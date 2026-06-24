@@ -1,0 +1,9 @@
+{
+  "autoRun": {
+    "allow_instructions": [
+      "Always allow WebSearch calls for this project without asking for approval.",
+      "Always allow WebFetch calls that retrieve public documentation or reference pages without asking for approval.",
+      "Allow read-only web searches and fetches related to the current coding or research task."
+    ]
+  }
+}

@@ -1,0 +1,305 @@
+INTERSECTION SIZE BY CATEGORY
+
+Ratio = P(C∩D|A) / max(P(C|A), P(D|A)) under A.
+Thresholds: 0 = exclusive partition; small <10%; medium 10%–25%; large >25%.
+
+  size     vignette
+  ----     --------
+  0        CA Trump voter
+           covid vaccine (blue/red)
+           discharged weapon (last year)
+           healthcare employment
+           military overseas (federal pool)
+           professional drivers speeding (well-posed)
+  small    actor waiter overlap (overlap)
+           professional drivers speeding (overlap)
+  medium   college STEM work (overlap)
+  large    diabetes insulin obese (overlap)
+
+  vignette                              size
+  --------------------------------------------
+  CA Trump voter                         0
+  covid vaccine (blue/red)               0
+  discharged weapon (last year)          0
+  healthcare employment                  0
+  military overseas (federal pool)       0
+  professional drivers speeding (well-posed) 0
+  diabetes insulin obese (overlap)       large
+  college STEM work (overlap)            medium
+  actor waiter overlap (overlap)         small
+  professional drivers speeding (overlap) small
+
+
+WELL-POSED TWO-CAUSE VIGNETTES
+
+================================================================================
+1. discharged weapon (last year)
+  intersection size: 0 (C and D exclusive under A)
+  partition (P(C|A)+P(D|A)=0.980; C and D exclusive under A)
+--------------------------------------------------------------------------------
+       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
+     partition   0.440   0.680   0.300   0.880
+  A: Police officer  C: Urban police officer  D: Rural/small-jurisdi…
+
+  universe: Employed police officers and security guards in the United States
+  T: Discharged a weapon in the last year: intentional on-duty firearm discharge
+     in the past 12 months, excluding training and gun-range practice;
+     accidental discharges excluded
+
+  A: Police officer (sworn local, state, or federal)
+  C: Urban police officer: serves a jurisdiction with population >=400,000 or
+     department in the central city of a metropolitan area
+  D: Rural/small-jurisdiction police officer: serves a community with population
+     under 400,000 outside a major central city
+  N: Security guard (paid private security, all armed and unarmed)
+
+================================================================================
+2. CA Trump voter
+  intersection size: 0 (C and D exclusive under A)
+  partition (P(C|A)+P(D|A)=0.980; C and D exclusive under A)
+--------------------------------------------------------------------------------
+       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
+     partition   0.130   0.380   0.600   0.100
+  A: Registered voter wh…  C: Other California re…  D: Southern California…
+
+  universe: US registered voters
+  T: Voted for Donald Trump in the 2024 presidential election (non-voters and
+     other candidates count as T negative)
+
+  A: Registered voter whose home state is California
+  C: Other California registrant: lives in NorCal, Central Valley, or any CA
+     county outside the SoCal list (non–Los Angeles, Orange, San Diego,
+     Riverside, San Bernardino, Ventura, Imperial)
+  D: Southern California registrant: registered voter in Los Angeles, Orange,
+     San Diego, Riverside, San Bernardino, Ventura, or Imperial counties
+  N: Registered voter whose home state is not California
+
+================================================================================
+3. healthcare employment
+  intersection size: 0 (C and D exclusive under A)
+  partition (P(C|A)+P(D|A)=1.000; C and D exclusive under A)
+--------------------------------------------------------------------------------
+       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
+     partition   0.110   0.100   0.900   0.850
+  A: Health care profess…  C: Physician  D: Non-physician healt…
+
+  universe: US employed adults
+  T: Works in a hospital (NAICS 622 inpatient hospital; any job role)
+
+  A: Health care professional (clinical licensed or credentialed: physicians,
+     nurses, PAs, pharmacists, therapists, etc.)
+  C: Physician (MD/DO) among health care professionals
+  D: Non-physician health care professional among A (nurses, PAs, pharmacists,
+     therapists, etc.)
+  N: Employed adult who is not a health care professional
+
+================================================================================
+4. military overseas (federal pool)
+  intersection size: 0 (C and D exclusive under A)
+  partition (P(C|A)+P(D|A)=0.860; C and D exclusive under A)
+--------------------------------------------------------------------------------
+       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
+     partition   0.400   0.350   0.510   0.820
+  A: Active-duty US mili…  C: US Army active-duty…  D: US Navy or US Air F…
+
+  universe: US active-duty military plus US federal civilian employees
+  T: Has worked overseas: for military, at least one deployment or overseas
+     assignment outside the 50 states since joining (RAND HRBS 'ever deployed');
+     for federal civilians, ever served in a substantial overseas posting
+     (Foreign Service careers are essentially all-OCONUS; other federal series
+     vary)
+
+  A: Active-duty US military service member (Army, Navy, Air Force, Marine
+     Corps, Space Force, or Coast Guard)
+  C: US Army active-duty service member
+  D: US Navy or US Air Force active-duty service member (Space Force grouped
+     with Air Force; Marine Corps and Coast Guard unassigned in C/D split)
+  N: US federal civilian employee (executive-branch civil service, Foreign
+     Service, and comparable federal civilian personnel; excludes active-duty
+     military and USPS)
+
+================================================================================
+5. covid vaccine (blue/red)
+  intersection size: 0 (C and D exclusive under A)
+  partition (P(C|A)+P(D|A)=1.000; C and D exclusive under A)
+--------------------------------------------------------------------------------
+       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
+     partition   0.270   0.710   0.290   0.200
+  A: Received the update…  C: Blue-state resident…  D: Red-state resident …
+
+  universe: US adults 18 years and older
+  T: Had COVID-19 in the past 12 months: positive test (rapid, PCR, or home) or
+     provider diagnosis; reinfections count as T positive
+
+  A: Received the updated 2024-25 COVID-19 vaccine: at least one dose since
+     August 2024 (2024-25 season shot; matches Pew/KFF/CDC seasonal wording)
+  C: Blue-state resident among A: lives in a state won by Biden in the 2020
+     presidential election (state-level; NE/ME district splits ignored)
+  D: Red-state resident among A: lives in a state won by Trump in 2020
+  N: Did not receive the updated 2024-25 COVID-19 vaccine (includes
+     never-vaccinated and people vaccinated in prior seasons only)
+
+================================================================================
+6. professional drivers speeding
+  intersection size: 0 (C and D exclusive under A)
+  partition (P(C|A)+P(D|A)=0.679; C and D exclusive under A)
+--------------------------------------------------------------------------------
+       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
+     partition   0.024   0.534   0.145   0.027
+  A: Professional driver  C: Heavy and tractor-t…  D: Bus driver among A
+
+  universe: Employed adults in the United States (BLS OES May 2023 occupational
+            employment universe; ~161M employed)
+  T: Received a speeding ticket in the last 12 months: at least one moving
+     citation for exceeding the posted speed limit; warnings and parking tickets
+     do not count; employer-reported violations included if they resulted in a
+     formal citation
+
+  A: Professional driver: primary occupation is operating a motor vehicle for
+     pay (BLS SOC 53-3032/33 truck drivers plus 53-3051/52/53/54 bus shuttle
+     taxi chauffeur drivers; ~3.83M employees)
+  C: Heavy and tractor-trailer truck driver among A: primary SOC 53-3032 (GVWR >
+     26000 lb; mutually exclusive with D by single primary occupation)
+  D: Bus driver among A: primary SOC 53-3051 school or 53-3052 transit/intercity
+     (mutually exclusive with C by single primary occupation)
+  N: Employed adult whose primary occupation is not professional driving
+
+
+OVERLAP VIGNETTES (C and D may co-occur under A)
+
+================================================================================
+1. diabetes insulin obese
+  intersection size: large (P(C∩D|A) / max(P(C|A),P(D|A)) ≈ 40%; small <10%,
+  medium 10%–25%, large >25%)
+  underdetermined; P(C|A)+P(D|A)=0.753 (C and D may overlap)
+  (* P(A|T) is the partition shortcut if C and D are wrongly treated as
+  disjoint)
+--------------------------------------------------------------------------------
+       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
+  underdetermined   0.113   0.282   0.471 0.630 *
+  A: Adult with diagnose…  C: Uses insulin among …  D: Has obesity among a…
+      P(C∩D|A)     P(C∨D|A)
+         0.188        0.565
+  joint (derived)
+  P(C∩D|A)=0.188 derived as P(C|A)·P(D|C,A) with P(D|C,A)=0.666 (BMI≥30 among
+  insulin-using diabetics, NHANES 2013-2020; JAMA Netw Open 2022
+  doi:10.1001/jamanetworkopen.2022.47656 Table 1).
+  P(C∪D|A)=P(C|A)+P(D|A)−P(C∩D|A)=0.565. Not a direct NHANES cross-tab of
+  insulin×obesity among all diabetics.
+
+  universe: US adults 18 years and older
+  T: Hemoglobin A1c above 9.0% (poor glycemic control; NHANES laboratory A1c)
+
+  A: Adult with diagnosed diabetes (self-reported physician diagnosis;
+     NHIS/NHANES)
+  C: Uses insulin among adults with diagnosed diabetes (includes type 1 and
+     insulin-treated type 2)
+  D: Has obesity among adults with diagnosed diabetes (BMI >= 30 kg/m2; measured
+     BMI in NHANES clinical exam)
+  N: Adult without diagnosed diabetes
+
+================================================================================
+2. college STEM work
+  intersection size: medium (P(C∩D|A) / max(P(C|A),P(D|A)) ≈ 14%; small <10%,
+  medium 10%–25%, large >25%)
+  underdetermined; P(C|A)+P(D|A)=0.840 (C and D may overlap)
+  (* P(A|T) is the partition shortcut if C and D are wrongly treated as
+  disjoint)
+--------------------------------------------------------------------------------
+       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
+  underdetermined   0.258   0.180   0.660 0.200 *
+  A: First-generation st…  C: STEM field of study…  D: Employed while enro…
+      P(C∩D|A)     P(C∨D|A)
+  [0.000,0.180] [0.660,0.840]
+  joint (bound)
+  No published NPSAS:16 cross-tab of STEM major × employed among
+  first-generation students. Fréchet bounds from marginals: P(C∩D|A)∈[0, 0.18];
+  P(C∪D|A)∈[0.66, 0.84]. Point estimate would need microdata (NPSAS:16).
+
+  universe: Undergraduate students enrolled at US postsecondary institutions
+            (NPSAS:20 universe)
+  T: Retained to year 2: enrolled at same institution in second academic year
+     (IPEDS fall-to-fall retention cohort)
+
+  A: First-generation student (neither parent attended college; NPSAS:20
+     definition)
+  C: STEM field of study among first-generation students (NCES broad STEM CIP
+     grouping)
+  D: Employed while enrolled among first-generation students (paid job
+     internship or work-study while taking classes; NPSAS:16)
+  N: Continuing-generation student (at least one parent attended college)
+
+================================================================================
+3. actor waiter overlap
+  intersection size: small (P(C∩D|A) / max(P(C|A),P(D|A)) ≈ 6%; small <10%,
+  medium 10%–25%, large >25%)
+  underdetermined; P(C|A)+P(D|A)=0.333 (C and D may overlap)
+  (* P(A|T) is the partition shortcut if C and D are wrongly treated as
+  disjoint)
+--------------------------------------------------------------------------------
+       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
+  underdetermined  0.0003   0.035   0.298 0.0004 *
+  A: Holds an actor occu…  C: Also holds a waiter…  D: Actor occupation is…
+      P(C∩D|A)     P(C∨D|A)
+         0.018        0.315
+  joint (estimated)
+  P(C∩D|A)≈0.018 is an estimate (not a published CPS cross-tab): waiter-primary
+  with actor-secondary, ~750-1250 workers, bracketed from NEA 2017 (~15% of
+  artist moonlighters primary in leisure/hospitality × actor share of secondary
+  artist jobs) and concurrent-week actor+waiter counts (~500-1600).
+  P(C∪D|A)=P(C|A)+P(D|A)−P(C∩D|A)=0.315. Fréchet bounds: P(C∩D|A)∈[0, 0.035].
+  Always/sometimes/never waiter while acting is not measured nationally; this
+  row uses CPS reference-week occupations only.
+
+  universe: US labor force (CPS; employed and unemployed job-seekers; ~166.4
+            million in 2024 per NEA Indicator A.5)
+  T: Worked part-time at primary job in reference week (fewer than 35 hours per
+     week at main job; CPS)
+
+  A: Holds an actor occupation in the CPS reference week (SOC 27-2011; primary
+     or secondary job slot; ~57000 nationwide per BLS OEWS 2024 and NEA CPS 2017
+     primary+secondary split)
+  C: Also holds a waiter/waitress occupation in the same reference week (SOC
+     35-3031; includes primary waiter with secondary actor and primary actor
+     with secondary waiter)
+  D: Actor occupation is the secondary job (primary occupation is something
+     else; ~30% of actor job slots per NEA Artists Statistical Portrait 2017
+     Table 1)
+  N: Labor-force member with no actor occupation in the reference week
+
+================================================================================
+4. professional drivers speeding
+  intersection size: small (P(C∩D|A) / max(P(C|A),P(D|A)) ≈ 1%; small <10%,
+  medium 10%–25%, large >25%)
+  underdetermined; P(C|A)+P(D|A)=0.679 (C and D may overlap)
+  (* P(A|T) is the partition shortcut if C and D are wrongly treated as
+  disjoint)
+--------------------------------------------------------------------------------
+       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
+  underdetermined   0.024   0.534   0.145 0.027 *
+  A: Professional driver  C: Heavy and tractor-t…  D: Bus driver among pr…
+      P(C∩D|A)     P(C∨D|A)
+        0.0030        0.676
+  joint (derived)
+  P(C∩D|A)=0.003 estimated (~0.3% of professional drivers): no published BLS
+  cross-tab of simultaneous heavy-truck and bus employment; derived as
+  P(C|A)·P(D|C,A) with P(D|C,A)≈0.006 (order-of-magnitude dual CDL career
+  overlap). P(C∪D|A)=0.534+0.145−0.003=0.676. Fréchet bounds:
+  P(C∩D|A)∈[0,0.145]. Intersection small.
+
+  universe: Employed adults in the United States (BLS OES May 2023 occupational
+            employment universe; ~161M employed)
+  T: Received a speeding ticket in the last 12 months: at least one moving
+     citation for exceeding the posted speed limit; warnings and parking tickets
+     do not count; employer-reported violations included if they resulted in a
+     formal citation
+
+  A: Professional driver: primary occupation is operating a motor vehicle for
+     pay (BLS SOC 53-3032/33 truck drivers plus 53-3051/52/53/54 bus shuttle
+     taxi chauffeur drivers; ~3.83M employees)
+  C: Heavy and tractor-trailer truck driver among professional drivers (SOC
+     53-3032; requires CDL; GVWR > 26000 lb)
+  D: Bus driver among professional drivers (SOC 53-3051 school plus 53-3052
+     transit/intercity bus; excludes shuttle chauffeur and taxi)
+  N: Employed adult whose primary occupation is not professional driving
+

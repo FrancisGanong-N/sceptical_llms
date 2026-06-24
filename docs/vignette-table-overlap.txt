@@ -1,0 +1,131 @@
+OVERLAP VIGNETTES (C and D may co-occur under A)
+
+================================================================================
+1. diabetes insulin obese
+  intersection size: large (P(C∩D|A) / max(P(C|A),P(D|A)) ≈ 40%; small <10%,
+  medium 10%–25%, large >25%)
+  underdetermined; P(C|A)+P(D|A)=0.753 (C and D may overlap)
+  (* P(A|T) is the partition shortcut if C and D are wrongly treated as
+  disjoint)
+--------------------------------------------------------------------------------
+       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
+  underdetermined   0.113   0.282   0.471 0.630 *
+  A: Adult with diagnose…  C: Uses insulin among …  D: Has obesity among a…
+      P(C∩D|A)     P(C∨D|A)
+         0.188        0.565
+  joint (derived)
+  P(C∩D|A)=0.188 derived as P(C|A)·P(D|C,A) with P(D|C,A)=0.666 (BMI≥30 among
+  insulin-using diabetics, NHANES 2013-2020; JAMA Netw Open 2022
+  doi:10.1001/jamanetworkopen.2022.47656 Table 1).
+  P(C∪D|A)=P(C|A)+P(D|A)−P(C∩D|A)=0.565. Not a direct NHANES cross-tab of
+  insulin×obesity among all diabetics.
+
+  universe: US adults 18 years and older
+  T: Hemoglobin A1c above 9.0% (poor glycemic control; NHANES laboratory A1c)
+
+  A: Adult with diagnosed diabetes (self-reported physician diagnosis;
+     NHIS/NHANES)
+  C: Uses insulin among adults with diagnosed diabetes (includes type 1 and
+     insulin-treated type 2)
+  D: Has obesity among adults with diagnosed diabetes (BMI >= 30 kg/m2; measured
+     BMI in NHANES clinical exam)
+  N: Adult without diagnosed diabetes
+
+================================================================================
+2. college STEM work
+  intersection size: medium (P(C∩D|A) / max(P(C|A),P(D|A)) ≈ 14%; small <10%,
+  medium 10%–25%, large >25%)
+  underdetermined; P(C|A)+P(D|A)=0.840 (C and D may overlap)
+  (* P(A|T) is the partition shortcut if C and D are wrongly treated as
+  disjoint)
+--------------------------------------------------------------------------------
+       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
+  underdetermined   0.258   0.180   0.660 0.200 *
+  A: First-generation st…  C: STEM field of study…  D: Employed while enro…
+      P(C∩D|A)     P(C∨D|A)
+  [0.000,0.180] [0.660,0.840]
+  joint (bound)
+  No published NPSAS:16 cross-tab of STEM major × employed among
+  first-generation students. Fréchet bounds from marginals: P(C∩D|A)∈[0, 0.18];
+  P(C∪D|A)∈[0.66, 0.84]. Point estimate would need microdata (NPSAS:16).
+
+  universe: Undergraduate students enrolled at US postsecondary institutions
+            (NPSAS:20 universe)
+  T: Retained to year 2: enrolled at same institution in second academic year
+     (IPEDS fall-to-fall retention cohort)
+
+  A: First-generation student (neither parent attended college; NPSAS:20
+     definition)
+  C: STEM field of study among first-generation students (NCES broad STEM CIP
+     grouping)
+  D: Employed while enrolled among first-generation students (paid job
+     internship or work-study while taking classes; NPSAS:16)
+  N: Continuing-generation student (at least one parent attended college)
+
+================================================================================
+3. email mobile desktop
+  intersection size: medium (P(C∩D|A) / max(P(C|A),P(D|A)) ≈ 23%; small <10%,
+  medium 10%–25%, large >25%)
+  underdetermined; P(C|A)+P(D|A)=1.100 (C and D may overlap)
+  (* P(A|T) is the partition shortcut if C and D are wrongly treated as
+  disjoint)
+--------------------------------------------------------------------------------
+       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
+  underdetermined   0.200   0.620   0.480 0.670 *
+  A: Gold loyalty-tier s…  C: Opened the latest p…  D: Opened the latest p…
+      P(C∩D|A)     P(C∨D|A)
+         0.143        0.957
+  joint (derived)
+  P(C∩D|A)≈0.143 derived as P(C|A)·P(D|C,A) with P(D|C,A)≈0.23 mobile openers
+  who reopen the same email on desktop (Campaign Monitor cross-device report;
+  Clean.email 2026 synthesis). P(C∪D|A)=P(C|A)+P(D|A)−P(C∩D|A)=0.957. Fréchet
+  minimum overlap is 0.10 because P(C|A)+P(D|A)>1; 0.143 is consistent. Not a
+  single-vendor Gold-tier cross-tab.
+
+  universe: Subscribers on a retail brand email list (scenario cohort; tier mix
+            illustrative)
+  T: Clicked a promotional link in the latest campaign (unique click)
+
+  A: Gold loyalty-tier subscriber
+  C: Opened the latest promotional email using a mobile email client among Gold
+     subscribers who opened (marginal; not mobile-only)
+  D: Opened the latest promotional email using a desktop email client among Gold
+     subscribers who opened (marginal; not desktop-only)
+  N: Standard or entry loyalty-tier subscriber
+
+================================================================================
+4. professional drivers speeding
+  intersection size: small (P(C∩D|A) / max(P(C|A),P(D|A)) ≈ 1%; small <10%,
+  medium 10%–25%, large >25%)
+  underdetermined; P(C|A)+P(D|A)=0.679 (C and D may overlap)
+  (* P(A|T) is the partition shortcut if C and D are wrongly treated as
+  disjoint)
+--------------------------------------------------------------------------------
+       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
+  underdetermined   0.024   0.534   0.145 0.027 *
+  A: Professional driver  C: Heavy and tractor-t…  D: Bus driver among pr…
+      P(C∩D|A)     P(C∨D|A)
+        0.0030        0.676
+  joint (derived)
+  P(C∩D|A)=0.003 estimated (~0.3% of professional drivers): no published BLS
+  cross-tab of simultaneous heavy-truck and bus employment; derived as
+  P(C|A)·P(D|C,A) with P(D|C,A)≈0.006 (order-of-magnitude dual CDL career
+  overlap). P(C∪D|A)=0.534+0.145−0.003=0.676. Fréchet bounds:
+  P(C∩D|A)∈[0,0.145]. Intersection small.
+
+  universe: Employed adults in the United States (BLS OES May 2023 occupational
+            employment universe; ~161M employed)
+  T: Received a speeding ticket in the last 12 months: at least one moving
+     citation for exceeding the posted speed limit; warnings and parking tickets
+     do not count; employer-reported violations included if they resulted in a
+     formal citation
+
+  A: Professional driver: primary occupation is operating a motor vehicle for
+     pay (BLS SOC 53-3032/33 truck drivers plus 53-3051/52/53/54 bus shuttle
+     taxi chauffeur drivers; ~3.83M employees)
+  C: Heavy and tractor-trailer truck driver among professional drivers (SOC
+     53-3032; requires CDL; GVWR > 26000 lb)
+  D: Bus driver among professional drivers (SOC 53-3051 school plus 53-3052
+     transit/intercity bus; excludes shuttle chauffeur and taxi)
+  N: Employed adult whose primary occupation is not professional driving
+
