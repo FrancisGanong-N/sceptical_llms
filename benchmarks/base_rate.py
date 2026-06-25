@@ -23,6 +23,7 @@ DEFAULT_MERGED_RESULTS_CSV = (
 )
 
 NORMATIVE_TOLERANCE_PERCENT = 1.0
+LURE_TOLERANCE_PERCENT = 0.05
 MC_NUMERIC_LETTERS = frozenset("ABCDE")
 MC_FULL_LETTERS = frozenset("ABCDEFGH")
 META_LETTERS = frozenset("FGH")
@@ -138,7 +139,7 @@ class BaseRateBenchmarkItem:
             option.percent
             for option in self.options
             if option.percent is not None
-            and not matches_percent_target(option.percent, self.normative_percent)
+            and option.letter != self.normative_choice
         )
 
 
@@ -325,6 +326,14 @@ def matches_percent_target(
     return abs(value - target) <= tolerance
 
 
+def normative_tolerance_percent(target: float) -> float:
+    """Tighter band for tiny posteriors; ±1 pp for larger ones."""
+    return min(
+        NORMATIVE_TOLERANCE_PERCENT,
+        max(LURE_TOLERANCE_PERCENT, abs(target) * 0.5),
+    )
+
+
 def _mc_numeric_sibling_id(example_id: str) -> str | None:
     if "__open_" not in example_id:
         return None
@@ -462,12 +471,16 @@ def score_open_example(
     if parsed.percent is None:
         return base
 
-    normative = matches_percent_target(parsed.percent, item.normative_percent)
+    normative = matches_percent_target(
+        parsed.percent,
+        item.normative_percent,
+        tolerance=normative_tolerance_percent(item.normative_percent),
+    )
     closest_lure, lure_distance = _closest_lure_percent(parsed.percent, lure_percents)
     biased = (
         closest_lure is not None
         and lure_distance is not None
-        and matches_percent_target(parsed.percent, closest_lure)
+        and lure_distance <= LURE_TOLERANCE_PERCENT
     )
     if normative and biased:
         dist_normative = abs(parsed.percent - item.normative_percent)
@@ -684,65 +697,64 @@ def score_outcome_label(score_outcome: str) -> str:
     return SCORE_OUTCOME_LABELS.get(score_outcome, score_outcome)
 
 
-def _condition_cell_scores(frame: "pd.DataFrame") -> str:
-    ordered = frame.sort_values("item")
-    return "".join(ordered["score"].tolist())
-
-
-def item_order_labels(merged_rows: list[dict[str, str]]) -> list[str]:
-    return sorted(
-        {
-            item_label(row["vignette_name"], row["problem_type"])
-            for row in merged_rows
-        }
-    )
+def normative_binary_score(score_outcome: str) -> int:
+    """1 when the answer is normative, else 0."""
+    return 1 if score_outcome == "normative" else 0
 
 
 def score_pivot_dataframe(merged_rows: list[dict[str, str]]) -> "pd.DataFrame":
-    """Pivot merged rows: rows=models, columns=condition, values=per-item score codes."""
+    """Pivot merged rows: rows=models, columns=condition, values=mean normative score (0/1)."""
     import pandas as pd
 
     if not merged_rows:
         return pd.DataFrame(columns=list(CONDITION_COLUMN_ORDER))
 
     frame = pd.DataFrame(merged_rows)
-    frame["item"] = frame.apply(
-        lambda row: item_label(row["vignette_name"], row["problem_type"]),
-        axis=1,
-    )
     frame["condition"] = frame.apply(
         lambda row: condition_column(row["response_type"], row["has_statistics"]),
         axis=1,
     )
-    frame["score"] = frame["score_outcome"].map(score_outcome_label)
+    frame["score"] = frame["score_outcome"].map(normative_binary_score)
 
     pivot = (
-        frame.groupby(["model", "condition"], group_keys=False)
-        .apply(_condition_cell_scores, include_groups=False)
-        .unstack("condition")
+        frame.groupby(["model", "condition"], as_index=False)["score"]
+        .mean()
+        .pivot(index="model", columns="condition", values="score")
     )
     pivot = pivot.reindex(columns=list(CONDITION_COLUMN_ORDER))
-    pivot = pivot.fillna("")
     pivot.index.name = "model"
-    return pivot.sort_index()
+    return pivot.sort_index().round(3)
 
 
 def print_score_pivots(merged_rows: list[dict[str, str]]) -> None:
-    """Print a pivoted score table: rows=models, columns=condition variants."""
+    """Print mean normative accuracy by model and condition (0/1 scores averaged)."""
     pivot = score_pivot_dataframe(merged_rows)
     if pivot.empty:
         print("No merged results to pivot.", flush=True)
         return
 
+    from collections import Counter
+
+    outcomes = Counter(row.get("score_outcome", "") for row in merged_rows)
     print(
-        "\nScore pivot (rows=model, columns=condition; "
-        "each cell = item scores in order, N/B/O/?):",
+        "\nNormative accuracy pivot (rows=model, columns=condition; "
+        "cell = mean of 0/1 normative scores across vignettes):",
         flush=True,
     )
-    print(pivot.to_string(), flush=True)
-    print("\nVignette order (one character per position in each cell):", flush=True)
-    for index, label in enumerate(item_order_labels(merged_rows), start=1):
-        print(f"  {index}. {label}", flush=True)
+    print(
+        "Outcome counts in merged rows:",
+        ", ".join(
+            f"{score_outcome_label(key)}={value}"
+            for key, value in sorted(outcomes.items())
+            if key
+        ),
+        flush=True,
+    )
+    print(pivot.to_string(na_rep=""), flush=True)
+    overall = pivot.mean(axis=1).round(3)
+    print("\nOverall mean normative accuracy by model:", flush=True)
+    for model, value in overall.items():
+        print(f"  {model}: {value:.3f}", flush=True)
 
 
 def write_score_pivot_csv(

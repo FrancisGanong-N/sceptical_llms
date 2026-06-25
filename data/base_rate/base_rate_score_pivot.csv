@@ -1,0 +1,2 @@
+model,open_probs,open_no_probs,mc_numeric_probs,mc_numeric_no_probs,mc_full_probs,mc_full_no_probs
+google/gemini-3-flash-preview,B,N,BB,BB,BB,BB

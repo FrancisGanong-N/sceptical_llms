@@ -106,6 +106,18 @@ class TestScoring:
         assert scored.biased is False
         assert scored.score_outcome == "off_target"
 
+    def test_open_small_posterior_off_target_is_not_normative(self):
+        items = load_benchmark()
+        example_id = "actor_waiter_overlap__overlap__open_no_probs"
+        parsed = parse_response("0.1%\n2", scoring_type="open")
+        scored = score_example(items[example_id], parsed, items=items)
+        assert scored.score_outcome == "off_target"
+
+    def test_actor_waiter_mc_sibling_has_lure_percents(self):
+        items = load_benchmark()
+        sibling = items["actor_waiter_overlap__overlap__mc_numeric_probs"]
+        assert sibling.lure_percents
+
     def test_mc_normative_choice(self):
         items = load_benchmark()
         example_id = "discharged_weapon_last_year__mc_numeric_probs"
@@ -218,8 +230,8 @@ class TestScorePivot:
             "mc_full_no_probs",
         ]
         assert list(pivot.index) == ["model-a"]
-        assert len(pivot.loc["model-a", "open_probs"]) == 9
-        assert "N" in pivot.loc["model-a", "open_probs"]
+        assert pivot.loc["model-a", "open_probs"] == round(1 / 9, 3)
+        assert pivot.loc["model-a", "open_no_probs"] == 0.0
 
     def test_score_pivot_multiple_models(self):
         items = load_benchmark()
@@ -234,7 +246,7 @@ class TestScorePivot:
                 },
                 {
                     "example_id": example_id,
-                    "response": "90%\n3",
+                    "response": "91.2%\n3",
                     "reasoning": "",
                     "model": "model-b",
                 },
@@ -243,6 +255,8 @@ class TestScorePivot:
         )
         pivot = score_pivot_dataframe(merged)
         assert set(pivot.index) == {"model-a", "model-b"}
+        assert pivot.loc["model-a", "open_probs"] == round(1 / 9, 3)
+        assert pivot.loc["model-b", "open_probs"] == round(1 / 9, 3)
         assert len(merged) == 54 * 2
 
 
