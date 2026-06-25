@@ -34,12 +34,28 @@ def model_slug_from_llm(llm) -> str:
     return getattr(llm, "model", None) or getattr(llm, "name", None) or "unknown"
 
 
+# Kaggle Model Proxy reserves quota from max_output_tokens; keep this low for
+# two-line answers (percent/letter + confidence). Reasoning is disabled to
+# avoid large thinking-token reservations on google/* models.
+BASE_RATE_MAX_OUTPUT_TOKENS = 512
+BASE_RATE_N_JOBS = 1
+_active_max_output_tokens = BASE_RATE_MAX_OUTPUT_TOKENS
+
+
+def _prompt_llm(llm, prompt: str) -> str:
+    return llm.prompt(
+        prompt,
+        reasoning="none",
+        extra_api_params={"max_output_tokens": _active_max_output_tokens},
+    )
+
+
 @kbench.task(
     store_task=False,
     description="One base-rate benchmark item: prompt, parsed lines, and reasoning.",
 )
 def base_rate_prompt_response(llm, example_id: str, prompt: str) -> dict:
-    response = llm.prompt(prompt)
+    response = _prompt_llm(llm, prompt)
     item = load_benchmark()[example_id]
     parsed = parse_response(response, scoring_type=item.scoring_type)
     answer_line, confidence_line = split_response_lines(response)
@@ -63,8 +79,12 @@ def evaluate_base_rate_benchmark(
     benchmark_path: str | Path | None = None,
     merged_results_path: str | Path | None = None,
     max_prompts: int | None = None,
+    max_output_tokens: int = BASE_RATE_MAX_OUTPUT_TOKENS,
+    n_jobs: int = BASE_RATE_N_JOBS,
 ):
     """Run benchmark prompts, score by response type, and write merged results CSV."""
+    global _active_max_output_tokens
+
     benchmark_path = Path(benchmark_path or BENCHMARK_CSV)
     llms = llm if isinstance(llm, list) else [llm]
     evaluation_data = prompts_to_dataframe(benchmark_path, max_prompts=max_prompts)
@@ -73,13 +93,18 @@ def evaluate_base_rate_benchmark(
         if max_prompts is None
         else list(evaluation_data["example_id"])
     )
-    with kbench.client.enable_cache():
-        runs = base_rate_prompt_response.evaluate(
-            llm=llms,
-            evaluation_data=evaluation_data,
-            n_jobs=2,
-            remove_run_files=True,
-        )
+    previous_max_output_tokens = _active_max_output_tokens
+    _active_max_output_tokens = max_output_tokens
+    try:
+        with kbench.client.enable_cache():
+            runs = base_rate_prompt_response.evaluate(
+                llm=llms,
+                evaluation_data=evaluation_data,
+                n_jobs=n_jobs,
+                remove_run_files=True,
+            )
+    finally:
+        _active_max_output_tokens = previous_max_output_tokens
 
     run_rows = []
     for run in runs.runs:
