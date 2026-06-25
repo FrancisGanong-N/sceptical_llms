@@ -10,6 +10,7 @@ from benchmarks.base_rate import (
     load_benchmark,
     parse_response,
     prompts_to_dataframe,
+    score_pivot_dataframe,
     score_run_rows,
     split_response_lines,
     write_merged_results_csv,
@@ -61,11 +62,17 @@ def evaluate_base_rate_benchmark(
     *,
     benchmark_path: str | Path | None = None,
     merged_results_path: str | Path | None = None,
+    max_prompts: int | None = None,
 ):
-    """Run all benchmark prompts, score by response type, and write merged results CSV."""
+    """Run benchmark prompts, score by response type, and write merged results CSV."""
     benchmark_path = Path(benchmark_path or BENCHMARK_CSV)
     llms = llm if isinstance(llm, list) else [llm]
-    evaluation_data = prompts_to_dataframe(benchmark_path)
+    evaluation_data = prompts_to_dataframe(benchmark_path, max_prompts=max_prompts)
+    example_ids = (
+        None
+        if max_prompts is None
+        else list(evaluation_data["example_id"])
+    )
     with kbench.client.enable_cache():
         runs = base_rate_prompt_response.evaluate(
             llm=llms,
@@ -83,13 +90,19 @@ def evaluate_base_rate_benchmark(
         run_rows.append(row)
 
     score = score_run_rows(run_rows)
-    merged_path = write_merged_results_csv(
+    merged_path, pivot_path = write_merged_results_csv(
         run_rows,
         merged_results_path or _kaggle_merged_results_path(),
         benchmark_path=benchmark_path,
         score=score,
+        example_ids=example_ids,
     )
-    return runs, score, merged_path
+    import csv
+
+    with merged_path.open(newline="", encoding="utf-8") as handle:
+        merged_rows = list(csv.DictReader(handle))
+    pivot = score_pivot_dataframe(merged_rows)
+    return runs, score, merged_path, pivot_path, pivot
 
 
 def _score_from_runs(runs: kbench.Runs):
@@ -109,7 +122,7 @@ def _score_from_runs(runs: kbench.Runs):
     ),
 )
 def base_rate_normative_accuracy(llm) -> float:
-    _, score, _ = evaluate_base_rate_benchmark(llm)
+    _, score, _, _, _ = evaluate_base_rate_benchmark(llm)
     return float(score.normative_accuracy)
 
 
@@ -122,5 +135,5 @@ def base_rate_normative_accuracy(llm) -> float:
     ),
 )
 def base_rate_bias_index(llm) -> float:
-    _, score, _ = evaluate_base_rate_benchmark(llm)
+    _, score, _, _, _ = evaluate_base_rate_benchmark(llm)
     return float(score.bias_index)

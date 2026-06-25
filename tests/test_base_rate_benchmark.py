@@ -41,6 +41,12 @@ class TestBenchmarkData:
         assert len(df) == 54
         assert "statistical consultant" in df.iloc[0]["prompt"]
 
+    def test_prompts_dataframe_max_prompts(self):
+        df = prompts_to_dataframe(max_prompts=2)
+        assert len(df) == 2
+        full = prompts_to_dataframe()
+        assert list(df["example_id"]) == list(full["example_id"][:2])
+
 
 class TestParsing:
     def test_split_response_lines(self):
@@ -173,11 +179,12 @@ class TestMergeResults:
         items = load_benchmark()
         example_id = "discharged_weapon_last_year__open_probs"
         out = tmp_path / "merged.csv"
-        write_merged_results_csv(
+        merged_path, pivot_path = write_merged_results_csv(
             [{"example_id": example_id, "response": "91.2%\n4", "reasoning": "", "model": "test-model"}],
             out,
             items=items,
         )
+        assert pivot_path.is_file()
         with out.open(encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
         assert len(rows) == 54

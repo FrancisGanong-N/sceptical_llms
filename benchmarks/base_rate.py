@@ -377,7 +377,11 @@ def load_benchmark_rows(path: Path | str = BENCHMARK_CSV) -> tuple[list[str], li
     return fieldnames, rows
 
 
-def prompts_to_dataframe(path: Path | str = BENCHMARK_CSV) -> "pd.DataFrame":
+def prompts_to_dataframe(
+    path: Path | str = BENCHMARK_CSV,
+    *,
+    max_prompts: int | None = None,
+) -> "pd.DataFrame":
     import pandas as pd
 
     items = load_benchmark(path)
@@ -385,6 +389,8 @@ def prompts_to_dataframe(path: Path | str = BENCHMARK_CSV) -> "pd.DataFrame":
         {"example_id": item.example_id, "prompt": item.prompt}
         for item in sorted(items.values(), key=lambda item: item.example_id)
     ]
+    if max_prompts is not None:
+        rows = rows[:max_prompts]
     return pd.DataFrame(rows)
 
 
@@ -683,6 +689,15 @@ def _condition_cell_scores(frame: "pd.DataFrame") -> str:
     return "".join(ordered["score"].tolist())
 
 
+def item_order_labels(merged_rows: list[dict[str, str]]) -> list[str]:
+    return sorted(
+        {
+            item_label(row["vignette_name"], row["problem_type"])
+            for row in merged_rows
+        }
+    )
+
+
 def score_pivot_dataframe(merged_rows: list[dict[str, str]]) -> "pd.DataFrame":
     """Pivot merged rows: rows=models, columns=condition, values=per-item score codes."""
     import pandas as pd
@@ -716,11 +731,29 @@ def print_score_pivots(merged_rows: list[dict[str, str]]) -> None:
     """Print a pivoted score table: rows=models, columns=condition variants."""
     pivot = score_pivot_dataframe(merged_rows)
     if pivot.empty:
-        print("No merged results to pivot.")
+        print("No merged results to pivot.", flush=True)
         return
 
-    print("\nScore pivot (rows=model, columns=condition; each cell = item scores in order, N/B/O/?):")
-    print(pivot.to_string())
+    print(
+        "\nScore pivot (rows=model, columns=condition; "
+        "each cell = item scores in order, N/B/O/?):",
+        flush=True,
+    )
+    print(pivot.to_string(), flush=True)
+    print("\nVignette order (one character per position in each cell):", flush=True)
+    for index, label in enumerate(item_order_labels(merged_rows), start=1):
+        print(f"  {index}. {label}", flush=True)
+
+
+def write_score_pivot_csv(
+    merged_rows: list[dict[str, str]],
+    path: Path | str,
+) -> Path:
+    pivot = score_pivot_dataframe(merged_rows)
+    out = Path(path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    pivot.to_csv(out)
+    return out
 
 
 def example_score_to_merge_fields(scored: ExampleScore) -> dict[str, str]:
@@ -746,10 +779,17 @@ def merge_run_results(
     benchmark_path: Path | str = BENCHMARK_CSV,
     items: dict[str, BaseRateBenchmarkItem] | None = None,
     score: BaseRateScore | None = None,
+    example_ids: list[str] | None = None,
 ) -> list[dict[str, str]]:
     items = items or load_benchmark(benchmark_path)
     benchmark_fields, benchmark_rows = load_benchmark_rows(benchmark_path)
     benchmark_by_id = {row["example_id"]: row for row in benchmark_rows}
+    if example_ids is not None:
+        benchmark_by_id = {
+            example_id: benchmark_by_id[example_id]
+            for example_id in example_ids
+            if example_id in benchmark_by_id
+        }
     models = sorted(
         {str(row.get("model")).strip() for row in run_rows if row.get("model")}
     )
@@ -805,6 +845,7 @@ def write_merged_results_csv(
     benchmark_path: Path | str = BENCHMARK_CSV,
     items: dict[str, BaseRateBenchmarkItem] | None = None,
     score: BaseRateScore | None = None,
+    example_ids: list[str] | None = None,
 ) -> Path:
     benchmark_fields, _ = load_benchmark_rows(benchmark_path)
     fieldnames = benchmark_fields + list(MERGE_RESULT_COLUMNS)
@@ -813,6 +854,7 @@ def write_merged_results_csv(
         benchmark_path=benchmark_path,
         items=items,
         score=score,
+        example_ids=example_ids,
     )
     out = Path(path or DEFAULT_MERGED_RESULTS_CSV)
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -821,7 +863,9 @@ def write_merged_results_csv(
         writer.writeheader()
         writer.writerows(merged)
     print_score_pivots(merged)
-    return out
+    pivot_path = out.with_name("base_rate_score_pivot.csv")
+    write_score_pivot_csv(merged, pivot_path)
+    return out, pivot_path
 
 
 # Backwards-compatible aliases used in tests.
