@@ -42,15 +42,25 @@ BASE_RATE_N_JOBS = 1
 _active_max_output_tokens = BASE_RATE_MAX_OUTPUT_TOKENS
 
 
+def _llm_extra_api_params(token_cap: int) -> dict[str, int | dict[str, int]]:
+    """Cap generation length for Kaggle Model Proxy.
+
+    The OpenAI SDK accepts ``max_tokens`` on chat.completions.create.
+    Model Proxy uses ``max_output_tokens`` in the request body for quota
+    reservation; passing it as a top-level kwarg raises TypeError.
+    """
+    return {
+        "max_tokens": token_cap,
+        "extra_body": {"max_output_tokens": token_cap},
+    }
+
+
 def _prompt_llm(llm, prompt: str) -> str:
     token_cap = _active_max_output_tokens
     return llm.prompt(
         prompt,
         reasoning="none",
-        extra_api_params={
-            "max_output_tokens": token_cap,
-            "max_tokens": token_cap,
-        },
+        extra_api_params=_llm_extra_api_params(token_cap),
     )
 
 

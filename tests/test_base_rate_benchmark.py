@@ -118,6 +118,14 @@ class TestScoring:
         sibling = items["actor_waiter_overlap__overlap__mc_numeric_probs"]
         assert sibling.lure_percents
 
+    def test_llm_extra_api_params(self):
+        from benchmarks.base_rate_tasks import _llm_extra_api_params
+
+        params = _llm_extra_api_params(128)
+        assert params["max_tokens"] == 128
+        assert "max_output_tokens" not in params
+        assert params["extra_body"]["max_output_tokens"] == 128
+
     def test_mc_normative_choice(self):
         items = load_benchmark()
         example_id = "discharged_weapon_last_year__mc_numeric_probs"
