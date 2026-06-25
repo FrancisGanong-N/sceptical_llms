@@ -2,5 +2,5 @@
   "versionNumber": 1,
   "name": "base_rate_bias_index",
   "description": "Sceptical base-rate benchmark: fraction of parseable answers choosing a lure (numeric shortcut, meta scepticism, or wrong MC option). Higher indicates more base-rate neglect or unwarranted scepticism.",
-  "definition": "@kbench.task(\n    name=\"base_rate_bias_index\",\n    description=(\n        \"Sceptical base-rate benchmark: fraction of parseable answers choosing a lure \"\n        \"(numeric shortcut, meta scepticism, or wrong MC option). Higher indicates \"\n        \"more base-rate neglect or unwarranted scepticism.\"\n    ),\n)\ndef base_rate_bias_index(llm) -> float:\n    runs = _evaluate_base_rate_benchmark(llm)\n    score = _score_from_runs(runs)\n    return float(score.bias_index)\n"
+  "definition": "@kbench.task(\n    name=\"base_rate_bias_index\",\n    description=(\n        \"Sceptical base-rate benchmark: fraction of parseable answers choosing a lure \"\n        \"(numeric shortcut, meta scepticism, or wrong MC option). Higher indicates \"\n        \"more base-rate neglect or unwarranted scepticism.\"\n    ),\n)\ndef base_rate_bias_index(llm) -> float:\n    _, score, _ = evaluate_base_rate_benchmark(llm)\n    return float(score.bias_index)\n"
 }

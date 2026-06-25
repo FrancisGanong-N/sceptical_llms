@@ -1,49 +1,104 @@
 """Kaggle Benchmarks tasks for the sceptical base-rate benchmark."""
 
+from pathlib import Path
+
 import kaggle_benchmarks as kbench
 
 from benchmarks.base_rate import (
     BENCHMARK_CSV,
+    DEFAULT_MERGED_RESULTS_CSV,
     load_benchmark,
     parse_response,
     prompts_to_dataframe,
-    score_base_rate_responses,
+    score_run_rows,
+    split_response_lines,
+    write_merged_results_csv,
 )
+
+
+def _kaggle_merged_results_path() -> Path:
+    if Path("/kaggle/working").is_dir():
+        return Path("/kaggle/working") / "base_rate_merged_results.csv"
+    return DEFAULT_MERGED_RESULTS_CSV
+
+
+def model_slug_from_run(run) -> str:
+    subject = getattr(run, "evaluated_subject", None)
+    if subject is None:
+        return "unknown"
+    return getattr(subject, "model", None) or getattr(subject, "name", None) or "unknown"
+
+
+def model_slug_from_llm(llm) -> str:
+    return getattr(llm, "model", None) or getattr(llm, "name", None) or "unknown"
 
 
 @kbench.task(
     store_task=False,
-    description="One base-rate benchmark item: prompt and parsed response fields.",
+    description="One base-rate benchmark item: prompt, parsed lines, and reasoning.",
 )
 def base_rate_prompt_response(llm, example_id: str, prompt: str) -> dict:
     response = llm.prompt(prompt)
     item = load_benchmark()[example_id]
-    parsed = parse_response(response, response_type=item.response_type)
+    parsed = parse_response(response, scoring_type=item.scoring_type)
+    answer_line, confidence_line = split_response_lines(response)
     return {
         "example_id": example_id,
         "response": response,
         "reasoning": kbench.last_reasoning_traces(),
-        "response_type": parsed.response_type,
-        "percent": parsed.percent,
-        "choice": parsed.choice,
-        "confidence": parsed.confidence,
+        "answer_line": answer_line,
+        "confidence_line": confidence_line,
+        "parsed_answer_type": parsed.answer_type,
+        "parsed_percent": parsed.percent,
+        "parsed_choice": parsed.choice,
+        "parsed_confidence": parsed.confidence,
+        "scoring_type": item.scoring_type,
     }
 
 
-def _evaluate_base_rate_benchmark(llm, benchmark_path: str | None = None):
-    evaluation_data = prompts_to_dataframe(benchmark_path or BENCHMARK_CSV)
+def evaluate_base_rate_benchmark(
+    llm,
+    *,
+    benchmark_path: str | Path | None = None,
+    merged_results_path: str | Path | None = None,
+):
+    """Run all benchmark prompts, score by response type, and write merged results CSV."""
+    benchmark_path = Path(benchmark_path or BENCHMARK_CSV)
+    llms = llm if isinstance(llm, list) else [llm]
+    evaluation_data = prompts_to_dataframe(benchmark_path)
     with kbench.client.enable_cache():
-        return base_rate_prompt_response.evaluate(
-            llm=[llm],
+        runs = base_rate_prompt_response.evaluate(
+            llm=llms,
             evaluation_data=evaluation_data,
             n_jobs=2,
             remove_run_files=True,
         )
 
+    run_rows = []
+    for run in runs.runs:
+        row = dict(run.result)
+        row["model"] = model_slug_from_run(run)
+        if row["model"] == "unknown" and len(llms) == 1:
+            row["model"] = model_slug_from_llm(llms[0])
+        run_rows.append(row)
+
+    score = score_run_rows(run_rows)
+    merged_path = write_merged_results_csv(
+        run_rows,
+        merged_results_path or _kaggle_merged_results_path(),
+        benchmark_path=benchmark_path,
+        score=score,
+    )
+    return runs, score, merged_path
+
 
 def _score_from_runs(runs: kbench.Runs):
-    rows = [run.result for run in runs.runs]
-    return score_base_rate_responses(rows)
+    rows = []
+    for run in runs.runs:
+        row = dict(run.result)
+        row["model"] = model_slug_from_run(run)
+        rows.append(row)
+    return score_run_rows(rows)
 
 
 @kbench.task(
@@ -54,8 +109,7 @@ def _score_from_runs(runs: kbench.Runs):
     ),
 )
 def base_rate_normative_accuracy(llm) -> float:
-    runs = _evaluate_base_rate_benchmark(llm)
-    score = _score_from_runs(runs)
+    _, score, _ = evaluate_base_rate_benchmark(llm)
     return float(score.normative_accuracy)
 
 
@@ -68,6 +122,5 @@ def base_rate_normative_accuracy(llm) -> float:
     ),
 )
 def base_rate_bias_index(llm) -> float:
-    runs = _evaluate_base_rate_benchmark(llm)
-    score = _score_from_runs(runs)
+    _, score, _ = evaluate_base_rate_benchmark(llm)
     return float(score.bias_index)
