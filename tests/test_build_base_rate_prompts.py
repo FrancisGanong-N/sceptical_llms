@@ -20,7 +20,7 @@ from scripts.build_base_rate_prompts import (
 class TestVignetteLoad:
     def test_counts(self):
         assert len(_load_two_cause()) == 5
-        assert len(_load_overlap()) == 4
+        assert len(_load_overlap()) == 5
 
     def test_well_posed_p_cd_zero(self):
         for v in _load_two_cause():
@@ -31,6 +31,7 @@ class TestVignetteLoad:
         assert abs(by_name["diabetes insulin obese"].p_cd - 0.188) < 1e-9
         assert abs(by_name["college STEM work"].p_cd - 0.09) < 1e-9
         assert abs(by_name["actor waiter overlap"].p_cd - 0.018) < 1e-9
+        assert abs(by_name["english teacher humanities"].p_cd - 0.114) < 1e-9
 
     def test_intersection_size_labels(self):
         for v in _load_two_cause():
@@ -40,6 +41,7 @@ class TestVignetteLoad:
         assert by_name["college STEM work"].intersection_size == "medium"
         assert by_name["actor waiter overlap"].intersection_size == "small"
         assert by_name["professional drivers speeding"].intersection_size == "small"
+        assert by_name["english teacher humanities"].intersection_size == "large"
 
     def test_ca_trump_posterior(self):
         v = next(v for v in _load_two_cause() if v.name == "CA Trump voter")
@@ -74,7 +76,7 @@ class TestBuildAll:
     def test_all_mc_full_normative_is_numeric_letter(self):
         _, items, _ = build_all()
         full = [r for r in items if r["variant"] == "mc_full_probs"]
-        assert len(full) == 9
+        assert len(full) == 10
         for row in full:
             assert row["normative_choice"] in "ABCDE"
             assert row["normative_open"] != META_F
@@ -131,6 +133,14 @@ class TestBuildAll:
         pro = pmap["professional_drivers_speeding__overlap__open_probs"]
         assert "a professional driver or other adult" in pro
         assert "primary occupation is not professional driving" not in pro
+
+    def test_english_teacher_short_phrasing(self):
+        prompts, _, _ = build_all()
+        pmap = {r["example_id"]: r["prompt"] for r in prompts}
+        eng = pmap["english_teacher_humanities__overlap__open_probs"]
+        assert "a public grades 9-12 teacher or other employed adult" in eng
+        assert "Among those who teach English/language arts" in eng
+        assert "Among teach English" not in eng
 
     def test_prose_quality_fixes(self):
         prompts, _, _ = build_all()
@@ -215,7 +225,7 @@ class TestBuildAll:
     def test_full_mc_has_meta_options(self):
         _, items, _ = build_all()
         full = [r for r in items if r["variant"] == "mc_full_probs"]
-        assert len(full) == 9
+        assert len(full) == 10
         for row in full:
             assert row["option_f_label"] == META_F
             assert row["option_g_label"]
@@ -225,7 +235,7 @@ class TestBuildAll:
 class TestBenchmarkCsv:
     def test_condition_columns(self):
         _, _, benchmark = build_all()
-        assert len(benchmark) == 54
+        assert len(benchmark) == 60
         for row in benchmark:
             assert row["response_type"] in {"open", "mc_numeric", "mc_full"}
             assert row["has_statistics"] in {"true", "false"}
@@ -240,12 +250,13 @@ class TestBenchmarkCsv:
             (row["vignette_name"], row["problem_type"]): row["intersection_size"]
             for row in benchmark
         }
-        assert len(by_key) == 9
+        assert len(by_key) == 10
         assert by_key[("discharged weapon (last year)", "well_posed")] == "0"
         assert by_key[("diabetes insulin obese", "overlap")] == "large"
         assert by_key[("college STEM work", "overlap")] == "medium"
         assert by_key[("actor waiter overlap", "overlap")] == "small"
         assert by_key[("professional drivers speeding", "overlap")] == "small"
+        assert by_key[("english teacher humanities", "overlap")] == "large"
 
     def test_factorial_uniqueness(self):
         _, _, benchmark = build_all()
@@ -258,7 +269,7 @@ class TestBenchmarkCsv:
             )
             for row in benchmark
         }
-        assert len(keys) == 54
+        assert len(keys) == 60
 
 
 class TestWrittenCsvs:
@@ -270,11 +281,11 @@ class TestWrittenCsvs:
 
         with (OUT_DIR / "prompts.csv").open(encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
-        assert len(rows) == 54
+        assert len(rows) == 60
 
         with (OUT_DIR / "benchmark.csv").open(encoding="utf-8") as handle:
             bench = list(csv.DictReader(handle))
-        assert len(bench) == 54
+        assert len(bench) == 60
         assert "intersection_size" in bench[0]
         assert "problem_type" in bench[0]
         assert "response_type" in bench[0]

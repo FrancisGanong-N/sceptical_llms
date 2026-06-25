@@ -10,11 +10,11 @@ Thresholds: 0 = exclusive partition; small <10%; medium 10%–25%; large >25%.
            discharged weapon (last year)
            healthcare employment
            military overseas (federal pool)
-           professional drivers speeding (well-posed)
   small    actor waiter overlap (overlap)
            professional drivers speeding (overlap)
   medium   college STEM work (overlap)
   large    diabetes insulin obese (overlap)
+           english teacher humanities (overlap)
 
   vignette                              size
   --------------------------------------------
@@ -23,8 +23,8 @@ Thresholds: 0 = exclusive partition; small <10%; medium 10%–25%; large >25%.
   discharged weapon (last year)          0
   healthcare employment                  0
   military overseas (federal pool)       0
-  professional drivers speeding (well-posed) 0
   diabetes insulin obese (overlap)       large
+  english teacher humanities (overlap)   large
   college STEM work (overlap)            medium
   actor waiter overlap (overlap)         small
   professional drivers speeding (overlap) small
@@ -139,31 +139,6 @@ WELL-POSED TWO-CAUSE VIGNETTES
   N: Did not receive the updated 2024-25 COVID-19 vaccine (includes
      never-vaccinated and people vaccinated in prior seasons only)
 
-================================================================================
-6. professional drivers speeding
-  intersection size: 0 (C and D exclusive under A)
-  partition (P(C|A)+P(D|A)=0.679; C and D exclusive under A)
---------------------------------------------------------------------------------
-       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
-     partition   0.024   0.534   0.145   0.027
-  A: Professional driver  C: Heavy and tractor-t…  D: Bus driver among A
-
-  universe: Employed adults in the United States (BLS OES May 2023 occupational
-            employment universe; ~161M employed)
-  T: Received a speeding ticket in the last 12 months: at least one moving
-     citation for exceeding the posted speed limit; warnings and parking tickets
-     do not count; employer-reported violations included if they resulted in a
-     formal citation
-
-  A: Professional driver: primary occupation is operating a motor vehicle for
-     pay (BLS SOC 53-3032/33 truck drivers plus 53-3051/52/53/54 bus shuttle
-     taxi chauffeur drivers; ~3.83M employees)
-  C: Heavy and tractor-trailer truck driver among A: primary SOC 53-3032 (GVWR >
-     26000 lb; mutually exclusive with D by single primary occupation)
-  D: Bus driver among A: primary SOC 53-3051 school or 53-3052 transit/intercity
-     (mutually exclusive with C by single primary occupation)
-  N: Employed adult whose primary occupation is not professional driving
-
 
 OVERLAP VIGNETTES (C and D may co-occur under A)
 
@@ -210,11 +185,11 @@ OVERLAP VIGNETTES (C and D may co-occur under A)
   underdetermined   0.258   0.180   0.660 0.200 *
   A: First-generation st…  C: STEM field of study…  D: Employed while enro…
       P(C∩D|A)     P(C∨D|A)
-  [0.000,0.180] [0.660,0.840]
-  joint (bound)
-  No published NPSAS:16 cross-tab of STEM major × employed among
-  first-generation students. Fréchet bounds from marginals: P(C∩D|A)∈[0, 0.18];
-  P(C∪D|A)∈[0.66, 0.84]. Point estimate would need microdata (NPSAS:16).
+         0.090        0.750
+  joint (estimated)
+  P(C∩D|A)=0.09 estimated as midpoint of Fréchet bounds [0, 0.18] from
+  marginals. P(C∪D|A)=P(C|A)+P(D|A)−P(C∩D|A)=0.75. Point estimate would need
+  NPSAS:16 microdata.
 
   universe: Undergraduate students enrolled at US postsecondary institutions
             (NPSAS:20 universe)
@@ -302,4 +277,37 @@ OVERLAP VIGNETTES (C and D may co-occur under A)
   D: Bus driver among professional drivers (SOC 53-3051 school plus 53-3052
      transit/intercity bus; excludes shuttle chauffeur and taxi)
   N: Employed adult whose primary occupation is not professional driving
+
+================================================================================
+5. english teacher humanities
+  intersection size: large (P(C∩D|A) / max(P(C|A),P(D|A)) ≈ 67%; small <10%,
+  medium 10%–25%, large >25%)
+  underdetermined; P(C|A)+P(D|A)=0.319 (C and D may overlap)
+  (* P(A|T) is the partition shortcut if C and D are wrongly treated as
+  disjoint)
+--------------------------------------------------------------------------------
+       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
+  underdetermined  0.0076   0.148   0.171 0.010 *
+  A: Public school teach…  C: Main teaching assig…  D: Bachelor's degree m…
+      P(C∩D|A)     P(C∨D|A)
+         0.114        0.205
+  joint (derived)
+  P(C∩D|A)=0.114 derived as P(C|A)·P(D|C,A) with P(D|C,A)=0.769 (76.9% of
+  English-assignment teachers have English bachelor's major; NCES 209.60
+  in-field rate). P(C∪D|A)=0.205.
+  Intersection/max(P(C|A),P(D|A))=0.114/0.171≈67% (large). Fréchet bounds:
+  P(C∩D|A)∈[0.007,0.148].
+
+  universe: Employed adults in the United States (~161 million; BLS occupational
+            employment universe)
+  T: Holds a master's degree or higher: master's education specialist or
+     doctorate (NCES Table 209.50 credential levels)
+
+  A: Public school teacher with main assignment in grades 9-12 (NCES NTPS
+     2020-21; ~1.23 million teachers)
+  C: Main teaching assignment is English/language arts among public grades 9-12
+     teachers (NCES Table 209.50 2020-21)
+  D: Bachelor's degree major field is English and language arts among public
+     grades 9-12 teachers (NCES Table 209.60 2020-21)
+  N: Employed adult who is not a public school teacher in grades 9-12
 

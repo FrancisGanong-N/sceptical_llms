@@ -43,11 +43,11 @@ OVERLAP VIGNETTES (C and D may co-occur under A)
   underdetermined   0.258   0.180   0.660 0.200 *
   A: First-generation st…  C: STEM field of study…  D: Employed while enro…
       P(C∩D|A)     P(C∨D|A)
-  [0.000,0.180] [0.660,0.840]
-  joint (bound)
-  No published NPSAS:16 cross-tab of STEM major × employed among
-  first-generation students. Fréchet bounds from marginals: P(C∩D|A)∈[0, 0.18];
-  P(C∪D|A)∈[0.66, 0.84]. Point estimate would need microdata (NPSAS:16).
+         0.090        0.750
+  joint (estimated)
+  P(C∩D|A)=0.09 estimated as midpoint of Fréchet bounds [0, 0.18] from
+  marginals. P(C∪D|A)=P(C|A)+P(D|A)−P(C∩D|A)=0.75. Point estimate would need
+  NPSAS:16 microdata.
 
   universe: Undergraduate students enrolled at US postsecondary institutions
             (NPSAS:20 universe)
@@ -63,35 +63,42 @@ OVERLAP VIGNETTES (C and D may co-occur under A)
   N: Continuing-generation student (at least one parent attended college)
 
 ================================================================================
-3. email mobile desktop
-  intersection size: medium (P(C∩D|A) / max(P(C|A),P(D|A)) ≈ 23%; small <10%,
+3. actor waiter overlap
+  intersection size: small (P(C∩D|A) / max(P(C|A),P(D|A)) ≈ 6%; small <10%,
   medium 10%–25%, large >25%)
-  underdetermined; P(C|A)+P(D|A)=1.100 (C and D may overlap)
+  underdetermined; P(C|A)+P(D|A)=0.333 (C and D may overlap)
   (* P(A|T) is the partition shortcut if C and D are wrongly treated as
   disjoint)
 --------------------------------------------------------------------------------
        overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
-  underdetermined   0.200   0.620   0.480 0.670 *
-  A: Gold loyalty-tier s…  C: Opened the latest p…  D: Opened the latest p…
+  underdetermined  0.0003   0.035   0.298 0.0004 *
+  A: Holds an actor occu…  C: Also holds a waiter…  D: Actor occupation is…
       P(C∩D|A)     P(C∨D|A)
-         0.143        0.957
-  joint (derived)
-  P(C∩D|A)≈0.143 derived as P(C|A)·P(D|C,A) with P(D|C,A)≈0.23 mobile openers
-  who reopen the same email on desktop (Campaign Monitor cross-device report;
-  Clean.email 2026 synthesis). P(C∪D|A)=P(C|A)+P(D|A)−P(C∩D|A)=0.957. Fréchet
-  minimum overlap is 0.10 because P(C|A)+P(D|A)>1; 0.143 is consistent. Not a
-  single-vendor Gold-tier cross-tab.
+         0.018        0.315
+  joint (estimated)
+  P(C∩D|A)≈0.018 is an estimate (not a published CPS cross-tab): waiter-primary
+  with actor-secondary, ~750-1250 workers, bracketed from NEA 2017 (~15% of
+  artist moonlighters primary in leisure/hospitality × actor share of secondary
+  artist jobs) and concurrent-week actor+waiter counts (~500-1600).
+  P(C∪D|A)=P(C|A)+P(D|A)−P(C∩D|A)=0.315. Fréchet bounds: P(C∩D|A)∈[0, 0.035].
+  Always/sometimes/never waiter while acting is not measured nationally; this
+  row uses CPS reference-week occupations only.
 
-  universe: Subscribers on a retail brand email list (scenario cohort; tier mix
-            illustrative)
-  T: Clicked a promotional link in the latest campaign (unique click)
+  universe: US labor force (CPS; employed and unemployed job-seekers; ~166.4
+            million in 2024 per NEA Indicator A.5)
+  T: Worked part-time at primary job in reference week (fewer than 35 hours per
+     week at main job; CPS)
 
-  A: Gold loyalty-tier subscriber
-  C: Opened the latest promotional email using a mobile email client among Gold
-     subscribers who opened (marginal; not mobile-only)
-  D: Opened the latest promotional email using a desktop email client among Gold
-     subscribers who opened (marginal; not desktop-only)
-  N: Standard or entry loyalty-tier subscriber
+  A: Holds an actor occupation in the CPS reference week (SOC 27-2011; primary
+     or secondary job slot; ~57000 nationwide per BLS OEWS 2024 and NEA CPS 2017
+     primary+secondary split)
+  C: Also holds a waiter/waitress occupation in the same reference week (SOC
+     35-3031; includes primary waiter with secondary actor and primary actor
+     with secondary waiter)
+  D: Actor occupation is the secondary job (primary occupation is something
+     else; ~30% of actor job slots per NEA Artists Statistical Portrait 2017
+     Table 1)
+  N: Labor-force member with no actor occupation in the reference week
 
 ================================================================================
 4. professional drivers speeding
@@ -128,4 +135,37 @@ OVERLAP VIGNETTES (C and D may co-occur under A)
   D: Bus driver among professional drivers (SOC 53-3051 school plus 53-3052
      transit/intercity bus; excludes shuttle chauffeur and taxi)
   N: Employed adult whose primary occupation is not professional driving
+
+================================================================================
+5. english teacher humanities
+  intersection size: large (P(C∩D|A) / max(P(C|A),P(D|A)) ≈ 67%; small <10%,
+  medium 10%–25%, large >25%)
+  underdetermined; P(C|A)+P(D|A)=0.319 (C and D may overlap)
+  (* P(A|T) is the partition shortcut if C and D are wrongly treated as
+  disjoint)
+--------------------------------------------------------------------------------
+       overlap    P(A)  P(C|A)  P(D|A)  P(A|T)
+  underdetermined  0.0076   0.148   0.171 0.010 *
+  A: Public school teach…  C: Main teaching assig…  D: Bachelor's degree m…
+      P(C∩D|A)     P(C∨D|A)
+         0.114        0.205
+  joint (derived)
+  P(C∩D|A)=0.114 derived as P(C|A)·P(D|C,A) with P(D|C,A)=0.769 (76.9% of
+  English-assignment teachers have English bachelor's major; NCES 209.60
+  in-field rate). P(C∪D|A)=0.205.
+  Intersection/max(P(C|A),P(D|A))=0.114/0.171≈67% (large). Fréchet bounds:
+  P(C∩D|A)∈[0.007,0.148].
+
+  universe: Employed adults in the United States (~161 million; BLS occupational
+            employment universe)
+  T: Holds a master's degree or higher: master's education specialist or
+     doctorate (NCES Table 209.50 credential levels)
+
+  A: Public school teacher with main assignment in grades 9-12 (NCES NTPS
+     2020-21; ~1.23 million teachers)
+  C: Main teaching assignment is English/language arts among public grades 9-12
+     teachers (NCES Table 209.50 2020-21)
+  D: Bachelor's degree major field is English and language arts among public
+     grades 9-12 teachers (NCES Table 209.60 2020-21)
+  N: Employed adult who is not a public school teacher in grades 9-12
 

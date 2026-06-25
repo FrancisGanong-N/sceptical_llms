@@ -31,14 +31,14 @@ class TestBenchmarkData:
 
     def test_load_benchmark(self):
         items = load_benchmark()
-        assert len(items) == 54
+        assert len(items) == 60
         response_types = {item.response_type for item in items.values()}
         assert response_types == {"open", "mc_numeric", "mc_full"}
 
     def test_prompts_dataframe(self):
         df = prompts_to_dataframe()
         assert list(df.columns) == ["example_id", "prompt"]
-        assert len(df) == 54
+        assert len(df) == 60
         assert "statistical consultant" in df.iloc[0]["prompt"]
 
     def test_prompts_dataframe_max_prompts(self):
@@ -207,7 +207,7 @@ class TestMergeResults:
         assert pivot_path.is_file()
         with out.open(encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
-        assert len(rows) == 54
+        assert len(rows) == 60
         assert "llm_response" in rows[0]
         assert "score_outcome" in rows[0]
         assert "model" in rows[0]
@@ -265,7 +265,7 @@ class TestScorePivot:
         assert set(pivot.index) == {"model-a", "model-b"}
         assert pivot.loc["model-a", "open_probs"] == round(1 / 9, 3)
         assert pivot.loc["model-b", "open_probs"] == round(1 / 9, 3)
-        assert len(merged) == 54 * 2
+        assert len(merged) == 60 * 2
 
 
 class TestTaskRegistration:

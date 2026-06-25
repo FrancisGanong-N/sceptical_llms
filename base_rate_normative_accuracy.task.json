@@ -1,6 +1,6 @@
 {
   "versionNumber": 1,
   "name": "base_rate_normative_accuracy",
-  "description": "Sceptical base-rate benchmark (54 conditions): fraction of parseable answers matching the overlap-aware Bayesian posterior. Higher is better.",
-  "definition": "@kbench.task(\n    name=\"base_rate_normative_accuracy\",\n    description=(\n        \"Sceptical base-rate benchmark (54 conditions): fraction of parseable answers \"\n        \"matching the overlap-aware Bayesian posterior. Higher is better.\"\n    ),\n)\ndef base_rate_normative_accuracy(llm) -> float:\n    _, score, _, _, _ = evaluate_base_rate_benchmark(llm)\n    return float(score.normative_accuracy)\n"
+  "description": "Sceptical base-rate benchmark (60 conditions): fraction of parseable answers matching the overlap-aware Bayesian posterior. Higher is better.",
+  "definition": "@kbench.task(\n    name=\"base_rate_normative_accuracy\",\n    description=(\n        \"Sceptical base-rate benchmark (60 conditions): fraction of parseable answers \"\n        \"matching the overlap-aware Bayesian posterior. Higher is better.\"\n    ),\n)\ndef base_rate_normative_accuracy(llm) -> float:\n    _, score, _, _, _ = evaluate_base_rate_benchmark(llm)\n    return float(score.normative_accuracy)\n"
 }

@@ -140,6 +140,14 @@ def _is_continuing_generation_student(text: str) -> bool:
     return _head_match(text).startswith("continuing-generation student")
 
 
+def _is_public_secondary_teacher(text: str) -> bool:
+    return _head_match(text).startswith("public school teacher with main assignment in grades 9-12")
+
+
+def _is_non_secondary_teacher_employed(text: str) -> bool:
+    return "not a public school teacher in grades 9-12" in _head_match(text)
+
+
 def _asks_given_t_only(v: Vignette) -> bool:
     """Vignettes where the natural question is P(A|T), conditioning on T alone."""
     return (
@@ -182,6 +190,10 @@ def _role_core(text: str) -> str:
         return "not vaccinated for 2024-25 COVID"
     if _is_other_employed_adult(text):
         return "other adult"
+    if _is_public_secondary_teacher(text):
+        return "public grades 9-12 teacher"
+    if _is_non_secondary_teacher_employed(text):
+        return "other employed adult"
     if _is_actor_holder(text):
         return "actor"
     if _is_non_actor_labor(text):
@@ -287,6 +299,10 @@ def _subtype_phrase(text: str) -> str:
         return "bus drivers"
     if re.search(r"heavy and tractor-trailer truck driver", head, re.I):
         return "heavy truck drivers"
+    if re.search(r"main teaching assignment is English", head, re.I):
+        return "teach English/language arts"
+    if re.search(r"bachelor.*major field is English", head, re.I):
+        return "majored in English/language arts"
     if re.search(r"^physician", head, re.I):
         return "physicians"
     if re.search(r"non-physician health care professional", head, re.I):
@@ -310,6 +326,8 @@ def _subtype_plural(text: str) -> str:
         return "STEM majors"
     if label == "work while enrolled":
         return "students who work while enrolled"
+    if label in {"teach English/language arts", "majored in English/language arts"}:
+        return f"those who {label}"
     if label == "also work as waiters":
         return "actors who also work as waiters"
     if label == "have a secondary acting job":
@@ -327,7 +345,18 @@ def _subtype_plural(text: str) -> str:
 
 def _subtype_some_phrase(text: str) -> str:
     label = _subtype_phrase(text)
-    if label.startswith(("live in ", "registered in ", "also work", "have a secondary", "major in", "work while")):
+    if label.startswith(
+        (
+            "live in ",
+            "registered in ",
+            "also work",
+            "have a secondary",
+            "major in",
+            "work while",
+            "teach ",
+            "majored in ",
+        )
+    ):
         return label
     if label.startswith(("use ", "have ")):
         return label
@@ -336,7 +365,18 @@ def _subtype_some_phrase(text: str) -> str:
 
 def _subtype_share_phrase(text: str, pct: float) -> str:
     label = _subtype_phrase(text)
-    if label.startswith(("live in ", "registered in ", "also work", "have a secondary", "major in", "work while")):
+    if label.startswith(
+        (
+            "live in ",
+            "registered in ",
+            "also work",
+            "have a secondary",
+            "major in",
+            "work while",
+            "teach ",
+            "majored in ",
+        )
+    ):
         return f"{_pct(pct)} {label}"
     if label.startswith(("use ", "have ")):
         return f"{_pct(pct)} {label}"
@@ -359,6 +399,8 @@ def _t_event(t: str) -> str:
         return "have worked overseas"
     if s.startswith("has "):
         return s.replace("has ", "have ", 1)
+    if s.startswith("holds "):
+        return s.replace("holds ", "hold ", 1)
     if s.startswith("works in"):
         return "work in a hospital"
     if s.startswith("worked part-time at primary job"):
@@ -378,6 +420,7 @@ def _t_event_in_question(t: str) -> str:
     singular = {
         "work in a hospital": "works in a hospital",
         "have worked overseas": "has worked overseas",
+        "hold a master's degree or higher": "holds a master's degree or higher",
     }
     return singular.get(event, event)
 
@@ -399,6 +442,8 @@ def _pool_phrase(a: str, n: str) -> str:
         return "vaccinated for 2024-25 COVID or not"
     if _is_professional_driver(a) and _is_other_employed_adult(n):
         return "a professional driver or other adult"
+    if _is_public_secondary_teacher(a) and _is_non_secondary_teacher_employed(n):
+        return "a public grades 9-12 teacher or other employed adult"
     if _is_actor_holder(a) and _is_non_actor_labor(n):
         return "an actor or a non-actor"
     if _is_health_care_professional(a) and _is_non_health_care_employed(n):
@@ -444,6 +489,16 @@ def _population_split_line(v: Vignette, *, with_probs: bool) -> str:
             )
         return (
             f"{setting}, some are professional drivers and the rest are other adults."
+        )
+    if _is_public_secondary_teacher(v.a) and _is_non_secondary_teacher_employed(v.n):
+        if with_probs:
+            return (
+                f"{setting}, {_pct(v.p_a)} are public grades 9-12 teachers "
+                f"and the remainder are other employed adults."
+            )
+        return (
+            f"{setting}, some are public grades 9-12 teachers "
+            f"and the rest are other employed adults."
         )
     if _is_actor_holder(v.a) and _is_non_actor_labor(v.n):
         if with_probs:
@@ -522,6 +577,8 @@ def _among_a_phrase(v: Vignette) -> str:
         return "those registered in California"
     if _is_diabetic_adult(v.a):
         return "those with diagnosed diabetes"
+    if _is_public_secondary_teacher(v.a):
+        return "public grades 9-12 teachers"
     return _role_plural(v.a)
 
 
@@ -530,6 +587,8 @@ def _among_n_phrase(v: Vignette) -> str:
         return "the unvaccinated"
     if _is_other_employed_adult(v.n):
         return "other adults"
+    if _is_non_secondary_teacher_employed(v.n):
+        return "other employed adults"
     if _is_non_actor_labor(v.n):
         return "non-actors"
     if _is_non_health_care_employed(v.n):

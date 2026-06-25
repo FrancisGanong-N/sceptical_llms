@@ -836,3 +836,96 @@ H. Provided information is obviously incorrect
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+english_teacher_humanities__overlap__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), 0.8% are public grades 9-12 teachers and the remainder are other employed adults.
+Among public grades 9-12 teachers, 15% teach English/language arts and 17% majored in English/language arts. An estimated 11% fall into both categories.
+Among those who teach English/language arts, 69% hold a master's degree or higher; among those who majored in English/language arts, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
+
+Given that a public grades 9-12 teacher or other employed adult holds a master's degree or higher, what is the probability the person was a public grades 9-12 teacher?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+english_teacher_humanities__overlap__open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), some are public grades 9-12 teachers and the rest are other employed adults.
+Among public grades 9-12 teachers, some teach English/language arts and some majored in English/language arts. An estimated 11% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a public grades 9-12 teacher or other employed adult and who holds a master's degree or higher was a public grades 9-12 teacher.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+english_teacher_humanities__overlap__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), 0.8% are public grades 9-12 teachers and the remainder are other employed adults.
+Among public grades 9-12 teachers, 15% teach English/language arts and 17% majored in English/language arts. An estimated 11% fall into both categories.
+Among those who teach English/language arts, 69% hold a master's degree or higher; among those who majored in English/language arts, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
+
+Given that a public grades 9-12 teacher or other employed adult holds a master's degree or higher, what is the probability the person was a public grades 9-12 teacher?
+
+A. About 1%
+B. About 0.5%
+C. About 0%
+D. About 0.6%
+E. About 0.52%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+english_teacher_humanities__overlap__mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), some are public grades 9-12 teachers and the rest are other employed adults.
+Among public grades 9-12 teachers, some teach English/language arts and some majored in English/language arts. An estimated 11% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a public grades 9-12 teacher or other employed adult and who holds a master's degree or higher was a public grades 9-12 teacher.
+
+A. About 0.5%
+B. About 0.6%
+C. About 1%
+D. About 0.52%
+E. About 0%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+english_teacher_humanities__overlap__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), 0.8% are public grades 9-12 teachers and the remainder are other employed adults.
+Among public grades 9-12 teachers, 15% teach English/language arts and 17% majored in English/language arts. An estimated 11% fall into both categories.
+Among those who teach English/language arts, 69% hold a master's degree or higher; among those who majored in English/language arts, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
+
+Given that a public grades 9-12 teacher or other employed adult holds a master's degree or higher, what is the probability the person was a public grades 9-12 teacher?
+
+A. About 0.5%
+B. About 0.6%
+C. About 0%
+D. About 0.52%
+E. About 1%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+english_teacher_humanities__overlap__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), some are public grades 9-12 teachers and the rest are other employed adults.
+Among public grades 9-12 teachers, some teach English/language arts and some majored in English/language arts. An estimated 11% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a public grades 9-12 teacher or other employed adult and who holds a master's degree or higher was a public grades 9-12 teacher.
+
+A. About 0.5%
+B. About 0.52%
+C. About 0.6%
+D. About 1%
+E. About 0%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
