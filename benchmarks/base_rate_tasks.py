@@ -37,16 +37,20 @@ def model_slug_from_llm(llm) -> str:
 # Kaggle Model Proxy reserves quota from max_output_tokens; keep this low for
 # two-line answers (percent/letter + confidence). Reasoning is disabled to
 # avoid large thinking-token reservations on google/* models.
-BASE_RATE_MAX_OUTPUT_TOKENS = 512
+BASE_RATE_MAX_OUTPUT_TOKENS = 128
 BASE_RATE_N_JOBS = 1
 _active_max_output_tokens = BASE_RATE_MAX_OUTPUT_TOKENS
 
 
 def _prompt_llm(llm, prompt: str) -> str:
+    token_cap = _active_max_output_tokens
     return llm.prompt(
         prompt,
         reasoning="none",
-        extra_api_params={"max_output_tokens": _active_max_output_tokens},
+        extra_api_params={
+            "max_output_tokens": token_cap,
+            "max_tokens": token_cap,
+        },
     )
 
 
