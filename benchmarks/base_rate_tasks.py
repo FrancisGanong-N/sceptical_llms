@@ -157,22 +157,21 @@ def _score_from_runs(runs: kbench.Runs):
     name="base_rate_normative_accuracy",
     description=(
         "Sceptical base-rate benchmark (60 conditions): fraction of parseable answers "
-        "matching the overlap-aware Bayesian posterior. Higher is better."
+        "matching scepticism_score_target. Higher is better."
     ),
 )
 def base_rate_normative_accuracy(llm) -> float:
     _, score, _, _, _ = evaluate_base_rate_benchmark(llm)
-    return float(score.normative_accuracy)
+    return float(score.accuracy)
 
 
 @kbench.task(
     name="base_rate_bias_index",
     description=(
-        "Sceptical base-rate benchmark: fraction of parseable answers choosing a lure "
-        "(numeric shortcut, meta scepticism, or wrong MC option). Higher indicates "
-        "more base-rate neglect or unwarranted scepticism."
+        "Sceptical base-rate benchmark: fraction of parseable answers that do not match "
+        "scepticism_score_target (1 - mean score). Higher indicates more scepticism errors."
     ),
 )
 def base_rate_bias_index(llm) -> float:
     _, score, _, _, _ = evaluate_base_rate_benchmark(llm)
-    return float(score.bias_index)
+    return 1.0 - float(score.accuracy)

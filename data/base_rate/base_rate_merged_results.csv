@@ -1,4 +1,4 @@
-example_id,vignette_name,problem_type,intersection_size,response_type,has_statistics,variant,prompt,well_posed,normative,p_c_and_d_given_a,normative_choice,normative_percent,normative_open,confidence_required,option_a_label,option_b_label,option_c_label,option_d_label,option_e_label,option_a_lure,option_b_lure,option_c_lure,option_d_lure,option_e_lure,option_f_label,option_g_label,option_h_label,option_f_lure,option_g_lure,option_h_lure,model,llm_response,reasoning,answer_line,confidence_line,parsed_answer_type,parsed_percent,parsed_choice,parsed_confidence,scoring_type,parseable,score_outcome,normative,biased,lure_matched
+example_id,vignette_name,problem_type,intersection_size,response_type,has_statistics,variant,prompt,well_posed,normative,p_c_and_d_given_a,normative_choice,normative_percent,normative_open,confidence_required,numeric_score_percent,numeric_score_choice,scepticism_required,scepticism_score_target,option_a_label,option_b_label,option_c_label,option_d_label,option_e_label,option_a_lure,option_b_lure,option_c_lure,option_d_lure,option_e_lure,option_f_label,option_g_label,option_h_label,option_f_lure,option_g_lure,option_h_lure,model,llm_response,reasoning,answer_line,confidence_line,parsed_answer_type,parsed_percent,parsed_choice,parsed_confidence,scoring_type,parseable,score_outcome,normative,biased,lure_matched
 actor_waiter_overlap__overlap__mc_full_no_probs,actor waiter overlap,overlap,small,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), some are actors and the rest are non-actors.
@@ -17,8 +17,8 @@ H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, E, F, G, or H).
-Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.018,B,0.03737,0.04%,true,About 0%,About 0.0%,About 0.00%,About 0.03%,About 0.04%,q_c*s_c × q_d*s_d (product; assumes independence),overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),partition shortcut (assumes P(C∩D|A)=0),Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,google/gemini-3-flash-preview,"E
-4",,E,4,mc_choice,,E,4,mc_full,true,biased,false,true,partition shortcut (assumes P(C∩D|A)=0)
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.018,B,0.03737,0.04%,true,0.03966,E,false,F|G|H,About 0%,About 0.0%,About 0.00%,About 0.03%,About 0.04%,q_c*s_c × q_d*s_d (product; assumes independence),overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),partition shortcut (assumes P(C∩D|A)=0),Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,google/gemini-2.5-flash,"D
+3",,D,3,mc_choice,,D,3,mc_full,true,biased,false,true,q_d*s_d only (second pathway; assumes partition)
 actor_waiter_overlap__overlap__mc_full_probs,actor waiter overlap,overlap,small,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.03% are actors and the remainder are non-actors.
@@ -38,8 +38,8 @@ H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, E, F, G, or H).
-Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.018,B,0.03737,0.04%,true,About 0%,About 0.0%,About 0.03%,About 0.04%,About 0.00%,q_c*s_c only (first pathway; assumes partition),overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c × q_d*s_d (product; assumes independence),Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,google/gemini-3-flash-preview,"D
-4",,D,4,mc_choice,,D,4,mc_full,true,biased,false,true,partition shortcut (assumes P(C∩D|A)=0)
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.018,B,0.03737,0.04%,true,0.03966,D,false,F|G|H,About 0%,About 0.0%,About 0.03%,About 0.04%,About 0.00%,q_c*s_c only (first pathway; assumes partition),overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c × q_d*s_d (product; assumes independence),Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,google/gemini-2.5-flash,"D
+5",,D,5,mc_choice,,D,5,mc_full,true,biased,false,true,partition shortcut (assumes P(C∩D|A)=0)
 actor_waiter_overlap__overlap__mc_numeric_no_probs,actor waiter overlap,overlap,small,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), some are actors and the rest are non-actors.
@@ -55,8 +55,8 @@ E. About 0.04%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
-Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.018,B,0.03737,0.04%,true,About 0%,About 0.0%,About 0.00%,About 0.03%,About 0.04%,q_c*s_c × q_d*s_d (product; assumes independence),overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),partition shortcut (assumes P(C∩D|A)=0),,,,,,,google/gemini-3-flash-preview,"E
-4",,E,4,mc_choice,,E,4,mc_numeric,true,biased,false,true,partition shortcut (assumes P(C∩D|A)=0)
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.018,B,0.03737,0.04%,true,0.03966,E,false,n/a,About 0%,About 0.0%,About 0.00%,About 0.03%,About 0.04%,q_c*s_c × q_d*s_d (product; assumes independence),overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),partition shortcut (assumes P(C∩D|A)=0),,,,,,,google/gemini-2.5-flash,"D
+4",,D,4,mc_choice,,D,4,mc_numeric,true,biased,false,true,q_d*s_d only (second pathway; assumes partition)
 actor_waiter_overlap__overlap__mc_numeric_probs,actor waiter overlap,overlap,small,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.03% are actors and the remainder are non-actors.
@@ -73,8 +73,8 @@ E. About 0.001%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
-Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.018,B,0.03737,0.04%,true,About 0%,About 0.0%,About 0.00%,About 0.03%,About 0.001%,partition shortcut (assumes P(C∩D|A)=0),overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),,,,,,,google/gemini-3-flash-preview,"D
-5",,D,5,mc_choice,,D,5,mc_numeric,true,biased,false,true,q_d*s_d only (second pathway; assumes partition)
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.018,B,0.03737,0.04%,true,0.03966,A,false,n/a,About 0%,About 0.0%,About 0.00%,About 0.03%,About 0.001%,partition shortcut (assumes P(C∩D|A)=0),overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),,,,,,,google/gemini-2.5-flash,"E
+5",,E,5,mc_choice,,E,5,mc_numeric,true,biased,false,true,q_c*s_c × q_d*s_d (product; assumes independence)
 actor_waiter_overlap__overlap__open_no_probs,actor waiter overlap,overlap,small,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), some are actors and the rest are non-actors.
@@ -84,8 +84,8 @@ Using knowledge of the world, please estimate the probability that a person who 
 
 Reply on two lines.
 Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
-Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,true,0.018,,0.03737,0.04%,true,,,,,,,,,,,,,,,,,google/gemini-3-flash-preview,"0.1%
-2",,0.1%,2,probability,0.1,,2,open,true,normative,true,false,
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.018,,0.03737,0.04%,true,0.03966,,false,meta,,,,,,,,,,,,,,,,,google/gemini-2.5-flash,"Less than 1 percent
+4",,Less than 1 percent,4,probability,1,,4,open,true,off_target,false,false,
 actor_waiter_overlap__overlap__open_probs,actor waiter overlap,overlap,small,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.03% are actors and the remainder are non-actors.
@@ -96,8 +96,8 @@ Given that an actor or a non-actor worked part-time at their primary job in the 
 
 Reply on two lines.
 Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
-Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.018,,0.03737,0.04%,true,,,,,,,,,,,,,,,,,google/gemini-3-flash-preview,"Insufficient information
-4",,Insufficient information,4,meta_insufficient,,,4,open,true,biased,false,true,insufficient
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.018,,0.03737,0.04%,true,0.03966,,false,meta,,,,,,,,,,,,,,,,,google/gemini-2.5-flash,"0.29%
+5",,0.29%,5,probability,0.29,,5,open,true,off_target,false,false,
 ca_trump_voter__mc_full_no_probs,CA Trump voter,well_posed,0,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, some are registered in California and the rest are registered elsewhere.
@@ -116,8 +116,8 @@ H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, E, F, G, or H).
-Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,false,0.0,B,9.918,9.9%,true,About 4.4%,About 9.9%,About 6%,About 9.91%,About 0.7%,q_c*s_c only (first pathway; assumes partition),overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c × q_d*s_d (product; assumes independence),Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,google/gemini-3-flash-preview,"C
-3",,C,3,mc_choice,,C,3,mc_full,true,biased,false,true,q_d*s_d only (second pathway; assumes partition)
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,false,0.0,B,9.918,9.9%,true,9.912,D,false,F|G|H,About 4.4%,About 9.9%,About 6%,About 9.91%,About 0.7%,q_c*s_c only (first pathway; assumes partition),overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c × q_d*s_d (product; assumes independence),Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,google/gemini-2.5-flash,"A
+4",,A,4,mc_choice,,A,4,mc_full,true,biased,false,true,q_c*s_c only (first pathway; assumes partition)
 ca_trump_voter__mc_full_probs,CA Trump voter,well_posed,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 13% are registered in California and the remainder are registered elsewhere.
@@ -137,8 +137,8 @@ H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, E, F, G, or H).
-Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,false,0.0,B,9.918,9.9%,true,About 4.4%,About 9.9%,About 6%,About 0.7%,About 9.91%,q_c*s_c only (first pathway; assumes partition),overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),partition shortcut (assumes P(C∩D|A)=0),Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,google/gemini-3-flash-preview,"E
-4",,E,4,mc_choice,,E,4,mc_full,true,biased,false,true,partition shortcut (assumes P(C∩D|A)=0)
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,true,0.0,B,9.918,9.9%,true,9.912,E,false,F|G|H,About 4.4%,About 9.9%,About 6%,About 0.7%,About 9.91%,q_c*s_c only (first pathway; assumes partition),overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),partition shortcut (assumes P(C∩D|A)=0),Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,google/gemini-2.5-flash,"B
+5",,B,5,mc_choice,,B,5,mc_full,true,normative,true,false,
 ca_trump_voter__mc_numeric_no_probs,CA Trump voter,well_posed,0,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, some are registered in California and the rest are registered elsewhere.
@@ -154,7 +154,7 @@ E. About 4.4%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
-Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,false,0.0,D,9.918,9.9%,true,About 0.7%,About 9.9%,About 6%,About 9.92%,About 4.4%,q_c*s_c × q_d*s_d (product; assumes independence),partition shortcut (assumes P(C∩D|A)=0),q_d*s_d only (second pathway; assumes partition),overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),,,,,,,google/gemini-3-flash-preview,"C
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,false,0.0,D,9.918,9.9%,true,9.912,B,false,n/a,About 0.7%,About 9.9%,About 6%,About 9.92%,About 4.4%,q_c*s_c × q_d*s_d (product; assumes independence),partition shortcut (assumes P(C∩D|A)=0),q_d*s_d only (second pathway; assumes partition),overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),,,,,,,google/gemini-2.5-flash,"C
 4",,C,4,mc_choice,,C,4,mc_numeric,true,biased,false,true,q_d*s_d only (second pathway; assumes partition)
 ca_trump_voter__mc_numeric_probs,CA Trump voter,well_posed,0,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -172,5 +172,127 @@ E. About 6%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
-Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,false,0.0,C,9.918,9.9%,true,About 0.7%,About 4.4%,About 9.9%,About 9.91%,About 6%,q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_d*s_d only (second pathway; assumes partition),,,,,,,google/gemini-3-flash-preview,"D
-5",,D,5,mc_choice,,D,5,mc_numeric,true,biased,false,true,partition shortcut (assumes P(C∩D|A)=0)
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,true,0.0,C,9.918,9.9%,true,9.912,D,false,n/a,About 0.7%,About 4.4%,About 9.9%,About 9.91%,About 6%,q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_d*s_d only (second pathway; assumes partition),,,,,,,google/gemini-2.5-flash,"C
+5",,C,5,mc_choice,,C,5,mc_numeric,true,normative,true,false,
+ca_trump_voter__open_no_probs,CA Trump voter,well_posed,0,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, some are registered in California and the rest are registered elsewhere.
+Among those registered in California, some are registered in southern California and some in other parts of the state.
+
+Using knowledge of the world, please estimate the probability that someone who voted for Donald Trump in the 2024 presidential election was registered in California.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,false,0.0,,9.918,9.9%,true,9.912,,false,meta,,,,,,,,,,,,,,,,,google/gemini-2.5-flash,"7%
+3",,7%,3,probability,7,,3,open,true,off_target,false,false,
+ca_trump_voter__open_probs,CA Trump voter,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 13% are registered in California and the remainder are registered elsewhere.
+Among those registered in California, 60% registered in southern California and 38% registered in other parts of the state.
+Among those registered in southern California, 27% voted for Donald Trump in the 2024 presidential election; among those registered in other parts of the state, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
+
+Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,true,0.0,,9.918,9.9%,true,9.912,,false,meta,,,,,,,,,,,,,,,,,google/gemini-2.5-flash,"10.6%
+5",,10.6%,5,probability,10.6,,5,open,true,normative,true,false,
+college_stem_work__overlap__mc_full_no_probs,college STEM work,overlap,medium,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), some are first-generation students.
+Among first-generation students, some major in STEM and some work while enrolled. An estimated 9% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a first-generation student or a continuing-generation student and who returned for a second year was a first-generation student.
+
+A. About 5.7%
+B. About 16%
+C. About 20%
+D. About 18%
+E. About 2.9%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.09,D,18.38,18%,true,20.22,C,true,C,About 5.7%,About 16%,About 20%,About 18%,About 2.9%,q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),partition shortcut (assumes P(C∩D|A)=0),overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,google/gemini-2.5-flash,"F
+1",,F,1,mc_choice,,F,1,mc_full,true,biased,false,true,insufficient information
+college_stem_work__overlap__mc_full_probs,college STEM work,overlap,medium,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), 26% are first-generation students and the remainder are continuing-generation students.
+Among first-generation students, 18% major in STEM and 66% work while enrolled. An estimated 9% fall into both categories.
+Among STEM majors, 85% returned for a second year; among students who work while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
+
+Given that a first-generation student or a continuing-generation student returned for a second year, what is the probability the person was a first-generation student?
+
+A. About 5.7%
+B. About 18%
+C. About 20%
+D. About 16%
+E. About 2.9%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.09,B,18.38,18%,true,20.22,C,true,C,About 5.7%,About 18%,About 20%,About 16%,About 2.9%,q_c*s_c only (first pathway; assumes partition),overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,google/gemini-2.5-flash,"C
+5",,C,5,mc_choice,,C,5,mc_full,true,biased,false,true,partition shortcut (assumes P(C∩D|A)=0)
+college_stem_work__overlap__mc_numeric_no_probs,college STEM work,overlap,medium,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), some are first-generation students.
+Among first-generation students, some major in STEM and some work while enrolled. An estimated 9% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a first-generation student or a continuing-generation student and who returned for a second year was a first-generation student.
+
+A. About 5.7%
+B. About 16%
+C. About 2.9%
+D. About 18%
+E. About 20%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.09,D,18.38,18%,true,20.22,E,true,E,About 5.7%,About 16%,About 2.9%,About 18%,About 20%,q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),,,,,,,google/gemini-2.5-flash,"B
+3",,B,3,mc_choice,,B,3,mc_numeric,true,biased,false,true,q_d*s_d only (second pathway; assumes partition)
+college_stem_work__overlap__mc_numeric_probs,college STEM work,overlap,medium,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), 26% are first-generation students and the remainder are continuing-generation students.
+Among first-generation students, 18% major in STEM and 66% work while enrolled. An estimated 9% fall into both categories.
+Among STEM majors, 85% returned for a second year; among students who work while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
+
+Given that a first-generation student or a continuing-generation student returned for a second year, what is the probability the person was a first-generation student?
+
+A. About 2.9%
+B. About 18%
+C. About 20%
+D. About 16%
+E. About 5.7%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.09,B,18.38,18%,true,20.22,C,true,C,About 2.9%,About 18%,About 20%,About 16%,About 5.7%,q_c*s_c × q_d*s_d (product; assumes independence),overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_d*s_d only (second pathway; assumes partition),q_c*s_c only (first pathway; assumes partition),,,,,,,google/gemini-2.5-flash,"C
+5",,C,5,mc_choice,,C,5,mc_numeric,true,biased,false,true,partition shortcut (assumes P(C∩D|A)=0)
+college_stem_work__overlap__open_no_probs,college STEM work,overlap,medium,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), some are first-generation students.
+Among first-generation students, some major in STEM and some work while enrolled. An estimated 9% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a first-generation student or a continuing-generation student and who returned for a second year was a first-generation student.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.09,,18.38,18%,true,20.22,,true,20.22,,,,,,,,,,,,,,,,,google/gemini-2.5-flash,"Insufficient information
+1",,Insufficient information,1,meta_insufficient,,,1,open,true,biased,false,true,insufficient
+college_stem_work__overlap__open_probs,college STEM work,overlap,medium,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), 26% are first-generation students and the remainder are continuing-generation students.
+Among first-generation students, 18% major in STEM and 66% work while enrolled. An estimated 9% fall into both categories.
+Among STEM majors, 85% returned for a second year; among students who work while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
+
+Given that a first-generation student or a continuing-generation student returned for a second year, what is the probability the person was a first-generation student?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,false,0.09,,18.38,18%,true,20.22,,true,20.22,,,,,,,,,,,,,,,,,google/gemini-2.5-flash,"28.9%
+5",,28.9%,5,probability,28.9,,5,open,true,off_target,false,false,

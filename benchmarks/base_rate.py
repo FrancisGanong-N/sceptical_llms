@@ -37,8 +37,6 @@ ParsedAnswerType = Literal[
     "mc_choice",
     "unparseable",
 ]
-ScoreOutcome = Literal["normative", "biased", "off_target", "unparseable"]
-
 STANDALONE_CHOICE_PATTERN = re.compile(r"(?<![A-Za-z])([A-H])(?![A-Za-z])")
 LABELED_CHOICE_PATTERN = re.compile(
     r"\b(?:option|choice|answer)\s*([A-H])\b",
@@ -68,10 +66,7 @@ MERGE_RESULT_COLUMNS = (
     "parsed_confidence",
     "scoring_type",
     "parseable",
-    "score_outcome",
-    "normative",
-    "biased",
-    "lure_matched",
+    "score",
 )
 
 RESPONSE_TYPE_ORDER = ("open", "mc_numeric", "mc_full")
@@ -81,14 +76,6 @@ CONDITION_COLUMN_ORDER = tuple(
     for response_type in RESPONSE_TYPE_ORDER
     for statistics in HAS_STATISTICS_ORDER
 )
-SCORE_OUTCOME_LABELS = {
-    "normative": "N",
-    "biased": "B",
-    "off_target": "O",
-    "unparseable": "?",
-}
-
-
 @dataclass(frozen=True)
 class BaseRateOption:
     letter: str
@@ -109,6 +96,7 @@ class BaseRateBenchmarkItem:
     variant: str
     normative_percent: float
     normative_choice: str
+    scepticism_score_target: str
     options: tuple[BaseRateOption, ...]
 
     @property
@@ -163,26 +151,24 @@ class ExampleScore:
     parsed_percent: float | None
     parsed_choice: str | None
     parsed_confidence: int | None
-    normative_percent: float
-    normative_choice: str
     parseable: bool
-    score_outcome: ScoreOutcome
-    normative: bool
-    biased: bool
-    lure_matched: str = ""
+    score: bool
     model: str = "unknown"
 
 
 @dataclass
 class BaseRateScore:
-    normative_accuracy: float
-    bias_index: float
+    accuracy: float
     parse_rate: float
     n_items: int
-    n_normative: int
-    n_biased: int
+    n_scored: int
     n_parseable: int
     examples: list[ExampleScore] = field(default_factory=list)
+
+    @property
+    def normative_accuracy(self) -> float:
+        """Backwards-compatible alias for mean scepticism-target score."""
+        return self.accuracy
 
 
 def _parse_percent_label(label: str) -> float | None:
@@ -334,12 +320,6 @@ def normative_tolerance_percent(target: float) -> float:
     )
 
 
-def _mc_numeric_sibling_id(example_id: str) -> str | None:
-    if "__open_" not in example_id:
-        return None
-    return example_id.replace("__open_", "__mc_numeric_", 1)
-
-
 def _item_from_row(row: dict[str, str]) -> BaseRateBenchmarkItem:
     options: list[BaseRateOption] = []
     for label_key, lure_key, letter in _option_columns():
@@ -365,6 +345,7 @@ def _item_from_row(row: dict[str, str]) -> BaseRateBenchmarkItem:
         variant=row["variant"].strip(),
         normative_percent=float(row["normative_percent"]),
         normative_choice=(row.get("normative_choice") or "").strip().upper(),
+        scepticism_score_target=(row.get("scepticism_score_target") or "").strip(),
         options=tuple(options),
     )
 
@@ -403,206 +384,124 @@ def prompts_to_dataframe(
     return pd.DataFrame(rows)
 
 
-def _open_lure_percents(
-    item: BaseRateBenchmarkItem, items: dict[str, BaseRateBenchmarkItem]
-) -> frozenset[float]:
-    sibling_id = _mc_numeric_sibling_id(item.example_id)
-    if sibling_id and sibling_id in items:
-        return items[sibling_id].lure_percents
-    return frozenset()
-
-
-def _closest_lure_percent(
-    percent: float, lure_percents: frozenset[float]
-) -> tuple[float | None, float | None]:
-    if not lure_percents:
-        return None, None
-    closest = min(lure_percents, key=lambda lure: abs(percent - lure))
-    return closest, abs(percent - closest)
-
-
-def _lure_name_for_percent(
-    percent: float,
+def matches_scepticism_target(
     item: BaseRateBenchmarkItem,
-    lure_percents: frozenset[float],
-) -> str:
-    closest, _ = _closest_lure_percent(percent, lure_percents)
-    if closest is None:
-        return ""
-    for option in item.options:
-        if option.percent is not None and matches_percent_target(option.percent, closest):
-            return option.lure
-    return f"lure_percent:{closest:g}"
+    parsed: ParsedResponse,
+) -> bool:
+    """True when the parsed answer matches ``scepticism_score_target`` for this item."""
+    target = item.scepticism_score_target.strip()
+    if not target:
+        return False
+
+    lowered = target.lower()
+    if lowered == "n/a":
+        if item.scoring_type == "mc_numeric":
+            return (
+                parsed.choice is not None
+                and parsed.choice in MC_NUMERIC_LETTERS
+                and parsed.choice == item.normative_choice
+            )
+        return parsed.answer_type != "unparseable"
+
+    if lowered == "meta":
+        return parsed.answer_type.startswith("meta_")
+
+    if "|" in target:
+        letters = frozenset(part.strip().upper() for part in target.split("|") if part.strip())
+        return parsed.choice is not None and parsed.choice in letters
+
+    if len(target) == 1 and target.upper() in MC_FULL_LETTERS:
+        return parsed.choice is not None and parsed.choice == target.upper()
+
+    try:
+        target_percent = float(target)
+    except ValueError:
+        return False
+
+    if parsed.percent is None:
+        return False
+    return matches_percent_target(
+        parsed.percent,
+        target_percent,
+        tolerance=normative_tolerance_percent(target_percent),
+    )
+
+
+def _example_score_base(
+    item: BaseRateBenchmarkItem,
+    parsed: ParsedResponse,
+) -> ExampleScore:
+    return ExampleScore(
+        example_id=item.example_id,
+        scoring_type=item.scoring_type,
+        answer_type=parsed.answer_type,
+        answer_line=parsed.answer_line,
+        confidence_line=parsed.confidence_line,
+        parsed_percent=parsed.percent,
+        parsed_choice=parsed.choice,
+        parsed_confidence=parsed.confidence,
+        parseable=False,
+        score=False,
+    )
+
+
+def _is_parseable(item: BaseRateBenchmarkItem, parsed: ParsedResponse) -> bool:
+    if item.scoring_type == "open":
+        return parsed.answer_type != "unparseable"
+    return parsed.choice is not None
 
 
 def score_open_example(
     item: BaseRateBenchmarkItem,
     parsed: ParsedResponse,
     *,
-    lure_percents: frozenset[float],
+    lure_percents: frozenset[float] | None = None,
 ) -> ExampleScore:
-    base = ExampleScore(
-        example_id=item.example_id,
-        scoring_type="open",
-        answer_type=parsed.answer_type,
-        answer_line=parsed.answer_line,
-        confidence_line=parsed.confidence_line,
-        parsed_percent=parsed.percent,
-        parsed_choice=None,
-        parsed_confidence=parsed.confidence,
-        normative_percent=item.normative_percent,
-        normative_choice="",
-        parseable=False,
-        score_outcome="unparseable",
-        normative=False,
-        biased=False,
-    )
+    del lure_percents  # kept for test/backwards-compatible call signature
+    scored = _example_score_base(item, parsed)
+    if not _is_parseable(item, parsed):
+        return scored
 
-    if parsed.answer_type == "unparseable":
-        return base
-
-    base.parseable = True
-    if parsed.answer_type.startswith("meta_"):
-        base.score_outcome = "biased"
-        base.biased = True
-        base.lure_matched = parsed.answer_type.removeprefix("meta_")
-        return base
-
-    if parsed.percent is None:
-        return base
-
-    normative = matches_percent_target(
-        parsed.percent,
-        item.normative_percent,
-        tolerance=normative_tolerance_percent(item.normative_percent),
-    )
-    closest_lure, lure_distance = _closest_lure_percent(parsed.percent, lure_percents)
-    biased = (
-        closest_lure is not None
-        and lure_distance is not None
-        and lure_distance <= LURE_TOLERANCE_PERCENT
-    )
-    if normative and biased:
-        dist_normative = abs(parsed.percent - item.normative_percent)
-        normative = dist_normative <= lure_distance
-        biased = lure_distance < dist_normative
-
-    if normative:
-        base.score_outcome = "normative"
-        base.normative = True
-        return base
-    if biased:
-        base.score_outcome = "biased"
-        base.biased = True
-        base.lure_matched = _lure_name_for_percent(parsed.percent, item, lure_percents)
-        return base
-
-    base.score_outcome = "off_target"
-    base.biased = False
-    return base
+    scored.parseable = True
+    scored.score = matches_scepticism_target(item, parsed)
+    return scored
 
 
 def score_mc_numeric_example(
     item: BaseRateBenchmarkItem,
     parsed: ParsedResponse,
 ) -> ExampleScore:
-    base = ExampleScore(
-        example_id=item.example_id,
-        scoring_type="mc_numeric",
-        answer_type=parsed.answer_type,
-        answer_line=parsed.answer_line,
-        confidence_line=parsed.confidence_line,
-        parsed_percent=None,
-        parsed_choice=parsed.choice,
-        parsed_confidence=parsed.confidence,
-        normative_percent=item.normative_percent,
-        normative_choice=item.normative_choice,
-        parseable=False,
-        score_outcome="unparseable",
-        normative=False,
-        biased=False,
-    )
-
+    scored = _example_score_base(item, parsed)
     if parsed.choice is None:
-        return base
+        return scored
 
-    base.parseable = True
-    if parsed.choice not in MC_NUMERIC_LETTERS:
-        base.score_outcome = "biased"
-        base.biased = True
-        base.lure_matched = "out_of_range_letter"
-        return base
-
-    if parsed.choice == item.normative_choice:
-        base.score_outcome = "normative"
-        base.normative = True
-        return base
-
-    option = item.option_by_letter.get(parsed.choice)
-    base.score_outcome = "biased"
-    base.biased = True
-    base.lure_matched = option.lure if option else parsed.choice
-    return base
+    scored.parseable = True
+    scored.score = matches_scepticism_target(item, parsed)
+    return scored
 
 
 def score_mc_full_example(
     item: BaseRateBenchmarkItem,
     parsed: ParsedResponse,
 ) -> ExampleScore:
-    base = ExampleScore(
-        example_id=item.example_id,
-        scoring_type="mc_full",
-        answer_type=parsed.answer_type,
-        answer_line=parsed.answer_line,
-        confidence_line=parsed.confidence_line,
-        parsed_percent=None,
-        parsed_choice=parsed.choice,
-        parsed_confidence=parsed.confidence,
-        normative_percent=item.normative_percent,
-        normative_choice=item.normative_choice,
-        parseable=False,
-        score_outcome="unparseable",
-        normative=False,
-        biased=False,
-    )
-
+    scored = _example_score_base(item, parsed)
     if parsed.choice is None:
-        return base
+        return scored
 
-    base.parseable = True
-    if parsed.choice not in MC_FULL_LETTERS:
-        base.score_outcome = "biased"
-        base.biased = True
-        base.lure_matched = "out_of_range_letter"
-        return base
-
-    if parsed.choice == item.normative_choice:
-        base.score_outcome = "normative"
-        base.normative = True
-        return base
-
-    option = item.option_by_letter.get(parsed.choice)
-    base.score_outcome = "biased"
-    base.biased = True
-    if parsed.choice in META_LETTERS:
-        base.lure_matched = option.lure if option else f"meta_{parsed.choice.lower()}"
-    else:
-        base.lure_matched = option.lure if option else parsed.choice
-    return base
+    scored.parseable = True
+    scored.score = matches_scepticism_target(item, parsed)
+    return scored
 
 
 def score_example(
     item: BaseRateBenchmarkItem,
     parsed: ParsedResponse,
     *,
-    items: dict[str, BaseRateBenchmarkItem],
+    items: dict[str, BaseRateBenchmarkItem] | None = None,
 ) -> ExampleScore:
+    del items
     if item.scoring_type == "open":
-        return score_open_example(
-            item,
-            parsed,
-            lure_percents=_open_lure_percents(item, items),
-        )
+        return score_open_example(item, parsed)
     if item.scoring_type == "mc_numeric":
         return score_mc_numeric_example(item, parsed)
     return score_mc_full_example(item, parsed)
@@ -625,8 +524,7 @@ def score_run_rows(
 ) -> BaseRateScore:
     items = items or load_benchmark()
     examples: list[ExampleScore] = []
-    n_normative = 0
-    n_biased = 0
+    n_scored = 0
     n_parseable = 0
 
     for row in sorted(
@@ -638,24 +536,20 @@ def score_run_rows(
         item = items[example_id]
         response = str(row.get("response") or "")
         parsed = parse_response(response, scoring_type=item.scoring_type)
-        scored = score_example(item, parsed, items=items)
+        scored = score_example(item, parsed)
         scored.model = model
         examples.append(scored)
         if scored.parseable:
             n_parseable += 1
-            if scored.normative:
-                n_normative += 1
-            if scored.biased:
-                n_biased += 1
+            if scored.score:
+                n_scored += 1
 
     n_items = len(run_rows)
     return BaseRateScore(
-        normative_accuracy=n_normative / n_parseable if n_parseable else 0.0,
-        bias_index=n_biased / n_parseable if n_parseable else 0.0,
+        accuracy=n_scored / n_parseable if n_parseable else 0.0,
         parse_rate=n_parseable / n_items if n_items else 0.0,
         n_items=n_items,
-        n_normative=n_normative,
-        n_biased=n_biased,
+        n_scored=n_scored,
         n_parseable=n_parseable,
         examples=examples,
     )
@@ -693,17 +587,8 @@ def condition_column(response_type: str, has_statistics: str) -> str:
     return f"{response_type}_{suffix}"
 
 
-def score_outcome_label(score_outcome: str) -> str:
-    return SCORE_OUTCOME_LABELS.get(score_outcome, score_outcome)
-
-
-def normative_binary_score(score_outcome: str) -> int:
-    """1 when the answer is normative, else 0."""
-    return 1 if score_outcome == "normative" else 0
-
-
 def score_pivot_dataframe(merged_rows: list[dict[str, str]]) -> "pd.DataFrame":
-    """Pivot merged rows: rows=models, columns=condition, values=mean normative score (0/1)."""
+    """Pivot merged rows: rows=models, columns=condition, values=mean score (0/1)."""
     import pandas as pd
 
     if not merged_rows:
@@ -714,12 +599,12 @@ def score_pivot_dataframe(merged_rows: list[dict[str, str]]) -> "pd.DataFrame":
         lambda row: condition_column(row["response_type"], row["has_statistics"]),
         axis=1,
     )
-    frame["score"] = frame["score_outcome"].map(normative_binary_score)
+    frame["score_value"] = frame["score"].map(lambda value: 1 if str(value).lower() == "true" else 0)
 
     pivot = (
-        frame.groupby(["model", "condition"], as_index=False)["score"]
+        frame.groupby(["model", "condition"], as_index=False)["score_value"]
         .mean()
-        .pivot(index="model", columns="condition", values="score")
+        .pivot(index="model", columns="condition", values="score_value")
     )
     pivot = pivot.reindex(columns=list(CONDITION_COLUMN_ORDER))
     pivot.index.name = "model"
@@ -727,7 +612,7 @@ def score_pivot_dataframe(merged_rows: list[dict[str, str]]) -> "pd.DataFrame":
 
 
 def print_score_pivots(merged_rows: list[dict[str, str]]) -> None:
-    """Print mean normative accuracy by model and condition (0/1 scores averaged)."""
+    """Print mean score by model and condition (0/1 scores averaged)."""
     pivot = score_pivot_dataframe(merged_rows)
     if pivot.empty:
         print("No merged results to pivot.", flush=True)
@@ -735,24 +620,20 @@ def print_score_pivots(merged_rows: list[dict[str, str]]) -> None:
 
     from collections import Counter
 
-    outcomes = Counter(row.get("score_outcome", "") for row in merged_rows)
+    scores = Counter(str(row.get("score", "")).lower() for row in merged_rows)
     print(
-        "\nNormative accuracy pivot (rows=model, columns=condition; "
-        "cell = mean of 0/1 normative scores across vignettes):",
+        "\nScore pivot (rows=model, columns=condition; "
+        "cell = mean of 0/1 scepticism-target scores across vignettes):",
         flush=True,
     )
     print(
-        "Outcome counts in merged rows:",
-        ", ".join(
-            f"{score_outcome_label(key)}={value}"
-            for key, value in sorted(outcomes.items())
-            if key
-        ),
+        "Score counts in merged rows:",
+        ", ".join(f"{key}={value}" for key, value in sorted(scores.items()) if key),
         flush=True,
     )
     print(pivot.to_string(na_rep=""), flush=True)
     overall = pivot.mean(axis=1).round(3)
-    print("\nOverall mean normative accuracy by model:", flush=True)
+    print("\nOverall mean score by model:", flush=True)
     for model, value in overall.items():
         print(f"  {model}: {value:.3f}", flush=True)
 
@@ -778,10 +659,7 @@ def example_score_to_merge_fields(scored: ExampleScore) -> dict[str, str]:
         else str(scored.parsed_confidence),
         "scoring_type": scored.scoring_type,
         "parseable": str(scored.parseable).lower(),
-        "score_outcome": scored.score_outcome,
-        "normative": str(scored.normative).lower(),
-        "biased": str(scored.biased).lower(),
-        "lure_matched": scored.lure_matched,
+        "score": str(scored.score).lower(),
     }
 
 

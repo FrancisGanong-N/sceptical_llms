@@ -6,6 +6,7 @@ from pathlib import Path
 from benchmarks.base_rate import (
     BENCHMARK_CSV,
     load_benchmark,
+    matches_scepticism_target,
     merge_run_results,
     parse_mc_choice,
     parse_response,
@@ -13,7 +14,6 @@ from benchmarks.base_rate import (
     score_base_rate_responses,
     score_example,
     score_mc_numeric_example,
-    score_open_example,
     score_pivot_dataframe,
     split_response_lines,
     write_merged_results_csv,
@@ -73,50 +73,49 @@ class TestParsing:
 
 
 class TestScoring:
-    def test_open_normative_percent(self):
+    def test_open_well_posed_percent_is_not_target(self):
         items = load_benchmark()
         example_id = "discharged_weapon_last_year__open_probs"
         score = score_base_rate_responses(
             {example_id: "91.2%\n4"},
             items=items,
         )
-        assert score.normative_accuracy == 1.0
-        assert score.bias_index == 0.0
-        assert score.examples[0].score_outcome == "normative"
+        assert score.accuracy == 0.0
+        assert score.examples[0].score is False
 
-    def test_open_meta_counts_as_bias(self):
+    def test_open_well_posed_meta_matches_target(self):
         items = load_benchmark()
         example_id = "discharged_weapon_last_year__open_probs"
         score = score_base_rate_responses(
             {example_id: "Insufficient information\n3"},
             items=items,
         )
-        assert score.normative_accuracy == 0.0
-        assert score.bias_index == 1.0
-        assert score.examples[0].lure_matched == "insufficient"
+        assert score.accuracy == 1.0
+        assert score.examples[0].score is True
 
-    def test_open_off_target_is_not_bias(self):
+    def test_open_off_target_is_not_scored(self):
         items = load_benchmark()
         example_id = "discharged_weapon_last_year__open_probs"
         item = items[example_id]
         parsed = parse_response("50%\n3", scoring_type="open")
-        scored = score_example(item, parsed, items=items)
+        scored = score_example(item, parsed)
         assert scored.parseable is True
-        assert scored.normative is False
-        assert scored.biased is False
-        assert scored.score_outcome == "off_target"
+        assert scored.score is False
 
-    def test_open_small_posterior_off_target_is_not_normative(self):
+    def test_open_overlap_partition_percent_matches_target(self):
+        items = load_benchmark()
+        example_id = "diabetes_insulin_obese__overlap__open_probs"
+        item = items[example_id]
+        parsed = parse_response(f"{item.scepticism_score_target}%\n2", scoring_type="open")
+        scored = score_example(item, parsed)
+        assert scored.score is True
+
+    def test_open_small_posterior_off_target_is_not_scored(self):
         items = load_benchmark()
         example_id = "actor_waiter_overlap__overlap__open_no_probs"
         parsed = parse_response("0.1%\n2", scoring_type="open")
-        scored = score_example(items[example_id], parsed, items=items)
-        assert scored.score_outcome == "off_target"
-
-    def test_actor_waiter_mc_sibling_has_lure_percents(self):
-        items = load_benchmark()
-        sibling = items["actor_waiter_overlap__overlap__mc_numeric_probs"]
-        assert sibling.lure_percents
+        scored = score_example(items[example_id], parsed)
+        assert scored.score is False
 
     def test_llm_extra_api_params(self):
         from benchmarks.base_rate_tasks import _llm_extra_api_params
@@ -126,7 +125,7 @@ class TestScoring:
         assert "max_output_tokens" not in params
         assert params["extra_body"]["max_output_tokens"] == 128
 
-    def test_mc_normative_choice(self):
+    def test_mc_numeric_normative_choice_when_target_na(self):
         items = load_benchmark()
         example_id = "discharged_weapon_last_year__mc_numeric_probs"
         normative = items[example_id].normative_choice
@@ -134,8 +133,7 @@ class TestScoring:
             {example_id: f"{normative}\n5"},
             items=items,
         )
-        assert score.normative_accuracy == 1.0
-        assert score.bias_index == 0.0
+        assert score.accuracy == 1.0
 
     def test_mc_lure_choice(self):
         items = load_benchmark()
@@ -146,29 +144,31 @@ class TestScoring:
             {example_id: f"{lure}\n5"},
             items=items,
         )
-        assert score.normative_accuracy == 0.0
-        assert score.bias_index == 1.0
+        assert score.accuracy == 0.0
 
-    def test_mc_numeric_rejects_meta_letter(self):
+    def test_mc_numeric_meta_letter_does_not_match_na_target(self):
         items = load_benchmark()
         example_id = "discharged_weapon_last_year__mc_numeric_probs"
         item = items[example_id]
         parsed = parse_response("F\n4", scoring_type="mc_numeric")
         scored = score_mc_numeric_example(item, parsed)
         assert scored.parseable is True
-        assert scored.biased is True
-        assert scored.lure_matched == "out_of_range_letter"
+        assert scored.score is False
 
-    def test_mc_full_meta_is_bias(self):
+    def test_mc_full_meta_matches_target(self):
         items = load_benchmark()
         example_id = "discharged_weapon_last_year__mc_full_probs"
         score = score_base_rate_responses(
             {example_id: "F\n4"},
             items=items,
         )
-        assert score.normative_accuracy == 0.0
-        assert score.bias_index == 1.0
-        assert score.examples[0].lure_matched == "insufficient information"
+        assert score.accuracy == 1.0
+
+    def test_matches_scepticism_target_meta(self):
+        items = load_benchmark()
+        item = items["discharged_weapon_last_year__open_probs"]
+        parsed = parse_response("Insufficient information\n1", scoring_type="open")
+        assert matches_scepticism_target(item, parsed) is True
 
 
 class TestMergeResults:
@@ -178,7 +178,7 @@ class TestMergeResults:
         run_rows = [
             {
                 "example_id": example_id,
-                "response": "91.2%\n4",
+                "response": "Insufficient information\n4",
                 "reasoning": "Used Bayes.",
                 "model": "test-model",
             }
@@ -187,20 +187,28 @@ class TestMergeResults:
         row = next(r for r in merged if r["example_id"] == example_id)
         assert row["vignette_name"] == "discharged weapon (last year)"
         assert row["response_type"] == "open"
-        assert row["llm_response"] == "91.2%\n4"
-        assert row["answer_line"] == "91.2%"
+        assert row["llm_response"] == "Insufficient information\n4"
+        assert row["answer_line"] == "Insufficient information"
         assert row["confidence_line"] == "4"
         assert row["reasoning"] == "Used Bayes."
-        assert row["normative"] == "true"
+        assert row["score"] == "true"
         assert row["scoring_type"] == "open"
         assert row["model"] == "test-model"
+        assert row["scepticism_score_target"] == "meta"
 
     def test_write_merged_results_csv(self, tmp_path: Path):
         items = load_benchmark()
         example_id = "discharged_weapon_last_year__open_probs"
         out = tmp_path / "merged.csv"
         merged_path, pivot_path = write_merged_results_csv(
-            [{"example_id": example_id, "response": "91.2%\n4", "reasoning": "", "model": "test-model"}],
+            [
+                {
+                    "example_id": example_id,
+                    "response": "Insufficient information\n4",
+                    "reasoning": "",
+                    "model": "test-model",
+                }
+            ],
             out,
             items=items,
         )
@@ -209,7 +217,7 @@ class TestMergeResults:
             rows = list(csv.DictReader(handle))
         assert len(rows) == 60
         assert "llm_response" in rows[0]
-        assert "score_outcome" in rows[0]
+        assert "score" in rows[0]
         assert "model" in rows[0]
 
 
@@ -221,7 +229,7 @@ class TestScorePivot:
             [
                 {
                     "example_id": example_id,
-                    "response": "91.2%\n4",
+                    "response": "Insufficient information\n4",
                     "reasoning": "",
                     "model": "model-a",
                 }
@@ -248,13 +256,13 @@ class TestScorePivot:
             [
                 {
                     "example_id": example_id,
-                    "response": "91.2%\n4",
+                    "response": "Insufficient information\n4",
                     "reasoning": "",
                     "model": "model-a",
                 },
                 {
                     "example_id": example_id,
-                    "response": "91.2%\n3",
+                    "response": "Insufficient information\n3",
                     "reasoning": "",
                     "model": "model-b",
                 },
