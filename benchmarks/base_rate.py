@@ -22,8 +22,7 @@ DEFAULT_MERGED_RESULTS_CSV = (
     / "merged_results.csv"
 )
 
-NORMATIVE_TOLERANCE_PERCENT = 1.0
-LURE_TOLERANCE_PERCENT = 0.05
+NUMERIC_SCORE_TOLERANCE_PERCENT = 0.5
 MC_NUMERIC_LETTERS = frozenset("ABCDE")
 MC_FULL_LETTERS = frozenset("ABCDEFGH")
 META_LETTERS = frozenset("FGH")
@@ -313,17 +312,15 @@ def parse_response(response: str, *, scoring_type: ScoringType) -> ParsedRespons
 def matches_percent_target(
     value: float,
     target: float,
-    tolerance: float = NORMATIVE_TOLERANCE_PERCENT,
+    tolerance: float = NUMERIC_SCORE_TOLERANCE_PERCENT,
 ) -> bool:
     return abs(value - target) <= tolerance
 
 
 def normative_tolerance_percent(target: float) -> float:
-    """Tighter band for tiny posteriors; ±1 pp for larger ones."""
-    return min(
-        NORMATIVE_TOLERANCE_PERCENT,
-        max(LURE_TOLERANCE_PERCENT, abs(target) * 0.5),
-    )
+    """±0.5 percentage-point band for numeric scepticism-target scoring."""
+    del target
+    return NUMERIC_SCORE_TOLERANCE_PERCENT
 
 
 def _rounded_mc_percent(percent: float) -> int:

@@ -102,18 +102,26 @@ class TestScoring:
         assert scored.parseable is True
         assert scored.score is False
 
-    def test_open_overlap_partition_percent_matches_target(self):
+    def test_open_overlap_partition_percent_within_half_percent(self):
         items = load_benchmark()
         example_id = "diabetes_insulin_obese__overlap__open_probs"
         item = items[example_id]
-        parsed = parse_response(f"{item.scepticism_score_target}%\n2", scoring_type="open")
-        scored = score_example(item, parsed)
-        assert scored.score is True
+        target = float(item.scepticism_score_target)
+        score = score_base_rate_responses(
+            {example_id: f"{target + 0.4}%\n2"},
+            items=items,
+        )
+        assert score.examples[0].score is True
+        miss = score_base_rate_responses(
+            {example_id: f"{target + 0.6}%\n2"},
+            items=items,
+        )
+        assert miss.examples[0].score is False
 
     def test_open_small_posterior_off_target_is_not_scored(self):
         items = load_benchmark()
         example_id = "actor_waiter_overlap__overlap__open_no_probs"
-        parsed = parse_response("0.1%\n2", scoring_type="open")
+        parsed = parse_response("2%\n2", scoring_type="open")
         scored = score_example(items[example_id], parsed)
         assert scored.score is False
 
