@@ -91,6 +91,7 @@ class TestScoring:
             items=items,
         )
         assert score.accuracy == 1.0
+        assert score.bias_index == 0.0
         assert score.examples[0].score is True
 
     def test_open_off_target_is_not_scored(self):

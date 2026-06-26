@@ -170,6 +170,11 @@ class BaseRateScore:
         """Backwards-compatible alias for mean scepticism-target score."""
         return self.accuracy
 
+    @property
+    def bias_index(self) -> float:
+        """Backwards-compatible alias for 1 - accuracy (non-matching parseable answers)."""
+        return 1.0 - self.accuracy
+
 
 def _parse_percent_label(label: str) -> float | None:
     if not label:
