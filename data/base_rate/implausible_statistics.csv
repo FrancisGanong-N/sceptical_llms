@@ -1,0 +1,51 @@
+vignette_name,problem_type,intersection_size,C,D,parameter,value,implausible_value
+CA Trump voter,well_posed,0,Other California registrant,Southern California registrant,P_A,0.13,0.8
+CA Trump voter,well_posed,0,Other California registrant,Southern California registrant,P_C_given_A,0.38,
+CA Trump voter,well_posed,0,Other California registrant,Southern California registrant,P_D_given_A,0.6,
+CA Trump voter,well_posed,0,Other California registrant,Southern California registrant,P_T_given_C,0.31,
+CA Trump voter,well_posed,0,Other California registrant,Southern California registrant,P_T_given_D,0.27,
+actor waiter overlap,overlap,small,Also holds a waiter/waitress occup…,Actor occupation is the secondary …,P_A,0.00034,
+actor waiter overlap,overlap,small,Also holds a waiter/waitress occup…,Actor occupation is the secondary …,P_C_given_A,0.035,0.7
+actor waiter overlap,overlap,small,Also holds a waiter/waitress occup…,Actor occupation is the secondary …,P_D_given_A,0.298,
+actor waiter overlap,overlap,small,Also holds a waiter/waitress occup…,Actor occupation is the secondary …,P_T_given_C,0.65,
+actor waiter overlap,overlap,small,Also holds a waiter/waitress occup…,Actor occupation is the secondary …,P_T_given_D,0.55,
+college STEM work,overlap,medium,STEM field of study among first-ge…,Employed while enrolled among firs…,P_A,0.258,
+college STEM work,overlap,medium,STEM field of study among first-ge…,Employed while enrolled among firs…,P_C_given_A,0.18,
+college STEM work,overlap,medium,STEM field of study among first-ge…,Employed while enrolled among firs…,P_D_given_A,0.66,0.2
+college STEM work,overlap,medium,STEM field of study among first-ge…,Employed while enrolled among firs…,P_T_given_C,0.85,
+college STEM work,overlap,medium,STEM field of study among first-ge…,Employed while enrolled among firs…,P_T_given_D,0.74,
+diabetes insulin obese,overlap,large,Uses insulin among adults with dia…,Has obesity among adults with diag…,P_A,0.113,
+diabetes insulin obese,overlap,large,Uses insulin among adults with dia…,Has obesity among adults with diag…,P_C_given_A,0.282,
+diabetes insulin obese,overlap,large,Uses insulin among adults with dia…,Has obesity among adults with diag…,P_D_given_A,0.471,
+diabetes insulin obese,overlap,large,Uses insulin among adults with dia…,Has obesity among adults with diag…,P_T_given_C,0.2,
+diabetes insulin obese,overlap,large,Uses insulin among adults with dia…,Has obesity among adults with diag…,P_T_given_D,0.16,0.8
+covid vaccine (blue/red),well_posed,0,Blue-state resident among A,Red-state resident among A,P_A,0.27,
+covid vaccine (blue/red),well_posed,0,Blue-state resident among A,Red-state resident among A,P_C_given_A,0.71,
+covid vaccine (blue/red),well_posed,0,Blue-state resident among A,Red-state resident among A,P_D_given_A,0.29,
+covid vaccine (blue/red),well_posed,0,Blue-state resident among A,Red-state resident among A,P_T_given_C,0.08,0.8
+covid vaccine (blue/red),well_posed,0,Blue-state resident among A,Red-state resident among A,P_T_given_D,0.1,
+professional drivers speeding,overlap,small,Heavy and tractor-trailer truck dr…,Bus driver among professional driv…,P_A,0.024,
+professional drivers speeding,overlap,small,Heavy and tractor-trailer truck dr…,Bus driver among professional driv…,P_C_given_A,0.534,
+professional drivers speeding,overlap,small,Heavy and tractor-trailer truck dr…,Bus driver among professional driv…,P_D_given_A,0.145,
+professional drivers speeding,overlap,small,Heavy and tractor-trailer truck dr…,Bus driver among professional driv…,P_T_given_C,0.16,0.9
+professional drivers speeding,overlap,small,Heavy and tractor-trailer truck dr…,Bus driver among professional driv…,P_T_given_D,0.1,
+english teacher humanities,overlap,large,Main teaching assignment is Englis…,Bachelor's degree major field is E…,P_A,0.0076,
+english teacher humanities,overlap,large,Main teaching assignment is Englis…,Bachelor's degree major field is E…,P_C_given_A,0.148,
+english teacher humanities,overlap,large,Main teaching assignment is Englis…,Bachelor's degree major field is E…,P_D_given_A,0.171,
+english teacher humanities,overlap,large,Main teaching assignment is Englis…,Bachelor's degree major field is E…,P_T_given_C,0.69,0.1
+english teacher humanities,overlap,large,Main teaching assignment is Englis…,Bachelor's degree major field is E…,P_T_given_D,0.55,
+discharged weapon (last year),well_posed,0,Urban police officer,Rural/small-jurisdiction police of…,P_A,0.44,0.1
+discharged weapon (last year),well_posed,0,Urban police officer,Rural/small-jurisdiction police of…,P_C_given_A,0.68,
+discharged weapon (last year),well_posed,0,Urban police officer,Rural/small-jurisdiction police of…,P_D_given_A,0.3,
+discharged weapon (last year),well_posed,0,Urban police officer,Rural/small-jurisdiction police of…,P_T_given_C,0.003,
+discharged weapon (last year),well_posed,0,Urban police officer,Rural/small-jurisdiction police of…,P_T_given_D,0.002,
+healthcare employment,well_posed,0,Physician,Non-physician health care professi…,P_A,0.11,
+healthcare employment,well_posed,0,Physician,Non-physician health care professi…,P_C_given_A,0.1,
+healthcare employment,well_posed,0,Physician,Non-physician health care professi…,P_D_given_A,0.9,
+healthcare employment,well_posed,0,Physician,Non-physician health care professi…,P_T_given_C,0.54,0.05
+healthcare employment,well_posed,0,Physician,Non-physician health care professi…,P_T_given_D,0.6,
+military overseas (federal pool),well_posed,0,US Army active-duty service member,US Navy or US Air Force active-dut…,P_A,0.4,
+military overseas (federal pool),well_posed,0,US Army active-duty service member,US Navy or US Air Force active-dut…,P_C_given_A,0.35,
+military overseas (federal pool),well_posed,0,US Army active-duty service member,US Navy or US Air Force active-dut…,P_D_given_A,0.51,
+military overseas (federal pool),well_posed,0,US Army active-duty service member,US Navy or US Air Force active-dut…,P_T_given_C,0.58,
+military overseas (federal pool),well_posed,0,US Army active-duty service member,US Navy or US Air Force active-dut…,P_T_given_D,0.64,0.98

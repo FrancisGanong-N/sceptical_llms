@@ -12,6 +12,7 @@ from scripts.build_base_rate_prompts import (
     _load_overlap,
     _load_two_cause,
     build_all,
+    scepticism_required,
     slug,
     write_csvs,
 )
@@ -272,6 +273,69 @@ class TestBenchmarkCsv:
         assert len(keys) == 60
 
 
+class TestScoringMeasures:
+    def test_scepticism_required_by_intersection_size(self):
+        _, _, benchmark = build_all()
+        by_vignette = {
+            row["vignette_name"]: row["scepticism_required"]
+            for row in benchmark
+            if row["variant"] == "open_probs"
+        }
+        assert by_vignette["discharged weapon (last year)"] == "false"
+        assert by_vignette["actor waiter overlap"] == "false"
+        assert by_vignette["college STEM work"] == "true"
+        assert by_vignette["diabetes insulin obese"] == "true"
+
+    def test_numeric_score_is_partition_shortcut(self):
+        _, items, _ = build_all()
+        discharged = next(
+            row
+            for row in items
+            if row["example_id"] == "discharged_weapon_last_year__mc_numeric_probs"
+        )
+        assert discharged["numeric_score_percent"]
+        assert discharged["numeric_score_choice"]
+        assert (
+            discharged["option_" + discharged["numeric_score_choice"].lower() + "_lure"]
+            == "partition shortcut (assumes P(C∩D|A)=0)"
+        )
+
+    def test_scepticism_score_target_when_required(self):
+        _, _, benchmark = build_all()
+        diabetes_open = next(
+            row
+            for row in benchmark
+            if row["example_id"] == "diabetes_insulin_obese__overlap__open_probs"
+        )
+        assert diabetes_open["scepticism_required"] == "true"
+        assert diabetes_open["scepticism_score_target"] == diabetes_open["numeric_score_percent"]
+
+    def test_scepticism_score_target_when_not_required(self):
+        _, _, benchmark = build_all()
+        by_id = {row["example_id"]: row for row in benchmark}
+        discharged = by_id["discharged_weapon_last_year__mc_full_probs"]
+        assert discharged["scepticism_required"] == "false"
+        assert discharged["scepticism_score_target"] == "F|G|H"
+
+        discharged_mc = by_id["discharged_weapon_last_year__mc_numeric_probs"]
+        assert discharged_mc["scepticism_score_target"] == "n/a"
+
+        discharged_open = by_id["discharged_weapon_last_year__open_probs"]
+        assert discharged_open["scepticism_score_target"] == "meta"
+
+    def test_implausible_vignette_requires_scepticism(self):
+        vignettes = _load_two_cause() + _load_overlap()
+        assert not scepticism_required(
+            next(v for v in vignettes if v.name == "discharged weapon (last year)")
+        )
+        assert not scepticism_required(
+            next(v for v in vignettes if v.name == "actor waiter overlap")
+        )
+        assert scepticism_required(
+            next(v for v in vignettes if v.name == "diabetes insulin obese")
+        )
+
+
 class TestWrittenCsvs:
     def test_files_exist_after_build(self):
         write_csvs()
@@ -290,6 +354,9 @@ class TestWrittenCsvs:
         assert "problem_type" in bench[0]
         assert "response_type" in bench[0]
         assert "has_statistics" in bench[0]
+        assert "numeric_score_percent" in bench[0]
+        assert "scepticism_required" in bench[0]
+        assert "scepticism_score_target" in bench[0]
 
 
 def _prompt_for(example_id: str) -> str:

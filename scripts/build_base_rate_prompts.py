@@ -1053,6 +1053,53 @@ def _problem_type(well_posed: bool) -> str:
     return "well_posed" if well_posed else "overlap"
 
 
+def scepticism_required(v: Vignette) -> bool:
+    """Whether the item expects scepticism (overlap-aware refusal or meta), not blind maths."""
+    if v.normative == "implausible":
+        return True
+    if v.intersection_size in {"medium", "large"}:
+        return True
+    return False
+
+
+def _partition_choice_letter(lures: dict[str, str]) -> str:
+    partition_lure = LURE_NAMES["partition"]
+    for letter in "ABCDE":
+        if lures[letter] == partition_lure:
+            return letter
+    raise ValueError("partition lure missing from MC options")
+
+
+def _scoring_measure_fields(
+    v: Vignette,
+    variant: str,
+    *,
+    partition_letter: str = "",
+) -> dict[str, str]:
+    """Numeric (uncritical partition) and scepticism scoring metadata for one variant."""
+    partition_percent = f"{v.posterior_partition() * 100:.4g}"
+    required = scepticism_required(v)
+
+    if required:
+        if variant.startswith("open"):
+            scepticism_target = partition_percent
+        else:
+            scepticism_target = partition_letter
+    elif variant.startswith("mc_numeric"):
+        scepticism_target = "n/a"
+    elif variant.startswith("mc_full"):
+        scepticism_target = "F|G|H"
+    else:
+        scepticism_target = "meta"
+
+    return {
+        "numeric_score_percent": partition_percent,
+        "numeric_score_choice": partition_letter if variant.startswith("mc") else "",
+        "scepticism_required": str(required).lower(),
+        "scepticism_score_target": scepticism_target,
+    }
+
+
 def build_prompt(v: Vignette, variant: str) -> tuple[str, dict[str, str]]:
     """Return prompt text and item metadata fields for one variant."""
     example_id = f"{v.example_prefix()}__{variant}"
@@ -1076,14 +1123,23 @@ def build_prompt(v: Vignette, variant: str) -> tuple[str, dict[str, str]]:
         item["normative_open"] = _pct(v.posterior_a())
         item["normative_percent"] = f"{v.posterior_a() * 100:.4g}"
         item["normative_choice"] = ""
+        item.update(_scoring_measure_fields(v, variant))
         prompt = body + _open_suffix(with_meta=True)
         return prompt, item
 
     labels, lures, numeric_letter = build_mc_options(v, example_id)
+    partition_letter = _partition_choice_letter(lures)
     item["response_type"] = "mc"
     item["normative_choice"] = numeric_letter
     item["normative_percent"] = f"{v.posterior_a() * 100:.4g}"
     item["normative_open"] = _pct(v.posterior_a())
+    item.update(
+        _scoring_measure_fields(
+            v,
+            variant,
+            partition_letter=partition_letter,
+        )
+    )
 
     lines = [body, ""]
     for letter in "ABCDE":
@@ -1165,6 +1221,10 @@ BENCHMARK_SCORING_FIELDS = (
     "normative_percent",
     "normative_open",
     "confidence_required",
+    "numeric_score_percent",
+    "numeric_score_choice",
+    "scepticism_required",
+    "scepticism_score_target",
     *[f"option_{c}_label" for c in "abcde"],
     *[f"option_{c}_lure" for c in "abcde"],
     *[f"option_{c}_label" for c in "fgh"],
@@ -1195,6 +1255,10 @@ def write_csvs() -> int:
         "normative_percent",
         "normative_open",
         "confidence_required",
+        "numeric_score_percent",
+        "numeric_score_choice",
+        "scepticism_required",
+        "scepticism_score_target",
         *[f"option_{c}_label" for c in "abcde"],
         *[f"option_{c}_lure" for c in "abcde"],
         *[f"option_{c}_label" for c in "fgh"],

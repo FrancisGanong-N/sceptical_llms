@@ -238,7 +238,7 @@ class TestScorePivot:
             "mc_full_no_probs",
         ]
         assert list(pivot.index) == ["model-a"]
-        assert pivot.loc["model-a", "open_probs"] == round(1 / 9, 3)
+        assert pivot.loc["model-a", "open_probs"] == round(1 / 10, 3)
         assert pivot.loc["model-a", "open_no_probs"] == 0.0
 
     def test_score_pivot_multiple_models(self):
@@ -263,8 +263,8 @@ class TestScorePivot:
         )
         pivot = score_pivot_dataframe(merged)
         assert set(pivot.index) == {"model-a", "model-b"}
-        assert pivot.loc["model-a", "open_probs"] == round(1 / 9, 3)
-        assert pivot.loc["model-b", "open_probs"] == round(1 / 9, 3)
+        assert pivot.loc["model-a", "open_probs"] == round(1 / 10, 3)
+        assert pivot.loc["model-b", "open_probs"] == round(1 / 10, 3)
         assert len(merged) == 60 * 2
 
 
