@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import re
 from pathlib import Path
 
 from scripts.build_base_rate_prompts import (
@@ -215,18 +216,55 @@ class TestBuildAll:
     def test_mc_numeric_labels_are_unique(self):
         _, items, _ = build_all()
         for row in items:
-            if not row["variant"].startswith("mc_"):
+            if not row["variant"].startswith("mc_numeric"):
                 continue
-            labels = [row[f"option_{c}_label"] for c in "abcde"]
+            labels = [
+                row[f"option_{letter}_label"]
+                for letter in "abcde"
+                if row.get(f"option_{letter}_label")
+            ]
             assert len(labels) == len(set(labels)), row["example_id"]
+            assert labels, row["example_id"]
+            for label in labels:
+                assert re.fullmatch(r"About \d+%", label), (row["example_id"], label)
 
-    def test_numeric_mc_has_five_options_only(self):
+    def test_mc_numeric_labels_round_to_whole_percents(self):
+        _, items, _ = build_all()
+        discharged = next(
+            row
+            for row in items
+            if row["example_id"] == "discharged_weapon_last_year__mc_numeric_probs"
+        )
+        labels = [
+            discharged[f"option_{letter}_label"]
+            for letter in "abcde"
+            if discharged.get(f"option_{letter}_label")
+        ]
+        assert "About 91%" in labels
+        assert not any("." in label for label in labels)
+
+    def test_actor_waiter_mc_numeric_dedupes_to_two_options(self):
+        _, items, _ = build_all()
+        actor = next(
+            row
+            for row in items
+            if row["example_id"] == "actor_waiter_overlap__overlap__mc_numeric_probs"
+        )
+        labels = [actor[f"option_{letter}_label"] for letter in "abcde" if actor.get(f"option_{letter}_label")]
+        assert labels == ["About 0%", "About 19%"]
+        assert not actor["option_c_label"]
+
+    def test_numeric_mc_has_one_to_five_options(self):
         _, items, _ = build_all()
         for row in items:
             if not row["variant"].startswith("mc_numeric"):
                 continue
-            assert row["option_a_label"]
-            assert row["option_e_label"]
+            labels = [
+                row[f"option_{letter}_label"]
+                for letter in "abcde"
+                if row.get(f"option_{letter}_label")
+            ]
+            assert 1 <= len(labels) <= 5, row["example_id"]
             assert not row.get("option_f_label")
 
     def test_full_mc_has_meta_options(self):
@@ -298,11 +336,11 @@ class TestScoringMeasures:
             if row["example_id"] == "discharged_weapon_last_year__mc_numeric_probs"
         )
         assert discharged["numeric_score_percent"]
-        assert discharged["numeric_score_choice"]
-        assert (
-            discharged["option_" + discharged["numeric_score_choice"].lower() + "_lure"]
-            == "partition shortcut (assumes P(C∩D|A)=0)"
-        )
+        choice = discharged["numeric_score_choice"]
+        assert choice
+        label = discharged[f"option_{choice.lower()}_label"]
+        rounded_partition = str(round(float(discharged["numeric_score_percent"])))
+        assert rounded_partition in label
 
     def test_scepticism_score_target_when_required(self):
         _, _, benchmark = build_all()

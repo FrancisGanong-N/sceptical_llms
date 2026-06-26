@@ -29,10 +29,10 @@ Among urban police officers, 0.3% discharged a weapon in the last year; among ru
 Given that a police officer or a security guard discharged a weapon in the last year, what is the probability the person was a police officer?
 
 A. About 91%
-B. About 91.2%
-C. About 0.5%
-D. About 70%
-E. About 89%
+B. About 0%
+C. About 70%
+D. About 89%
+E. About 44%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -44,11 +44,11 @@ Among police officers, some are urban police officers and some are rural/small-j
 
 Using knowledge of the world, please estimate the probability that a person who was a police officer or a security guard and who discharged a weapon in the last year was a police officer.
 
-A. About 70%
-B. About 0.5%
-C. About 91%
+A. About 91%
+B. About 70%
+C. About 0%
 D. About 89%
-E. About 91.2%
+E. About 44%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -61,17 +61,17 @@ Among urban police officers, 0.3% discharged a weapon in the last year; among ru
 
 Given that a police officer or a security guard discharged a weapon in the last year, what is the probability the person was a police officer?
 
-A. About 70%
-B. About 0.5%
-C. About 91%
+A. About 91%
+B. About 70%
+C. About 0%
 D. About 89%
-E. About 91.2%
+E. About 44%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 discharged_weapon_last_year__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -80,17 +80,17 @@ Among police officers, some are urban police officers and some are rural/small-j
 
 Using knowledge of the world, please estimate the probability that a person who was a police officer or a security guard and who discharged a weapon in the last year was a police officer.
 
-A. About 89%
-B. About 70%
-C. About 0.5%
-D. About 91%
-E. About 91.2%
+A. About 91%
+B. About 89%
+C. About 70%
+D. About 0%
+E. About 44%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 ca_trump_voter__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -121,11 +121,11 @@ Among those registered in southern California, 27% voted for Donald Trump in the
 
 Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
 
-A. About 0.7%
-B. About 4.4%
-C. About 9.9%
-D. About 9.91%
-E. About 6%
+A. About 10%
+B. About 1%
+C. About 4%
+D. About 6%
+E. About 13%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -137,11 +137,11 @@ Among those registered in California, some are registered in southern California
 
 Using knowledge of the world, please estimate the probability that someone who voted for Donald Trump in the 2024 presidential election was registered in California.
 
-A. About 0.7%
-B. About 9.9%
+A. About 10%
+B. About 1%
 C. About 6%
-D. About 9.92%
-E. About 4.4%
+D. About 4%
+E. About 13%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -154,17 +154,17 @@ Among those registered in southern California, 27% voted for Donald Trump in the
 
 Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
 
-A. About 4.4%
-B. About 9.9%
+A. About 10%
+B. About 4%
 C. About 6%
-D. About 0.7%
-E. About 9.91%
+D. About 1%
+E. About 13%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 ca_trump_voter__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -173,17 +173,17 @@ Among those registered in California, some are registered in southern California
 
 Using knowledge of the world, please estimate the probability that someone who voted for Donald Trump in the 2024 presidential election was registered in California.
 
-A. About 4.4%
-B. About 9.9%
+A. About 10%
+B. About 4%
 C. About 6%
-D. About 9.91%
-E. About 0.7%
+D. About 1%
+E. About 13%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 healthcare_employment__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -214,11 +214,11 @@ Among physicians, 54% work in a hospital; among non-physician health care profes
 
 Given that someone works in a hospital, what is the probability they were a health care professional?
 
-A. About 40%
-B. About 88%
+A. About 88%
+B. About 40%
 C. About 26%
 D. About 87%
-E. About 88.0%
+E. About 11%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -230,11 +230,11 @@ Among health care professionals, some are physicians and some are non-physician 
 
 Using knowledge of the world, please estimate the probability that someone who work in a hospital was a health care professional.
 
-A. About 26%
-B. About 40%
-C. About 88%
+A. About 88%
+B. About 26%
+C. About 40%
 D. About 87%
-E. About 88.0%
+E. About 11%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -247,17 +247,17 @@ Among physicians, 54% work in a hospital; among non-physician health care profes
 
 Given that someone works in a hospital, what is the probability they were a health care professional?
 
-A. About 40%
-B. About 88%
+A. About 88%
+B. About 40%
 C. About 26%
 D. About 87%
-E. About 88.0%
+E. About 11%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 healthcare_employment__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -267,16 +267,16 @@ Among health care professionals, some are physicians and some are non-physician 
 Using knowledge of the world, please estimate the probability that someone who work in a hospital was a health care professional.
 
 A. About 88%
-B. About 88.0%
-C. About 40%
-D. About 87%
-E. About 26%
+B. About 40%
+C. About 87%
+D. About 26%
+E. About 59%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 military_overseas_federal_pool__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -307,11 +307,11 @@ Among US Army active-duty service members, 58% have worked overseas; among US Na
 
 Given that an active-duty service member or a federal civilian employee has worked overseas, what is the probability the person was an active-duty service member?
 
-A. About 73%
-B. About 82%
-C. About 81.5%
-D. About 36%
-E. About 63%
+A. About 82%
+B. About 73%
+C. About 36%
+D. About 63%
+E. About 40%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -325,9 +325,9 @@ Using knowledge of the world, please estimate the probability that a person who 
 
 A. About 82%
 B. About 36%
-C. About 81.5%
-D. About 63%
-E. About 73%
+C. About 63%
+D. About 73%
+E. About 40%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -342,15 +342,15 @@ Given that an active-duty service member or a federal civilian employee has work
 
 A. About 82%
 B. About 36%
-C. About 81.5%
-D. About 63%
-E. About 73%
+C. About 63%
+D. About 73%
+E. About 53%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 military_overseas_federal_pool__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -359,17 +359,17 @@ Among active-duty service members, some are US Army active-duty service members 
 
 Using knowledge of the world, please estimate the probability that a person who was an active-duty service member or a federal civilian employee and who has worked overseas was an active-duty service member.
 
-A. About 36%
-B. About 82%
+A. About 82%
+B. About 36%
 C. About 63%
 D. About 73%
-E. About 81.5%
+E. About 53%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 covid_vaccine_blue_red__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -400,11 +400,11 @@ Among those who live in blue states, 8% had COVID-19 in the past 12 months; amon
 
 Given that someone had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
 
-A. About 7.6%
-B. About 20%
+A. About 20%
+B. About 8%
 C. About 14%
-D. About 19.6%
-E. About 0.5%
+D. About 0%
+E. About 27%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -416,11 +416,11 @@ Among the vaccinated, some live in blue states and some live in red states.
 
 Using knowledge of the world, please estimate the probability that someone who had COVID-19 in the past 12 months was vaccinated for 2024-25 COVID.
 
-A. About 0.5%
-B. About 14%
-C. About 20%
-D. About 19.6%
-E. About 7.6%
+A. About 20%
+B. About 0%
+C. About 14%
+D. About 8%
+E. About 9%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -434,16 +434,16 @@ Among those who live in blue states, 8% had COVID-19 in the past 12 months; amon
 Given that someone had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
 
 A. About 20%
-B. About 7.6%
-C. About 0.5%
-D. About 19.6%
-E. About 14%
+B. About 8%
+C. About 0%
+D. About 14%
+E. About 9%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 covid_vaccine_blue_red__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -453,16 +453,16 @@ Among the vaccinated, some live in blue states and some live in red states.
 Using knowledge of the world, please estimate the probability that someone who had COVID-19 in the past 12 months was vaccinated for 2024-25 COVID.
 
 A. About 20%
-B. About 7.6%
+B. About 8%
 C. About 14%
-D. About 19.6%
-E. About 0.5%
+D. About 0%
+E. About 27%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 diabetes_insulin_obese__overlap__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -493,10 +493,10 @@ Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who 
 
 Given that someone had hemoglobin A1c above 9.0%, what is the probability they have diagnosed diabetes?
 
-A. About 5.1%
-B. About 49%
-C. About 63%
-D. About 56%
+A. About 56%
+B. About 63%
+C. About 5%
+D. About 49%
 E. About 42%
 
 Which answer is closest? Reply on two lines.
@@ -509,9 +509,9 @@ Among those with diagnosed diabetes, some use insulin and some have obesity. An 
 
 Using knowledge of the world, please estimate the probability that someone who had hemoglobin A1c above 9.0% have diagnosed diabetes.
 
-A. About 5.1%
+A. About 56%
 B. About 63%
-C. About 56%
+C. About 5%
 D. About 49%
 E. About 42%
 
@@ -526,17 +526,17 @@ Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who 
 
 Given that someone had hemoglobin A1c above 9.0%, what is the probability they have diagnosed diabetes?
 
-A. About 42%
-B. About 49%
-C. About 5.1%
-D. About 63%
-E. About 56%
+A. About 56%
+B. About 63%
+C. About 42%
+D. About 49%
+E. About 5%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 diabetes_insulin_obese__overlap__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -545,17 +545,17 @@ Among those with diagnosed diabetes, some use insulin and some have obesity. An 
 
 Using knowledge of the world, please estimate the probability that someone who had hemoglobin A1c above 9.0% have diagnosed diabetes.
 
-A. About 49%
-B. About 56%
-C. About 63%
+A. About 56%
+B. About 63%
+C. About 49%
 D. About 42%
-E. About 5.1%
+E. About 5%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 college_stem_work__overlap__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -586,11 +586,11 @@ Among STEM majors, 85% returned for a second year; among students who work while
 
 Given that a first-generation student or a continuing-generation student returned for a second year, what is the probability the person was a first-generation student?
 
-A. About 2.9%
-B. About 18%
-C. About 20%
+A. About 18%
+B. About 20%
+C. About 3%
 D. About 16%
-E. About 5.7%
+E. About 6%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -602,11 +602,11 @@ Among first-generation students, some major in STEM and some work while enrolled
 
 Using knowledge of the world, please estimate the probability that a person who was a first-generation student or a continuing-generation student and who returned for a second year was a first-generation student.
 
-A. About 5.7%
-B. About 16%
-C. About 2.9%
-D. About 18%
-E. About 20%
+A. About 18%
+B. About 20%
+C. About 6%
+D. About 16%
+E. About 3%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -619,17 +619,17 @@ Among STEM majors, 85% returned for a second year; among students who work while
 
 Given that a first-generation student or a continuing-generation student returned for a second year, what is the probability the person was a first-generation student?
 
-A. About 5.7%
-B. About 18%
-C. About 20%
+A. About 18%
+B. About 20%
+C. About 6%
 D. About 16%
-E. About 2.9%
+E. About 3%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 college_stem_work__overlap__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -638,17 +638,17 @@ Among first-generation students, some major in STEM and some work while enrolled
 
 Using knowledge of the world, please estimate the probability that a person who was a first-generation student or a continuing-generation student and who returned for a second year was a first-generation student.
 
-A. About 5.7%
-B. About 16%
-C. About 20%
-D. About 18%
-E. About 2.9%
+A. About 18%
+B. About 20%
+C. About 6%
+D. About 16%
+E. About 3%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 actor_waiter_overlap__overlap__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -680,13 +680,10 @@ Among actors who also work as waiters, 65% worked part-time at their primary job
 Given that an actor or a non-actor worked part-time at their primary job in the reference week, what is the probability the person was an actor?
 
 A. About 0%
-B. About 0.0%
-C. About 0.00%
-D. About 0.03%
-E. About 0.001%
+B. About 19%
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, or E).
+Line 1: only the letter (A or B).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 actor_waiter_overlap__overlap__mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -696,13 +693,10 @@ Among actors, some also work as waiters and some have a secondary acting job. An
 Using knowledge of the world, please estimate the probability that a person who was an actor or a non-actor and who worked part-time at their primary job in the reference week was an actor.
 
 A. About 0%
-B. About 0.0%
-C. About 0.00%
-D. About 0.03%
-E. About 0.04%
+B. About 19%
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, or E).
+Line 1: only the letter (A or B).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 actor_waiter_overlap__overlap__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -713,16 +707,13 @@ Among actors who also work as waiters, 65% worked part-time at their primary job
 Given that an actor or a non-actor worked part-time at their primary job in the reference week, what is the probability the person was an actor?
 
 A. About 0%
-B. About 0.0%
-C. About 0.03%
-D. About 0.04%
-E. About 0.00%
+B. About 19%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A or B, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 actor_waiter_overlap__overlap__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -732,16 +723,13 @@ Among actors, some also work as waiters and some have a secondary acting job. An
 Using knowledge of the world, please estimate the probability that a person who was an actor or a non-actor and who worked part-time at their primary job in the reference week was an actor.
 
 A. About 0%
-B. About 0.0%
-C. About 0.00%
-D. About 0.03%
-E. About 0.04%
+B. About 19%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A or B, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 professional_drivers_speeding__overlap__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -772,14 +760,13 @@ Among heavy truck drivers, 16% received a speeding ticket in the last 12 months;
 
 Given that a professional driver or other adult received a speeding ticket in the last 12 months, what is the probability the person was a professional driver?
 
-A. About 0.4%
-B. About 2.7%
-C. About 2.6%
-D. About 2.3%
-E. About 0%
+A. About 3%
+B. About 0%
+C. About 2%
+D. About 10%
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, or E).
+Line 1: only the letter (A, B, C, or D).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 professional_drivers_speeding__overlap__mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -788,14 +775,13 @@ Among professional drivers, some are heavy truck drivers and some are bus driver
 
 Using knowledge of the world, please estimate the probability that a person who was a professional driver or other adult and who received a speeding ticket in the last 12 months was a professional driver.
 
-A. About 0%
-B. About 2.3%
-C. About 2.6%
-D. About 0.4%
-E. About 2.7%
+A. About 3%
+B. About 0%
+C. About 2%
+D. About 10%
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, or E).
+Line 1: only the letter (A, B, C, or D).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 professional_drivers_speeding__overlap__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -805,17 +791,16 @@ Among heavy truck drivers, 16% received a speeding ticket in the last 12 months;
 
 Given that a professional driver or other adult received a speeding ticket in the last 12 months, what is the probability the person was a professional driver?
 
-A. About 2.7%
-B. About 2.6%
-C. About 2.3%
-D. About 0.4%
-E. About 0%
+A. About 3%
+B. About 2%
+C. About 0%
+D. About 10%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, or D, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 professional_drivers_speeding__overlap__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -824,17 +809,16 @@ Among professional drivers, some are heavy truck drivers and some are bus driver
 
 Using knowledge of the world, please estimate the probability that a person who was a professional driver or other adult and who received a speeding ticket in the last 12 months was a professional driver.
 
-A. About 0%
-B. About 2.7%
-C. About 2.3%
-D. About 2.6%
-E. About 0.4%
+A. About 3%
+B. About 0%
+C. About 2%
+D. About 10%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, or D, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 english_teacher_humanities__overlap__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -866,13 +850,11 @@ Among those who teach English/language arts, 69% hold a master's degree or highe
 Given that a public grades 9-12 teacher or other employed adult holds a master's degree or higher, what is the probability the person was a public grades 9-12 teacher?
 
 A. About 1%
-B. About 0.5%
-C. About 0%
-D. About 0.6%
-E. About 0.52%
+B. About 0%
+C. About 20%
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, or E).
+Line 1: only the letter (A, B, or C).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 english_teacher_humanities__overlap__mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -881,14 +863,12 @@ Among public grades 9-12 teachers, some teach English/language arts and some maj
 
 Using knowledge of the world, please estimate the probability that a person who was a public grades 9-12 teacher or other employed adult and who holds a master's degree or higher was a public grades 9-12 teacher.
 
-A. About 0.5%
-B. About 0.6%
-C. About 1%
-D. About 0.52%
-E. About 0%
+A. About 1%
+B. About 0%
+C. About 20%
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, or E).
+Line 1: only the letter (A, B, or C).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 english_teacher_humanities__overlap__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -898,17 +878,15 @@ Among those who teach English/language arts, 69% hold a master's degree or highe
 
 Given that a public grades 9-12 teacher or other employed adult holds a master's degree or higher, what is the probability the person was a public grades 9-12 teacher?
 
-A. About 0.5%
-B. About 0.6%
-C. About 0%
-D. About 0.52%
-E. About 1%
+A. About 1%
+B. About 0%
+C. About 20%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, or C, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 english_teacher_humanities__overlap__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -917,17 +895,15 @@ Among public grades 9-12 teachers, some teach English/language arts and some maj
 
 Using knowledge of the world, please estimate the probability that a person who was a public grades 9-12 teacher or other employed adult and who holds a master's degree or higher was a public grades 9-12 teacher.
 
-A. About 0.5%
-B. About 0.52%
-C. About 0.6%
-D. About 1%
-E. About 0%
+A. About 1%
+B. About 0%
+C. About 20%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, or C, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 ca_trump_voter__implausible__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -958,11 +934,11 @@ Among those registered in southern California, 27% voted for Donald Trump in the
 
 Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
 
-A. About 63%
-B. About 17%
-C. About 75%
+A. About 75%
+B. About 63%
+C. About 17%
 D. About 55%
-E. About 74.7%
+E. About 28%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -978,7 +954,7 @@ A. About 75%
 B. About 17%
 C. About 63%
 D. About 55%
-E. About 74.7%
+E. About 80%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -995,13 +971,13 @@ A. About 75%
 B. About 17%
 C. About 63%
 D. About 55%
-E. About 74.7%
+E. About 28%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 ca_trump_voter__implausible__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1011,16 +987,16 @@ Among those registered in California, some are registered in southern California
 Using knowledge of the world, please estimate the probability that someone who voted for Donald Trump in the 2024 presidential election was registered in California.
 
 A. About 75%
-B. About 74.7%
-C. About 17%
-D. About 55%
-E. About 63%
+B. About 17%
+C. About 55%
+D. About 63%
+E. About 28%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 actor_waiter_overlap__overlap__implausible__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1052,13 +1028,10 @@ Among actors who also work as waiters, 65% worked part-time at their primary job
 Given that an actor or a non-actor worked part-time at their primary job in the reference week, what is the probability the person was an actor?
 
 A. About 0%
-B. About 0.1%
-C. About 0.10%
-D. About 0.0%
-E. About 0.13%
+B. About 62%
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, or E).
+Line 1: only the letter (A or B).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 actor_waiter_overlap__overlap__implausible__mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1068,13 +1041,10 @@ Among actors, some also work as waiters and some have a secondary acting job. An
 Using knowledge of the world, please estimate the probability that a person who was an actor or a non-actor and who worked part-time at their primary job in the reference week was an actor.
 
 A. About 0%
-B. About 0.1%
-C. About 0.0%
-D. About 0.10%
-E. About 0.13%
+B. About 62%
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, or E).
+Line 1: only the letter (A or B).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 actor_waiter_overlap__overlap__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1084,17 +1054,14 @@ Among actors who also work as waiters, 65% worked part-time at their primary job
 
 Given that an actor or a non-actor worked part-time at their primary job in the reference week, what is the probability the person was an actor?
 
-A. About 0.1%
-B. About 0.13%
-C. About 0%
-D. About 0.10%
-E. About 0.0%
+A. About 0%
+B. About 62%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A or B, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 actor_waiter_overlap__overlap__implausible__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1104,16 +1071,13 @@ Among actors, some also work as waiters and some have a secondary acting job. An
 Using knowledge of the world, please estimate the probability that a person who was an actor or a non-actor and who worked part-time at their primary job in the reference week was an actor.
 
 A. About 0%
-B. About 0.0%
-C. About 0.1%
-D. About 0.13%
-E. About 0.10%
+B. About 62%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A or B, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 college_stem_work__overlap__implausible__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1144,11 +1108,11 @@ Among STEM majors, 85% returned for a second year; among students who work while
 
 Given that a first-generation student or a continuing-generation student returned for a second year, what is the probability the person was a first-generation student?
 
-A. About 0.9%
-B. About 5.7%
-C. About 5.5%
-D. About 8.3%
-E. About 11%
+A. About 8%
+B. About 11%
+C. About 1%
+D. About 6%
+E. About 26%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -1160,11 +1124,11 @@ Among first-generation students, some major in STEM and some work while enrolled
 
 Using knowledge of the world, please estimate the probability that a person who was a first-generation student or a continuing-generation student and who returned for a second year was a first-generation student.
 
-A. About 0.9%
-B. About 8.3%
-C. About 5.7%
-D. About 11%
-E. About 5.5%
+A. About 8%
+B. About 11%
+C. About 1%
+D. About 6%
+E. About 26%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -1177,17 +1141,17 @@ Among STEM majors, 85% returned for a second year; among students who work while
 
 Given that a first-generation student or a continuing-generation student returned for a second year, what is the probability the person was a first-generation student?
 
-A. About 5.7%
-B. About 8.3%
-C. About 0.9%
-D. About 11%
-E. About 5.5%
+A. About 8%
+B. About 11%
+C. About 6%
+D. About 1%
+E. About 30%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 college_stem_work__overlap__implausible__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1196,17 +1160,17 @@ Among first-generation students, some major in STEM and some work while enrolled
 
 Using knowledge of the world, please estimate the probability that a person who was a first-generation student or a continuing-generation student and who returned for a second year was a first-generation student.
 
-A. About 5.7%
+A. About 8%
 B. About 11%
-C. About 0.9%
-D. About 5.5%
-E. About 8.3%
+C. About 6%
+D. About 1%
+E. About 26%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 covid_vaccine_blue_red__implausible__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1238,10 +1202,10 @@ Among those who live in blue states, 80% had COVID-19 in the past 12 months; amo
 Given that someone had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
 
 A. About 63%
-B. About 4.5%
-C. About 62.9%
-D. About 62%
-E. About 7.6%
+B. About 4%
+C. About 62%
+D. About 8%
+E. About 27%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -1253,11 +1217,11 @@ Among the vaccinated, some live in blue states and some live in red states.
 
 Using knowledge of the world, please estimate the probability that someone who had COVID-19 in the past 12 months was vaccinated for 2024-25 COVID.
 
-A. About 62%
-B. About 63%
-C. About 4.5%
-D. About 7.6%
-E. About 62.9%
+A. About 63%
+B. About 62%
+C. About 4%
+D. About 8%
+E. About 60%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -1270,17 +1234,17 @@ Among those who live in blue states, 80% had COVID-19 in the past 12 months; amo
 
 Given that someone had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
 
-A. About 4.5%
-B. About 63%
-C. About 62.9%
-D. About 7.6%
-E. About 62%
+A. About 63%
+B. About 4%
+C. About 8%
+D. About 62%
+E. About 27%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 covid_vaccine_blue_red__implausible__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1289,17 +1253,17 @@ Among the vaccinated, some live in blue states and some live in red states.
 
 Using knowledge of the world, please estimate the probability that someone who had COVID-19 in the past 12 months was vaccinated for 2024-25 COVID.
 
-A. About 62%
-B. About 63%
-C. About 7.6%
-D. About 4.5%
-E. About 62.9%
+A. About 63%
+B. About 62%
+C. About 8%
+D. About 4%
+E. About 27%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 diabetes_insulin_obese__overlap__implausible__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1330,11 +1294,11 @@ Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who 
 
 Given that someone had hemoglobin A1c above 9.0%, what is the probability they have diagnosed diabetes?
 
-A. About 42%
-B. About 83%
-C. About 21%
-D. About 85%
-E. About 81%
+A. About 81%
+B. About 85%
+C. About 42%
+D. About 83%
+E. About 21%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -1346,11 +1310,11 @@ Among those with diagnosed diabetes, some use insulin and some have obesity. An 
 
 Using knowledge of the world, please estimate the probability that someone who had hemoglobin A1c above 9.0% have diagnosed diabetes.
 
-A. About 21%
-B. About 83%
-C. About 42%
-D. About 81%
-E. About 85%
+A. About 81%
+B. About 85%
+C. About 21%
+D. About 83%
+E. About 42%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -1363,17 +1327,17 @@ Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who 
 
 Given that someone had hemoglobin A1c above 9.0%, what is the probability they have diagnosed diabetes?
 
-A. About 83%
-B. About 21%
-C. About 81%
-D. About 85%
+A. About 81%
+B. About 85%
+C. About 83%
+D. About 21%
 E. About 42%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 diabetes_insulin_obese__overlap__implausible__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1382,17 +1346,17 @@ Among those with diagnosed diabetes, some use insulin and some have obesity. An 
 
 Using knowledge of the world, please estimate the probability that someone who had hemoglobin A1c above 9.0% have diagnosed diabetes.
 
-A. About 42%
-B. About 83%
-C. About 85%
-D. About 81%
+A. About 81%
+B. About 85%
+C. About 42%
+D. About 83%
 E. About 21%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 discharged_weapon_last_year__implausible__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1423,11 +1387,11 @@ Among urban police officers, 0.3% discharged a weapon in the last year; among ru
 
 Given that a police officer or a security guard discharged a weapon in the last year, what is the probability the person was a police officer?
 
-A. About 0.1%
-B. About 59%
-C. About 59.5%
-D. About 25%
-E. About 53%
+A. About 59%
+B. About 0%
+C. About 25%
+D. About 53%
+E. About 10%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -1439,11 +1403,11 @@ Among police officers, some are urban police officers and some are rural/small-j
 
 Using knowledge of the world, please estimate the probability that a person who was a police officer or a security guard and who discharged a weapon in the last year was a police officer.
 
-A. About 25%
-B. About 59%
-C. About 59.5%
-D. About 0.1%
-E. About 53%
+A. About 59%
+B. About 25%
+C. About 0%
+D. About 53%
+E. About 10%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -1457,16 +1421,16 @@ Among urban police officers, 0.3% discharged a weapon in the last year; among ru
 Given that a police officer or a security guard discharged a weapon in the last year, what is the probability the person was a police officer?
 
 A. About 59%
-B. About 59.5%
-C. About 25%
-D. About 0.1%
-E. About 53%
+B. About 25%
+C. About 0%
+D. About 53%
+E. About 10%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 discharged_weapon_last_year__implausible__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1475,17 +1439,17 @@ Among police officers, some are urban police officers and some are rural/small-j
 
 Using knowledge of the world, please estimate the probability that a person who was a police officer or a security guard and who discharged a weapon in the last year was a police officer.
 
-A. About 53%
-B. About 25%
-C. About 59%
-D. About 59.5%
-E. About 0.1%
+A. About 59%
+B. About 53%
+C. About 25%
+D. About 0%
+E. About 10%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 english_teacher_humanities__overlap__implausible__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1517,13 +1481,11 @@ Among those who teach English/language arts, 10% hold a master's degree or highe
 Given that a public grades 9-12 teacher or other employed adult holds a master's degree or higher, what is the probability the person was a public grades 9-12 teacher?
 
 A. About 0%
-B. About 0.1%
-C. About 0.5%
-D. About 0.6%
-E. About 0.4%
+B. About 1%
+C. About 11%
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, or E).
+Line 1: only the letter (A, B, or C).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 english_teacher_humanities__overlap__implausible__mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1533,13 +1495,11 @@ Among public grades 9-12 teachers, some teach English/language arts and some maj
 Using knowledge of the world, please estimate the probability that a person who was a public grades 9-12 teacher or other employed adult and who holds a master's degree or higher was a public grades 9-12 teacher.
 
 A. About 0%
-B. About 0.1%
-C. About 0.6%
-D. About 0.5%
-E. About 0.4%
+B. About 1%
+C. About 11%
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, or E).
+Line 1: only the letter (A, B, or C).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 english_teacher_humanities__overlap__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1549,17 +1509,15 @@ Among those who teach English/language arts, 10% hold a master's degree or highe
 
 Given that a public grades 9-12 teacher or other employed adult holds a master's degree or higher, what is the probability the person was a public grades 9-12 teacher?
 
-A. About 0.1%
-B. About 0.4%
-C. About 0.6%
-D. About 0.5%
-E. About 0%
+A. About 0%
+B. About 1%
+C. About 11%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, or C, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 english_teacher_humanities__overlap__implausible__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1569,16 +1527,14 @@ Among public grades 9-12 teachers, some teach English/language arts and some maj
 Using knowledge of the world, please estimate the probability that a person who was a public grades 9-12 teacher or other employed adult and who holds a master's degree or higher was a public grades 9-12 teacher.
 
 A. About 0%
-B. About 0.4%
-C. About 0.6%
-D. About 0.5%
-E. About 0.1%
+B. About 1%
+C. About 11%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, or C, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 healthcare_employment__implausible__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1609,11 +1565,11 @@ Among physicians, 5% work in a hospital; among non-physician health care profess
 
 Given that someone works in a hospital, what is the probability they were a health care professional?
 
-A. About 3.2%
-B. About 87%
-C. About 5.8%
-D. About 87.0%
-E. About 87.1%
+A. About 87%
+B. About 3%
+C. About 6%
+D. About 55%
+E. About 11%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -1625,11 +1581,11 @@ Among health care professionals, some are physicians and some are non-physician 
 
 Using knowledge of the world, please estimate the probability that someone who work in a hospital was a health care professional.
 
-A. About 3.2%
-B. About 5.8%
-C. About 87%
-D. About 87.1%
-E. About 87.0%
+A. About 87%
+B. About 3%
+C. About 6%
+D. About 11%
+E. About 55%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -1643,16 +1599,16 @@ Among physicians, 5% work in a hospital; among non-physician health care profess
 Given that someone works in a hospital, what is the probability they were a health care professional?
 
 A. About 87%
-B. About 87.1%
-C. About 87.07%
-D. About 3.2%
-E. About 5.8%
+B. About 3%
+C. About 6%
+D. About 55%
+E. About 11%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 healthcare_employment__implausible__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1661,17 +1617,17 @@ Among health care professionals, some are physicians and some are non-physician 
 
 Using knowledge of the world, please estimate the probability that someone who work in a hospital was a health care professional.
 
-A. About 3.2%
-B. About 87%
-C. About 5.8%
-D. About 87.1%
-E. About 87.0%
+A. About 87%
+B. About 3%
+C. About 6%
+D. About 55%
+E. About 11%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 military_overseas_federal_pool__implausible__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1702,11 +1658,11 @@ Among US Army active-duty service members, 58% have worked overseas; among US Na
 
 Given that an active-duty service member or a federal civilian employee has worked overseas, what is the probability the person was an active-duty service member?
 
-A. About 46%
-B. About 63%
-C. About 81%
-D. About 85%
-E. About 85.4%
+A. About 85%
+B. About 46%
+C. About 63%
+D. About 81%
+E. About 40%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -1718,11 +1674,11 @@ Among active-duty service members, some are US Army active-duty service members 
 
 Using knowledge of the world, please estimate the probability that a person who was an active-duty service member or a federal civilian employee and who has worked overseas was an active-duty service member.
 
-A. About 81%
-B. About 85%
-C. About 85.4%
-D. About 63%
-E. About 46%
+A. About 85%
+B. About 81%
+C. About 63%
+D. About 46%
+E. About 40%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
@@ -1735,17 +1691,17 @@ Among US Army active-duty service members, 58% have worked overseas; among US Na
 
 Given that an active-duty service member or a federal civilian employee has worked overseas, what is the probability the person was an active-duty service member?
 
-A. About 63%
-B. About 85%
-C. About 85.4%
-D. About 46%
-E. About 81%
+A. About 85%
+B. About 63%
+C. About 46%
+D. About 81%
+E. About 40%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 military_overseas_federal_pool__implausible__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1756,15 +1712,15 @@ Using knowledge of the world, please estimate the probability that a person who 
 
 A. About 85%
 B. About 63%
-C. About 85.4%
-D. About 46%
-E. About 81%
+C. About 46%
+D. About 81%
+E. About 70%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 professional_drivers_speeding__overlap__implausible__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1795,14 +1751,13 @@ Among heavy truck drivers, 90% received a speeding ticket in the last 12 months;
 
 Given that a professional driver or other adult received a speeding ticket in the last 12 months, what is the probability the person was a professional driver?
 
-A. About 0.2%
-B. About 12%
-C. About 11.6%
-D. About 0.4%
-E. About 11.9%
+A. About 12%
+B. About 0%
+C. About 50%
+D. About 2%
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, or E).
+Line 1: only the letter (A, B, C, or D).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 professional_drivers_speeding__overlap__implausible__mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1811,14 +1766,13 @@ Among professional drivers, some are heavy truck drivers and some are bus driver
 
 Using knowledge of the world, please estimate the probability that a person who was a professional driver or other adult and who received a speeding ticket in the last 12 months was a professional driver.
 
-A. About 0.4%
-B. About 0.2%
-C. About 12%
-D. About 11.6%
-E. About 11.9%
+A. About 12%
+B. About 0%
+C. About 50%
+D. About 2%
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, or E).
+Line 1: only the letter (A, B, C, or D).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 professional_drivers_speeding__overlap__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1829,16 +1783,15 @@ Among heavy truck drivers, 90% received a speeding ticket in the last 12 months;
 Given that a professional driver or other adult received a speeding ticket in the last 12 months, what is the probability the person was a professional driver?
 
 A. About 12%
-B. About 11.9%
-C. About 11.92%
-D. About 0.4%
-E. About 0.2%
+B. About 0%
+C. About 2%
+D. About 50%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, or D, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 professional_drivers_speeding__overlap__implausible__mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
@@ -1847,15 +1800,14 @@ Among professional drivers, some are heavy truck drivers and some are bus driver
 
 Using knowledge of the world, please estimate the probability that a person who was a professional driver or other adult and who received a speeding ticket in the last 12 months was a professional driver.
 
-A. About 0.2%
-B. About 0.4%
-C. About 12%
-D. About 11.9%
-E. About 11.88%
+A. About 12%
+B. About 0%
+C. About 50%
+D. About 2%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A, B, C, D, E, F, G, or H).
+Line 1: only the letter (A, B, C, or D, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."

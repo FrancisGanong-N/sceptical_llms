@@ -744,17 +744,16 @@ def _pct(value: float) -> str:
     return f"{round(value * 100)}%"
 
 
-def _about_percent(percent: float) -> str:
-    if percent < 10 and abs(percent - round(percent)) > 0.05:
-        return f"About {percent:.1f}%"
-    return f"About {round(percent)}%"
+def _rounded_mc_percent(percent: float) -> int:
+    """Nearest whole percent for MC numeric option labels (percent is 0–100 scale)."""
+    return int(round(percent))
 
 
-def _mc_label(percent: float, *, decimals: int) -> str:
-    """MC option label; decimals>0 used to break ties among tiny percentages."""
-    if decimals == 0:
-        return _about_percent(percent)
-    return f"About {percent:.{decimals}f}%"
+def _mc_rounded_label(percent: float) -> str:
+    return f"About {_rounded_mc_percent(percent)}%"
+
+
+MC_SINGLE_ROUNDED_PERCENT_NOTICES: list[str] = []
 
 
 def _shuffle_keys(example_id: str, keys: tuple[str, ...]) -> tuple[str, ...]:
@@ -984,80 +983,70 @@ def _shuffle_lure_keys(example_id: str) -> tuple[str, ...]:
     return _shuffle_keys(example_id, LURE_KEYS)
 
 
-def _unique_mc_label(
-    percents: dict[str, float], key: str, used_labels: set[str]
-) -> str:
-    for decimals in range(4):
-        label = _mc_label(percents[key], decimals=decimals)
-        if label not in used_labels:
-            return label
-    return _mc_label(percents[key], decimals=3)
-
-
 def _select_mc_lure_keys(
     percents: dict[str, float], example_id: str
-) -> tuple[tuple[str, ...], tuple[str, ...]]:
-    """Pick five lure keys with unique MC labels; normative stays on its shuffled letter."""
+) -> tuple[tuple[str, ...], tuple[str, ...], bool]:
+    """Pick up to five lure keys with unique nearest-integer percent labels."""
     primary = list(_shuffle_lure_keys(example_id))
-    reserve = list(_shuffle_keys(example_id, RESERVE_LURE_KEYS))
-    norm_pos = primary.index("normative")
-    keys = list(primary)
+    reserve = [
+        key
+        for key in _shuffle_keys(example_id, RESERVE_LURE_KEYS)
+        if key not in primary
+    ]
+    ordered: list[str] = []
+    for key in ("normative", "partition"):
+        if key in percents and key not in ordered:
+            ordered.append(key)
+    for key in primary + reserve:
+        if key not in ordered:
+            ordered.append(key)
+
+    all_rounded = {_rounded_mc_percent(percents[key]) for key in ordered}
+    single_rounded_percent = len(all_rounded) == 1
+
+    seen_rounded: set[int] = set()
+    keys: list[str] = []
     labels: list[str] = []
-    for key in keys:
-        labels.append(_unique_mc_label(percents, key, set(labels)))
-
-    def substitute(victim_idx: int) -> None:
-        used_keys = {keys[i] for i in range(5) if i != victim_idx}
-        used_labels = {labels[i] for i in range(5) if i != victim_idx}
-        for key in reserve + [k for k in primary if k not in used_keys]:
-            if key == "normative":
-                continue
-            for decimals in range(4):
-                label = _mc_label(percents[key], decimals=decimals)
-                if label not in used_labels:
-                    keys[victim_idx] = key
-                    labels[victim_idx] = label
-                    return
-        raise ValueError(f"cannot deduplicate MC options for {example_id}")
-
-    while True:
-        victim: int | None = None
-        for i in range(5):
-            for j in range(i + 1, 5):
-                if labels[i] != labels[j]:
-                    continue
-                if i == norm_pos:
-                    victim = j
-                elif j == norm_pos:
-                    victim = i
-                else:
-                    victim = j
-                break
-            if victim is not None:
-                break
-        if victim is None:
+    for key in ordered:
+        rounded = _rounded_mc_percent(percents[key])
+        if rounded in seen_rounded:
+            continue
+        seen_rounded.add(rounded)
+        keys.append(key)
+        labels.append(_mc_rounded_label(percents[key]))
+        if len(keys) == 5:
             break
-        substitute(victim)
 
-    if keys[norm_pos] != "normative":
+    if "normative" not in keys:
         raise ValueError(f"normative missing from MC options for {example_id}")
 
-    return tuple(keys), tuple(labels)
+    return tuple(keys), tuple(labels), single_rounded_percent
 
 
-def build_mc_options(v: Vignette, example_id: str) -> tuple[dict[str, str], dict[str, str], str]:
-    """Return labels, lures, and normative letter for A–E numeric options."""
+def build_mc_options(
+    v: Vignette, example_id: str
+) -> tuple[dict[str, str], dict[str, str], str, tuple[str, ...]]:
+    """Return labels, lures, normative letter, and option letters for numeric MC choices."""
     percents = v.lure_percents()
-    keys, display_labels = _select_mc_lure_keys(percents, example_id)
+    keys, display_labels, single_rounded_percent = _select_mc_lure_keys(percents, example_id)
+    if single_rounded_percent:
+        notice = (
+            f"{example_id} ({v.name}): only one distinct rounded percent "
+            f"({display_labels[0]}) among numeric MC lure values"
+        )
+        MC_SINGLE_ROUNDED_PERCENT_NOTICES.append(notice)
+
+    option_letters = tuple("ABCDE"[: len(keys)])
     labels: dict[str, str] = {}
     lures: dict[str, str] = {}
     normative_letter = "A"
-    for letter, key, label in zip("ABCDE", keys, display_labels):
+    for letter, key, label in zip(option_letters, keys, display_labels):
         labels[letter] = label
         lures[letter] = LURE_NAMES[key]
         if key == "normative":
             normative_letter = letter
-    return labels, lures, normative_letter
+    partition_letter = _resolve_partition_letter(keys, option_letters, percents)
+    return labels, lures, normative_letter, option_letters, partition_letter
 
 
 def _open_suffix(*, with_meta: bool) -> str:
@@ -1072,6 +1061,14 @@ def _open_suffix(*, with_meta: bool) -> str:
         f"{meta_line}"
         "Line 2: your confidence from 1 (not confident) to 5 (very confident)."
     )
+
+
+def _mc_letter_list(letters: tuple[str, ...]) -> str:
+    if len(letters) == 1:
+        return letters[0]
+    if len(letters) == 2:
+        return f"{letters[0]} or {letters[1]}"
+    return ", ".join(letters[:-1]) + f", or {letters[-1]}"
 
 
 def _mc_suffix(*, letters: str) -> str:
@@ -1116,10 +1113,17 @@ def scepticism_required(v: Vignette) -> bool:
     return False
 
 
-def _partition_choice_letter(lures: dict[str, str]) -> str:
-    partition_lure = LURE_NAMES["partition"]
-    for letter in "ABCDE":
-        if lures[letter] == partition_lure:
+def _resolve_partition_letter(
+    keys: tuple[str, ...],
+    option_letters: tuple[str, ...],
+    percents: dict[str, float],
+) -> str:
+    for letter, key in zip(option_letters, keys):
+        if key == "partition":
+            return letter
+    partition_rounded = _rounded_mc_percent(percents["partition"])
+    for letter, key in zip(option_letters, keys):
+        if _rounded_mc_percent(percents[key]) == partition_rounded:
             return letter
     raise ValueError("partition lure missing from MC options")
 
@@ -1188,8 +1192,9 @@ def build_prompt(v: Vignette, variant: str) -> tuple[str, dict[str, str]]:
         prompt = body + _open_suffix(with_meta=True)
         return prompt, item
 
-    labels, lures, numeric_letter = build_mc_options(v, example_id)
-    partition_letter = _partition_choice_letter(lures)
+    labels, lures, numeric_letter, option_letters, partition_letter = build_mc_options(
+        v, example_id
+    )
     item["response_type"] = "mc"
     item["normative_choice"] = numeric_letter
     item["normative_percent"] = f"{v.posterior_a() * 100:.4g}"
@@ -1203,7 +1208,10 @@ def build_prompt(v: Vignette, variant: str) -> tuple[str, dict[str, str]]:
     )
 
     lines = [body, ""]
-    for letter in "ABCDE":
+    for letter in "abcde":
+        item[f"option_{letter}_label"] = ""
+        item[f"option_{letter}_lure"] = ""
+    for letter in option_letters:
         item[f"option_{letter.lower()}_label"] = labels[letter]
         item[f"option_{letter.lower()}_lure"] = lures[letter]
         lines.append(f"{letter}. {labels[letter]}")
@@ -1217,14 +1225,19 @@ def build_prompt(v: Vignette, variant: str) -> tuple[str, dict[str, str]]:
             item[f"option_{letter.lower()}_label"] = label
             item[f"option_{letter.lower()}_lure"] = lure
             lines.append(f"{letter}. {label}")
-        prompt = "\n".join(lines) + _mc_suffix(letters="A, B, C, D, E, F, G, or H")
+        numeric_letters = _mc_letter_list(option_letters)
+        prompt = (
+            "\n".join(lines)
+            + _mc_suffix(letters=f"{numeric_letters}, F, G, or H")
+        )
     else:
-        prompt = "\n".join(lines) + _mc_suffix(letters="A, B, C, D, or E")
+        prompt = "\n".join(lines) + _mc_suffix(letters=_mc_letter_list(option_letters))
 
     return prompt, item
 
 
 def build_all() -> tuple[list[dict[str, str]], list[dict[str, str]], list[dict[str, str]]]:
+    MC_SINGLE_ROUNDED_PERCENT_NOTICES.clear()
     vignettes = load_vignettes()
     prompts: list[dict[str, str]] = []
     items: list[dict[str, str]] = []
@@ -1298,6 +1311,15 @@ BENCHMARK_FIELDS = BENCHMARK_CONDITION_FIELDS + BENCHMARK_SCORING_FIELDS
 def write_csvs() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     prompts, items, benchmark = build_all()
+
+    if MC_SINGLE_ROUNDED_PERCENT_NOTICES:
+        print(
+            "\nNumeric MC prompts with only one distinct rounded percent "
+            f"({len(MC_SINGLE_ROUNDED_PERCENT_NOTICES)}):",
+            flush=True,
+        )
+        for notice in MC_SINGLE_ROUNDED_PERCENT_NOTICES:
+            print(f"  - {notice}", flush=True)
 
     with (OUT_DIR / "prompts.csv").open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=["example_id", "prompt"])
