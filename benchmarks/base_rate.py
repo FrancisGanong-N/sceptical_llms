@@ -97,6 +97,7 @@ class BaseRateBenchmarkItem:
     normative_percent: float
     normative_choice: str
     scepticism_score_target: str
+    normative_type: str
     options: tuple[BaseRateOption, ...]
 
     @property
@@ -351,6 +352,7 @@ def _item_from_row(row: dict[str, str]) -> BaseRateBenchmarkItem:
         normative_percent=float(row["normative_percent"]),
         normative_choice=(row.get("normative_choice") or "").strip().upper(),
         scepticism_score_target=(row.get("scepticism_score_target") or "").strip(),
+        normative_type=(row.get("normative") or "").strip(),
         options=tuple(options),
     )
 
@@ -401,6 +403,8 @@ def matches_scepticism_target(
     lowered = target.lower()
     if lowered == "n/a":
         if item.scoring_type == "mc_numeric":
+            if item.normative_type == "implausible":
+                return False
             return (
                 parsed.choice is not None
                 and parsed.choice in MC_NUMERIC_LETTERS

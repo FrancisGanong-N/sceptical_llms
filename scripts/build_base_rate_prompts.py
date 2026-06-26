@@ -6,13 +6,22 @@ from __future__ import annotations
 import csv
 import hashlib
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = ROOT / "data" / "base_rate"
 TWO_CAUSE_CSV = ROOT / "docs" / "base-rate-two-cause-vignettes.csv"
 OVERLAP_CSV = ROOT / "docs" / "base-rate-overlap-vignettes.csv"
+IMPLAUSIBLE_CSV = OUT_DIR / "implausible_statistics.csv"
+
+IMPLAUSIBLE_PARAM_FIELD = {
+    "P_A": "p_a",
+    "P_C_given_A": "q_c",
+    "P_D_given_A": "q_d",
+    "P_T_given_C": "s_c",
+    "P_T_given_D": "s_d",
+}
 
 META_F = "Insufficient information"
 META_G = "Inconsistent information"
@@ -857,7 +866,9 @@ class Vignette:
     def example_prefix(self) -> str:
         base = slug(self.name)
         if not self.well_posed:
-            return f"{base}__overlap"
+            base = f"{base}__overlap"
+        if self.normative == "implausible":
+            base = f"{base}__implausible"
         return base
 
 
@@ -924,6 +935,49 @@ def _load_overlap() -> list[Vignette]:
                 )
             )
     return rows
+
+
+def _implausible_value_is_set(value: str) -> bool:
+    text = (value or "").strip()
+    return bool(text) and text.upper() not in {"N/A", "NA"}
+
+
+def _apply_implausible_parameter(v: Vignette, parameter: str, value: float) -> Vignette:
+    field = IMPLAUSIBLE_PARAM_FIELD[parameter]
+    return replace(v, **{field: value, "normative": "implausible"})
+
+
+def _load_implausible() -> list[Vignette]:
+    if not IMPLAUSIBLE_CSV.is_file():
+        return []
+
+    edits: dict[str, tuple[str, float]] = {}
+    with IMPLAUSIBLE_CSV.open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            implausible_value = (row.get("implausible_value") or "").strip()
+            if not _implausible_value_is_set(implausible_value):
+                continue
+            name = row["vignette_name"].strip()
+            if name in edits:
+                raise ValueError(f"Multiple implausible values for vignette {name!r}")
+            edits[name] = (row["parameter"].strip(), float(implausible_value))
+
+    base_by_name = {v.name: v for v in _load_two_cause() + _load_overlap()}
+    missing = sorted(set(edits) - set(base_by_name))
+    if missing:
+        raise ValueError(f"Unknown vignette_name(s) in implausible_statistics.csv: {missing}")
+
+    vignettes: list[Vignette] = []
+    for name in sorted(edits):
+        parameter, value = edits[name]
+        if parameter not in IMPLAUSIBLE_PARAM_FIELD:
+            raise ValueError(f"Unknown parameter {parameter!r} for vignette {name!r}")
+        vignettes.append(_apply_implausible_parameter(base_by_name[name], parameter, value))
+    return vignettes
+
+
+def load_vignettes() -> list[Vignette]:
+    return _load_two_cause() + _load_overlap() + _load_implausible()
 
 
 def _shuffle_lure_keys(example_id: str) -> tuple[str, ...]:
@@ -1080,7 +1134,14 @@ def _scoring_measure_fields(
     partition_percent = f"{v.posterior_partition() * 100:.4g}"
     required = scepticism_required(v)
 
-    if required:
+    if v.normative == "implausible":
+        if variant.startswith("open"):
+            scepticism_target = "meta"
+        elif variant.startswith("mc_full"):
+            scepticism_target = "H"
+        else:
+            scepticism_target = "n/a"
+    elif required:
         if variant.startswith("open"):
             scepticism_target = partition_percent
         else:
@@ -1164,7 +1225,7 @@ def build_prompt(v: Vignette, variant: str) -> tuple[str, dict[str, str]]:
 
 
 def build_all() -> tuple[list[dict[str, str]], list[dict[str, str]], list[dict[str, str]]]:
-    vignettes = _load_two_cause() + _load_overlap()
+    vignettes = load_vignettes()
     prompts: list[dict[str, str]] = []
     items: list[dict[str, str]] = []
 
@@ -1281,7 +1342,7 @@ def write_csvs() -> int:
 
 def main() -> int:
     count = write_csvs()
-    vignette_count = len(_load_two_cause()) + len(_load_overlap())
+    vignette_count = len(load_vignettes())
     print(
         f"Wrote {count} prompts ({vignette_count} vignettes × {len(VARIANTS)} variants)"
     )

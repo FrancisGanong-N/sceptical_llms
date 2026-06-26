@@ -9,9 +9,11 @@ from scripts.build_base_rate_prompts import (
     META_F,
     OUT_DIR,
     VARIANTS,
+    _load_implausible,
     _load_overlap,
     _load_two_cause,
     build_all,
+    load_vignettes,
     scepticism_required,
     slug,
     write_csvs,
@@ -57,18 +59,22 @@ class TestVignetteLoad:
 class TestBuildAll:
     def test_variant_count(self):
         prompts, items, benchmark = build_all()
-        vignette_count = len(_load_two_cause()) + len(_load_overlap())
+        vignette_count = len(load_vignettes())
+        assert len(_load_implausible()) == 10
+        assert vignette_count == 20
         assert len(prompts) == vignette_count * len(VARIANTS)
         assert len(items) == len(prompts)
         assert len(benchmark) == len(prompts)
 
     def test_all_variants_present(self):
         _, items, _ = build_all()
-        by_slug: dict[str, set[str]] = {}
+        by_prefix: dict[str, set[str]] = {}
         for row in items:
-            by_slug.setdefault(row["vignette_name"], set()).add(row["variant"])
-        for name, variants in by_slug.items():
-            assert variants == set(VARIANTS), name
+            prefix = row["example_id"].rsplit("__", 1)[0]
+            by_prefix.setdefault(prefix, set()).add(row["variant"])
+        assert len(by_prefix) == 20
+        for prefix, variants in by_prefix.items():
+            assert variants == set(VARIANTS), prefix
 
     def test_ca_trump_posterior(self):
         v = next(v for v in _load_two_cause() if v.name == "CA Trump voter")
@@ -77,7 +83,7 @@ class TestBuildAll:
     def test_all_mc_full_normative_is_numeric_letter(self):
         _, items, _ = build_all()
         full = [r for r in items if r["variant"] == "mc_full_probs"]
-        assert len(full) == 10
+        assert len(full) == 20
         for row in full:
             assert row["normative_choice"] in "ABCDE"
             assert row["normative_open"] != META_F
@@ -226,7 +232,7 @@ class TestBuildAll:
     def test_full_mc_has_meta_options(self):
         _, items, _ = build_all()
         full = [r for r in items if r["variant"] == "mc_full_probs"]
-        assert len(full) == 10
+        assert len(full) == 20
         for row in full:
             assert row["option_f_label"] == META_F
             assert row["option_g_label"]
@@ -236,7 +242,7 @@ class TestBuildAll:
 class TestBenchmarkCsv:
     def test_condition_columns(self):
         _, _, benchmark = build_all()
-        assert len(benchmark) == 60
+        assert len(benchmark) == 120
         for row in benchmark:
             assert row["response_type"] in {"open", "mc_numeric", "mc_full"}
             assert row["has_statistics"] in {"true", "false"}
@@ -248,29 +254,27 @@ class TestBenchmarkCsv:
     def test_intersection_size_by_vignette(self):
         _, _, benchmark = build_all()
         by_key = {
-            (row["vignette_name"], row["problem_type"]): row["intersection_size"]
+            (row["vignette_name"], row["normative"], row["problem_type"]): row["intersection_size"]
             for row in benchmark
         }
-        assert len(by_key) == 10
-        assert by_key[("discharged weapon (last year)", "well_posed")] == "0"
-        assert by_key[("diabetes insulin obese", "overlap")] == "large"
-        assert by_key[("college STEM work", "overlap")] == "medium"
-        assert by_key[("actor waiter overlap", "overlap")] == "small"
-        assert by_key[("professional drivers speeding", "overlap")] == "small"
-        assert by_key[("english teacher humanities", "overlap")] == "large"
+        assert len(by_key) == 20
+        assert by_key[("discharged weapon (last year)", "well_posed", "well_posed")] == "0"
+        assert by_key[("discharged weapon (last year)", "implausible", "well_posed")] == "0"
+        assert by_key[("diabetes insulin obese", "underdetermined", "overlap")] == "large"
+        assert by_key[("diabetes insulin obese", "implausible", "overlap")] == "large"
 
     def test_factorial_uniqueness(self):
         _, _, benchmark = build_all()
         keys = {
             (
                 row["vignette_name"],
-                row["problem_type"],
+                row["normative"],
                 row["response_type"],
                 row["has_statistics"],
             )
             for row in benchmark
         }
-        assert len(keys) == 60
+        assert len(keys) == 120
 
 
 class TestScoringMeasures:
@@ -279,7 +283,7 @@ class TestScoringMeasures:
         by_vignette = {
             row["vignette_name"]: row["scepticism_required"]
             for row in benchmark
-            if row["variant"] == "open_probs"
+            if row["variant"] == "open_probs" and row["normative"] != "implausible"
         }
         assert by_vignette["discharged weapon (last year)"] == "false"
         assert by_vignette["actor waiter overlap"] == "false"
@@ -334,6 +338,30 @@ class TestScoringMeasures:
         assert scepticism_required(
             next(v for v in vignettes if v.name == "diabetes insulin obese")
         )
+        for v in _load_implausible():
+            assert v.normative == "implausible"
+            assert scepticism_required(v)
+
+
+class TestImplausibleVignettes:
+    def test_implausible_open_targets_meta(self):
+        _, _, benchmark = build_all()
+        implausible_open = [
+            row
+            for row in benchmark
+            if row["normative"] == "implausible" and row["variant"] == "open_probs"
+        ]
+        assert len(implausible_open) == 10
+        assert all(row["scepticism_score_target"] == "meta" for row in implausible_open)
+
+    def test_ca_trump_implausible_changes_p_a_in_prompt(self):
+        prompts, _, _ = build_all()
+        pmap = {row["example_id"]: row["prompt"] for row in prompts}
+        base = pmap[f"{slug('CA Trump voter')}__open_probs"]
+        implausible = pmap[f"{slug('CA Trump voter')}__implausible__open_probs"]
+        assert "13%" in base
+        assert "80%" in implausible
+        assert base.count("%") == implausible.count("%")
 
 
 class TestWrittenCsvs:
@@ -345,11 +373,11 @@ class TestWrittenCsvs:
 
         with (OUT_DIR / "prompts.csv").open(encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
-        assert len(rows) == 60
+        assert len(rows) == 120
 
         with (OUT_DIR / "benchmark.csv").open(encoding="utf-8") as handle:
             bench = list(csv.DictReader(handle))
-        assert len(bench) == 60
+        assert len(bench) == 120
         assert "intersection_size" in bench[0]
         assert "problem_type" in bench[0]
         assert "response_type" in bench[0]
