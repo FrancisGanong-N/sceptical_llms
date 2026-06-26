@@ -1128,14 +1128,23 @@ def _resolve_partition_letter(
     raise ValueError("partition lure missing from MC options")
 
 
+def _numeric_targets_round_same(v: Vignette) -> bool:
+    """True when overlap-aware and partition posteriors round to the same MC percent."""
+    normative_percent = v.posterior_a() * 100
+    partition_percent = v.posterior_partition() * 100
+    return _rounded_mc_percent(normative_percent) == _rounded_mc_percent(partition_percent)
+
+
 def _scoring_measure_fields(
     v: Vignette,
     variant: str,
     *,
     partition_letter: str = "",
+    normative_letter: str = "",
 ) -> dict[str, str]:
     """Numeric (uncritical partition) and scepticism scoring metadata for one variant."""
     partition_percent = f"{v.posterior_partition() * 100:.4g}"
+    normative_percent = f"{v.posterior_a() * 100:.4g}"
     required = scepticism_required(v)
 
     if v.normative == "implausible":
@@ -1148,8 +1157,19 @@ def _scoring_measure_fields(
     elif required:
         if variant.startswith("open"):
             scepticism_target = partition_percent
+        elif variant.startswith("mc_full"):
+            scepticism_target = "F|G|H"
         else:
             scepticism_target = partition_letter
+    elif _numeric_targets_round_same(v):
+        if variant.startswith("open"):
+            scepticism_target = normative_percent
+        elif variant.startswith("mc_numeric"):
+            scepticism_target = "n/a"
+        elif variant.startswith("mc_full"):
+            scepticism_target = normative_letter
+        else:
+            scepticism_target = normative_percent
     elif variant.startswith("mc_numeric"):
         scepticism_target = "n/a"
     elif variant.startswith("mc_full"):
@@ -1204,6 +1224,7 @@ def build_prompt(v: Vignette, variant: str) -> tuple[str, dict[str, str]]:
             v,
             variant,
             partition_letter=partition_letter,
+            normative_letter=numeric_letter,
         )
     )
 

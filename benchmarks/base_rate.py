@@ -326,6 +326,10 @@ def normative_tolerance_percent(target: float) -> float:
     )
 
 
+def _rounded_mc_percent(percent: float) -> int:
+    return int(round(percent))
+
+
 def _item_from_row(row: dict[str, str]) -> BaseRateBenchmarkItem:
     options: list[BaseRateOption] = []
     for label_key, lure_key, letter in _option_columns():
@@ -405,11 +409,22 @@ def matches_scepticism_target(
         if item.scoring_type == "mc_numeric":
             if item.normative_type == "implausible":
                 return False
-            return (
-                parsed.choice is not None
-                and parsed.choice in MC_NUMERIC_LETTERS
-                and parsed.choice == item.normative_choice
-            )
+            if parsed.choice is None or parsed.choice not in MC_NUMERIC_LETTERS:
+                return False
+            if parsed.choice == item.normative_choice:
+                return True
+            choice_option = item.option_by_letter.get(parsed.choice)
+            normative_option = item.option_by_letter.get(item.normative_choice)
+            if (
+                choice_option is not None
+                and normative_option is not None
+                and choice_option.percent is not None
+                and normative_option.percent is not None
+                and _rounded_mc_percent(choice_option.percent)
+                == _rounded_mc_percent(normative_option.percent)
+            ):
+                return True
+            return False
         return parsed.answer_type != "unparseable"
 
     if lowered == "meta":

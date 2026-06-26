@@ -344,26 +344,26 @@ class TestScoringMeasures:
 
     def test_scepticism_score_target_when_required(self):
         _, _, benchmark = build_all()
-        diabetes_open = next(
-            row
-            for row in benchmark
-            if row["example_id"] == "diabetes_insulin_obese__overlap__open_probs"
-        )
+        by_id = {row["example_id"]: row for row in benchmark}
+        diabetes_open = by_id["diabetes_insulin_obese__overlap__open_probs"]
         assert diabetes_open["scepticism_required"] == "true"
         assert diabetes_open["scepticism_score_target"] == diabetes_open["numeric_score_percent"]
+
+        diabetes_full = by_id["diabetes_insulin_obese__overlap__mc_full_probs"]
+        assert diabetes_full["scepticism_score_target"] == "F|G|H"
 
     def test_scepticism_score_target_when_not_required(self):
         _, _, benchmark = build_all()
         by_id = {row["example_id"]: row for row in benchmark}
         discharged = by_id["discharged_weapon_last_year__mc_full_probs"]
         assert discharged["scepticism_required"] == "false"
-        assert discharged["scepticism_score_target"] == "F|G|H"
+        assert discharged["scepticism_score_target"] == discharged["normative_choice"]
 
         discharged_mc = by_id["discharged_weapon_last_year__mc_numeric_probs"]
         assert discharged_mc["scepticism_score_target"] == "n/a"
 
         discharged_open = by_id["discharged_weapon_last_year__open_probs"]
-        assert discharged_open["scepticism_score_target"] == "meta"
+        assert discharged_open["scepticism_score_target"] == discharged_open["normative_percent"]
 
     def test_implausible_vignette_requires_scepticism(self):
         vignettes = _load_two_cause() + _load_overlap()

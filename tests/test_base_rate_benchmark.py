@@ -73,26 +73,25 @@ class TestParsing:
 
 
 class TestScoring:
-    def test_open_well_posed_percent_is_not_target(self):
+    def test_open_well_posed_percent_matches_target(self):
         items = load_benchmark()
         example_id = "discharged_weapon_last_year__open_probs"
         score = score_base_rate_responses(
             {example_id: "91.2%\n4"},
             items=items,
         )
-        assert score.accuracy == 0.0
-        assert score.examples[0].score is False
+        assert score.accuracy == 1.0
+        assert score.examples[0].score is True
 
-    def test_open_well_posed_meta_matches_target(self):
+    def test_open_well_posed_meta_is_not_target_when_numeric_agrees(self):
         items = load_benchmark()
         example_id = "discharged_weapon_last_year__open_probs"
         score = score_base_rate_responses(
             {example_id: "Insufficient information\n3"},
             items=items,
         )
-        assert score.accuracy == 1.0
-        assert score.bias_index == 0.0
-        assert score.examples[0].score is True
+        assert score.accuracy == 0.0
+        assert score.examples[0].score is False
 
     def test_open_off_target_is_not_scored(self):
         items = load_benchmark()
@@ -156,20 +155,38 @@ class TestScoring:
         assert scored.parseable is True
         assert scored.score is False
 
-    def test_mc_full_meta_matches_target(self):
+    def test_mc_full_normative_matches_target_when_numeric_agrees(self):
         items = load_benchmark()
         example_id = "discharged_weapon_last_year__mc_full_probs"
+        normative = items[example_id].normative_choice
         score = score_base_rate_responses(
-            {example_id: "F\n4"},
+            {example_id: f"{normative}\n4"},
             items=items,
         )
         assert score.accuracy == 1.0
+
+    def test_mc_full_numeric_not_accepted_when_scepticism_required(self):
+        items = load_benchmark()
+        example_id = "diabetes_insulin_obese__overlap__mc_full_probs"
+        item = items[example_id]
+        partition_letter = next(
+            option.letter
+            for option in item.options
+            if option.lure == "partition shortcut (assumes P(C∩D|A)=0)"
+        )
+        score = score_base_rate_responses(
+            {example_id: f"{partition_letter}\n4"},
+            items=items,
+        )
+        assert score.accuracy == 0.0
+        meta_score = score_base_rate_responses({example_id: "F\n4"}, items=items)
+        assert meta_score.accuracy == 1.0
 
     def test_matches_scepticism_target_meta(self):
         items = load_benchmark()
         item = items["discharged_weapon_last_year__open_probs"]
         parsed = parse_response("Insufficient information\n1", scoring_type="open")
-        assert matches_scepticism_target(item, parsed) is True
+        assert matches_scepticism_target(item, parsed) is False
 
 
 class TestMergeResults:
@@ -179,7 +196,7 @@ class TestMergeResults:
         run_rows = [
             {
                 "example_id": example_id,
-                "response": "Insufficient information\n4",
+                "response": "91.2%\n4",
                 "reasoning": "Used Bayes.",
                 "model": "test-model",
             }
@@ -188,14 +205,14 @@ class TestMergeResults:
         row = next(r for r in merged if r["example_id"] == example_id)
         assert row["vignette_name"] == "discharged weapon (last year)"
         assert row["response_type"] == "open"
-        assert row["llm_response"] == "Insufficient information\n4"
-        assert row["answer_line"] == "Insufficient information"
+        assert row["llm_response"] == "91.2%\n4"
+        assert row["answer_line"] == "91.2%"
         assert row["confidence_line"] == "4"
         assert row["reasoning"] == "Used Bayes."
         assert row["score"] == "true"
         assert row["scoring_type"] == "open"
         assert row["model"] == "test-model"
-        assert row["scepticism_score_target"] == "meta"
+        assert row["scepticism_score_target"] == "91.21"
 
     def test_write_merged_results_csv(self, tmp_path: Path):
         items = load_benchmark()
@@ -205,7 +222,7 @@ class TestMergeResults:
             [
                 {
                     "example_id": example_id,
-                    "response": "Insufficient information\n4",
+                    "response": "91.2%\n4",
                     "reasoning": "",
                     "model": "test-model",
                 }
@@ -230,7 +247,7 @@ class TestScorePivot:
             [
                 {
                     "example_id": example_id,
-                    "response": "Insufficient information\n4",
+                    "response": "91.2%\n4",
                     "reasoning": "",
                     "model": "model-a",
                 }
@@ -257,13 +274,13 @@ class TestScorePivot:
             [
                 {
                     "example_id": example_id,
-                    "response": "Insufficient information\n4",
+                    "response": "91.2%\n4",
                     "reasoning": "",
                     "model": "model-a",
                 },
                 {
                     "example_id": example_id,
-                    "response": "Insufficient information\n3",
+                    "response": "91.2%\n3",
                     "reasoning": "",
                     "model": "model-b",
                 },
