@@ -1,0 +1,6 @@
+{
+  "versionNumber": 1,
+  "name": "simple_rate_path_c_confusion",
+  "description": "Simple base-rate benchmark: fraction of parseable answers matching the P(T|C) lure (inverse conditional). Lower is better.",
+  "definition": "@kbench.task(\n    name=\"simple_rate_path_c_confusion\",\n    description=(\n        \"Simple base-rate benchmark: fraction of parseable answers matching the \"\n        \"P(T|C) lure (inverse conditional). Lower is better.\"\n    ),\n)\ndef simple_rate_path_c_confusion(llm) -> float:\n    _, _, _, _, _, path_c_rate = evaluate_simple_rate_benchmark(llm)\n    return float(path_c_rate)\n"
+}

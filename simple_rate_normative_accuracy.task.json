@@ -1,0 +1,6 @@
+{
+  "versionNumber": 1,
+  "name": "simple_rate_normative_accuracy",
+  "description": "Simple base-rate benchmark (20 conditions): fraction of parseable answers matching normative P(C|T). Higher is better.",
+  "definition": "@kbench.task(\n    name=\"simple_rate_normative_accuracy\",\n    description=(\n        \"Simple base-rate benchmark (20 conditions): fraction of parseable answers \"\n        \"matching normative P(C|T). Higher is better.\"\n    ),\n)\ndef simple_rate_normative_accuracy(llm) -> float:\n    _, score, _, _, _, _ = evaluate_simple_rate_benchmark(llm)\n    return float(score.accuracy)\n"
+}

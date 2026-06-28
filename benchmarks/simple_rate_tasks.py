@@ -1,7 +1,5 @@
 """Kaggle Benchmarks tasks for the simple two-path base-rate benchmark."""
 
-from __future__ import annotations
-
 import csv
 from pathlib import Path
 
