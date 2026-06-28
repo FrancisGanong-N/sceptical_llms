@@ -1,0 +1,220 @@
+example_id,prompt
+discharged_weapon_last_year__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.3% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.2% discharged a weapon in the last year.
+
+Given that a police officer discharged a weapon in the last year, what is the probability they were urban police officers?
+
+Reply with a percentage (for example, 16% or 16 percent)."
+discharged_weapon_last_year__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.3% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.2% discharged a weapon in the last year.
+
+Given that a police officer discharged a weapon in the last year, what is the probability they were urban police officers?
+
+A. About 77%
+B. About 0%
+C. About 13%
+D. About 30%
+
+Which answer is closest? Reply with only the letter (A, B, C, or D)."
+ca_trump_voter__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 4.9% are other California registrants and 7.8% are southern California registrants.
+Among other California registrants, 31% voted for Donald Trump in the 2024 presidential election; among southern California registrants, 27% voted for Donald Trump in the 2024 presidential election.
+
+Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California registrants?
+
+Reply with a percentage (for example, 16% or 16 percent)."
+ca_trump_voter__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 4.9% are other California registrants and 7.8% are southern California registrants.
+Among other California registrants, 31% voted for Donald Trump in the 2024 presidential election; among southern California registrants, 27% voted for Donald Trump in the 2024 presidential election.
+
+Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California registrants?
+
+A. About 42%
+B. About 8%
+C. About 31%
+D. About 27%
+E. About 5%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
+healthcare_employment__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 1.1% are physician (MD/DO) among health care professionals and 9.9% are non-physician health care professional among A (nurses, PAs, pharmacists, therapists, etc.)s.
+Among physician (MD/DO) among health care professionals, 54% work in a hospital; among non-physician health care professional among A (nurses, PAs, pharmacists, therapists, etc.)s, 60% work in a hospital.
+
+Given that a health care professional works in a hospital, what is the probability they were physician (MD/DO) among health care professionals?
+
+Reply with a percentage (for example, 16% or 16 percent)."
+healthcare_employment__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 1.1% are physician (MD/DO) among health care professionals and 9.9% are non-physician health care professional among A (nurses, PAs, pharmacists, therapists, etc.)s.
+Among physician (MD/DO) among health care professionals, 54% work in a hospital; among non-physician health care professional among A (nurses, PAs, pharmacists, therapists, etc.)s, 60% work in a hospital.
+
+Given that a health care professional works in a hospital, what is the probability they were physician (MD/DO) among health care professionals?
+
+A. About 9%
+B. About 10%
+C. About 32%
+D. About 60%
+E. About 54%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
+military_overseas_federal_pool__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service member (Space Force grouped with Air Force; Marine Corps and Coast Guard unassigned in C/D split)s.
+Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service member (Space Force grouped with Air Force; Marine Corps and Coast Guard unassigned in C/D split)s, 64% have worked overseas.
+
+Given that an active-duty US military service member has worked overseas, what is the probability they were uS Army active-duty service members?
+
+Reply with a percentage (for example, 16% or 16 percent)."
+military_overseas_federal_pool__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service member (Space Force grouped with Air Force; Marine Corps and Coast Guard unassigned in C/D split)s.
+Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service member (Space Force grouped with Air Force; Marine Corps and Coast Guard unassigned in C/D split)s, 64% have worked overseas.
+
+Given that an active-duty US military service member has worked overseas, what is the probability they were uS Army active-duty service members?
+
+A. About 38%
+B. About 37%
+C. About 58%
+D. About 64%
+E. About 20%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
+covid_vaccine_blue_red__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 19% are blue-state resident among As and 7.8% are red-state resident among As.
+Among blue-state resident among As, 8% had COVID-19 in the past 12 months; among red-state resident among As, 10% had COVID-19 in the past 12 months.
+
+Given that someone vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state resident among As?
+
+Reply with a percentage (for example, 16% or 16 percent)."
+covid_vaccine_blue_red__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 19% are blue-state resident among As and 7.8% are red-state resident among As.
+Among blue-state resident among As, 8% had COVID-19 in the past 12 months; among red-state resident among As, 10% had COVID-19 in the past 12 months.
+
+Given that someone vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state resident among As?
+
+A. About 66%
+B. About 1%
+C. About 8%
+D. About 10%
+E. About 19%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
+diabetes_insulin_obese__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 3.2% are uses insulin among adults with diagnosed diabetes (includes type 1 and insulin-treated type 2)s and 5.3% are has obesity among adults with diagnosed diabetes (BMI >= 30 kg/m2; measured BMI in NHANES clinical exam)s.
+Among uses insulin among adults with diagnosed diabetes (includes type 1 and insulin-treated type 2)s, 20% had hemoglobin A1c above 9.0%; among has obesity among adults with diagnosed diabetes (BMI >= 30 kg/m2; measured BMI in NHANES clinical exam)s, 16% had hemoglobin A1c above 9.0%.
+
+Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they were uses insulin among adults with diagnosed diabetes (includes type 1 and insulin-treated type 2)s?
+
+Reply with a percentage (for example, 16% or 16 percent)."
+diabetes_insulin_obese__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 3.2% are uses insulin among adults with diagnosed diabetes (includes type 1 and insulin-treated type 2)s and 5.3% are has obesity among adults with diagnosed diabetes (BMI >= 30 kg/m2; measured BMI in NHANES clinical exam)s.
+Among uses insulin among adults with diagnosed diabetes (includes type 1 and insulin-treated type 2)s, 20% had hemoglobin A1c above 9.0%; among has obesity among adults with diagnosed diabetes (BMI >= 30 kg/m2; measured BMI in NHANES clinical exam)s, 16% had hemoglobin A1c above 9.0%.
+
+Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they were uses insulin among adults with diagnosed diabetes (includes type 1 and insulin-treated type 2)s?
+
+A. About 43%
+B. About 5%
+C. About 16%
+D. About 20%
+E. About 3%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
+college_stem_work__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), 4.6% are sTEM field of study among first-generation students (NCES broad STEM CIP grouping)s and 17% are employed while enrolled among first-generation students (paid job internship or work-study while taking classes; NPSASs.
+Among sTEM field of study among first-generation students (NCES broad STEM CIP grouping)s, 85% returned for a second year; among employed while enrolled among first-generation students (paid job internship or work-study while taking classes; NPSASs, 74% returned for a second year.
+
+Given that a first-generation student returned for a second year, what is the probability they were sTEM field of study among first-generation students (NCES broad STEM CIP grouping)s?
+
+Reply with a percentage (for example, 16% or 16 percent)."
+college_stem_work__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), 4.6% are sTEM field of study among first-generation students (NCES broad STEM CIP grouping)s and 17% are employed while enrolled among first-generation students (paid job internship or work-study while taking classes; NPSASs.
+Among sTEM field of study among first-generation students (NCES broad STEM CIP grouping)s, 85% returned for a second year; among employed while enrolled among first-generation students (paid job internship or work-study while taking classes; NPSASs, 74% returned for a second year.
+
+Given that a first-generation student returned for a second year, what is the probability they were sTEM field of study among first-generation students (NCES broad STEM CIP grouping)s?
+
+A. About 24%
+B. About 63%
+C. About 74%
+D. About 17%
+E. About 85%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
+actor_waiter_overlap__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.00% are also holds a waiter/waitress occupation in the same reference week (SOC 35-3031; includes primary waiter with secondary actor and primary actor with secondary waiter)s and 0.01% are actor occupation is the secondary job (primary occupation is something else; ~30% of actor job slots per NEA Artists Statistical Portrait 2017 Table 1)s.
+Among also holds a waiter/waitress occupation in the same reference week (SOC 35-3031; includes primary waiter with secondary actor and primary actor with secondary waiter)s, 65% worked part-time at their primary job in the reference week; among actor occupation is the secondary job (primary occupation is something else; ~30% of actor job slots per NEA Artists Statistical Portrait 2017 Table 1)s, 55% worked part-time at their primary job in the reference week.
+
+Given that an actor worked part-time at their primary job in the reference week, what is the probability they were also holds a waiter/waitress occupation in the same reference week (SOC 35-3031; includes primary waiter with secondary actor and primary actor with secondary waiter)s?
+
+Reply with a percentage (for example, 16% or 16 percent)."
+actor_waiter_overlap__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.00% are also holds a waiter/waitress occupation in the same reference week (SOC 35-3031; includes primary waiter with secondary actor and primary actor with secondary waiter)s and 0.01% are actor occupation is the secondary job (primary occupation is something else; ~30% of actor job slots per NEA Artists Statistical Portrait 2017 Table 1)s.
+Among also holds a waiter/waitress occupation in the same reference week (SOC 35-3031; includes primary waiter with secondary actor and primary actor with secondary waiter)s, 65% worked part-time at their primary job in the reference week; among actor occupation is the secondary job (primary occupation is something else; ~30% of actor job slots per NEA Artists Statistical Portrait 2017 Table 1)s, 55% worked part-time at their primary job in the reference week.
+
+Given that an actor worked part-time at their primary job in the reference week, what is the probability they were also holds a waiter/waitress occupation in the same reference week (SOC 35-3031; includes primary waiter with secondary actor and primary actor with secondary waiter)s?
+
+A. About 12%
+B. About 55%
+C. About 36%
+D. About 0%
+E. About 65%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
+professional_drivers_speeding__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), 1.3% are heavy and tractor-trailer truck driver among professional drivers (SOC 53-3032; requires CDL; GVWR > 26000 lb)s and 0.3% are bus driver among professional drivers (SOC 53-3051 school plus 53-3052 transit/intercity bus; excludes shuttle chauffeur and taxi)s.
+Among heavy and tractor-trailer truck driver among professional drivers (SOC 53-3032; requires CDL; GVWR > 26000 lb)s, 16% received a speeding ticket in the last 12 months; among bus driver among professional drivers (SOC 53-3051 school plus 53-3052 transit/intercity bus; excludes shuttle chauffeur and taxi)s, 10% received a speeding ticket in the last 12 months.
+
+Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck driver among professional drivers (SOC 53-3032; requires CDL; GVWR > 26000 lb)s?
+
+Reply with a percentage (for example, 16% or 16 percent)."
+professional_drivers_speeding__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), 1.3% are heavy and tractor-trailer truck driver among professional drivers (SOC 53-3032; requires CDL; GVWR > 26000 lb)s and 0.3% are bus driver among professional drivers (SOC 53-3051 school plus 53-3052 transit/intercity bus; excludes shuttle chauffeur and taxi)s.
+Among heavy and tractor-trailer truck driver among professional drivers (SOC 53-3032; requires CDL; GVWR > 26000 lb)s, 16% received a speeding ticket in the last 12 months; among bus driver among professional drivers (SOC 53-3051 school plus 53-3052 transit/intercity bus; excludes shuttle chauffeur and taxi)s, 10% received a speeding ticket in the last 12 months.
+
+Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck driver among professional drivers (SOC 53-3032; requires CDL; GVWR > 26000 lb)s?
+
+A. About 85%
+B. About 0%
+C. About 16%
+D. About 10%
+E. About 2%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
+english_teacher_humanities__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), 0.1% are main teaching assignment is English/language arts among public grades 9-12 teachers (NCES Table 209.50 2020-21)s and 0.1% are bachelor's degree major field is English and language arts among public grades 9-12 teachers (NCES Table 209.60 2020-21)s.
+Among main teaching assignment is English/language arts among public grades 9-12 teachers (NCES Table 209.50 2020-21)s, 69% hold a master's degree or higher; among bachelor's degree major field is English and language arts among public grades 9-12 teachers (NCES Table 209.60 2020-21)s, 55% hold a master's degree or higher.
+
+Given that a public grades 9-12 teacher holds a master's degree or higher, what is the probability they were main teaching assignment is English/language arts among public grades 9-12 teachers (NCES Table 209.50 2020-21)s?
+
+Reply with a percentage (for example, 16% or 16 percent)."
+english_teacher_humanities__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), 0.1% are main teaching assignment is English/language arts among public grades 9-12 teachers (NCES Table 209.50 2020-21)s and 0.1% are bachelor's degree major field is English and language arts among public grades 9-12 teachers (NCES Table 209.60 2020-21)s.
+Among main teaching assignment is English/language arts among public grades 9-12 teachers (NCES Table 209.50 2020-21)s, 69% hold a master's degree or higher; among bachelor's degree major field is English and language arts among public grades 9-12 teachers (NCES Table 209.60 2020-21)s, 55% hold a master's degree or higher.
+
+Given that a public grades 9-12 teacher holds a master's degree or higher, what is the probability they were main teaching assignment is English/language arts among public grades 9-12 teachers (NCES Table 209.50 2020-21)s?
+
+A. About 52%
+B. About 69%
+C. About 55%
+D. About 0%
+E. About 38%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
