@@ -9,7 +9,8 @@ from pathlib import Path
 from scripts.build_base_rate_prompts import (
     META_F,
     OUT_DIR,
-    VARIANTS,
+    CANONICAL_VARIANTS,
+    SCEPTICISM_VARIANTS,
     _load_implausible,
     _load_overlap,
     _load_two_cause,
@@ -17,6 +18,7 @@ from scripts.build_base_rate_prompts import (
     load_vignettes,
     scepticism_required,
     slug,
+    variants_for_vignette,
     write_csvs,
 )
 
@@ -60,12 +62,23 @@ class TestVignetteLoad:
 class TestBuildAll:
     def test_variant_count(self):
         prompts, items, benchmark = build_all()
-        vignette_count = len(load_vignettes())
+        vignettes = load_vignettes()
         assert len(_load_implausible()) == 10
-        assert vignette_count == 20
-        assert len(prompts) == vignette_count * len(VARIANTS)
+        assert len(vignettes) == 20
+        expected = sum(len(variants_for_vignette(v)) for v in vignettes)
+        assert expected == 34
+        assert len(prompts) == expected
         assert len(items) == len(prompts)
         assert len(benchmark) == len(prompts)
+
+    def test_variants_by_scepticism(self):
+        vignettes = load_vignettes()
+        for v in vignettes:
+            variants = set(variants_for_vignette(v))
+            if scepticism_required(v):
+                assert variants == set(SCEPTICISM_VARIANTS), v.name
+            else:
+                assert variants == set(CANONICAL_VARIANTS), v.name
 
     def test_all_variants_present(self):
         _, items, _ = build_all()
@@ -74,8 +87,10 @@ class TestBuildAll:
             prefix = row["example_id"].rsplit("__", 1)[0]
             by_prefix.setdefault(prefix, set()).add(row["variant"])
         assert len(by_prefix) == 20
+        vignettes = {v.example_prefix(): v for v in load_vignettes()}
         for prefix, variants in by_prefix.items():
-            assert variants == set(VARIANTS), prefix
+            expected = set(variants_for_vignette(vignettes[prefix]))
+            assert variants == expected, prefix
 
     def test_ca_trump_posterior(self):
         v = next(v for v in _load_two_cause() if v.name == "CA Trump voter")
@@ -89,6 +104,19 @@ class TestBuildAll:
             assert row["normative_choice"] in "ABCDE"
             assert row["normative_open"] != META_F
 
+    def test_scepticism_vignettes_have_mc_full_only(self):
+        _, items, _ = build_all()
+        scepticism_prefixes = {
+            v.example_prefix() for v in load_vignettes() if scepticism_required(v)
+        }
+        assert len(scepticism_prefixes) == 13
+        for row in items:
+            prefix = row["example_id"].rsplit("__", 1)[0]
+            if prefix in scepticism_prefixes:
+                assert row["variant"] == "mc_full_probs", row["example_id"]
+            else:
+                assert row["variant"] in CANONICAL_VARIANTS, row["example_id"]
+
     def test_probs_include_consultant_intro(self):
         prompts, _, _ = build_all()
         pmap = {r["example_id"]: r["prompt"] for r in prompts}
@@ -100,41 +128,6 @@ class TestBuildAll:
         assert "group A" not in discharged
         assert "P(A)" not in discharged
 
-    def test_no_probs_uses_estimate_question(self):
-        prompts, _, _ = build_all()
-        pmap = {r["example_id"]: r["prompt"] for r in prompts}
-        no_probs = pmap["discharged_weapon_last_year__open_no_probs"]
-        assert "Using knowledge of the world, please estimate the probability" in no_probs
-        assert "a police officer or a security guard" in no_probs
-        assert "discharged a weapon in the last year" in no_probs
-        assert "No numerical probabilities" not in no_probs
-
-    def test_probs_vs_no_probs(self):
-        prompts, items, _ = build_all()
-        pmap = {r["example_id"]: r["prompt"] for r in prompts}
-        ids = {r["example_id"]: r for r in items}
-        with_probs = ids[f"{slug('CA Trump voter')}__open_probs"]
-        no_probs = ids[f"{slug('CA Trump voter')}__open_no_probs"]
-        assert "P(A)" not in pmap[with_probs["example_id"]]
-        assert "statistical consultant" in pmap[with_probs["example_id"]]
-        assert "Using knowledge of the world, please estimate the probability" in pmap[no_probs["example_id"]]
-
-    def test_ca_trump_geo_phrasing(self):
-        prompts, _, _ = build_all()
-        pmap = {r["example_id"]: r["prompt"] for r in prompts}
-        ca = pmap[f"{slug('CA Trump voter')}__open_no_probs"]
-        assert "registered in southern California" in ca
-        assert "other parts of the state" in ca
-        assert "other California registrant" not in ca.lower()
-
-    def test_covid_vaccine_short_phrasing(self):
-        prompts, _, _ = build_all()
-        pmap = {r["example_id"]: r["prompt"] for r in prompts}
-        covid = pmap[f"{slug('covid vaccine (blue/red)')}__open_no_probs"]
-        assert "some received the 2024-25 COVID vaccine and the rest did not" in covid
-        assert "people who received" not in covid
-        assert "Among the vaccinated" in covid
-
     def test_professional_driver_short_phrasing(self):
         prompts, _, _ = build_all()
         pmap = {r["example_id"]: r["prompt"] for r in prompts}
@@ -145,18 +138,32 @@ class TestBuildAll:
     def test_english_teacher_short_phrasing(self):
         prompts, _, _ = build_all()
         pmap = {r["example_id"]: r["prompt"] for r in prompts}
-        eng = pmap["english_teacher_humanities__overlap__open_probs"]
+        eng = pmap["english_teacher_humanities__overlap__mc_full_probs"]
         assert "a public grades 9-12 teacher or other employed adult" in eng
         assert "Among those who teach English/language arts" in eng
         assert "Among teach English" not in eng
+
+    def test_ca_trump_geo_phrasing(self):
+        prompts, _, _ = build_all()
+        pmap = {r["example_id"]: r["prompt"] for r in prompts}
+        ca = pmap[f"{slug('CA Trump voter')}__open_probs"]
+        assert "registered in southern California" in ca
+        assert "other parts of the state" in ca
+        assert "other California registrant" not in ca.lower()
+
+    def test_covid_vaccine_short_phrasing(self):
+        prompts, _, _ = build_all()
+        pmap = {r["example_id"]: r["prompt"] for r in prompts}
+        covid = pmap[f"{slug('covid vaccine (blue/red)')}__open_probs"]
+        assert "27% received the 2024-25 COVID vaccine" in covid
+        assert "people who received" not in covid
+        assert "Among the vaccinated" in covid
 
     def test_prose_quality_fixes(self):
         prompts, _, _ = build_all()
         pmap = {r["example_id"]: r["prompt"] for r in prompts}
         actor = pmap["actor_waiter_overlap__overlap__open_probs"]
-        assert "some are actors and the rest are non-actors" in pmap[
-            "actor_waiter_overlap__overlap__open_no_probs"
-        ]
+        assert "0.03% are actors and the remainder are non-actors" in actor
         assert "also work as waiters" in actor
         assert "people who hold" not in actor
 
@@ -173,7 +180,7 @@ class TestBuildAll:
         assert "had has worked" not in military
         assert "uS Army" not in military
 
-        college = pmap["college_stem_work__overlap__open_probs"]
+        college = pmap["college_stem_work__overlap__mc_full_probs"]
         assert "major in STEM" in college
         assert "STEM majors" in college
         assert "studys" not in college
@@ -183,10 +190,6 @@ class TestBuildAll:
         assert "among continuing-generation students" not in college
         assert "Among undergraduate students" in college
         assert "In Undergraduate" not in college
-        college_no = pmap["college_stem_work__overlap__open_no_probs"]
-        college_no_body = college_no.split("\n\nUsing knowledge")[0]
-        assert "some are first-generation students." in college_no_body
-        assert "the rest are continuing-generation" not in college_no_body
 
         ca = pmap[f"{slug('CA Trump voter')}__open_probs"]
         assert "registered in California" in ca
@@ -195,7 +198,7 @@ class TestBuildAll:
         assert "registered elsewhere" in ca
         assert "home state is California" not in ca
 
-        diabetes = pmap["diabetes_insulin_obese__overlap__open_probs"]
+        diabetes = pmap["diabetes_insulin_obese__overlap__mc_full_probs"]
         assert "have diagnosed diabetes" in diabetes
         assert "those with diagnosed diabetes" in diabetes
         assert "adults with diagnosed diabetes and the remainder are adults without" not in diabetes
@@ -203,7 +206,7 @@ class TestBuildAll:
     def test_overlap_mentioned_in_prose(self):
         prompts, _, _ = build_all()
         pmap = {r["example_id"]: r["prompt"] for r in prompts}
-        dia = pmap["diabetes_insulin_obese__overlap__open_probs"]
+        dia = pmap["diabetes_insulin_obese__overlap__mc_full_probs"]
         assert "fall into both categories" in dia
         ca = pmap[f"{slug('CA Trump voter')}__open_probs"]
         assert "fall into both categories" not in ca
@@ -280,14 +283,14 @@ class TestBuildAll:
 class TestBenchmarkCsv:
     def test_condition_columns(self):
         _, _, benchmark = build_all()
-        assert len(benchmark) == 120
+        assert len(benchmark) == 34
         for row in benchmark:
             assert row["response_type"] in {"open", "mc_numeric", "mc_full"}
-            assert row["has_statistics"] in {"true", "false"}
+            assert row["has_statistics"] == "true"
             assert row["problem_type"] in {"well_posed", "overlap"}
             assert row["intersection_size"] in {"0", "small", "medium", "large"}
             assert row["prompt"]
-            assert row["variant"].endswith("_probs" if row["has_statistics"] == "true" else "_no_probs")
+            assert row["variant"].endswith("_probs")
 
     def test_intersection_size_by_vignette(self):
         _, _, benchmark = build_all()
@@ -308,11 +311,10 @@ class TestBenchmarkCsv:
                 row["vignette_name"],
                 row["normative"],
                 row["response_type"],
-                row["has_statistics"],
             )
             for row in benchmark
         }
-        assert len(keys) == 120
+        assert len(keys) == 34
 
 
 class TestScoringMeasures:
@@ -321,7 +323,7 @@ class TestScoringMeasures:
         by_vignette = {
             row["vignette_name"]: row["scepticism_required"]
             for row in benchmark
-            if row["variant"] == "open_probs" and row["normative"] != "implausible"
+            if row["variant"] == "mc_full_probs" and row["normative"] != "implausible"
         }
         assert by_vignette["discharged weapon (last year)"] == "false"
         assert by_vignette["actor waiter overlap"] == "false"
@@ -345,11 +347,8 @@ class TestScoringMeasures:
     def test_scepticism_score_target_when_required(self):
         _, _, benchmark = build_all()
         by_id = {row["example_id"]: row for row in benchmark}
-        diabetes_open = by_id["diabetes_insulin_obese__overlap__open_probs"]
-        assert diabetes_open["scepticism_required"] == "true"
-        assert diabetes_open["scepticism_score_target"] == diabetes_open["numeric_score_percent"]
-
         diabetes_full = by_id["diabetes_insulin_obese__overlap__mc_full_probs"]
+        assert diabetes_full["scepticism_required"] == "true"
         assert diabetes_full["scepticism_score_target"] == "F|G|H"
 
     def test_scepticism_score_target_when_not_required(self):
@@ -382,24 +381,22 @@ class TestScoringMeasures:
 
 
 class TestImplausibleVignettes:
-    def test_implausible_open_targets_meta(self):
-        _, _, benchmark = build_all()
-        implausible_open = [
-            row
-            for row in benchmark
-            if row["normative"] == "implausible" and row["variant"] == "open_probs"
-        ]
-        assert len(implausible_open) == 10
-        assert all(row["scepticism_score_target"] == "meta" for row in implausible_open)
+    def test_implausible_items_are_mc_full_only(self):
+        _, items, _ = build_all()
+        implausible = [row for row in items if row["normative"] == "implausible"]
+        assert len(implausible) == 10
+        assert all(row["variant"] == "mc_full_probs" for row in implausible)
+        assert all(row["scepticism_required"] == "true" for row in implausible)
+        assert all(row["scepticism_score_target"] == "H" for row in implausible)
 
     def test_ca_trump_implausible_changes_p_a_in_prompt(self):
         prompts, _, _ = build_all()
         pmap = {row["example_id"]: row["prompt"] for row in prompts}
         base = pmap[f"{slug('CA Trump voter')}__open_probs"]
-        implausible = pmap[f"{slug('CA Trump voter')}__implausible__open_probs"]
+        implausible = pmap[f"{slug('CA Trump voter')}__implausible__mc_full_probs"]
         assert "13%" in base
         assert "80%" in implausible
-        assert base.count("%") == implausible.count("%")
+        assert "80%" not in base
 
 
 class TestWrittenCsvs:
@@ -411,11 +408,11 @@ class TestWrittenCsvs:
 
         with (OUT_DIR / "prompts.csv").open(encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
-        assert len(rows) == 120
+        assert len(rows) == 34
 
         with (OUT_DIR / "benchmark.csv").open(encoding="utf-8") as handle:
             bench = list(csv.DictReader(handle))
-        assert len(bench) == 120
+        assert len(bench) == 34
         assert "intersection_size" in bench[0]
         assert "problem_type" in bench[0]
         assert "response_type" in bench[0]

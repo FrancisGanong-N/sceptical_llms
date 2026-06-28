@@ -42,14 +42,12 @@ LURE_NAMES = {
     "p_a": "P(A) confusion",
 }
 
-VARIANTS = (
+CANONICAL_VARIANTS = (
     "open_probs",
-    "open_no_probs",
     "mc_numeric_probs",
-    "mc_numeric_no_probs",
     "mc_full_probs",
-    "mc_full_no_probs",
 )
+SCEPTICISM_VARIANTS = ("mc_full_probs",)
 
 INTRO = (
     "You are a statistical consultant. Your task is to estimate a "
@@ -1079,10 +1077,6 @@ def _mc_suffix(*, letters: str) -> str:
     )
 
 
-def _variant_has_probs(variant: str) -> bool:
-    return not variant.endswith("_no_probs")
-
-
 def _intersection_size_label(row: dict, *, well_posed: bool) -> str:
     if well_posed:
         return "0"
@@ -1105,12 +1099,19 @@ def _problem_type(well_posed: bool) -> str:
 
 
 def scepticism_required(v: Vignette) -> bool:
-    """Whether the item expects scepticism (overlap-aware refusal or meta), not blind maths."""
+    """Whether the item expects a sceptical meta response (F/G/H), not blind maths."""
     if v.normative == "implausible":
         return True
     if v.intersection_size in {"medium", "large"}:
         return True
     return False
+
+
+def variants_for_vignette(v: Vignette) -> tuple[str, ...]:
+    """Canonical vignettes get open + numeric + full MC; scepticism items get full MC only."""
+    if scepticism_required(v):
+        return SCEPTICISM_VARIANTS
+    return CANONICAL_VARIANTS
 
 
 def _resolve_partition_letter(
@@ -1188,7 +1189,7 @@ def _scoring_measure_fields(
 def build_prompt(v: Vignette, variant: str) -> tuple[str, dict[str, str]]:
     """Return prompt text and item metadata fields for one variant."""
     example_id = f"{v.example_prefix()}__{variant}"
-    body = body_with_probs(v) if _variant_has_probs(variant) else body_no_probs(v)
+    body = body_with_probs(v)
     item: dict[str, str] = {
         "example_id": example_id,
         "vignette_name": v.name,
@@ -1197,7 +1198,7 @@ def build_prompt(v: Vignette, variant: str) -> tuple[str, dict[str, str]]:
         "problem_type": _problem_type(v.well_posed),
         "intersection_size": v.intersection_size,
         "response_format": _response_format(variant),
-        "has_statistics": str(_variant_has_probs(variant)).lower(),
+        "has_statistics": "true",
         "normative": v.normative,
         "p_c_and_d_given_a": str(v.p_cd),
         "confidence_required": "true",
@@ -1264,7 +1265,7 @@ def build_all() -> tuple[list[dict[str, str]], list[dict[str, str]], list[dict[s
     items: list[dict[str, str]] = []
 
     for v in vignettes:
-        for variant in VARIANTS:
+        for variant in variants_for_vignette(v):
             prompt, item = build_prompt(v, variant)
             prompts.append({"example_id": item["example_id"], "prompt": prompt})
             items.append(item)
@@ -1386,8 +1387,12 @@ def write_csvs() -> int:
 def main() -> int:
     count = write_csvs()
     vignette_count = len(load_vignettes())
+    canonical = sum(1 for v in load_vignettes() if not scepticism_required(v))
+    scepticism = vignette_count - canonical
     print(
-        f"Wrote {count} prompts ({vignette_count} vignettes × {len(VARIANTS)} variants)"
+        f"Wrote {count} prompts "
+        f"({canonical} canonical × {len(CANONICAL_VARIANTS)} + "
+        f"{scepticism} scepticism × {len(SCEPTICISM_VARIANTS)})"
     )
     print(f"Output: {OUT_DIR} (prompts.csv, items.csv, benchmark.csv)")
     return 0

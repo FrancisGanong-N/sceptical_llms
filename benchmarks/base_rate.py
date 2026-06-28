@@ -36,7 +36,7 @@ ParsedAnswerType = Literal[
     "mc_choice",
     "unparseable",
 ]
-STANDALONE_CHOICE_PATTERN = re.compile(r"(?<![A-Za-z])([A-H])(?![A-Za-z])")
+STANDALONE_CHOICE_PATTERN = re.compile(r"(?<![A-Za-z0-9])([A-H])(?![A-Za-z0-9])")
 LABELED_CHOICE_PATTERN = re.compile(
     r"\b(?:option|choice|answer)\s*([A-H])\b",
     re.IGNORECASE,
@@ -69,12 +69,7 @@ MERGE_RESULT_COLUMNS = (
 )
 
 RESPONSE_TYPE_ORDER = ("open", "mc_numeric", "mc_full")
-HAS_STATISTICS_ORDER = ("probs", "no_probs")
-CONDITION_COLUMN_ORDER = tuple(
-    f"{response_type}_{statistics}"
-    for response_type in RESPONSE_TYPE_ORDER
-    for statistics in HAS_STATISTICS_ORDER
-)
+CONDITION_COLUMN_ORDER = tuple(f"{response_type}_probs" for response_type in RESPONSE_TYPE_ORDER)
 @dataclass(frozen=True)
 class BaseRateOption:
     letter: str
@@ -139,6 +134,7 @@ class ParsedResponse:
     percent: float | None = None
     choice: str | None = None
     confidence: int | None = None
+    percent_candidates: tuple[float, ...] = ()
 
 
 @dataclass
@@ -200,10 +196,126 @@ def _as_bool(value: str) -> bool:
 
 
 def split_response_lines(response: str) -> tuple[str, str]:
-    lines = [line.strip() for line in response.strip().splitlines() if line.strip()]
-    answer_line = lines[0] if lines else ""
-    confidence_line = lines[1] if len(lines) > 1 else ""
+    body, confidence = strip_trailing_confidence(response)
+    lines = [line.strip() for line in body.splitlines() if line.strip()]
+    answer_line = lines[0] if lines else body.strip()
+    confidence_line = str(confidence) if confidence is not None else ""
     return answer_line, confidence_line
+
+
+def _is_standalone_mc_choice_line(line: str) -> bool:
+    return bool(re.fullmatch(r"[A-H]", line.strip(), re.IGNORECASE))
+
+
+def split_mc_response_lines(response: str) -> tuple[str, str]:
+    """Parse MC answers from the last few lines, preserving answer-first format."""
+    body, trailing_confidence = strip_trailing_confidence(response)
+    lines = [line.strip() for line in body.splitlines() if line.strip()]
+    confidence_line = (
+        str(trailing_confidence) if trailing_confidence is not None else ""
+    )
+
+    if (
+        len(lines) >= 2
+        and _is_standalone_mc_choice_line(lines[0])
+        and _line_looks_like_confidence_only(lines[1])
+    ):
+        return lines[0], lines[1]
+
+    tail = lines
+    for line in reversed(tail):
+        if parse_mc_choice_from_line(line) is not None:
+            return line, confidence_line
+
+    return (lines[-1] if lines else body.strip()), confidence_line
+
+
+def _line_looks_like_confidence_only(line: str) -> bool:
+    text = line.strip()
+    if not text:
+        return False
+    if re.fullmatch(r"[1-5]", text):
+        return True
+    if re.fullmatch(r"(?:confidence|conf\.?)\s*:?\s*[1-5]\s*", text, re.IGNORECASE):
+        return True
+    if len(text) <= 24 and parse_confidence_line(text) is not None:
+        if _extract_percent_values(text):
+            return False
+        if DECIMAL_PROBABILITY_PATTERN.search(text):
+            return False
+        if "%" in text:
+            return False
+        return True
+    return False
+
+
+def strip_trailing_confidence(response: str) -> tuple[str, int | None]:
+    """Drop a trailing confidence-only line (e.g. ``4`` or ``Confidence: 4``)."""
+    lines = [line.strip() for line in response.strip().splitlines() if line.strip()]
+    confidence: int | None = None
+    if lines and _line_looks_like_confidence_only(lines[-1]):
+        confidence = parse_confidence_line(lines[-1])
+        lines = lines[:-1]
+    return "\n".join(lines), confidence
+
+
+def extract_open_percent_candidates(text: str) -> list[float]:
+    """All percentage-scale numbers found in an open response body."""
+    candidates: list[float] = []
+    seen: set[float] = set()
+    for value in _extract_percent_values(text):
+        if value not in seen:
+            seen.add(value)
+            candidates.append(value)
+    for match in DECIMAL_PROBABILITY_PATTERN.finditer(text.lower()):
+        value = float(match.group(1))
+        if 0 < value <= 1:
+            scaled = value * 100.0
+            if scaled not in seen:
+                seen.add(scaled)
+                candidates.append(scaled)
+    return candidates
+
+
+def parse_open_response(response: str) -> ParsedResponse:
+    """Parse an open response: ignore trailing confidence, extract numeric candidates."""
+    body, confidence = strip_trailing_confidence(response)
+    confidence_line = str(confidence) if confidence is not None else ""
+    lines = [line.strip() for line in body.splitlines() if line.strip()]
+    first_line = lines[0] if lines else ""
+
+    meta = _parse_meta_type(first_line) if first_line else None
+    if meta is not None:
+        return ParsedResponse(
+            answer_type=meta,
+            answer_line=body,
+            confidence_line=confidence_line,
+            confidence=confidence,
+            percent_candidates=(),
+        )
+
+    candidates = extract_open_percent_candidates(body)
+    first_pct = parse_probability_from_line(first_line) if first_line else None
+    if first_pct is not None and len(lines) == 1:
+        percent = first_pct
+    elif candidates:
+        percent = candidates[-1]
+    else:
+        percent = None
+
+    if percent is not None or candidates:
+        answer_type: ParsedAnswerType = "probability"
+    else:
+        answer_type = "unparseable"
+
+    return ParsedResponse(
+        answer_type=answer_type,
+        answer_line=body,
+        confidence_line=confidence_line,
+        percent=percent,
+        confidence=confidence,
+        percent_candidates=tuple(candidates),
+    )
 
 
 def parse_confidence_line(confidence_line: str) -> int | None:
@@ -264,33 +376,11 @@ def parse_mc_choice_from_line(answer_line: str) -> str | None:
 
 
 def parse_response(response: str, *, scoring_type: ScoringType) -> ParsedResponse:
-    answer_line, confidence_line = split_response_lines(response)
-    confidence = parse_confidence_line(confidence_line)
-
     if scoring_type == "open":
-        meta = _parse_meta_type(answer_line) if answer_line else None
-        if meta is not None:
-            return ParsedResponse(
-                answer_type=meta,
-                answer_line=answer_line,
-                confidence_line=confidence_line,
-                confidence=confidence,
-            )
-        percent = parse_probability_from_line(answer_line)
-        if percent is not None:
-            return ParsedResponse(
-                answer_type="probability",
-                answer_line=answer_line,
-                confidence_line=confidence_line,
-                percent=percent,
-                confidence=confidence,
-            )
-        return ParsedResponse(
-            answer_type="unparseable",
-            answer_line=answer_line,
-            confidence_line=confidence_line,
-            confidence=confidence,
-        )
+        return parse_open_response(response)
+
+    answer_line, confidence_line = split_mc_response_lines(response)
+    confidence = parse_confidence_line(confidence_line)
 
     choice = parse_mc_choice_from_line(answer_line)
     if choice is None:
@@ -439,12 +529,18 @@ def matches_scepticism_target(
     except ValueError:
         return False
 
-    if parsed.percent is None:
+    candidates: list[float] = []
+    if parsed.percent_candidates:
+        candidates.extend(parsed.percent_candidates)
+    elif parsed.percent is not None:
+        candidates.append(parsed.percent)
+    if not candidates:
         return False
-    return matches_percent_target(
-        parsed.percent,
-        target_percent,
-        tolerance=normative_tolerance_percent(target_percent),
+
+    tolerance = normative_tolerance_percent(target_percent)
+    return any(
+        matches_percent_target(candidate, target_percent, tolerance=tolerance)
+        for candidate in candidates
     )
 
 
@@ -603,9 +699,9 @@ def item_label(vignette_name: str, problem_type: str) -> str:
     return f"{vignette_name} ({problem_type})"
 
 
-def condition_column(response_type: str, has_statistics: str) -> str:
-    suffix = "probs" if str(has_statistics).strip().lower() == "true" else "no_probs"
-    return f"{response_type}_{suffix}"
+def condition_column(response_type: str, has_statistics: str | None = None) -> str:
+    del has_statistics
+    return f"{response_type}_probs"
 
 
 def score_pivot_dataframe(merged_rows: list[dict[str, str]]) -> "pd.DataFrame":
@@ -735,13 +831,12 @@ def merge_run_results(
             run_row = run_by_key.get((example_id, model), {})
             scored = score_by_key[(example_id, model)]
             response = str(run_row.get("response") or "")
-            answer_line, confidence_line = split_response_lines(response)
             merge_fields = {
                 "model": model,
                 "llm_response": response,
                 "reasoning": _normalize_reasoning(run_row.get("reasoning")),
-                "answer_line": answer_line,
-                "confidence_line": confidence_line,
+                "answer_line": scored.answer_line,
+                "confidence_line": scored.confidence_line,
                 **example_score_to_merge_fields(scored),
             }
             merged.append({**benchmark_row, **merge_fields})

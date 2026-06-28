@@ -10,11 +10,13 @@ from benchmarks.base_rate import (
     merge_run_results,
     parse_mc_choice,
     parse_response,
+    parse_open_response,
     prompts_to_dataframe,
     score_base_rate_responses,
     score_example,
     score_mc_numeric_example,
     score_pivot_dataframe,
+    split_mc_response_lines,
     split_response_lines,
     write_merged_results_csv,
 )
@@ -31,14 +33,14 @@ class TestBenchmarkData:
 
     def test_load_benchmark(self):
         items = load_benchmark()
-        assert len(items) == 120
+        assert len(items) == 34
         response_types = {item.response_type for item in items.values()}
         assert response_types == {"open", "mc_numeric", "mc_full"}
 
     def test_prompts_dataframe(self):
         df = prompts_to_dataframe()
         assert list(df.columns) == ["example_id", "prompt"]
-        assert len(df) == 120
+        assert len(df) == 34
         assert "statistical consultant" in df.iloc[0]["prompt"]
 
     def test_prompts_dataframe_max_prompts(self):
@@ -52,12 +54,54 @@ class TestParsing:
     def test_split_response_lines(self):
         assert split_response_lines("91%\n4") == ("91%", "4")
 
-    def test_parse_open_probability(self):
-        parsed = parse_response("91%\n4", scoring_type="open")
-        assert parsed.answer_type == "probability"
-        assert parsed.percent == 91.0
+    def test_split_mc_response_lines_uses_tail(self):
+        answer, confidence = split_mc_response_lines(
+            "Let me work through this.\n\nInsufficient information.\nG\n4"
+        )
+        assert answer == "G"
+        assert confidence == "4"
+
+    def test_split_mc_response_lines_keeps_answer_first_format(self):
+        answer, confidence = split_mc_response_lines("A\n4\n\nLet me verify.")
+        assert answer == "A"
+        assert confidence == "4"
+
+    def test_parse_mc_choice(self):
+        assert parse_mc_choice("B\n5") == "B"
+        assert parse_mc_choice("I choose option H.") == "H"
+        assert parse_mc_choice("Patient A1c is elevated.") is None
+
+    def test_mc_full_verbose_choice_on_last_line(self):
+        parsed = parse_response(
+            "Let me work through this.\n\nInsufficient information.\nG\n4",
+            scoring_type="mc_full",
+        )
+        assert parsed.choice == "G"
         assert parsed.confidence == 4
-        assert parsed.answer_line == "91%"
+
+    def test_mc_numeric_verbose_choice_on_last_line(self):
+        parsed = parse_response(
+            "Computing posteriors.\n\nBest match is about 91%.\nA\n3",
+            scoring_type="mc_numeric",
+        )
+        assert parsed.choice == "A"
+        assert parsed.confidence == 3
+
+    def test_open_verbose_response_rescores_from_embedded_percent(self):
+        items = load_benchmark()
+        example_id = "discharged_weapon_last_year__open_probs"
+        item = items[example_id]
+        parsed = parse_open_response(
+            "Working through the tree.\nPosterior is about 91%.\n4"
+        )
+        assert parsed.confidence == 4
+        assert 91.0 in parsed.percent_candidates
+        assert matches_scepticism_target(item, parsed) is True
+
+    def test_open_short_format_still_parses(self):
+        parsed = parse_open_response("91.2%\n4")
+        assert parsed.percent == 91.2
+        assert parsed.confidence == 4
 
     def test_parse_open_meta(self):
         parsed = parse_response(
@@ -66,10 +110,6 @@ class TestParsing:
         )
         assert parsed.answer_type == "meta_insufficient"
         assert parsed.confidence_line == "2"
-
-    def test_parse_mc_choice(self):
-        assert parse_mc_choice("B\n5") == "B"
-        assert parse_mc_choice("I choose option H.") == "H"
 
 
 class TestScoring:
@@ -104,23 +144,15 @@ class TestScoring:
 
     def test_open_overlap_partition_percent_within_half_percent(self):
         items = load_benchmark()
-        example_id = "diabetes_insulin_obese__overlap__open_probs"
-        item = items[example_id]
-        target = float(item.scepticism_score_target)
-        score = score_base_rate_responses(
-            {example_id: f"{target + 0.4}%\n2"},
-            items=items,
-        )
-        assert score.examples[0].score is True
-        miss = score_base_rate_responses(
-            {example_id: f"{target + 0.6}%\n2"},
-            items=items,
-        )
-        assert miss.examples[0].score is False
+        example_id = "diabetes_insulin_obese__overlap__mc_full_probs"
+        meta_score = score_base_rate_responses({example_id: "F\n2"}, items=items)
+        assert meta_score.examples[0].score is True
+        lure_score = score_base_rate_responses({example_id: "A\n2"}, items=items)
+        assert lure_score.examples[0].score is False
 
     def test_open_small_posterior_off_target_is_not_scored(self):
         items = load_benchmark()
-        example_id = "actor_waiter_overlap__overlap__open_no_probs"
+        example_id = "actor_waiter_overlap__overlap__open_probs"
         parsed = parse_response("2%\n2", scoring_type="open")
         scored = score_example(items[example_id], parsed)
         assert scored.score is False
@@ -241,7 +273,7 @@ class TestMergeResults:
         assert pivot_path.is_file()
         with out.open(encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
-        assert len(rows) == 120
+        assert len(rows) == 34
         assert "llm_response" in rows[0]
         assert "score" in rows[0]
         assert "model" in rows[0]
@@ -265,15 +297,12 @@ class TestScorePivot:
         pivot = score_pivot_dataframe(merged)
         assert list(pivot.columns) == [
             "open_probs",
-            "open_no_probs",
             "mc_numeric_probs",
-            "mc_numeric_no_probs",
             "mc_full_probs",
-            "mc_full_no_probs",
         ]
         assert list(pivot.index) == ["model-a"]
-        assert pivot.loc["model-a", "open_probs"] == round(1 / 20, 3)
-        assert pivot.loc["model-a", "open_no_probs"] == 0.0
+        assert pivot.loc["model-a", "open_probs"] == round(1 / 7, 3)
+        assert pivot.loc["model-a", "mc_numeric_probs"] == 0.0
 
     def test_score_pivot_multiple_models(self):
         items = load_benchmark()
@@ -297,9 +326,9 @@ class TestScorePivot:
         )
         pivot = score_pivot_dataframe(merged)
         assert set(pivot.index) == {"model-a", "model-b"}
-        assert pivot.loc["model-a", "open_probs"] == round(1 / 20, 3)
-        assert pivot.loc["model-b", "open_probs"] == round(1 / 20, 3)
-        assert len(merged) == 120 * 2
+        assert pivot.loc["model-a", "open_probs"] == round(1 / 7, 3)
+        assert pivot.loc["model-b", "open_probs"] == round(1 / 7, 3)
+        assert len(merged) == 34 * 2
 
 
 class TestTaskRegistration:

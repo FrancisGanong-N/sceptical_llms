@@ -1,0 +1,2251 @@
+example_id,vignette_name,problem_type,intersection_size,response_type,has_statistics,variant,prompt,well_posed,normative,p_c_and_d_given_a,normative_choice,normative_percent,normative_open,confidence_required,numeric_score_percent,numeric_score_choice,scepticism_required,scepticism_score_target,option_a_label,option_b_label,option_c_label,option_d_label,option_e_label,option_a_lure,option_b_lure,option_c_lure,option_d_lure,option_e_lure,option_f_label,option_g_label,option_h_label,option_f_lure,option_g_lure,option_h_lure,model,llm_response,reasoning,answer_line,confidence_line,parsed_answer_type,parsed_percent,parsed_choice,parsed_confidence,scoring_type,parseable,score
+actor_waiter_overlap__overlap__implausible__mc_full_no_probs,actor waiter overlap,overlap,small,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), some are actors and the rest are non-actors.
+Among actors, some also work as waiters and some have a secondary acting job. An estimated 1.8% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was an actor or a non-actor and who worked part-time at their primary job in the reference week was an actor.
+
+A. About 0%
+B. About 62%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.018,A,0.1291,0.1%,true,0.1314,A,true,H,About 0%,About 62%,,,,overlap-aware Bayes (uses P(C∩D|A) estimate),P(T | A) confusion,,,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"A
+4",,A,4,mc_choice,,A,4,mc_full,true,false
+actor_waiter_overlap__overlap__implausible__mc_full_probs,actor waiter overlap,overlap,small,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.03% are actors and the remainder are non-actors.
+Among actors, 70% also work as waiters and 30% have a secondary acting job. An estimated 1.8% fall into both categories.
+Among actors who also work as waiters, 65% worked part-time at their primary job in the reference week; among actors whose acting job is secondary, 55% worked part-time at their primary job in the reference week; among non-actors, 16% worked part-time at their primary job in the reference week.
+
+Given that an actor or a non-actor worked part-time at their primary job in the reference week, what is the probability the person was an actor?
+
+A. About 0%
+B. About 62%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.018,A,0.1291,0.1%,true,0.1314,A,true,H,About 0%,About 62%,,,,overlap-aware Bayes (uses P(C∩D|A) estimate),P(T | A) confusion,,,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"A
+5",,A,5,mc_choice,,A,5,mc_full,true,false
+actor_waiter_overlap__overlap__implausible__mc_numeric_no_probs,actor waiter overlap,overlap,small,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), some are actors and the rest are non-actors.
+Among actors, some also work as waiters and some have a secondary acting job. An estimated 1.8% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was an actor or a non-actor and who worked part-time at their primary job in the reference week was an actor.
+
+A. About 0%
+B. About 62%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.018,A,0.1291,0.1%,true,0.1314,A,true,n/a,About 0%,About 62%,,,,overlap-aware Bayes (uses P(C∩D|A) estimate),P(T | A) confusion,,,,,,,,,,anthropic/claude-opus-4-8@default,"A
+5",,A,5,mc_choice,,A,5,mc_numeric,true,false
+actor_waiter_overlap__overlap__implausible__mc_numeric_probs,actor waiter overlap,overlap,small,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.03% are actors and the remainder are non-actors.
+Among actors, 70% also work as waiters and 30% have a secondary acting job. An estimated 1.8% fall into both categories.
+Among actors who also work as waiters, 65% worked part-time at their primary job in the reference week; among actors whose acting job is secondary, 55% worked part-time at their primary job in the reference week; among non-actors, 16% worked part-time at their primary job in the reference week.
+
+Given that an actor or a non-actor worked part-time at their primary job in the reference week, what is the probability the person was an actor?
+
+A. About 0%
+B. About 62%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.018,A,0.1291,0.1%,true,0.1314,A,true,n/a,About 0%,About 62%,,,,overlap-aware Bayes (uses P(C∩D|A) estimate),P(T | A) confusion,,,,,,,,,,anthropic/claude-opus-4-8@default,"A
+5",,A,5,mc_choice,,A,5,mc_numeric,true,false
+actor_waiter_overlap__overlap__implausible__open_no_probs,actor waiter overlap,overlap,small,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), some are actors and the rest are non-actors.
+Among actors, some also work as waiters and some have a secondary acting job. An estimated 1.8% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was an actor or a non-actor and who worked part-time at their primary job in the reference week was an actor.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.018,,0.1291,0.1%,true,0.1314,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"About 0.05%
+2
+
+Let me reconsider.
+
+The ""actor or non-actor"" category is everyone in the labor force (~166.4 million). So I need P(actor | works part-time at primary job).
+
+Number of actors in the US labor force is roughly 50,000–70,000 (BLS estimates ~60,000 actors). Actors disproportionately work part-time, but even generously assuming many work part-",,About 0.05%,2,probability,0.05,,2,open,true,false
+actor_waiter_overlap__overlap__implausible__open_probs,actor waiter overlap,overlap,small,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.03% are actors and the remainder are non-actors.
+Among actors, 70% also work as waiters and 30% have a secondary acting job. An estimated 1.8% fall into both categories.
+Among actors who also work as waiters, 65% worked part-time at their primary job in the reference week; among actors whose acting job is secondary, 55% worked part-time at their primary job in the reference week; among non-actors, 16% worked part-time at their primary job in the reference week.
+
+Given that an actor or a non-actor worked part-time at their primary job in the reference week, what is the probability the person was an actor?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.018,,0.1291,0.1%,true,0.1314,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(actor | part-time).
+
+**Setup:**
+- P(actor) = 0.0003, P(non-actor) = 0.9997
+- Among actors: 70% waiters, 30% secondary acting job, 1.8% both
+- Among actors who are waiters: 65% part-time
+- Among actors with secondary acting: 55% part-time
+- Among non-actors: 16% part-",,I need to find P(actor | part-time).,**Setup:**,unparseable,,,,open,false,false
+actor_waiter_overlap__overlap__mc_full_no_probs,actor waiter overlap,overlap,small,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), some are actors and the rest are non-actors.
+Among actors, some also work as waiters and some have a secondary acting job. An estimated 1.8% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was an actor or a non-actor and who worked part-time at their primary job in the reference week was an actor.
+
+A. About 0%
+B. About 19%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.018,A,0.03737,0.04%,true,0.03966,A,false,A,About 0%,About 19%,,,,overlap-aware Bayes (uses P(C∩D|A) estimate),P(T | A) confusion,,,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"A
+4",,A,4,mc_choice,,A,4,mc_full,true,true
+actor_waiter_overlap__overlap__mc_full_probs,actor waiter overlap,overlap,small,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.03% are actors and the remainder are non-actors.
+Among actors, 3.5% also work as waiters and 30% have a secondary acting job. An estimated 1.8% fall into both categories.
+Among actors who also work as waiters, 65% worked part-time at their primary job in the reference week; among actors whose acting job is secondary, 55% worked part-time at their primary job in the reference week; among non-actors, 16% worked part-time at their primary job in the reference week.
+
+Given that an actor or a non-actor worked part-time at their primary job in the reference week, what is the probability the person was an actor?
+
+A. About 0%
+B. About 19%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.018,A,0.03737,0.04%,true,0.03966,A,false,A,About 0%,About 19%,,,,overlap-aware Bayes (uses P(C∩D|A) estimate),P(T | A) confusion,,,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"A
+4",,A,4,mc_choice,,A,4,mc_full,true,true
+actor_waiter_overlap__overlap__mc_numeric_no_probs,actor waiter overlap,overlap,small,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), some are actors and the rest are non-actors.
+Among actors, some also work as waiters and some have a secondary acting job. An estimated 1.8% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was an actor or a non-actor and who worked part-time at their primary job in the reference week was an actor.
+
+A. About 0%
+B. About 19%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.018,A,0.03737,0.04%,true,0.03966,A,false,n/a,About 0%,About 19%,,,,overlap-aware Bayes (uses P(C∩D|A) estimate),P(T | A) confusion,,,,,,,,,,anthropic/claude-opus-4-8@default,"A
+4",,A,4,mc_choice,,A,4,mc_numeric,true,true
+actor_waiter_overlap__overlap__mc_numeric_probs,actor waiter overlap,overlap,small,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.03% are actors and the remainder are non-actors.
+Among actors, 3.5% also work as waiters and 30% have a secondary acting job. An estimated 1.8% fall into both categories.
+Among actors who also work as waiters, 65% worked part-time at their primary job in the reference week; among actors whose acting job is secondary, 55% worked part-time at their primary job in the reference week; among non-actors, 16% worked part-time at their primary job in the reference week.
+
+Given that an actor or a non-actor worked part-time at their primary job in the reference week, what is the probability the person was an actor?
+
+A. About 0%
+B. About 19%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.018,A,0.03737,0.04%,true,0.03966,A,false,n/a,About 0%,About 19%,,,,overlap-aware Bayes (uses P(C∩D|A) estimate),P(T | A) confusion,,,,,,,,,,anthropic/claude-opus-4-8@default,"A
+5",,A,5,mc_choice,,A,5,mc_numeric,true,true
+actor_waiter_overlap__overlap__open_no_probs,actor waiter overlap,overlap,small,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), some are actors and the rest are non-actors.
+Among actors, some also work as waiters and some have a secondary acting job. An estimated 1.8% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was an actor or a non-actor and who worked part-time at their primary job in the reference week was an actor.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.018,,0.03737,0.04%,true,0.03966,,false,0.03737,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"About 0.05%
+2",,About 0.05%,2,probability,0.05,,2,open,true,true
+actor_waiter_overlap__overlap__open_probs,actor waiter overlap,overlap,small,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.03% are actors and the remainder are non-actors.
+Among actors, 3.5% also work as waiters and 30% have a secondary acting job. An estimated 1.8% fall into both categories.
+Among actors who also work as waiters, 65% worked part-time at their primary job in the reference week; among actors whose acting job is secondary, 55% worked part-time at their primary job in the reference week; among non-actors, 16% worked part-time at their primary job in the reference week.
+
+Given that an actor or a non-actor worked part-time at their primary job in the reference week, what is the probability the person was an actor?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.018,,0.03737,0.04%,true,0.03966,,false,0.03737,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(actor | part-time).
+
+**Setup of population:**
+- Total: 166.4 million
+- Actors: 0.03% = 0.0003 × 166.4M = 49,920
+- Non-actors: 166,350,080
+
+**Among actors (49,920):**
+- Waiters: 3.5% = 1,747.2
+- Secondary acting job: 30% = 14,976
+-",,I need to find P(actor | part-time).,**Setup of population:**,unparseable,,,,open,false,false
+ca_trump_voter__implausible__mc_full_no_probs,CA Trump voter,well_posed,0,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, some are registered in California and the rest are registered elsewhere.
+Among those registered in California, some are registered in southern California and some in other parts of the state.
+
+Using knowledge of the world, please estimate the probability that someone who voted for Donald Trump in the 2024 presidential election was registered in California.
+
+A. About 75%
+B. About 17%
+C. About 55%
+D. About 63%
+E. About 28%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,74.67,75%,true,74.65,A,true,H,About 75%,About 17%,About 55%,About 63%,About 28%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),P(T | A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"B
+3",,B,3,mc_choice,,B,3,mc_full,true,false
+ca_trump_voter__implausible__mc_full_probs,CA Trump voter,well_posed,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 80% are registered in California and the remainder are registered elsewhere.
+Among those registered in California, 60% registered in southern California and 38% registered in other parts of the state.
+Among those registered in southern California, 27% voted for Donald Trump in the 2024 presidential election; among those registered in other parts of the state, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
+
+Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
+
+A. About 75%
+B. About 17%
+C. About 63%
+D. About 55%
+E. About 28%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,74.67,75%,true,74.65,A,true,H,About 75%,About 17%,About 63%,About 55%,About 28%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_d*s_d only (second pathway; assumes partition),q_c*s_c only (first pathway; assumes partition),P(T | A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"Let me work through this.
+
+Among California voters: 60% southern, 38% other = 98% (2% unaccounted, but proceed).
+
+P(CA) = 0.80
+- Southern CA: 0.80 × 0.60 = 0.48, Trump: 0.48 × 0.27 = 0.1296
+- Other CA: 0.80 × 0.38 = 0.304, Trump: ",,Let me work through this.,"Among California voters: 60% southern, 38% other = 98% (2% unaccounted, but proceed).",unparseable,,,2,mc_full,false,false
+ca_trump_voter__implausible__mc_numeric_no_probs,CA Trump voter,well_posed,0,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, some are registered in California and the rest are registered elsewhere.
+Among those registered in California, some are registered in southern California and some in other parts of the state.
+
+Using knowledge of the world, please estimate the probability that someone who voted for Donald Trump in the 2024 presidential election was registered in California.
+
+A. About 75%
+B. About 17%
+C. About 63%
+D. About 55%
+E. About 80%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,74.67,75%,true,74.65,A,true,n/a,About 75%,About 17%,About 63%,About 55%,About 80%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_d*s_d only (second pathway; assumes partition),q_c*s_c only (first pathway; assumes partition),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"B
+4",,B,4,mc_choice,,B,4,mc_numeric,true,false
+ca_trump_voter__implausible__mc_numeric_probs,CA Trump voter,well_posed,0,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 80% are registered in California and the remainder are registered elsewhere.
+Among those registered in California, 60% registered in southern California and 38% registered in other parts of the state.
+Among those registered in southern California, 27% voted for Donald Trump in the 2024 presidential election; among those registered in other parts of the state, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
+
+Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
+
+A. About 75%
+B. About 63%
+C. About 17%
+D. About 55%
+E. About 28%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,74.67,75%,true,74.65,A,true,n/a,About 75%,About 63%,About 17%,About 55%,About 28%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),P(T | A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"Let me compute the joint probabilities.
+
+P(California) = 0.80
+- Southern CA: 0.80 × 0.60 = 0.48, Trump: 0.48 × 0.27 = 0.1296
+- Other CA: 0.80 × 0.38 = 0.304, Trump: 0.304 × 0.31 = 0.09424
+- (Note: 0.60 + 0",,Let me compute the joint probabilities.,P(California) = 0.80,unparseable,,,,mc_numeric,false,false
+ca_trump_voter__implausible__open_no_probs,CA Trump voter,well_posed,0,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, some are registered in California and the rest are registered elsewhere.
+Among those registered in California, some are registered in southern California and some in other parts of the state.
+
+Using knowledge of the world, please estimate the probability that someone who voted for Donald Trump in the 2024 presidential election was registered in California.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,,74.67,75%,true,74.65,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"6%
+2",,6%,2,probability,6,,2,open,true,false
+ca_trump_voter__implausible__open_probs,CA Trump voter,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 80% are registered in California and the remainder are registered elsewhere.
+Among those registered in California, 60% registered in southern California and 38% registered in other parts of the state.
+Among those registered in southern California, 27% voted for Donald Trump in the 2024 presidential election; among those registered in other parts of the state, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
+
+Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,,74.67,75%,true,74.65,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Let me work through this with the given numbers.
+
+P(CA) = 0.80, P(elsewhere) = 0.20
+Within CA: Southern = 0.60, other parts = 0.38 (note: sums to 0.98, not 1.00)
+
+Southern CA: 0.80 × 0.60 = 0.48, Trump 0.27 → 0.1296
+Other CA: 0.80 ",,Let me work through this with the given numbers.,"P(CA) = 0.80, P(elsewhere) = 0.20",unparseable,,,,open,false,false
+ca_trump_voter__mc_full_no_probs,CA Trump voter,well_posed,0,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, some are registered in California and the rest are registered elsewhere.
+Among those registered in California, some are registered in southern California and some in other parts of the state.
+
+Using knowledge of the world, please estimate the probability that someone who voted for Donald Trump in the 2024 presidential election was registered in California.
+
+A. About 10%
+B. About 4%
+C. About 6%
+D. About 1%
+E. About 13%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,9.918,9.9%,true,9.912,A,false,A,About 10%,About 4%,About 6%,About 1%,About 13%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),P(A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"A
+3",,A,3,mc_choice,,A,3,mc_full,true,true
+ca_trump_voter__mc_full_probs,CA Trump voter,well_posed,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 13% are registered in California and the remainder are registered elsewhere.
+Among those registered in California, 60% registered in southern California and 38% registered in other parts of the state.
+Among those registered in southern California, 27% voted for Donald Trump in the 2024 presidential election; among those registered in other parts of the state, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
+
+Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
+
+A. About 10%
+B. About 4%
+C. About 6%
+D. About 1%
+E. About 13%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,9.918,9.9%,true,9.912,A,false,A,About 10%,About 4%,About 6%,About 1%,About 13%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),P(A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"Let me compute the probabilities.
+
+P(California) = 0.13, P(elsewhere) = 0.87
+
+Within California:
+- Southern: 0.60 × 0.13 = 0.078, Trump: 0.27 → 0.02106
+- Other CA: 0.38 × 0.13 = 0.0494, Trump: 0.31 → 0.015314
+- (Note: 60% +",,Let me compute the probabilities.,"P(California) = 0.13, P(elsewhere) = 0.87",unparseable,,,,mc_full,false,false
+ca_trump_voter__mc_numeric_no_probs,CA Trump voter,well_posed,0,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, some are registered in California and the rest are registered elsewhere.
+Among those registered in California, some are registered in southern California and some in other parts of the state.
+
+Using knowledge of the world, please estimate the probability that someone who voted for Donald Trump in the 2024 presidential election was registered in California.
+
+A. About 10%
+B. About 1%
+C. About 6%
+D. About 4%
+E. About 13%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,9.918,9.9%,true,9.912,A,false,n/a,About 10%,About 1%,About 6%,About 4%,About 13%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_d*s_d only (second pathway; assumes partition),q_c*s_c only (first pathway; assumes partition),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"A
+3",,A,3,mc_choice,,A,3,mc_numeric,true,true
+ca_trump_voter__mc_numeric_probs,CA Trump voter,well_posed,0,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 13% are registered in California and the remainder are registered elsewhere.
+Among those registered in California, 60% registered in southern California and 38% registered in other parts of the state.
+Among those registered in southern California, 27% voted for Donald Trump in the 2024 presidential election; among those registered in other parts of the state, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
+
+Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
+
+A. About 10%
+B. About 1%
+C. About 4%
+D. About 6%
+E. About 13%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,9.918,9.9%,true,9.912,A,false,n/a,About 10%,About 1%,About 4%,About 6%,About 13%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"A
+5",,A,5,mc_choice,,A,5,mc_numeric,true,true
+ca_trump_voter__open_no_probs,CA Trump voter,well_posed,0,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, some are registered in California and the rest are registered elsewhere.
+Among those registered in California, some are registered in southern California and some in other parts of the state.
+
+Using knowledge of the world, please estimate the probability that someone who voted for Donald Trump in the 2024 presidential election was registered in California.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,,9.918,9.9%,true,9.912,,false,9.918,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"6%
+2",,6%,2,probability,6,,2,open,true,false
+ca_trump_voter__open_probs,CA Trump voter,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 13% are registered in California and the remainder are registered elsewhere.
+Among those registered in California, 60% registered in southern California and 38% registered in other parts of the state.
+Among those registered in southern California, 27% voted for Donald Trump in the 2024 presidential election; among those registered in other parts of the state, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
+
+Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,,9.918,9.9%,true,9.912,,false,9.918,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Let me compute the joint probabilities.
+
+California: 0.13
+- Southern CA: 0.13 × 0.60 = 0.078, Trump: 0.078 × 0.27 = 0.02106
+- Other CA: 0.13 × 0.38 = 0.0494, Trump: 0.0494 × 0.31 = 0.015314
+- (Note: 60% + 38% = ",,Let me compute the joint probabilities.,California: 0.13,unparseable,,,,open,false,false
+college_stem_work__overlap__implausible__mc_full_no_probs,college STEM work,overlap,medium,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), some are first-generation students.
+Among first-generation students, some major in STEM and some work while enrolled. An estimated 9% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a first-generation student or a continuing-generation student and who returned for a second year was a first-generation student.
+
+A. About 8%
+B. About 11%
+C. About 6%
+D. About 1%
+E. About 26%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.09,A,8.312,8.3%,true,10.63,B,true,H,About 8%,About 11%,About 6%,About 1%,About 26%,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c only (first pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),P(A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"E
+2",,E,2,mc_choice,,E,2,mc_full,true,false
+college_stem_work__overlap__implausible__mc_full_probs,college STEM work,overlap,medium,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), 26% are first-generation students and the remainder are continuing-generation students.
+Among first-generation students, 18% major in STEM and 20% work while enrolled. An estimated 9% fall into both categories.
+Among STEM majors, 85% returned for a second year; among students who work while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
+
+Given that a first-generation student or a continuing-generation student returned for a second year, what is the probability the person was a first-generation student?
+
+A. About 8%
+B. About 11%
+C. About 6%
+D. About 1%
+E. About 30%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.09,A,8.312,8.3%,true,10.63,B,true,H,About 8%,About 11%,About 6%,About 1%,About 30%,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c only (first pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),P(T | A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"F
+3",,F,3,mc_choice,,F,3,mc_full,true,false
+college_stem_work__overlap__implausible__mc_numeric_no_probs,college STEM work,overlap,medium,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), some are first-generation students.
+Among first-generation students, some major in STEM and some work while enrolled. An estimated 9% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a first-generation student or a continuing-generation student and who returned for a second year was a first-generation student.
+
+A. About 8%
+B. About 11%
+C. About 1%
+D. About 6%
+E. About 26%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.09,A,8.312,8.3%,true,10.63,B,true,n/a,About 8%,About 11%,About 1%,About 6%,About 26%,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"E
+3",,E,3,mc_choice,,E,3,mc_numeric,true,false
+college_stem_work__overlap__implausible__mc_numeric_probs,college STEM work,overlap,medium,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), 26% are first-generation students and the remainder are continuing-generation students.
+Among first-generation students, 18% major in STEM and 20% work while enrolled. An estimated 9% fall into both categories.
+Among STEM majors, 85% returned for a second year; among students who work while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
+
+Given that a first-generation student or a continuing-generation student returned for a second year, what is the probability the person was a first-generation student?
+
+A. About 8%
+B. About 11%
+C. About 1%
+D. About 6%
+E. About 26%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.09,A,8.312,8.3%,true,10.63,B,true,n/a,About 8%,About 11%,About 1%,About 6%,About 26%,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"E
+2",,E,2,mc_choice,,E,2,mc_numeric,true,false
+college_stem_work__overlap__implausible__open_no_probs,college STEM work,overlap,medium,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), some are first-generation students.
+Among first-generation students, some major in STEM and some work while enrolled. An estimated 9% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a first-generation student or a continuing-generation student and who returned for a second year was a first-generation student.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.09,,8.312,8.3%,true,10.63,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Insufficient information
+4",,Insufficient information,4,meta_insufficient,,,4,open,true,true
+college_stem_work__overlap__implausible__open_probs,college STEM work,overlap,medium,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), 26% are first-generation students and the remainder are continuing-generation students.
+Among first-generation students, 18% major in STEM and 20% work while enrolled. An estimated 9% fall into both categories.
+Among STEM majors, 85% returned for a second year; among students who work while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
+
+Given that a first-generation student or a continuing-generation student returned for a second year, what is the probability the person was a first-generation student?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.09,,8.312,8.3%,true,10.63,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Insufficient information
+4",,Insufficient information,4,meta_insufficient,,,4,open,true,true
+college_stem_work__overlap__mc_full_no_probs,college STEM work,overlap,medium,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), some are first-generation students.
+Among first-generation students, some major in STEM and some work while enrolled. An estimated 9% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a first-generation student or a continuing-generation student and who returned for a second year was a first-generation student.
+
+A. About 18%
+B. About 20%
+C. About 6%
+D. About 16%
+E. About 3%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.09,A,18.38,18%,true,20.22,B,true,F|G|H,About 18%,About 20%,About 6%,About 16%,About 3%,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"A
+2",,A,2,mc_choice,,A,2,mc_full,true,false
+college_stem_work__overlap__mc_full_probs,college STEM work,overlap,medium,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), 26% are first-generation students and the remainder are continuing-generation students.
+Among first-generation students, 18% major in STEM and 66% work while enrolled. An estimated 9% fall into both categories.
+Among STEM majors, 85% returned for a second year; among students who work while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
+
+Given that a first-generation student or a continuing-generation student returned for a second year, what is the probability the person was a first-generation student?
+
+A. About 18%
+B. About 20%
+C. About 6%
+D. About 16%
+E. About 3%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.09,A,18.38,18%,true,20.22,B,true,F|G|H,About 18%,About 20%,About 6%,About 16%,About 3%,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"F
+3",,F,3,mc_choice,,F,3,mc_full,true,true
+college_stem_work__overlap__mc_numeric_no_probs,college STEM work,overlap,medium,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), some are first-generation students.
+Among first-generation students, some major in STEM and some work while enrolled. An estimated 9% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a first-generation student or a continuing-generation student and who returned for a second year was a first-generation student.
+
+A. About 18%
+B. About 20%
+C. About 6%
+D. About 16%
+E. About 3%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.09,A,18.38,18%,true,20.22,B,true,B,About 18%,About 20%,About 6%,About 16%,About 3%,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),,,,,,,anthropic/claude-opus-4-8@default,"A
+2",,A,2,mc_choice,,A,2,mc_numeric,true,false
+college_stem_work__overlap__mc_numeric_probs,college STEM work,overlap,medium,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), 26% are first-generation students and the remainder are continuing-generation students.
+Among first-generation students, 18% major in STEM and 66% work while enrolled. An estimated 9% fall into both categories.
+Among STEM majors, 85% returned for a second year; among students who work while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
+
+Given that a first-generation student or a continuing-generation student returned for a second year, what is the probability the person was a first-generation student?
+
+A. About 18%
+B. About 20%
+C. About 3%
+D. About 16%
+E. About 6%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.09,A,18.38,18%,true,20.22,B,true,B,About 18%,About 20%,About 3%,About 16%,About 6%,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c × q_d*s_d (product; assumes independence),q_d*s_d only (second pathway; assumes partition),q_c*s_c only (first pathway; assumes partition),,,,,,,anthropic/claude-opus-4-8@default,"A
+2",,A,2,mc_choice,,A,2,mc_numeric,true,false
+college_stem_work__overlap__open_no_probs,college STEM work,overlap,medium,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), some are first-generation students.
+Among first-generation students, some major in STEM and some work while enrolled. An estimated 9% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a first-generation student or a continuing-generation student and who returned for a second year was a first-generation student.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.09,,18.38,18%,true,20.22,,true,20.22,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Insufficient information
+4",,Insufficient information,4,meta_insufficient,,,4,open,true,false
+college_stem_work__overlap__open_probs,college STEM work,overlap,medium,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), 26% are first-generation students and the remainder are continuing-generation students.
+Among first-generation students, 18% major in STEM and 66% work while enrolled. An estimated 9% fall into both categories.
+Among STEM majors, 85% returned for a second year; among students who work while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
+
+Given that a first-generation student or a continuing-generation student returned for a second year, what is the probability the person was a first-generation student?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.09,,18.38,18%,true,20.22,,true,20.22,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Insufficient information
+4",,Insufficient information,4,meta_insufficient,,,4,open,true,false
+covid_vaccine_blue_red__implausible__mc_full_no_probs,covid vaccine (blue/red),well_posed,0,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, some received the 2024-25 COVID vaccine and the rest did not.
+Among the vaccinated, some live in blue states and some live in red states.
+
+Using knowledge of the world, please estimate the probability that someone who had COVID-19 in the past 12 months was vaccinated for 2024-25 COVID.
+
+A. About 63%
+B. About 62%
+C. About 8%
+D. About 4%
+E. About 27%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,62.94,63%,true,62.94,A,true,H,About 63%,About 62%,About 8%,About 4%,About 27%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),P(A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"E
+2",,E,2,mc_choice,,E,2,mc_full,true,false
+covid_vaccine_blue_red__implausible__mc_full_probs,covid vaccine (blue/red),well_posed,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 27% received the 2024-25 COVID vaccine and the remainder did not.
+Among the vaccinated, 71% live in blue states and 29% live in red states.
+Among those who live in blue states, 80% had COVID-19 in the past 12 months; among those who live in red states, 10% had COVID-19 in the past 12 months; among the unvaccinated, 13% had COVID-19 in the past 12 months.
+
+Given that someone had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
+
+A. About 63%
+B. About 4%
+C. About 8%
+D. About 62%
+E. About 27%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,62.94,63%,true,62.94,A,true,H,About 63%,About 4%,About 8%,About 62%,About 27%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_d*s_d only (second pathway; assumes partition),q_c*s_c only (first pathway; assumes partition),P(A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"Let me work through this with Bayes' theorem.
+
+P(vaccinated) = 0.27, P(unvaccinated) = 0.73
+
+Among vaccinated:
+- Blue state: 0.71, COVID rate 0.80
+- Red state: 0.29, COVID rate 0.10
+- P(COVID | vaccinated) = 0.71(0.80) + 0.29(0.10",,Let me work through this with Bayes' theorem.,"P(vaccinated) = 0.27, P(unvaccinated) = 0.73",unparseable,,,,mc_full,false,false
+covid_vaccine_blue_red__implausible__mc_numeric_no_probs,covid vaccine (blue/red),well_posed,0,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, some received the 2024-25 COVID vaccine and the rest did not.
+Among the vaccinated, some live in blue states and some live in red states.
+
+Using knowledge of the world, please estimate the probability that someone who had COVID-19 in the past 12 months was vaccinated for 2024-25 COVID.
+
+A. About 63%
+B. About 62%
+C. About 4%
+D. About 8%
+E. About 60%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,62.94,63%,true,62.94,A,true,n/a,About 63%,About 62%,About 4%,About 8%,About 60%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),q_d*s_d only (second pathway; assumes partition),P(T | A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"D
+2",,D,2,mc_choice,,D,2,mc_numeric,true,false
+covid_vaccine_blue_red__implausible__mc_numeric_probs,covid vaccine (blue/red),well_posed,0,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 27% received the 2024-25 COVID vaccine and the remainder did not.
+Among the vaccinated, 71% live in blue states and 29% live in red states.
+Among those who live in blue states, 80% had COVID-19 in the past 12 months; among those who live in red states, 10% had COVID-19 in the past 12 months; among the unvaccinated, 13% had COVID-19 in the past 12 months.
+
+Given that someone had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
+
+A. About 63%
+B. About 4%
+C. About 62%
+D. About 8%
+E. About 27%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,62.94,63%,true,62.94,A,true,n/a,About 63%,About 4%,About 62%,About 8%,About 27%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"A
+4
+
+Let me verify:
+P(vax) = 0.27, P(unvax) = 0.73
+
+Vaccinated: 0.27 × 0.71 = 0.1917 (blue), 0.27 × 0.29 = 0.0783 (red)
+
+COVID among vaccinated:
+- Blue: 0.1917 × 0.80 = 0.15336
+- Red: 0.0",,A,4,mc_choice,,A,4,mc_numeric,true,false
+covid_vaccine_blue_red__implausible__open_no_probs,covid vaccine (blue/red),well_posed,0,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, some received the 2024-25 COVID vaccine and the rest did not.
+Among the vaccinated, some live in blue states and some live in red states.
+
+Using knowledge of the world, please estimate the probability that someone who had COVID-19 in the past 12 months was vaccinated for 2024-25 COVID.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,,62.94,63%,true,62.94,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"23%
+2",,23%,2,probability,23,,2,open,true,false
+covid_vaccine_blue_red__implausible__open_probs,covid vaccine (blue/red),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 27% received the 2024-25 COVID vaccine and the remainder did not.
+Among the vaccinated, 71% live in blue states and 29% live in red states.
+Among those who live in blue states, 80% had COVID-19 in the past 12 months; among those who live in red states, 10% had COVID-19 in the past 12 months; among the unvaccinated, 13% had COVID-19 in the past 12 months.
+
+Given that someone had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,,62.94,63%,true,62.94,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Vaccinated: 0.27
+- Blue: 0.27×0.71=0.1917, COVID: 0.1917×0.80=0.15336
+- Red: 0.27×0.29=0.0783, COVID: 0.0783×0.10=0.00783
+- Vaccinated COVID total: 0.16119
+
+Unvaccinated: 0.73, COVID: 0.73×0",,Vaccinated: 0.27,"- Blue: 0.27×0.71=0.1917, COVID: 0.1917×0.80=0.15336",probability,27,,,open,true,false
+covid_vaccine_blue_red__mc_full_no_probs,covid vaccine (blue/red),well_posed,0,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, some received the 2024-25 COVID vaccine and the rest did not.
+Among the vaccinated, some live in blue states and some live in red states.
+
+Using knowledge of the world, please estimate the probability that someone who had COVID-19 in the past 12 months was vaccinated for 2024-25 COVID.
+
+A. About 20%
+B. About 8%
+C. About 14%
+D. About 0%
+E. About 27%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,19.62,20%,true,19.62,A,false,A,About 20%,About 8%,About 14%,About 0%,About 27%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),q_c*s_c only (first pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),P(A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"A
+2",,A,2,mc_choice,,A,2,mc_full,true,true
+covid_vaccine_blue_red__mc_full_probs,covid vaccine (blue/red),well_posed,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 27% received the 2024-25 COVID vaccine and the remainder did not.
+Among the vaccinated, 71% live in blue states and 29% live in red states.
+Among those who live in blue states, 8% had COVID-19 in the past 12 months; among those who live in red states, 10% had COVID-19 in the past 12 months; among the unvaccinated, 13% had COVID-19 in the past 12 months.
+
+Given that someone had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
+
+A. About 20%
+B. About 8%
+C. About 0%
+D. About 14%
+E. About 9%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,19.62,20%,true,19.62,A,false,A,About 20%,About 8%,About 0%,About 14%,About 9%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),P(T | A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"A
+4
+
+Let me verify: 
+- P(vax)=0.27, blue=0.71×0.27=0.1917, red=0.29×0.27=0.0783
+- COVID among vax: 0.1917×0.08 + 0.0783×0.10 = 0.015336+0.00783=0.023166
+- Unvax=0.73, COVID=0.73×0.13=0.0949
+-",,A,4,mc_choice,,A,4,mc_full,true,true
+covid_vaccine_blue_red__mc_numeric_no_probs,covid vaccine (blue/red),well_posed,0,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, some received the 2024-25 COVID vaccine and the rest did not.
+Among the vaccinated, some live in blue states and some live in red states.
+
+Using knowledge of the world, please estimate the probability that someone who had COVID-19 in the past 12 months was vaccinated for 2024-25 COVID.
+
+A. About 20%
+B. About 0%
+C. About 14%
+D. About 8%
+E. About 9%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,19.62,20%,true,19.62,A,false,n/a,About 20%,About 0%,About 14%,About 8%,About 9%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),P(T | A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"A
+2",,A,2,mc_choice,,A,2,mc_numeric,true,true
+covid_vaccine_blue_red__mc_numeric_probs,covid vaccine (blue/red),well_posed,0,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 27% received the 2024-25 COVID vaccine and the remainder did not.
+Among the vaccinated, 71% live in blue states and 29% live in red states.
+Among those who live in blue states, 8% had COVID-19 in the past 12 months; among those who live in red states, 10% had COVID-19 in the past 12 months; among the unvaccinated, 13% had COVID-19 in the past 12 months.
+
+Given that someone had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
+
+A. About 20%
+B. About 8%
+C. About 14%
+D. About 0%
+E. About 27%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,19.62,20%,true,19.62,A,false,n/a,About 20%,About 8%,About 14%,About 0%,About 27%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),q_c*s_c only (first pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"A
+4
+
+Let me verify: P(vax)=0.27, blue=0.71×0.27=0.1917, red=0.29×0.27=0.0783.
+
+COVID among vaccinated = 0.1917×0.08 + 0.0783×0.10 = 0.015336 + 0.00783 = 0.023166
+COVID among unvaccinated = 0.73×0.13 = 0.",,A,4,mc_choice,,A,4,mc_numeric,true,true
+covid_vaccine_blue_red__open_no_probs,covid vaccine (blue/red),well_posed,0,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, some received the 2024-25 COVID vaccine and the rest did not.
+Among the vaccinated, some live in blue states and some live in red states.
+
+Using knowledge of the world, please estimate the probability that someone who had COVID-19 in the past 12 months was vaccinated for 2024-25 COVID.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,,19.62,20%,true,19.62,,false,19.62,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"20%
+2",,20%,2,probability,20,,2,open,true,true
+covid_vaccine_blue_red__open_probs,covid vaccine (blue/red),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 27% received the 2024-25 COVID vaccine and the remainder did not.
+Among the vaccinated, 71% live in blue states and 29% live in red states.
+Among those who live in blue states, 8% had COVID-19 in the past 12 months; among those who live in red states, 10% had COVID-19 in the past 12 months; among the unvaccinated, 13% had COVID-19 in the past 12 months.
+
+Given that someone had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,,19.62,20%,true,19.62,,false,19.62,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Vaccinated: 0.27, blue 0.71×0.08=0.05680, red 0.29×0.10=0.02900 → P(COVID,vacc)=0.27×(0.0568+0.029)=0.27×0.0858=0.023166
+Unvaccinated: 0.73×0.13=0.0949
+Total COVID = 0.023166+0.0949=0.118066
+",,"Vaccinated: 0.27, blue 0.71×0.08=0.05680, red 0.29×0.10=0.02900 → P(COVID,vacc)=0.27×(0.0568+0.029)=0.27×0.0858=0.023166",Unvaccinated: 0.73×0.13=0.0949,probability,2.3166,,,open,true,false
+diabetes_insulin_obese__overlap__implausible__mc_full_no_probs,diabetes insulin obese,overlap,large,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, some have diagnosed diabetes and the rest do not.
+Among those with diagnosed diabetes, some use insulin and some have obesity. An estimated 19% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that someone who had hemoglobin A1c above 9.0% have diagnosed diabetes.
+
+A. About 81%
+B. About 85%
+C. About 42%
+D. About 83%
+E. About 21%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.188,A,81.21,81%,true,84.66,B,true,H,About 81%,About 85%,About 42%,About 83%,About 21%,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"H
+3",,H,3,mc_choice,,H,3,mc_full,true,true
+diabetes_insulin_obese__overlap__implausible__mc_full_probs,diabetes insulin obese,overlap,large,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 11% have diagnosed diabetes and the remainder do not.
+Among those with diagnosed diabetes, 28% use insulin and 47% have obesity. An estimated 19% fall into both categories.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who have obesity, 80% had hemoglobin A1c above 9.0%; among those without diagnosed diabetes, 1% had hemoglobin A1c above 9.0%.
+
+Given that someone had hemoglobin A1c above 9.0%, what is the probability they have diagnosed diabetes?
+
+A. About 81%
+B. About 85%
+C. About 83%
+D. About 21%
+E. About 42%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.188,A,81.21,81%,true,84.66,B,true,H,About 81%,About 85%,About 83%,About 21%,About 42%,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"Let me work through this.
+
+Among diabetics: insulin = 28%, obesity = 47%, both = 19%.
+Insulin only = 9%, obesity only = 28%, both = 19%, neither = 44%.
+
+High A1c rates given for insulin (20%) and obesity (80%), but these overlap and don't cover ""neither"" category. The insulin and obesity groups overlap (both 19%",,Let me work through this.,"Among diabetics: insulin = 28%, obesity = 47%, both = 19%.",unparseable,,,,mc_full,false,false
+diabetes_insulin_obese__overlap__implausible__mc_numeric_no_probs,diabetes insulin obese,overlap,large,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, some have diagnosed diabetes and the rest do not.
+Among those with diagnosed diabetes, some use insulin and some have obesity. An estimated 19% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that someone who had hemoglobin A1c above 9.0% have diagnosed diabetes.
+
+A. About 81%
+B. About 85%
+C. About 21%
+D. About 83%
+E. About 42%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.188,A,81.21,81%,true,84.66,B,true,n/a,About 81%,About 85%,About 21%,About 83%,About 42%,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c × q_d*s_d (product; assumes independence),q_d*s_d only (second pathway; assumes partition),q_c*s_c only (first pathway; assumes partition),,,,,,,anthropic/claude-opus-4-8@default,"A
+2",,A,2,mc_choice,,A,2,mc_numeric,true,false
+diabetes_insulin_obese__overlap__implausible__mc_numeric_probs,diabetes insulin obese,overlap,large,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 11% have diagnosed diabetes and the remainder do not.
+Among those with diagnosed diabetes, 28% use insulin and 47% have obesity. An estimated 19% fall into both categories.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who have obesity, 80% had hemoglobin A1c above 9.0%; among those without diagnosed diabetes, 1% had hemoglobin A1c above 9.0%.
+
+Given that someone had hemoglobin A1c above 9.0%, what is the probability they have diagnosed diabetes?
+
+A. About 81%
+B. About 85%
+C. About 42%
+D. About 83%
+E. About 21%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.188,A,81.21,81%,true,84.66,B,true,n/a,About 81%,About 85%,About 42%,About 83%,About 21%,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(diabetes | A1c > 9.0%).
+
+**Setup among diabetics (11% of adults):**
+- Insulin: 28%, Obesity: 47%, Both: 19%
+- Insulin only: 28-19 = 9%
+- Obesity only: 47-19 = 28%
+- Both: 19%
+- Neither: 100 - (9+28+19) = 44%",,I need to find P(diabetes | A1c > 9.0%).,**Setup among diabetics (11% of adults):**,mc_choice,,A,,mc_numeric,true,false
+diabetes_insulin_obese__overlap__implausible__open_no_probs,diabetes insulin obese,overlap,large,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, some have diagnosed diabetes and the rest do not.
+Among those with diagnosed diabetes, some use insulin and some have obesity. An estimated 19% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that someone who had hemoglobin A1c above 9.0% have diagnosed diabetes.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.188,,81.21,81%,true,84.66,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Insufficient information
+4",,Insufficient information,4,meta_insufficient,,,4,open,true,true
+diabetes_insulin_obese__overlap__implausible__open_probs,diabetes insulin obese,overlap,large,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 11% have diagnosed diabetes and the remainder do not.
+Among those with diagnosed diabetes, 28% use insulin and 47% have obesity. An estimated 19% fall into both categories.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who have obesity, 80% had hemoglobin A1c above 9.0%; among those without diagnosed diabetes, 1% had hemoglobin A1c above 9.0%.
+
+Given that someone had hemoglobin A1c above 9.0%, what is the probability they have diagnosed diabetes?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.188,,81.21,81%,true,84.66,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(diabetes | A1c > 9.0%).
+
+**Diabetes group (11% of adults):**
+Within diabetics:
+- Insulin: 28%
+- Obesity: 47%
+- Both: 19%
+
+The A1c rates are given for insulin users (20%) and obesity (80%) separately. But these overlap (19% both), and there are diabetics in neither category. I can't determ",,I need to find P(diabetes | A1c > 9.0%).,**Diabetes group (11% of adults):**,probability,9,,,open,true,false
+diabetes_insulin_obese__overlap__mc_full_no_probs,diabetes insulin obese,overlap,large,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, some have diagnosed diabetes and the rest do not.
+Among those with diagnosed diabetes, some use insulin and some have obesity. An estimated 19% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that someone who had hemoglobin A1c above 9.0% have diagnosed diabetes.
+
+A. About 56%
+B. About 63%
+C. About 49%
+D. About 42%
+E. About 5%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.188,A,55.51,56%,true,62.67,B,true,F|G|H,About 56%,About 63%,About 49%,About 42%,About 5%,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_d*s_d only (second pathway; assumes partition),q_c*s_c only (first pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"E
+3",,E,3,mc_choice,,E,3,mc_full,true,false
+diabetes_insulin_obese__overlap__mc_full_probs,diabetes insulin obese,overlap,large,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 11% have diagnosed diabetes and the remainder do not.
+Among those with diagnosed diabetes, 28% use insulin and 47% have obesity. An estimated 19% fall into both categories.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who have obesity, 16% had hemoglobin A1c above 9.0%; among those without diagnosed diabetes, 1% had hemoglobin A1c above 9.0%.
+
+Given that someone had hemoglobin A1c above 9.0%, what is the probability they have diagnosed diabetes?
+
+A. About 56%
+B. About 63%
+C. About 42%
+D. About 49%
+E. About 5%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.188,A,55.51,56%,true,62.67,B,true,F|G|H,About 56%,About 63%,About 42%,About 49%,About 5%,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"I need to find P(diabetes | A1c > 9.0%).
+
+**Setup of populations:**
+- Diabetes: 11% of adults
+- No diabetes: 89%
+
+**Among diabetics:**
+- Insulin: 28%
+- Obesity: 47%
+- Both: 19%
+- Insulin only: 28-19 = 9%
+- Obesity only: 47-19 = 28%",,I need to find P(diabetes | A1c > 9.0%).,**Setup of populations:**,mc_choice,,A,,mc_full,true,false
+diabetes_insulin_obese__overlap__mc_numeric_no_probs,diabetes insulin obese,overlap,large,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, some have diagnosed diabetes and the rest do not.
+Among those with diagnosed diabetes, some use insulin and some have obesity. An estimated 19% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that someone who had hemoglobin A1c above 9.0% have diagnosed diabetes.
+
+A. About 56%
+B. About 63%
+C. About 5%
+D. About 49%
+E. About 42%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.188,A,55.51,56%,true,62.67,B,true,B,About 56%,About 63%,About 5%,About 49%,About 42%,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c × q_d*s_d (product; assumes independence),q_d*s_d only (second pathway; assumes partition),q_c*s_c only (first pathway; assumes partition),,,,,,,anthropic/claude-opus-4-8@default,"A
+2",,A,2,mc_choice,,A,2,mc_numeric,true,false
+diabetes_insulin_obese__overlap__mc_numeric_probs,diabetes insulin obese,overlap,large,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 11% have diagnosed diabetes and the remainder do not.
+Among those with diagnosed diabetes, 28% use insulin and 47% have obesity. An estimated 19% fall into both categories.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who have obesity, 16% had hemoglobin A1c above 9.0%; among those without diagnosed diabetes, 1% had hemoglobin A1c above 9.0%.
+
+Given that someone had hemoglobin A1c above 9.0%, what is the probability they have diagnosed diabetes?
+
+A. About 56%
+B. About 63%
+C. About 5%
+D. About 49%
+E. About 42%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.188,A,55.51,56%,true,62.67,B,true,B,About 56%,About 63%,About 5%,About 49%,About 42%,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),q_c*s_c × q_d*s_d (product; assumes independence),q_d*s_d only (second pathway; assumes partition),q_c*s_c only (first pathway; assumes partition),,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(diabetes | A1c > 9.0%).
+
+**Setup:**
+- P(diabetes) = 0.11, P(no diabetes) = 0.89
+
+**Among diabetics:**
+- Insulin: 28%, Obesity: 47%, Both: 19%
+- Insulin only: 28-19 = 9%
+- Obesity only: 47-19 = 28%
+-",,I need to find P(diabetes | A1c > 9.0%).,**Setup:**,mc_choice,,A,,mc_numeric,true,false
+diabetes_insulin_obese__overlap__open_no_probs,diabetes insulin obese,overlap,large,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, some have diagnosed diabetes and the rest do not.
+Among those with diagnosed diabetes, some use insulin and some have obesity. An estimated 19% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that someone who had hemoglobin A1c above 9.0% have diagnosed diabetes.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.188,,55.51,56%,true,62.67,,true,62.67,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Insufficient information
+4",,Insufficient information,4,meta_insufficient,,,4,open,true,false
+diabetes_insulin_obese__overlap__open_probs,diabetes insulin obese,overlap,large,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 11% have diagnosed diabetes and the remainder do not.
+Among those with diagnosed diabetes, 28% use insulin and 47% have obesity. An estimated 19% fall into both categories.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who have obesity, 16% had hemoglobin A1c above 9.0%; among those without diagnosed diabetes, 1% had hemoglobin A1c above 9.0%.
+
+Given that someone had hemoglobin A1c above 9.0%, what is the probability they have diagnosed diabetes?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.188,,55.51,56%,true,62.67,,true,62.67,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(diabetes | A1c > 9.0%).
+
+**Setting up populations:**
+- Diabetes: 11%
+- No diabetes: 89%
+
+**Among diabetics (11% of total):**
+- Insulin: 28%
+- Obesity: 47%
+- Both: 19%
+- Insulin only: 28-19 = 9%
+- Obesity only: 47-19 = ",,I need to find P(diabetes | A1c > 9.0%).,**Setting up populations:**,probability,9,,,open,true,false
+discharged_weapon_last_year__implausible__mc_full_no_probs,discharged weapon (last year),well_posed,0,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, some are police officers and the rest are security guards.
+Among police officers, some are urban police officers and some are rural/small-jurisdiction police officers.
+
+Using knowledge of the world, please estimate the probability that a person who was a police officer or a security guard and who discharged a weapon in the last year was a police officer.
+
+A. About 59%
+B. About 53%
+C. About 25%
+D. About 0%
+E. About 10%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,59.46,59%,true,59.46,A,true,H,About 59%,About 53%,About 25%,About 0%,About 10%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),P(A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"A
+2",,A,2,mc_choice,,A,2,mc_full,true,false
+discharged_weapon_last_year__implausible__mc_full_probs,discharged weapon (last year),well_posed,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 10% are police officers and the remainder are security guards.
+Among police officers, 68% are urban police officers and 30% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.3% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.2% discharged a weapon in the last year; among security guards, 0.02% discharged a weapon in the last year.
+
+Given that a police officer or a security guard discharged a weapon in the last year, what is the probability the person was a police officer?
+
+A. About 59%
+B. About 25%
+C. About 0%
+D. About 53%
+E. About 10%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,59.46,59%,true,59.46,A,true,H,About 59%,About 25%,About 0%,About 53%,About 10%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),P(A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"Let me compute the probabilities.
+
+Police officers: 10% of total. Security guards: 90%.
+
+Among police: 68% urban, 30% rural (note: 68+30=98%, not 100%, but I'll use given).
+
+P(discharge | police) using subcategories: but these don't sum to 100%. Let me weight within police.
+
+Urban: 0.68 × 0.003 = 0.00204
+",,Let me compute the probabilities.,Police officers: 10% of total. Security guards: 90%.,unparseable,,,,mc_full,false,false
+discharged_weapon_last_year__implausible__mc_numeric_no_probs,discharged weapon (last year),well_posed,0,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, some are police officers and the rest are security guards.
+Among police officers, some are urban police officers and some are rural/small-jurisdiction police officers.
+
+Using knowledge of the world, please estimate the probability that a person who was a police officer or a security guard and who discharged a weapon in the last year was a police officer.
+
+A. About 59%
+B. About 25%
+C. About 0%
+D. About 53%
+E. About 10%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,59.46,59%,true,59.46,A,true,n/a,About 59%,About 25%,About 0%,About 53%,About 10%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"A
+2",,A,2,mc_choice,,A,2,mc_numeric,true,false
+discharged_weapon_last_year__implausible__mc_numeric_probs,discharged weapon (last year),well_posed,0,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 10% are police officers and the remainder are security guards.
+Among police officers, 68% are urban police officers and 30% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.3% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.2% discharged a weapon in the last year; among security guards, 0.02% discharged a weapon in the last year.
+
+Given that a police officer or a security guard discharged a weapon in the last year, what is the probability the person was a police officer?
+
+A. About 59%
+B. About 0%
+C. About 25%
+D. About 53%
+E. About 10%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,59.46,59%,true,59.46,A,true,n/a,About 59%,About 0%,About 25%,About 53%,About 10%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_d*s_d only (second pathway; assumes partition),q_c*s_c only (first pathway; assumes partition),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"Let me set up the calculation.
+
+Let total = 1.
+
+Police officers = 0.10, Security guards = 0.90.
+
+Among police: urban = 68% → 0.10 × 0.68 = 0.068
+Rural = 30% → 0.10 × 0.30 = 0.030
+
+Discharge probabilities:
+- Urban police: 0.068 × 0.003 = 0.000204
+-",,Let me set up the calculation.,Let total = 1.,unparseable,,,1,mc_numeric,false,false
+discharged_weapon_last_year__implausible__open_no_probs,discharged weapon (last year),well_posed,0,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, some are police officers and the rest are security guards.
+Among police officers, some are urban police officers and some are rural/small-jurisdiction police officers.
+
+Using knowledge of the world, please estimate the probability that a person who was a police officer or a security guard and who discharged a weapon in the last year was a police officer.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,,59.46,59%,true,59.46,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"75%
+2",,75%,2,probability,75,,2,open,true,false
+discharged_weapon_last_year__implausible__open_probs,discharged weapon (last year),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 10% are police officers and the remainder are security guards.
+Among police officers, 68% are urban police officers and 30% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.3% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.2% discharged a weapon in the last year; among security guards, 0.02% discharged a weapon in the last year.
+
+Given that a police officer or a security guard discharged a weapon in the last year, what is the probability the person was a police officer?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,,59.46,59%,true,59.46,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(police officer | discharged weapon).
+
+**Setting up populations** (assume total = 1):
+- Police officers: 0.10
+- Security guards: 0.90
+
+**Among police officers:**
+- Urban: 68% → 0.10 × 0.68 = 0.068
+- Rural: 30% → 0.10 × 0.30 = 0.030
+- (Note: 68% + ",,I need to find P(police officer | discharged weapon).,**Setting up populations** (assume total = 1):,unparseable,,,1,open,false,false
+discharged_weapon_last_year__mc_full_no_probs,discharged weapon (last year),well_posed,0,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, some are police officers and the rest are security guards.
+Among police officers, some are urban police officers and some are rural/small-jurisdiction police officers.
+
+Using knowledge of the world, please estimate the probability that a person who was a police officer or a security guard and who discharged a weapon in the last year was a police officer.
+
+A. About 91%
+B. About 89%
+C. About 70%
+D. About 0%
+E. About 44%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,91.21,91%,true,91.21,A,false,A,About 91%,About 89%,About 70%,About 0%,About 44%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),P(A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"A
+3",,A,3,mc_choice,,A,3,mc_full,true,true
+discharged_weapon_last_year__mc_full_probs,discharged weapon (last year),well_posed,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 44% are police officers and the remainder are security guards.
+Among police officers, 68% are urban police officers and 30% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.3% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.2% discharged a weapon in the last year; among security guards, 0.02% discharged a weapon in the last year.
+
+Given that a police officer or a security guard discharged a weapon in the last year, what is the probability the person was a police officer?
+
+A. About 91%
+B. About 70%
+C. About 0%
+D. About 89%
+E. About 44%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,91.21,91%,true,91.21,A,false,A,About 91%,About 70%,About 0%,About 89%,About 44%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),P(A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"A
+4",,A,4,mc_choice,,A,4,mc_full,true,true
+discharged_weapon_last_year__mc_numeric_no_probs,discharged weapon (last year),well_posed,0,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, some are police officers and the rest are security guards.
+Among police officers, some are urban police officers and some are rural/small-jurisdiction police officers.
+
+Using knowledge of the world, please estimate the probability that a person who was a police officer or a security guard and who discharged a weapon in the last year was a police officer.
+
+A. About 91%
+B. About 70%
+C. About 0%
+D. About 89%
+E. About 44%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,91.21,91%,true,91.21,A,false,n/a,About 91%,About 70%,About 0%,About 89%,About 44%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"A
+2",,A,2,mc_choice,,A,2,mc_numeric,true,true
+discharged_weapon_last_year__mc_numeric_probs,discharged weapon (last year),well_posed,0,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 44% are police officers and the remainder are security guards.
+Among police officers, 68% are urban police officers and 30% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.3% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.2% discharged a weapon in the last year; among security guards, 0.02% discharged a weapon in the last year.
+
+Given that a police officer or a security guard discharged a weapon in the last year, what is the probability the person was a police officer?
+
+A. About 91%
+B. About 0%
+C. About 70%
+D. About 89%
+E. About 44%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,91.21,91%,true,91.21,A,false,n/a,About 91%,About 0%,About 70%,About 89%,About 44%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_d*s_d only (second pathway; assumes partition),q_c*s_c only (first pathway; assumes partition),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(police officer | discharged weapon).
+
+**Setting up the population (assume 10000 people):**
+- Police officers: 44% = 4400
+- Security guards: 56% = 5600
+
+**Police breakdown:**
+- Urban: 68% of 4400 = 2992
+- Rural: 30% of 4400 = 1320
+- (Note: only 98% accounted for, but I'll",,I need to find P(police officer | discharged weapon).,**Setting up the population (assume 10000 people):**,unparseable,,,,mc_numeric,false,false
+discharged_weapon_last_year__open_no_probs,discharged weapon (last year),well_posed,0,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, some are police officers and the rest are security guards.
+Among police officers, some are urban police officers and some are rural/small-jurisdiction police officers.
+
+Using knowledge of the world, please estimate the probability that a person who was a police officer or a security guard and who discharged a weapon in the last year was a police officer.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,,91.21,91%,true,91.21,,false,91.21,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"75%
+2",,75%,2,probability,75,,2,open,true,false
+discharged_weapon_last_year__open_probs,discharged weapon (last year),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 44% are police officers and the remainder are security guards.
+Among police officers, 68% are urban police officers and 30% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.3% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.2% discharged a weapon in the last year; among security guards, 0.02% discharged a weapon in the last year.
+
+Given that a police officer or a security guard discharged a weapon in the last year, what is the probability the person was a police officer?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,,91.21,91%,true,91.21,,false,91.21,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(police officer | discharged weapon).
+
+**Setup:**
+- P(police) = 0.44, P(security) = 0.56
+- Among police: 68% urban, 30% rural (note: this sums to 98%, but I'll work with given numbers)
+
+**Discharge rates:**
+- Urban police: 0.3%
+- Rural police: 0.2%
+- Security: 0.02%",,I need to find P(police officer | discharged weapon).,**Setup:**,unparseable,,,,open,false,false
+english_teacher_humanities__overlap__implausible__mc_full_no_probs,english teacher humanities,overlap,large,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), some are public grades 9-12 teachers and the rest are other employed adults.
+Among public grades 9-12 teachers, some teach English/language arts and some majored in English/language arts. An estimated 11% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a public grades 9-12 teacher or other employed adult and who holds a master's degree or higher was a public grades 9-12 teacher.
+
+A. About 0%
+B. About 1%
+C. About 11%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, or C, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.114,A,0.3652,0.4%,true,0.5527,B,true,H,About 0%,About 1%,About 11%,,,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),P(T | A) confusion,,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"B
+3",,B,3,mc_choice,,B,3,mc_full,true,false
+english_teacher_humanities__overlap__implausible__mc_full_probs,english teacher humanities,overlap,large,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), 0.8% are public grades 9-12 teachers and the remainder are other employed adults.
+Among public grades 9-12 teachers, 15% teach English/language arts and 17% majored in English/language arts. An estimated 11% fall into both categories.
+Among those who teach English/language arts, 10% hold a master's degree or higher; among those who majored in English/language arts, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
+
+Given that a public grades 9-12 teacher or other employed adult holds a master's degree or higher, what is the probability the person was a public grades 9-12 teacher?
+
+A. About 0%
+B. About 1%
+C. About 11%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, or C, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.114,A,0.3652,0.4%,true,0.5527,B,true,H,About 0%,About 1%,About 11%,,,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),P(T | A) confusion,,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"B
+4",,B,4,mc_choice,,B,4,mc_full,true,false
+english_teacher_humanities__overlap__implausible__mc_numeric_no_probs,english teacher humanities,overlap,large,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), some are public grades 9-12 teachers and the rest are other employed adults.
+Among public grades 9-12 teachers, some teach English/language arts and some majored in English/language arts. An estimated 11% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a public grades 9-12 teacher or other employed adult and who holds a master's degree or higher was a public grades 9-12 teacher.
+
+A. About 0%
+B. About 1%
+C. About 11%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, or C).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.114,A,0.3652,0.4%,true,0.5527,B,true,n/a,About 0%,About 1%,About 11%,,,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),P(T | A) confusion,,,,,,,,,anthropic/claude-opus-4-8@default,"B
+3",,B,3,mc_choice,,B,3,mc_numeric,true,false
+english_teacher_humanities__overlap__implausible__mc_numeric_probs,english teacher humanities,overlap,large,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), 0.8% are public grades 9-12 teachers and the remainder are other employed adults.
+Among public grades 9-12 teachers, 15% teach English/language arts and 17% majored in English/language arts. An estimated 11% fall into both categories.
+Among those who teach English/language arts, 10% hold a master's degree or higher; among those who majored in English/language arts, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
+
+Given that a public grades 9-12 teacher or other employed adult holds a master's degree or higher, what is the probability the person was a public grades 9-12 teacher?
+
+A. About 0%
+B. About 1%
+C. About 11%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, or C).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.114,A,0.3652,0.4%,true,0.5527,B,true,n/a,About 0%,About 1%,About 11%,,,overlap-aware Bayes (uses P(C∩D|A) estimate),partition shortcut (assumes P(C∩D|A)=0),P(T | A) confusion,,,,,,,,,anthropic/claude-opus-4-8@default,"B
+4",,B,4,mc_choice,,B,4,mc_numeric,true,false
+english_teacher_humanities__overlap__implausible__open_no_probs,english teacher humanities,overlap,large,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), some are public grades 9-12 teachers and the rest are other employed adults.
+Among public grades 9-12 teachers, some teach English/language arts and some majored in English/language arts. An estimated 11% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a public grades 9-12 teacher or other employed adult and who holds a master's degree or higher was a public grades 9-12 teacher.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.114,,0.3652,0.4%,true,0.5527,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Let me work through this.
+
+I need P(public 9-12 teacher | holds master's or higher), among employed adults.
+
+Estimates:
+- Public secondary (9-12) teachers: roughly 1 million.
+- Total employed adults: ~161 million.
+- Share of employed adults with master's or higher: ~16-17%, so ~26 million.
+- Teachers with master's or higher: roughly ",,Let me work through this.,"I need P(public 9-12 teacher | holds master's or higher), among employed adults.",unparseable,,,,open,false,false
+english_teacher_humanities__overlap__implausible__open_probs,english teacher humanities,overlap,large,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), 0.8% are public grades 9-12 teachers and the remainder are other employed adults.
+Among public grades 9-12 teachers, 15% teach English/language arts and 17% majored in English/language arts. An estimated 11% fall into both categories.
+Among those who teach English/language arts, 10% hold a master's degree or higher; among those who majored in English/language arts, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
+
+Given that a public grades 9-12 teacher or other employed adult holds a master's degree or higher, what is the probability the person was a public grades 9-12 teacher?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.114,,0.3652,0.4%,true,0.5527,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(teacher | master's degree).
+
+**Population setup:**
+- Total: 161 million
+- Teachers (grades 9-12 public): 0.8% = 1.288 million
+- Other employed adults: 159.712 million
+
+**Among teachers, define groups:**
+- Teach ELA: 15%
+- Majored ELA: 17%
+- Both: 11%
+- Teach ELA",,I need to find P(teacher | master's degree).,**Population setup:**,unparseable,,,,open,false,false
+english_teacher_humanities__overlap__mc_full_no_probs,english teacher humanities,overlap,large,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), some are public grades 9-12 teachers and the rest are other employed adults.
+Among public grades 9-12 teachers, some teach English/language arts and some majored in English/language arts. An estimated 11% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a public grades 9-12 teacher or other employed adult and who holds a master's degree or higher was a public grades 9-12 teacher.
+
+A. About 1%
+B. About 0%
+C. About 20%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, or C, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.114,A,0.6366,0.6%,true,0.9916,A,true,F|G|H,About 1%,About 0%,About 20%,,,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),P(T | A) confusion,,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"A
+3",,A,3,mc_choice,,A,3,mc_full,true,false
+english_teacher_humanities__overlap__mc_full_probs,english teacher humanities,overlap,large,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), 0.8% are public grades 9-12 teachers and the remainder are other employed adults.
+Among public grades 9-12 teachers, 15% teach English/language arts and 17% majored in English/language arts. An estimated 11% fall into both categories.
+Among those who teach English/language arts, 69% hold a master's degree or higher; among those who majored in English/language arts, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
+
+Given that a public grades 9-12 teacher or other employed adult holds a master's degree or higher, what is the probability the person was a public grades 9-12 teacher?
+
+A. About 1%
+B. About 0%
+C. About 20%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, or C, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.114,A,0.6366,0.6%,true,0.9916,A,true,F|G|H,About 1%,About 0%,About 20%,,,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),P(T | A) confusion,,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"A
+3",,A,3,mc_choice,,A,3,mc_full,true,false
+english_teacher_humanities__overlap__mc_numeric_no_probs,english teacher humanities,overlap,large,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), some are public grades 9-12 teachers and the rest are other employed adults.
+Among public grades 9-12 teachers, some teach English/language arts and some majored in English/language arts. An estimated 11% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a public grades 9-12 teacher or other employed adult and who holds a master's degree or higher was a public grades 9-12 teacher.
+
+A. About 1%
+B. About 0%
+C. About 20%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, or C).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.114,A,0.6366,0.6%,true,0.9916,A,true,A,About 1%,About 0%,About 20%,,,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),P(T | A) confusion,,,,,,,,,anthropic/claude-opus-4-8@default,"C
+3",,C,3,mc_choice,,C,3,mc_numeric,true,false
+english_teacher_humanities__overlap__mc_numeric_probs,english teacher humanities,overlap,large,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), 0.8% are public grades 9-12 teachers and the remainder are other employed adults.
+Among public grades 9-12 teachers, 15% teach English/language arts and 17% majored in English/language arts. An estimated 11% fall into both categories.
+Among those who teach English/language arts, 69% hold a master's degree or higher; among those who majored in English/language arts, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
+
+Given that a public grades 9-12 teacher or other employed adult holds a master's degree or higher, what is the probability the person was a public grades 9-12 teacher?
+
+A. About 1%
+B. About 0%
+C. About 20%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, or C).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.114,A,0.6366,0.6%,true,0.9916,A,true,A,About 1%,About 0%,About 20%,,,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),P(T | A) confusion,,,,,,,,,anthropic/claude-opus-4-8@default,"A
+4
+
+Let me verify: Teachers = 0.8% = 1.288M. Others = 159.7M.
+
+Teachers with master's: Need P(master's | teacher). ELA teach=15%, ELA major=17%, both=11%. Union = 15+17-11=21% are ELA-related. The other 79% have unknown master's rate... 
+
+Actually only ELA categories have rates given.",,A,4,mc_choice,,A,4,mc_numeric,true,true
+english_teacher_humanities__overlap__open_no_probs,english teacher humanities,overlap,large,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), some are public grades 9-12 teachers and the rest are other employed adults.
+Among public grades 9-12 teachers, some teach English/language arts and some majored in English/language arts. An estimated 11% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a public grades 9-12 teacher or other employed adult and who holds a master's degree or higher was a public grades 9-12 teacher.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.114,,0.6366,0.6%,true,0.9916,,true,0.9916,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Let me work through this.
+
+Public high school (grades 9-12) teachers: roughly 1 million in the US.
+
+Among all employed adults (~161 million), the fraction with a master's degree or higher is about 14-15%, so roughly 23-24 million people.
+
+High school teachers have very high rates of advanced degrees—roughly 50-55% hold a master's or higher. So master's-holding HS teach",,Let me work through this.,Public high school (grades 9-12) teachers: roughly 1 million in the US.,unparseable,,,1,open,false,false
+english_teacher_humanities__overlap__open_probs,english teacher humanities,overlap,large,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (~161 million; BLS occupational employment universe), 0.8% are public grades 9-12 teachers and the remainder are other employed adults.
+Among public grades 9-12 teachers, 15% teach English/language arts and 17% majored in English/language arts. An estimated 11% fall into both categories.
+Among those who teach English/language arts, 69% hold a master's degree or higher; among those who majored in English/language arts, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
+
+Given that a public grades 9-12 teacher or other employed adult holds a master's degree or higher, what is the probability the person was a public grades 9-12 teacher?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.114,,0.6366,0.6%,true,0.9916,,true,0.9916,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(teacher | master's degree).
+
+**Setup:**
+- Total employed adults: 161 million
+- Teachers (grades 9-12 public): 0.8% = 0.008
+- Other employed adults: 0.992
+
+**Master's rate among teachers:**
+
+I need P(master's | teacher). I have rates for English-teaching subgroups and English-major subgroups, but not for teachers",,I need to find P(teacher | master's degree).,**Setup:**,unparseable,,,,open,false,false
+healthcare_employment__implausible__mc_full_no_probs,healthcare employment,well_posed,0,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, some are health care professionals and the rest are other employed adults.
+Among health care professionals, some are physicians and some are non-physician health care professionals.
+
+Using knowledge of the world, please estimate the probability that someone who work in a hospital was a health care professional.
+
+A. About 87%
+B. About 3%
+C. About 6%
+D. About 55%
+E. About 11%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,87.07,87%,true,87.07,A,true,H,About 87%,About 3%,About 6%,About 55%,About 11%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),P(T | A) confusion,P(A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"D
+3",,D,3,mc_choice,,D,3,mc_full,true,false
+healthcare_employment__implausible__mc_full_probs,healthcare employment,well_posed,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 11% are health care professionals and the remainder are other employed adults.
+Among health care professionals, 10% are physicians and 90% are non-physician health care professionals.
+Among physicians, 5% work in a hospital; among non-physician health care professionals, 60% work in a hospital; among other employed adults, 1% work in a hospital.
+
+Given that someone works in a hospital, what is the probability they were a health care professional?
+
+A. About 87%
+B. About 3%
+C. About 6%
+D. About 55%
+E. About 11%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,87.07,87%,true,87.07,A,true,H,About 87%,About 3%,About 6%,About 55%,About 11%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),P(T | A) confusion,P(A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"A
+5",,A,5,mc_choice,,A,5,mc_full,true,false
+healthcare_employment__implausible__mc_numeric_no_probs,healthcare employment,well_posed,0,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, some are health care professionals and the rest are other employed adults.
+Among health care professionals, some are physicians and some are non-physician health care professionals.
+
+Using knowledge of the world, please estimate the probability that someone who work in a hospital was a health care professional.
+
+A. About 87%
+B. About 3%
+C. About 6%
+D. About 11%
+E. About 55%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,87.07,87%,true,87.07,A,true,n/a,About 87%,About 3%,About 6%,About 11%,About 55%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),P(A) confusion,P(T | A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"E
+2",,E,2,mc_choice,,E,2,mc_numeric,true,false
+healthcare_employment__implausible__mc_numeric_probs,healthcare employment,well_posed,0,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 11% are health care professionals and the remainder are other employed adults.
+Among health care professionals, 10% are physicians and 90% are non-physician health care professionals.
+Among physicians, 5% work in a hospital; among non-physician health care professionals, 60% work in a hospital; among other employed adults, 1% work in a hospital.
+
+Given that someone works in a hospital, what is the probability they were a health care professional?
+
+A. About 87%
+B. About 3%
+C. About 6%
+D. About 55%
+E. About 11%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,87.07,87%,true,87.07,A,true,n/a,About 87%,About 3%,About 6%,About 55%,About 11%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),P(T | A) confusion,P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"Let me calculate using Bayes' theorem.
+
+P(HCP) = 0.11, P(other) = 0.89
+
+Physicians: 0.11 × 0.10 = 0.011, work in hospital: 0.011 × 0.05 = 0.00055
+Non-physician HCP: 0.11 × 0.90 = 0.099, work in hospital: 0.099 × 0.60 ",,Let me calculate using Bayes' theorem.,"P(HCP) = 0.11, P(other) = 0.89",unparseable,,,,mc_numeric,false,false
+healthcare_employment__implausible__open_no_probs,healthcare employment,well_posed,0,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, some are health care professionals and the rest are other employed adults.
+Among health care professionals, some are physicians and some are non-physician health care professionals.
+
+Using knowledge of the world, please estimate the probability that someone who work in a hospital was a health care professional.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,,87.07,87%,true,87.07,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"70%
+2",,70%,2,probability,70,,2,open,true,false
+healthcare_employment__implausible__open_probs,healthcare employment,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 11% are health care professionals and the remainder are other employed adults.
+Among health care professionals, 10% are physicians and 90% are non-physician health care professionals.
+Among physicians, 5% work in a hospital; among non-physician health care professionals, 60% work in a hospital; among other employed adults, 1% work in a hospital.
+
+Given that someone works in a hospital, what is the probability they were a health care professional?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,,87.07,87%,true,87.07,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Let me compute the probabilities.
+
+P(HC) = 0.11, P(other) = 0.89
+P(physician) = 0.11 × 0.10 = 0.011
+P(non-physician HC) = 0.11 × 0.90 = 0.099
+
+P(hospital | physician) = 0.05 → 0.011 × 0.05 = 0.00055
+P(hospital | non-phys H",,Let me compute the probabilities.,"P(HC) = 0.11, P(other) = 0.89",unparseable,,,,open,false,false
+healthcare_employment__mc_full_no_probs,healthcare employment,well_posed,0,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, some are health care professionals and the rest are other employed adults.
+Among health care professionals, some are physicians and some are non-physician health care professionals.
+
+Using knowledge of the world, please estimate the probability that someone who work in a hospital was a health care professional.
+
+A. About 88%
+B. About 40%
+C. About 87%
+D. About 26%
+E. About 59%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,88.01,88%,true,88.01,A,false,A,About 88%,About 40%,About 87%,About 26%,About 59%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),P(T | A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"E
+2",,E,2,mc_choice,,E,2,mc_full,true,false
+healthcare_employment__mc_full_probs,healthcare employment,well_posed,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 11% are health care professionals and the remainder are other employed adults.
+Among health care professionals, 10% are physicians and 90% are non-physician health care professionals.
+Among physicians, 54% work in a hospital; among non-physician health care professionals, 60% work in a hospital; among other employed adults, 1% work in a hospital.
+
+Given that someone works in a hospital, what is the probability they were a health care professional?
+
+A. About 88%
+B. About 40%
+C. About 26%
+D. About 87%
+E. About 11%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,88.01,88%,true,88.01,A,false,A,About 88%,About 40%,About 26%,About 87%,About 11%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),q_d*s_d only (second pathway; assumes partition),P(A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"Let me calculate using Bayes' theorem.
+
+Population breakdown:
+- Health care professionals: 11%
+  - Physicians: 10% × 11% = 1.1%
+  - Non-physician HCP: 90% × 11% = 9.9%
+- Other employed: 89%
+
+P(hospital and HCP):
+- Physicians: 0.011 × 0.54 = 0.00594
+",,Let me calculate using Bayes' theorem.,Population breakdown:,unparseable,,,,mc_full,false,false
+healthcare_employment__mc_numeric_no_probs,healthcare employment,well_posed,0,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, some are health care professionals and the rest are other employed adults.
+Among health care professionals, some are physicians and some are non-physician health care professionals.
+
+Using knowledge of the world, please estimate the probability that someone who work in a hospital was a health care professional.
+
+A. About 88%
+B. About 26%
+C. About 40%
+D. About 87%
+E. About 11%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,88.01,88%,true,88.01,A,false,n/a,About 88%,About 26%,About 40%,About 87%,About 11%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"B
+2",,B,2,mc_choice,,B,2,mc_numeric,true,false
+healthcare_employment__mc_numeric_probs,healthcare employment,well_posed,0,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 11% are health care professionals and the remainder are other employed adults.
+Among health care professionals, 10% are physicians and 90% are non-physician health care professionals.
+Among physicians, 54% work in a hospital; among non-physician health care professionals, 60% work in a hospital; among other employed adults, 1% work in a hospital.
+
+Given that someone works in a hospital, what is the probability they were a health care professional?
+
+A. About 88%
+B. About 40%
+C. About 26%
+D. About 87%
+E. About 11%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,88.01,88%,true,88.01,A,false,n/a,About 88%,About 40%,About 26%,About 87%,About 11%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),q_d*s_d only (second pathway; assumes partition),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"Let me compute.
+
+P(HC) = 0.11, P(other) = 0.89
+
+Physicians: 0.11 × 0.10 = 0.011, hospital: 0.011 × 0.54 = 0.00594
+Non-phys: 0.11 × 0.90 = 0.099, hospital: 0.099 × 0.60 = 0.0594
+HC hospital total = 0.06",,Let me compute.,"P(HC) = 0.11, P(other) = 0.89",unparseable,,,,mc_numeric,false,false
+healthcare_employment__open_no_probs,healthcare employment,well_posed,0,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, some are health care professionals and the rest are other employed adults.
+Among health care professionals, some are physicians and some are non-physician health care professionals.
+
+Using knowledge of the world, please estimate the probability that someone who work in a hospital was a health care professional.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,,88.01,88%,true,88.01,,false,88.01,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"75%
+2",,75%,2,probability,75,,2,open,true,false
+healthcare_employment__open_probs,healthcare employment,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 11% are health care professionals and the remainder are other employed adults.
+Among health care professionals, 10% are physicians and 90% are non-physician health care professionals.
+Among physicians, 54% work in a hospital; among non-physician health care professionals, 60% work in a hospital; among other employed adults, 1% work in a hospital.
+
+Given that someone works in a hospital, what is the probability they were a health care professional?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,,88.01,88%,true,88.01,,false,88.01,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Let me compute the probabilities.
+
+P(HCP) = 0.11, P(other) = 0.89
+P(physician|HCP) = 0.10, P(non-phys|HCP) = 0.90
+
+P(physician) = 0.11 × 0.10 = 0.011
+P(non-phys) = 0.11 × 0.90 = 0.099
+P(other) = 0.89
+
+P(hosp",,Let me compute the probabilities.,"P(HCP) = 0.11, P(other) = 0.89",unparseable,,,,open,false,false
+military_overseas_federal_pool__implausible__mc_full_no_probs,military overseas (federal pool),well_posed,0,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, some are active-duty service members and the rest are federal civilian employees.
+Among active-duty service members, some are US Army active-duty service members and some are US Navy or US Air Force active-duty service members.
+
+Using knowledge of the world, please estimate the probability that a person who was an active-duty service member or a federal civilian employee and who has worked overseas was an active-duty service member.
+
+A. About 85%
+B. About 63%
+C. About 46%
+D. About 81%
+E. About 70%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,85.42,85%,true,85.42,A,true,H,About 85%,About 63%,About 46%,About 81%,About 70%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),q_d*s_d only (second pathway; assumes partition),P(T | A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"D
+2",,D,2,mc_choice,,D,2,mc_full,true,false
+military_overseas_federal_pool__implausible__mc_full_probs,military overseas (federal pool),well_posed,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 40% are active-duty service members and the remainder are federal civilian employees.
+Among active-duty service members, 35% are US Army active-duty service members and 51% are US Navy or US Air Force active-duty service members.
+Among US Army active-duty service members, 58% have worked overseas; among US Navy or US Air Force active-duty service members, 98% have worked overseas; among federal civilian employees, 8% have worked overseas.
+
+Given that an active-duty service member or a federal civilian employee has worked overseas, what is the probability the person was an active-duty service member?
+
+A. About 85%
+B. About 63%
+C. About 46%
+D. About 81%
+E. About 40%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,85.42,85%,true,85.42,A,true,H,About 85%,About 63%,About 46%,About 81%,About 40%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),q_d*s_d only (second pathway; assumes partition),P(A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"Let me set up populations.
+
+Active-duty: 0.40, Federal civilian: 0.60
+
+Among active-duty:
+- Army: 0.35 × 0.40 = 0.14, overseas: 0.58 → 0.0812
+- Navy/AF: 0.51 × 0.40 = 0.204, overseas: 0.98 → 0.19992
+- (remaining 14% of active",,Let me set up populations.,"Active-duty: 0.40, Federal civilian: 0.60",unparseable,,,,mc_full,false,false
+military_overseas_federal_pool__implausible__mc_numeric_no_probs,military overseas (federal pool),well_posed,0,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, some are active-duty service members and the rest are federal civilian employees.
+Among active-duty service members, some are US Army active-duty service members and some are US Navy or US Air Force active-duty service members.
+
+Using knowledge of the world, please estimate the probability that a person who was an active-duty service member or a federal civilian employee and who has worked overseas was an active-duty service member.
+
+A. About 85%
+B. About 81%
+C. About 63%
+D. About 46%
+E. About 40%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,85.42,85%,true,85.42,A,true,n/a,About 85%,About 81%,About 63%,About 46%,About 40%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),q_c*s_c only (first pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"A
+3",,A,3,mc_choice,,A,3,mc_numeric,true,false
+military_overseas_federal_pool__implausible__mc_numeric_probs,military overseas (federal pool),well_posed,0,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 40% are active-duty service members and the remainder are federal civilian employees.
+Among active-duty service members, 35% are US Army active-duty service members and 51% are US Navy or US Air Force active-duty service members.
+Among US Army active-duty service members, 58% have worked overseas; among US Navy or US Air Force active-duty service members, 98% have worked overseas; among federal civilian employees, 8% have worked overseas.
+
+Given that an active-duty service member or a federal civilian employee has worked overseas, what is the probability the person was an active-duty service member?
+
+A. About 85%
+B. About 46%
+C. About 63%
+D. About 81%
+E. About 40%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,A,85.42,85%,true,85.42,A,true,n/a,About 85%,About 46%,About 63%,About 81%,About 40%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"Let me set up populations.
+
+Active-duty: 40%
+- Army: 0.40 × 0.35 = 0.14, overseas 0.58 → 0.0812
+- Navy/AF: 0.40 × 0.51 = 0.204, overseas 0.98 → 0.19992
+- (Other active-duty: 0.40 × 0.14 = 0.056, no overseas rate given",,Let me set up populations.,Active-duty: 40%,unparseable,,,,mc_numeric,false,false
+military_overseas_federal_pool__implausible__open_no_probs,military overseas (federal pool),well_posed,0,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, some are active-duty service members and the rest are federal civilian employees.
+Among active-duty service members, some are US Army active-duty service members and some are US Navy or US Air Force active-duty service members.
+
+Using knowledge of the world, please estimate the probability that a person who was an active-duty service member or a federal civilian employee and who has worked overseas was an active-duty service member.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,,85.42,85%,true,85.42,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"65%
+2",,65%,2,probability,65,,2,open,true,false
+military_overseas_federal_pool__implausible__open_probs,military overseas (federal pool),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 40% are active-duty service members and the remainder are federal civilian employees.
+Among active-duty service members, 35% are US Army active-duty service members and 51% are US Navy or US Air Force active-duty service members.
+Among US Army active-duty service members, 58% have worked overseas; among US Navy or US Air Force active-duty service members, 98% have worked overseas; among federal civilian employees, 8% have worked overseas.
+
+Given that an active-duty service member or a federal civilian employee has worked overseas, what is the probability the person was an active-duty service member?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,implausible,0.0,,85.42,85%,true,85.42,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Let me set up the population.
+
+Active-duty: 40%, Federal civilian: 60%
+
+Among active-duty:
+- Army: 35% → 0.40 × 0.35 = 0.14
+- Navy/Air Force: 51% → 0.40 × 0.51 = 0.204
+- (remaining 14% other branches, not given overseas rate)
+
+Overseas:
+- Army: 0.",,Let me set up the population.,"Active-duty: 40%, Federal civilian: 60%",unparseable,,,,open,false,false
+military_overseas_federal_pool__mc_full_no_probs,military overseas (federal pool),well_posed,0,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, some are active-duty service members and the rest are federal civilian employees.
+Among active-duty service members, some are US Army active-duty service members and some are US Navy or US Air Force active-duty service members.
+
+Using knowledge of the world, please estimate the probability that a person who was an active-duty service member or a federal civilian employee and who has worked overseas was an active-duty service member.
+
+A. About 82%
+B. About 36%
+C. About 63%
+D. About 73%
+E. About 53%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,81.54,82%,true,81.52,A,false,A,About 82%,About 36%,About 63%,About 73%,About 53%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),P(T | A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"D
+2",,D,2,mc_choice,,D,2,mc_full,true,false
+military_overseas_federal_pool__mc_full_probs,military overseas (federal pool),well_posed,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 40% are active-duty service members and the remainder are federal civilian employees.
+Among active-duty service members, 35% are US Army active-duty service members and 51% are US Navy or US Air Force active-duty service members.
+Among US Army active-duty service members, 58% have worked overseas; among US Navy or US Air Force active-duty service members, 64% have worked overseas; among federal civilian employees, 8% have worked overseas.
+
+Given that an active-duty service member or a federal civilian employee has worked overseas, what is the probability the person was an active-duty service member?
+
+A. About 82%
+B. About 36%
+C. About 63%
+D. About 73%
+E. About 53%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,81.54,82%,true,81.52,A,false,A,About 82%,About 36%,About 63%,About 73%,About 53%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),P(T | A) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"Let me set up the population.
+
+Active-duty: 40%, Federal civilian: 60%
+
+Active-duty breakdown:
+- Army: 35% of active-duty
+- Navy/Air Force: 51% of active-duty
+- Other: 14%
+
+Overseas rates:
+- Army: 58%
+- Navy/AF: 64%
+- Federal civilian: 8%
+- Other active-duty",,Let me set up the population.,"Active-duty: 40%, Federal civilian: 60%",unparseable,,,,mc_full,false,false
+military_overseas_federal_pool__mc_numeric_no_probs,military overseas (federal pool),well_posed,0,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, some are active-duty service members and the rest are federal civilian employees.
+Among active-duty service members, some are US Army active-duty service members and some are US Navy or US Air Force active-duty service members.
+
+Using knowledge of the world, please estimate the probability that a person who was an active-duty service member or a federal civilian employee and who has worked overseas was an active-duty service member.
+
+A. About 82%
+B. About 36%
+C. About 63%
+D. About 73%
+E. About 40%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,81.54,82%,true,81.52,A,false,n/a,About 82%,About 36%,About 63%,About 73%,About 40%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"D
+2",,D,2,mc_choice,,D,2,mc_numeric,true,false
+military_overseas_federal_pool__mc_numeric_probs,military overseas (federal pool),well_posed,0,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 40% are active-duty service members and the remainder are federal civilian employees.
+Among active-duty service members, 35% are US Army active-duty service members and 51% are US Navy or US Air Force active-duty service members.
+Among US Army active-duty service members, 58% have worked overseas; among US Navy or US Air Force active-duty service members, 64% have worked overseas; among federal civilian employees, 8% have worked overseas.
+
+Given that an active-duty service member or a federal civilian employee has worked overseas, what is the probability the person was an active-duty service member?
+
+A. About 82%
+B. About 73%
+C. About 36%
+D. About 63%
+E. About 40%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,A,81.54,82%,true,81.52,A,false,n/a,About 82%,About 73%,About 36%,About 63%,About 40%,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),P(A) confusion,,,,,,,anthropic/claude-opus-4-8@default,"Let me set up the population.
+
+Active-duty: 40%, Civilian: 60%
+
+Active-duty subgroups:
+- Army: 35% of 40% = 0.14, overseas 58% → 0.0812
+- Navy/AF: 51% of 40% = 0.204, overseas 64% → 0.13056
+- (remaining 14% of active-duty unspecified)
+
+Active-duty over",,Let me set up the population.,"Active-duty: 40%, Civilian: 60%",unparseable,,,,mc_numeric,false,false
+military_overseas_federal_pool__open_no_probs,military overseas (federal pool),well_posed,0,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, some are active-duty service members and the rest are federal civilian employees.
+Among active-duty service members, some are US Army active-duty service members and some are US Navy or US Air Force active-duty service members.
+
+Using knowledge of the world, please estimate the probability that a person who was an active-duty service member or a federal civilian employee and who has worked overseas was an active-duty service member.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,,81.54,82%,true,81.52,,false,81.54,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"70%
+2",,70%,2,probability,70,,2,open,true,false
+military_overseas_federal_pool__open_probs,military overseas (federal pool),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 40% are active-duty service members and the remainder are federal civilian employees.
+Among active-duty service members, 35% are US Army active-duty service members and 51% are US Navy or US Air Force active-duty service members.
+Among US Army active-duty service members, 58% have worked overseas; among US Navy or US Air Force active-duty service members, 64% have worked overseas; among federal civilian employees, 8% have worked overseas.
+
+Given that an active-duty service member or a federal civilian employee has worked overseas, what is the probability the person was an active-duty service member?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",true,well_posed,0.0,,81.54,82%,true,81.52,,false,81.54,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Let me set up the population.
+
+**Population fractions:**
+- Active-duty: 0.40
+- Federal civilian: 0.60
+
+**Within active-duty:**
+- Army: 35% → 0.40 × 0.35 = 0.14
+- Navy/Air Force: 51% → 0.40 × 0.51 = 0.204
+- Other active-duty: 14% → 0.40 × ",,Let me set up the population.,**Population fractions:**,unparseable,,,,open,false,false
+professional_drivers_speeding__overlap__implausible__mc_full_no_probs,professional drivers speeding,overlap,small,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), some are professional drivers and the rest are other adults.
+Among professional drivers, some are heavy truck drivers and some are bus drivers. An estimated 0.3% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a professional driver or other adult and who received a speeding ticket in the last 12 months was a professional driver.
+
+A. About 12%
+B. About 0%
+C. About 50%
+D. About 2%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, or D, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.003,A,11.88,12%,true,11.92,A,true,H,About 12%,About 0%,About 50%,About 2%,,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),P(T | A) confusion,P(A) confusion,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"A
+2",,A,2,mc_choice,,A,2,mc_full,true,false
+professional_drivers_speeding__overlap__implausible__mc_full_probs,professional drivers speeding,overlap,small,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), 2.4% are professional drivers and the remainder are other adults.
+Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.3% fall into both categories.
+Among heavy truck drivers, 90% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
+
+Given that a professional driver or other adult received a speeding ticket in the last 12 months, what is the probability the person was a professional driver?
+
+A. About 12%
+B. About 0%
+C. About 2%
+D. About 50%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, or D, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.003,A,11.88,12%,true,11.92,A,true,H,About 12%,About 0%,About 2%,About 50%,,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),P(A) confusion,P(T | A) confusion,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"Let me compute.
+
+Professional drivers: 2.4% of 161M = 3.864M
+Heavy truck: 53% × 3.864M = 2.048M, tickets: 90% → 1.843M
+Bus: 14% × 3.864M = 0.541M, tickets: 10% → 0.0541M
+Both: 0.3% × 3.864M = 0.0116M (small overlap",,Let me compute.,Professional drivers: 2.4% of 161M = 3.864M,unparseable,,,2,mc_full,false,false
+professional_drivers_speeding__overlap__implausible__mc_numeric_no_probs,professional drivers speeding,overlap,small,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), some are professional drivers and the rest are other adults.
+Among professional drivers, some are heavy truck drivers and some are bus drivers. An estimated 0.3% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a professional driver or other adult and who received a speeding ticket in the last 12 months was a professional driver.
+
+A. About 12%
+B. About 0%
+C. About 50%
+D. About 2%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, or D).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.003,A,11.88,12%,true,11.92,A,true,n/a,About 12%,About 0%,About 50%,About 2%,,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),P(T | A) confusion,P(A) confusion,,,,,,,,anthropic/claude-opus-4-8@default,"A
+3",,A,3,mc_choice,,A,3,mc_numeric,true,false
+professional_drivers_speeding__overlap__implausible__mc_numeric_probs,professional drivers speeding,overlap,small,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), 2.4% are professional drivers and the remainder are other adults.
+Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.3% fall into both categories.
+Among heavy truck drivers, 90% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
+
+Given that a professional driver or other adult received a speeding ticket in the last 12 months, what is the probability the person was a professional driver?
+
+A. About 12%
+B. About 0%
+C. About 50%
+D. About 2%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, or D).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.003,A,11.88,12%,true,11.92,A,true,n/a,About 12%,About 0%,About 50%,About 2%,,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),P(T | A) confusion,P(A) confusion,,,,,,,,anthropic/claude-opus-4-8@default,"Let me work through this.
+
+Total employed = 161M
+Professional drivers = 2.4% = 0.0240 × 161M = 3.864M
+Other adults = 157.136M
+
+Among professional drivers:
+- Heavy truck: 53% = 0.53 × 3.864 = 2.048M
+- Bus: 14% = 0.14 × 3.864 = 0.541M
+- Both:",,Let me work through this.,Total employed = 161M,unparseable,,,,mc_numeric,false,false
+professional_drivers_speeding__overlap__implausible__open_no_probs,professional drivers speeding,overlap,small,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), some are professional drivers and the rest are other adults.
+Among professional drivers, some are heavy truck drivers and some are bus drivers. An estimated 0.3% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a professional driver or other adult and who received a speeding ticket in the last 12 months was a professional driver.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.003,,11.88,12%,true,11.92,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"14%
+2",,14%,2,probability,14,,2,open,true,false
+professional_drivers_speeding__overlap__implausible__open_probs,professional drivers speeding,overlap,small,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), 2.4% are professional drivers and the remainder are other adults.
+Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.3% fall into both categories.
+Among heavy truck drivers, 90% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
+
+Given that a professional driver or other adult received a speeding ticket in the last 12 months, what is the probability the person was a professional driver?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,implausible,0.003,,11.88,12%,true,11.92,,true,meta,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Let me work through this.
+
+**Population shares:**
+- Professional drivers: 2.4% of 161M = 3.864M
+- Other adults: 97.6% = 157.136M
+
+**Among professional drivers (3.864M):**
+- Heavy truck: 53% = 2.04792M
+- Bus: 14% = 0.54096M
+- Both: 0.3% = 0.011592M
+-",,Let me work through this.,**Population shares:**,unparseable,,,,open,false,false
+professional_drivers_speeding__overlap__mc_full_no_probs,professional drivers speeding,overlap,small,mc_full,false,mc_full_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), some are professional drivers and the rest are other adults.
+Among professional drivers, some are heavy truck drivers and some are bus drivers. An estimated 0.3% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a professional driver or other adult and who received a speeding ticket in the last 12 months was a professional driver.
+
+A. About 3%
+B. About 0%
+C. About 2%
+D. About 10%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, or D, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.003,A,2.648,2.6%,true,2.658,A,false,A,About 3%,About 0%,About 2%,About 10%,,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),P(T | A) confusion,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"D
+3",,D,3,mc_choice,,D,3,mc_full,true,false
+professional_drivers_speeding__overlap__mc_full_probs,professional drivers speeding,overlap,small,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), 2.4% are professional drivers and the remainder are other adults.
+Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.3% fall into both categories.
+Among heavy truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
+
+Given that a professional driver or other adult received a speeding ticket in the last 12 months, what is the probability the person was a professional driver?
+
+A. About 3%
+B. About 2%
+C. About 0%
+D. About 10%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, or D, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.003,A,2.648,2.6%,true,2.658,A,false,A,About 3%,About 2%,About 0%,About 10%,,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c only (first pathway; assumes partition),q_d*s_d only (second pathway; assumes partition),P(T | A) confusion,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises,anthropic/claude-opus-4-8@default,"Let me work through this.
+
+Professional drivers: 2.4% of 161M = 3.864M
+Other adults: 157.136M
+
+Among professional drivers: heavy truck = 53%, bus = 14%, both = 0.3%.
+Tickets among drivers: I'll compute using heavy truck and bus rates, but what about drivers who are neither? Their rate isn't given.
+
+Heavy tru",,Let me work through this.,Professional drivers: 2.4% of 161M = 3.864M,unparseable,,,2,mc_full,false,false
+professional_drivers_speeding__overlap__mc_numeric_no_probs,professional drivers speeding,overlap,small,mc_numeric,false,mc_numeric_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), some are professional drivers and the rest are other adults.
+Among professional drivers, some are heavy truck drivers and some are bus drivers. An estimated 0.3% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a professional driver or other adult and who received a speeding ticket in the last 12 months was a professional driver.
+
+A. About 3%
+B. About 0%
+C. About 2%
+D. About 10%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, or D).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.003,A,2.648,2.6%,true,2.658,A,false,n/a,About 3%,About 0%,About 2%,About 10%,,overlap-aware Bayes (uses P(C∩D|A) estimate),q_c*s_c × q_d*s_d (product; assumes independence),q_c*s_c only (first pathway; assumes partition),P(T | A) confusion,,,,,,,,anthropic/claude-opus-4-8@default,"D
+2",,D,2,mc_choice,,D,2,mc_numeric,true,false
+professional_drivers_speeding__overlap__mc_numeric_probs,professional drivers speeding,overlap,small,mc_numeric,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), 2.4% are professional drivers and the remainder are other adults.
+Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.3% fall into both categories.
+Among heavy truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
+
+Given that a professional driver or other adult received a speeding ticket in the last 12 months, what is the probability the person was a professional driver?
+
+A. About 3%
+B. About 0%
+C. About 2%
+D. About 10%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, or D).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.003,A,2.648,2.6%,true,2.658,A,false,n/a,About 3%,About 0%,About 2%,About 10%,,overlap-aware Bayes (uses P(C∩D|A) estimate),q_d*s_d only (second pathway; assumes partition),q_c*s_c only (first pathway; assumes partition),P(T | A) confusion,,,,,,,,anthropic/claude-opus-4-8@default,"A
+4",,A,4,mc_choice,,A,4,mc_numeric,true,true
+professional_drivers_speeding__overlap__open_no_probs,professional drivers speeding,overlap,small,open,false,open_no_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), some are professional drivers and the rest are other adults.
+Among professional drivers, some are heavy truck drivers and some are bus drivers. An estimated 0.3% fall into both categories.
+
+Using knowledge of the world, please estimate the probability that a person who was a professional driver or other adult and who received a speeding ticket in the last 12 months was a professional driver.
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.003,,2.648,2.6%,true,2.658,,false,2.648,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"Let me work through this with reasonable estimates.
+
+**Population sizes:**
+- Total employed ≈ 161M
+- Professional drivers (heavy truck + bus + delivery, etc.). Heavy truck drivers ≈ 2.0M, bus drivers ≈ 0.5M, plus light delivery drivers ≈ 1.5M. Let me use a ""professional driver"" est",,Let me work through this with reasonable estimates.,**Population sizes:**,unparseable,,,,open,false,false
+professional_drivers_speeding__overlap__open_probs,professional drivers speeding,overlap,small,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), 2.4% are professional drivers and the remainder are other adults.
+Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.3% fall into both categories.
+Among heavy truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
+
+Given that a professional driver or other adult received a speeding ticket in the last 12 months, what is the probability the person was a professional driver?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident).",false,underdetermined,0.003,,2.648,2.6%,true,2.658,,false,2.648,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(professional driver | received ticket).
+
+**Setting up populations:**
+- Total employed: 161M
+- Professional drivers: 2.4% = 0.024 × 161M = 3.864M
+- Other adults: 157.136M
+
+**Among professional drivers (3.864M):**
+- Heavy truck drivers: 53% = 2.04792M
+- Bus drivers: 14%",,I need to find P(professional driver | received ticket).,**Setting up populations:**,unparseable,,,,open,false,false

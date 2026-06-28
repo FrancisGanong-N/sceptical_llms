@@ -1,0 +1,32 @@
+﻿python : Traceback (most recent call last):
+At C:\Users\fgano\AppData\Local\Temp\ps-script-05aff46a-ccea-4b06-a454-e2adafa3e56d.ps1:115 char:1
++ python -c "
++ ~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "<string>", line 7, in <module>
+    print(r['vignette_name'][:20], r['normative'][:10], 'LAST', repr(lines[-1][:80] if lines else ''))
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 26: character maps to <undefined>
+actor waiter overlap implausibl LAST '- Among non-actors: 16% part-'
+actor waiter overlap underdeter LAST '-'
+CA Trump voter implausibl LAST 'Other CA: 0.80'
+CA Trump voter well_posed LAST '- (Note: 60% + 38% ='
+college STEM work implausibl LAST '4'
+college STEM work underdeter LAST '4'
+covid vaccine (blue/ implausibl LAST 'Unvaccinated: 0.73, COVID: 0.73╫0'
+covid vaccine (blue/ well_posed LAST 'Total COVID = 0.023166+0.0949=0.118066'
+diabetes insulin obe implausibl LAST 'The A1c rates are given for insulin users (20%) and obesity (80%) separately. Bu'
+diabetes insulin obe underdeter LAST '- Obesity only: 47-19 ='
+discharged weapon (l implausibl LAST '- (Note: 68% +'
+discharged weapon (l well_posed LAST '- Security: 0.02%'
+english teacher huma implausibl LAST '- Teach ELA'
+english teacher huma underdeter LAST "I need P(master's | teacher). I have rates for English-teaching subgroups and En"
+healthcare employmen implausibl LAST 'P(hospital | non-phys H'
+healthcare employmen well_posed LAST 'P(hosp'
+military overseas (f implausibl LAST '- Army: 0.'
+military overseas (f well_posed LAST 

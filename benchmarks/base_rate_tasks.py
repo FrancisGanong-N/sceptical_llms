@@ -12,7 +12,6 @@ from benchmarks.base_rate import (
     prompts_to_dataframe,
     score_pivot_dataframe,
     score_run_rows,
-    split_response_lines,
     write_merged_results_csv,
 )
 
@@ -72,13 +71,12 @@ def base_rate_prompt_response(llm, example_id: str, prompt: str) -> dict:
     response = _prompt_llm(llm, prompt)
     item = load_benchmark()[example_id]
     parsed = parse_response(response, scoring_type=item.scoring_type)
-    answer_line, confidence_line = split_response_lines(response)
     return {
         "example_id": example_id,
         "response": response,
         "reasoning": kbench.last_reasoning_traces(),
-        "answer_line": answer_line,
-        "confidence_line": confidence_line,
+        "answer_line": parsed.answer_line,
+        "confidence_line": parsed.confidence_line,
         "parsed_answer_type": parsed.answer_type,
         "parsed_percent": parsed.percent,
         "parsed_choice": parsed.choice,
@@ -156,7 +154,7 @@ def _score_from_runs(runs: kbench.Runs):
 @kbench.task(
     name="base_rate_normative_accuracy",
     description=(
-        "Sceptical base-rate benchmark (120 conditions): fraction of parseable answers "
+        "Sceptical base-rate benchmark (34 conditions): fraction of parseable answers "
         "matching scepticism_score_target. Higher is better."
     ),
 )
