@@ -154,7 +154,7 @@ def _score_from_runs(runs: kbench.Runs):
 @kbench.task(
     name="base_rate_normative_accuracy",
     description=(
-        "Sceptical base-rate benchmark (34 conditions): fraction of parseable answers "
+        "Sceptical base-rate benchmark (44 conditions): fraction of parseable answers "
         "matching scepticism_score_target. Higher is better."
     ),
 )

@@ -3,7 +3,7 @@ discharged_weapon_last_year__open_probs,"You are a statistical consultant. Your 
 
 Among employed police officers and security guards in the United States, 44% are police officers and the remainder are security guards.
 Among police officers, 68% are urban police officers and 30% are rural/small-jurisdiction police officers.
-Among urban police officers, 0.3% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.2% discharged a weapon in the last year; among security guards, 0.02% discharged a weapon in the last year.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year; among security guards, 0.02% discharged a weapon in the last year.
 
 Given that a police officer or a security guard discharged a weapon in the last year, what is the probability the person was a police officer?
 
@@ -14,7 +14,7 @@ discharged_weapon_last_year__mc_numeric_probs,"You are a statistical consultant.
 
 Among employed police officers and security guards in the United States, 44% are police officers and the remainder are security guards.
 Among police officers, 68% are urban police officers and 30% are rural/small-jurisdiction police officers.
-Among urban police officers, 0.3% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.2% discharged a weapon in the last year; among security guards, 0.02% discharged a weapon in the last year.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year; among security guards, 0.02% discharged a weapon in the last year.
 
 Given that a police officer or a security guard discharged a weapon in the last year, what is the probability the person was a police officer?
 
@@ -31,7 +31,7 @@ discharged_weapon_last_year__mc_full_probs,"You are a statistical consultant. Yo
 
 Among employed police officers and security guards in the United States, 44% are police officers and the remainder are security guards.
 Among police officers, 68% are urban police officers and 30% are rural/small-jurisdiction police officers.
-Among urban police officers, 0.3% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.2% discharged a weapon in the last year; among security guards, 0.02% discharged a weapon in the last year.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year; among security guards, 0.02% discharged a weapon in the last year.
 
 Given that a police officer or a security guard discharged a weapon in the last year, what is the probability the person was a police officer?
 
@@ -50,8 +50,8 @@ Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 ca_trump_voter__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 13% are registered in California and the remainder are registered elsewhere.
-Among those registered in California, 60% registered in southern California and 38% registered in other parts of the state.
-Among those registered in southern California, 27% voted for Donald Trump in the 2024 presidential election; among those registered in other parts of the state, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
+Among those registered in California, 60% are voters registered in Southern California and 38% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
 
 Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
 
@@ -61,8 +61,8 @@ Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 ca_trump_voter__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 13% are registered in California and the remainder are registered elsewhere.
-Among those registered in California, 60% registered in southern California and 38% registered in other parts of the state.
-Among those registered in southern California, 27% voted for Donald Trump in the 2024 presidential election; among those registered in other parts of the state, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
+Among those registered in California, 60% are voters registered in Southern California and 38% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
 
 Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
 
@@ -78,8 +78,8 @@ Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 ca_trump_voter__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 13% are registered in California and the remainder are registered elsewhere.
-Among those registered in California, 60% registered in southern California and 38% registered in other parts of the state.
-Among those registered in southern California, 27% voted for Donald Trump in the 2024 presidential election; among those registered in other parts of the state, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
+Among those registered in California, 60% are voters registered in Southern California and 38% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
 
 Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
 
@@ -98,8 +98,8 @@ Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 healthcare_employment__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US employed adults, 11% are health care professionals and the remainder are other employed adults.
-Among health care professionals, 10% are physicians and 90% are non-physician health care professionals.
-Among physicians, 54% work in a hospital; among non-physician health care professionals, 60% work in a hospital; among other employed adults, 1% work in a hospital.
+Among health care professionals, 10% are physicians and 90% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital; among other employed adults, 1% work in a hospital.
 
 Given that someone works in a hospital, what is the probability they were a health care professional?
 
@@ -109,8 +109,8 @@ Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 healthcare_employment__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US employed adults, 11% are health care professionals and the remainder are other employed adults.
-Among health care professionals, 10% are physicians and 90% are non-physician health care professionals.
-Among physicians, 54% work in a hospital; among non-physician health care professionals, 60% work in a hospital; among other employed adults, 1% work in a hospital.
+Among health care professionals, 10% are physicians and 90% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital; among other employed adults, 1% work in a hospital.
 
 Given that someone works in a hospital, what is the probability they were a health care professional?
 
@@ -126,8 +126,8 @@ Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 healthcare_employment__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US employed adults, 11% are health care professionals and the remainder are other employed adults.
-Among health care professionals, 10% are physicians and 90% are non-physician health care professionals.
-Among physicians, 54% work in a hospital; among non-physician health care professionals, 60% work in a hospital; among other employed adults, 1% work in a hospital.
+Among health care professionals, 10% are physicians and 90% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital; among other employed adults, 1% work in a hospital.
 
 Given that someone works in a hospital, what is the probability they were a health care professional?
 
@@ -197,7 +197,7 @@ Among US adults 18 years and older, 27% received the 2024-25 COVID vaccine and t
 Among the vaccinated, 71% live in blue states and 29% live in red states.
 Among those who live in blue states, 8% had COVID-19 in the past 12 months; among those who live in red states, 10% had COVID-19 in the past 12 months; among the unvaccinated, 13% had COVID-19 in the past 12 months.
 
-Given that someone had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
+Given that an adult living in the US had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
 
 Reply on two lines.
 Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
@@ -208,7 +208,7 @@ Among US adults 18 years and older, 27% received the 2024-25 COVID vaccine and t
 Among the vaccinated, 71% live in blue states and 29% live in red states.
 Among those who live in blue states, 8% had COVID-19 in the past 12 months; among those who live in red states, 10% had COVID-19 in the past 12 months; among the unvaccinated, 13% had COVID-19 in the past 12 months.
 
-Given that someone had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
+Given that an adult living in the US had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
 
 A. About 20%
 B. About 8%
@@ -225,7 +225,7 @@ Among US adults 18 years and older, 27% received the 2024-25 COVID vaccine and t
 Among the vaccinated, 71% live in blue states and 29% live in red states.
 Among those who live in blue states, 8% had COVID-19 in the past 12 months; among those who live in red states, 10% had COVID-19 in the past 12 months; among the unvaccinated, 13% had COVID-19 in the past 12 months.
 
-Given that someone had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
+Given that an adult living in the US had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
 
 A. About 20%
 B. About 8%
@@ -239,18 +239,46 @@ H. Provided information is obviously incorrect
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-diabetes_insulin_obese__overlap__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+diabetes_insulin_obese__overlap__explicit__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 11% have diagnosed diabetes and the remainder do not.
-Among those with diagnosed diabetes, 28% use insulin and 47% have obesity. An estimated 19% fall into both categories.
-Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who have obesity, 16% had hemoglobin A1c above 9.0%; among those without diagnosed diabetes, 1% had hemoglobin A1c above 9.0%.
+Among those with diagnosed diabetes, 28% use insulin and 47% are obese. An estimated 19% fall into both categories.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%; among those without diagnosed diabetes, 1% had hemoglobin A1c above 9.0%.
+
+Given that someone had hemoglobin A1c above 9.0%, what is the probability they have diagnosed diabetes?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+diabetes_insulin_obese__overlap__explicit__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 11% have diagnosed diabetes and the remainder do not.
+Among those with diagnosed diabetes, 28% use insulin and 47% are obese. An estimated 19% fall into both categories.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%; among those without diagnosed diabetes, 1% had hemoglobin A1c above 9.0%.
 
 Given that someone had hemoglobin A1c above 9.0%, what is the probability they have diagnosed diabetes?
 
 A. About 56%
 B. About 63%
 C. About 42%
-D. About 49%
+D. About 5%
+E. About 49%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+diabetes_insulin_obese__overlap__explicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 11% have diagnosed diabetes and the remainder do not.
+Among those with diagnosed diabetes, 28% use insulin and 47% are obese. An estimated 19% fall into both categories.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%; among those without diagnosed diabetes, 1% had hemoglobin A1c above 9.0%.
+
+Given that someone had hemoglobin A1c above 9.0%, what is the probability they have diagnosed diabetes?
+
+A. About 56%
+B. About 63%
+C. About 49%
+D. About 42%
 E. About 5%
 F. Insufficient information
 G. Inconsistent information
@@ -259,19 +287,19 @@ H. Provided information is obviously incorrect
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-college_stem_work__overlap__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+diabetes_insulin_obese__overlap__implicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), 26% are first-generation students and the remainder are continuing-generation students.
-Among first-generation students, 18% major in STEM and 66% work while enrolled. An estimated 9% fall into both categories.
-Among STEM majors, 85% returned for a second year; among students who work while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
+Among US adults 18 years and older, 11% have diagnosed diabetes and the remainder do not.
+Among those with diagnosed diabetes, 28% use insulin and 47% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%; among those without diagnosed diabetes, 1% had hemoglobin A1c above 9.0%.
 
-Given that a first-generation student or a continuing-generation student returned for a second year, what is the probability the person was a first-generation student?
+Given that someone had hemoglobin A1c above 9.0%, what is the probability they have diagnosed diabetes?
 
-A. About 18%
-B. About 20%
-C. About 6%
-D. About 16%
-E. About 3%
+A. About 56%
+B. About 63%
+C. About 49%
+D. About 5%
+E. About 42%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
@@ -279,52 +307,78 @@ H. Provided information is obviously incorrect
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-actor_waiter_overlap__overlap__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+college_stem_work__overlap__explicit__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.03% are actors and the remainder are non-actors.
-Among actors, 3.5% also work as waiters and 30% have a secondary acting job. An estimated 1.8% fall into both categories.
-Among actors who also work as waiters, 65% worked part-time at their primary job in the reference week; among actors whose acting job is secondary, 55% worked part-time at their primary job in the reference week; among non-actors, 16% worked part-time at their primary job in the reference week.
+Among undergraduate students enrolled at US postsecondary institutions, 26% are first-generation students and the remainder are continuing-generation students.
+Among first-generation students, 18% study STEM and 66% are employed while enrolled. An estimated 9% fall into both categories.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
 
-Given that an actor or a non-actor worked part-time at their primary job in the reference week, what is the probability the person was an actor?
+Given that a student or other students returned for a second year, what is the probability the person was a first-generation student?
 
 Reply on two lines.
 Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-actor_waiter_overlap__overlap__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+college_stem_work__overlap__explicit__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.03% are actors and the remainder are non-actors.
-Among actors, 3.5% also work as waiters and 30% have a secondary acting job. An estimated 1.8% fall into both categories.
-Among actors who also work as waiters, 65% worked part-time at their primary job in the reference week; among actors whose acting job is secondary, 55% worked part-time at their primary job in the reference week; among non-actors, 16% worked part-time at their primary job in the reference week.
+Among undergraduate students enrolled at US postsecondary institutions, 26% are first-generation students and the remainder are continuing-generation students.
+Among first-generation students, 18% study STEM and 66% are employed while enrolled. An estimated 9% fall into both categories.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
 
-Given that an actor or a non-actor worked part-time at their primary job in the reference week, what is the probability the person was an actor?
+Given that a student or other students returned for a second year, what is the probability the person was a first-generation student?
 
-A. About 0%
-B. About 19%
+A. About 18%
+B. About 20%
+C. About 6%
+D. About 3%
+E. About 16%
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A or B).
+Line 1: only the letter (A, B, C, D, or E).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-actor_waiter_overlap__overlap__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+college_stem_work__overlap__explicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.03% are actors and the remainder are non-actors.
-Among actors, 3.5% also work as waiters and 30% have a secondary acting job. An estimated 1.8% fall into both categories.
-Among actors who also work as waiters, 65% worked part-time at their primary job in the reference week; among actors whose acting job is secondary, 55% worked part-time at their primary job in the reference week; among non-actors, 16% worked part-time at their primary job in the reference week.
+Among undergraduate students enrolled at US postsecondary institutions, 26% are first-generation students and the remainder are continuing-generation students.
+Among first-generation students, 18% study STEM and 66% are employed while enrolled. An estimated 9% fall into both categories.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
 
-Given that an actor or a non-actor worked part-time at their primary job in the reference week, what is the probability the person was an actor?
+Given that a student or other students returned for a second year, what is the probability the person was a first-generation student?
 
-A. About 0%
-B. About 19%
+A. About 18%
+B. About 20%
+C. About 3%
+D. About 6%
+E. About 16%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A or B, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-professional_drivers_speeding__overlap__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+college_stem_work__overlap__implicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), 2.4% are professional drivers and the remainder are other adults.
-Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.3% fall into both categories.
+Among undergraduate students enrolled at US postsecondary institutions, 26% are first-generation students and the remainder are continuing-generation students.
+Among first-generation students, 18% study STEM and 66% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
+
+Given that a student or other students returned for a second year, what is the probability the person was a first-generation student?
+
+A. About 18%
+B. About 20%
+C. About 3%
+D. About 16%
+E. About 6%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+professional_drivers_speeding__overlap__explicit__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 2.4% are professional drivers and the remainder are other adults.
+Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.30% fall into both categories.
 Among heavy truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
 
 Given that a professional driver or other adult received a speeding ticket in the last 12 months, what is the probability the person was a professional driver?
@@ -332,10 +386,10 @@ Given that a professional driver or other adult received a speeding ticket in th
 Reply on two lines.
 Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-professional_drivers_speeding__overlap__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+professional_drivers_speeding__overlap__explicit__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), 2.4% are professional drivers and the remainder are other adults.
-Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.3% fall into both categories.
+Among employed adults in the United States, 2.4% are professional drivers and the remainder are other adults.
+Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.30% fall into both categories.
 Among heavy truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
 
 Given that a professional driver or other adult received a speeding ticket in the last 12 months, what is the probability the person was a professional driver?
@@ -348,17 +402,17 @@ D. About 10%
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, or D).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-professional_drivers_speeding__overlap__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+professional_drivers_speeding__overlap__explicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), 2.4% are professional drivers and the remainder are other adults.
-Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.3% fall into both categories.
+Among employed adults in the United States, 2.4% are professional drivers and the remainder are other adults.
+Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.30% fall into both categories.
 Among heavy truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
 
 Given that a professional driver or other adult received a speeding ticket in the last 12 months, what is the probability the person was a professional driver?
 
 A. About 3%
-B. About 2%
-C. About 0%
+B. About 0%
+C. About 2%
 D. About 10%
 F. Insufficient information
 G. Inconsistent information
@@ -367,13 +421,76 @@ H. Provided information is obviously incorrect
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, or D, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-english_teacher_humanities__overlap__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+professional_drivers_speeding__overlap__implicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States (~161 million; BLS occupational employment universe), 0.8% are public grades 9-12 teachers and the remainder are other employed adults.
-Among public grades 9-12 teachers, 15% teach English/language arts and 17% majored in English/language arts. An estimated 11% fall into both categories.
-Among those who teach English/language arts, 69% hold a master's degree or higher; among those who majored in English/language arts, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
+Among employed adults in the United States, 2.4% are professional drivers and the remainder are other adults.
+Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers.
+Among heavy truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
 
-Given that a public grades 9-12 teacher or other employed adult holds a master's degree or higher, what is the probability the person was a public grades 9-12 teacher?
+Given that a professional driver or other adult received a speeding ticket in the last 12 months, what is the probability the person was a professional driver?
+
+A. About 3%
+B. About 0%
+C. About 2%
+D. About 10%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, or D, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+english_teacher_humanities__overlap__explicit__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 0.76% are high school teachers and the remainder are other employed adults.
+Among high school teachers, 15% teach English as their primary assignment and 17% have a bachelor's degree in English. An estimated 11% fall into both categories.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
+
+Given that a high school teacher or other employed adult holds a master's degree or higher, what is the probability the person was an English teacher?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+english_teacher_humanities__overlap__explicit__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 0.76% are high school teachers and the remainder are other employed adults.
+Among high school teachers, 15% teach English as their primary assignment and 17% have a bachelor's degree in English. An estimated 11% fall into both categories.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
+
+Given that a high school teacher or other employed adult holds a master's degree or higher, what is the probability the person was an English teacher?
+
+A. About 1%
+B. About 0%
+C. About 20%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, or C).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+english_teacher_humanities__overlap__explicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 0.76% are high school teachers and the remainder are other employed adults.
+Among high school teachers, 15% teach English as their primary assignment and 17% have a bachelor's degree in English. An estimated 11% fall into both categories.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
+
+Given that a high school teacher or other employed adult holds a master's degree or higher, what is the probability the person was an English teacher?
+
+A. About 1%
+B. About 0%
+C. About 20%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, or C, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+english_teacher_humanities__overlap__implicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 0.76% are high school teachers and the remainder are other employed adults.
+Among high school teachers, 15% teach English as their primary assignment and 17% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
+
+Given that a high school teacher or other employed adult holds a master's degree or higher, what is the probability the person was an English teacher?
 
 A. About 1%
 B. About 0%
@@ -388,8 +505,8 @@ Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 ca_trump_voter__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 80% are registered in California and the remainder are registered elsewhere.
-Among those registered in California, 60% registered in southern California and 38% registered in other parts of the state.
-Among those registered in southern California, 27% voted for Donald Trump in the 2024 presidential election; among those registered in other parts of the state, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
+Among those registered in California, 60% are voters registered in Southern California and 38% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
 
 Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
 
@@ -405,36 +522,39 @@ H. Provided information is obviously incorrect
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-actor_waiter_overlap__overlap__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+college_stem_work__overlap__explicit__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.03% are actors and the remainder are non-actors.
-Among actors, 70% also work as waiters and 30% have a secondary acting job. An estimated 1.8% fall into both categories.
-Among actors who also work as waiters, 65% worked part-time at their primary job in the reference week; among actors whose acting job is secondary, 55% worked part-time at their primary job in the reference week; among non-actors, 16% worked part-time at their primary job in the reference week.
+Among undergraduate students enrolled at US postsecondary institutions, 26% are first-generation students and the remainder are continuing-generation students.
+Among first-generation students, 18% study STEM and 20% are employed while enrolled. An estimated 9% fall into both categories.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
 
-Given that an actor or a non-actor worked part-time at their primary job in the reference week, what is the probability the person was an actor?
+Given that a student or other students returned for a second year, what is the probability the person was a first-generation student?
 
-A. About 0%
-B. About 62%
+A. About 8%
+B. About 11%
+C. About 1%
+D. About 6%
+E. About 26%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
-Line 1: only the letter (A or B, F, G, or H).
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-college_stem_work__overlap__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+college_stem_work__overlap__implicit__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), 26% are first-generation students and the remainder are continuing-generation students.
-Among first-generation students, 18% major in STEM and 20% work while enrolled. An estimated 9% fall into both categories.
-Among STEM majors, 85% returned for a second year; among students who work while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
+Among undergraduate students enrolled at US postsecondary institutions, 26% are first-generation students and the remainder are continuing-generation students.
+Among first-generation students, 18% study STEM and 20% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
 
-Given that a first-generation student or a continuing-generation student returned for a second year, what is the probability the person was a first-generation student?
+Given that a student or other students returned for a second year, what is the probability the person was a first-generation student?
 
 A. About 8%
 B. About 11%
-C. About 6%
-D. About 1%
-E. About 30%
+C. About 1%
+D. About 6%
+E. About 26%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
@@ -448,7 +568,7 @@ Among US adults 18 years and older, 27% received the 2024-25 COVID vaccine and t
 Among the vaccinated, 71% live in blue states and 29% live in red states.
 Among those who live in blue states, 80% had COVID-19 in the past 12 months; among those who live in red states, 10% had COVID-19 in the past 12 months; among the unvaccinated, 13% had COVID-19 in the past 12 months.
 
-Given that someone had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
+Given that an adult living in the US had COVID-19 in the past 12 months, what is the probability they were vaccinated for 2024-25 COVID?
 
 A. About 63%
 B. About 4%
@@ -462,11 +582,31 @@ H. Provided information is obviously incorrect
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-diabetes_insulin_obese__overlap__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+diabetes_insulin_obese__overlap__explicit__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 11% have diagnosed diabetes and the remainder do not.
-Among those with diagnosed diabetes, 28% use insulin and 47% have obesity. An estimated 19% fall into both categories.
-Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who have obesity, 80% had hemoglobin A1c above 9.0%; among those without diagnosed diabetes, 1% had hemoglobin A1c above 9.0%.
+Among those with diagnosed diabetes, 28% use insulin and 47% are obese. An estimated 19% fall into both categories.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 80% had hemoglobin A1c above 9.0%; among those without diagnosed diabetes, 1% had hemoglobin A1c above 9.0%.
+
+Given that someone had hemoglobin A1c above 9.0%, what is the probability they have diagnosed diabetes?
+
+A. About 81%
+B. About 85%
+C. About 21%
+D. About 42%
+E. About 83%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, D, or E, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+diabetes_insulin_obese__overlap__implicit__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 11% have diagnosed diabetes and the remainder do not.
+Among those with diagnosed diabetes, 28% use insulin and 47% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 80% had hemoglobin A1c above 9.0%; among those without diagnosed diabetes, 1% had hemoglobin A1c above 9.0%.
 
 Given that someone had hemoglobin A1c above 9.0%, what is the probability they have diagnosed diabetes?
 
@@ -486,7 +626,7 @@ discharged_weapon_last_year__implausible__mc_full_probs,"You are a statistical c
 
 Among employed police officers and security guards in the United States, 10% are police officers and the remainder are security guards.
 Among police officers, 68% are urban police officers and 30% are rural/small-jurisdiction police officers.
-Among urban police officers, 0.3% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.2% discharged a weapon in the last year; among security guards, 0.02% discharged a weapon in the last year.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year; among security guards, 0.02% discharged a weapon in the last year.
 
 Given that a police officer or a security guard discharged a weapon in the last year, what is the probability the person was a police officer?
 
@@ -502,13 +642,31 @@ H. Provided information is obviously incorrect
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-english_teacher_humanities__overlap__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+english_teacher_humanities__overlap__explicit__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States (~161 million; BLS occupational employment universe), 0.8% are public grades 9-12 teachers and the remainder are other employed adults.
-Among public grades 9-12 teachers, 15% teach English/language arts and 17% majored in English/language arts. An estimated 11% fall into both categories.
-Among those who teach English/language arts, 10% hold a master's degree or higher; among those who majored in English/language arts, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
+Among employed adults in the United States, 0.76% are high school teachers and the remainder are other employed adults.
+Among high school teachers, 15% teach English as their primary assignment and 17% have a bachelor's degree in English. An estimated 11% fall into both categories.
+Among those who teach English as their primary assignment, 10% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
 
-Given that a public grades 9-12 teacher or other employed adult holds a master's degree or higher, what is the probability the person was a public grades 9-12 teacher?
+Given that a high school teacher or other employed adult holds a master's degree or higher, what is the probability the person was an English teacher?
+
+A. About 0%
+B. About 1%
+C. About 11%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, or C, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+english_teacher_humanities__overlap__implicit__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 0.76% are high school teachers and the remainder are other employed adults.
+Among high school teachers, 15% teach English as their primary assignment and 17% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 10% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
+
+Given that a high school teacher or other employed adult holds a master's degree or higher, what is the probability the person was an English teacher?
 
 A. About 0%
 B. About 1%
@@ -523,8 +681,8 @@ Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 healthcare_employment__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US employed adults, 11% are health care professionals and the remainder are other employed adults.
-Among health care professionals, 10% are physicians and 90% are non-physician health care professionals.
-Among physicians, 5% work in a hospital; among non-physician health care professionals, 60% work in a hospital; among other employed adults, 1% work in a hospital.
+Among health care professionals, 10% are physicians and 90% are health care professionals who are not physicians.
+Among physicians, 5% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital; among other employed adults, 1% work in a hospital.
 
 Given that someone works in a hospital, what is the probability they were a health care professional?
 
@@ -560,10 +718,29 @@ H. Provided information is obviously incorrect
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-professional_drivers_speeding__overlap__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+professional_drivers_speeding__overlap__explicit__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), 2.4% are professional drivers and the remainder are other adults.
-Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.3% fall into both categories.
+Among employed adults in the United States, 2.4% are professional drivers and the remainder are other adults.
+Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.30% fall into both categories.
+Among heavy truck drivers, 90% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
+
+Given that a professional driver or other adult received a speeding ticket in the last 12 months, what is the probability the person was a professional driver?
+
+A. About 12%
+B. About 0%
+C. About 50%
+D. About 2%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, C, or D, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+professional_drivers_speeding__overlap__implicit__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 2.4% are professional drivers and the remainder are other adults.
+Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers.
 Among heavy truck drivers, 90% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
 
 Given that a professional driver or other adult received a speeding ticket in the last 12 months, what is the probability the person was a professional driver?
