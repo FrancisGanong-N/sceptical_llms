@@ -21,6 +21,7 @@ from scripts.build_base_rate_prompts import (  # noqa: E402
     _is_covid_vaccinated,
     _is_diabetic_adult,
     _is_first_generation_student,
+    _is_public_secondary_teacher,
     _load_overlap,
     _load_two_cause,
     _mc_letter_list,
@@ -33,6 +34,12 @@ from scripts.build_base_rate_prompts import (  # noqa: E402
     _t_event_in_question,
     slug,
 )
+
+
+def _simple_pct(value: float) -> str:
+    if value < 0.01:
+        return f"{value * 100:.2f}%"
+    return _pct(value)
 
 OUT_DIR = ROOT / "data" / "simple"
 VARIANTS = ("open_probs", "mc_numeric_probs")
@@ -161,22 +168,101 @@ class SimpleVignette:
         return slug(self.name)
 
 
-def _entity_label(subtype: str) -> str:
-    """Lowercase entity phrase from an old subtype-under-A description."""
+def _entity_phrase(subtype: str) -> str:
+    """Short prose phrase for a subtype-under-A description."""
     head = subtype.split(":")[0].strip()
     if not head:
         return subtype.strip()
-    label = head[0].lower() + head[1:]
-    return re.sub(r"\bus\b", "US", label)
+    if re.search(r"\s+among\s+", head, re.I):
+        head = re.split(r"\s+among\s+", head, maxsplit=1, flags=re.I)[0]
+    head = re.sub(r"\s*\(.*", "", head).strip()
+    if re.search(r"^physician", head, re.I):
+        return "physicians"
+    if re.search(r"non-physician health care professional", head, re.I):
+        return "health care professionals who are not physicians"
+    s = head[0].lower() + head[1:]
+    s = re.sub(r"\bus\b", "US", s)
+    if re.search(r"^uses insulin", s, re.I):
+        return "use insulin"
+    if re.search(r"^has obesity", s, re.I):
+        return "are obese"
+    if re.search(r"STEM field of study", head, re.I):
+        return "study STEM"
+    if re.search(r"employed while enrolled", head, re.I):
+        return "employed while enrolled"
+    if re.search(r"southern california registrant", head, re.I):
+        return "voters registered in Southern California"
+    if re.search(r"other california registrant", head, re.I):
+        return "other California voters"
+    if re.search(r"main teaching assignment is English", head, re.I):
+        return "teach English as their primary assignment"
+    if re.search(r"bachelor.*major field is English", head, re.I):
+        return "have a bachelor's degree in English"
+    if s.startswith("uses "):
+        return s.replace("uses ", "use ", 1)
+    if s.startswith("has "):
+        return s.replace("has ", "have ", 1)
+    return s
+
+
+def _entity_label(subtype: str) -> str:
+    return _entity_phrase(subtype)
 
 
 def _entity_group(subtype: str) -> str:
-    label = _entity_label(subtype)
-    if label.endswith("s"):
-        return label
-    if label.endswith("y"):
-        return label[:-1] + "ies"
-    return label + "s"
+    phrase = _entity_phrase(subtype)
+    if phrase in {"voters registered in Southern California", "other California voters"}:
+        return phrase
+    if phrase.startswith(("use ", "have ", "are ")):
+        return phrase
+    if phrase.endswith("s"):
+        return phrase
+    if phrase.endswith("y"):
+        return phrase[:-1] + "ies"
+    return phrase + "s"
+
+
+def _entity_share_clause(subtype: str, pct: float) -> str:
+    phrase = _entity_phrase(subtype)
+    if phrase == "study STEM":
+        return f"{_simple_pct(pct)} study STEM"
+    if phrase == "employed while enrolled":
+        return f"{_simple_pct(pct)} are employed while enrolled"
+    if phrase == "teach English as their primary assignment":
+        return f"{_simple_pct(pct)} teach English as their primary assignment"
+    if phrase == "have a bachelor's degree in English":
+        return f"{_simple_pct(pct)} have a bachelor's degree in English"
+    if phrase.startswith(("use ", "are ")):
+        return f"{_simple_pct(pct)} {phrase}"
+    if phrase.endswith("members"):
+        return f"{_simple_pct(pct)} are {phrase}"
+    return f"{_simple_pct(pct)} are {_entity_group(subtype)}"
+
+
+def _entity_among_group(subtype: str) -> str:
+    phrase = _entity_phrase(subtype)
+    if phrase == "study STEM":
+        return "those who studied STEM"
+    if phrase == "employed while enrolled":
+        return "those employed while enrolled"
+    if phrase == "teach English as their primary assignment":
+        return "those who teach English as their primary assignment"
+    if phrase == "have a bachelor's degree in English":
+        return "those who have a bachelor's degree in English"
+    if phrase.startswith(("use ", "have ", "are ")):
+        return f"those who {phrase}"
+    return _entity_group(subtype)
+
+
+def _entity_answer_clause(subtype: str) -> str:
+    phrase = _entity_phrase(subtype)
+    if phrase == "study STEM":
+        return "studied STEM"
+    if phrase == "teach English as their primary assignment":
+        return "teach English as their primary assignment"
+    if phrase.startswith(("use ", "are ")):
+        return phrase
+    return f"were {_entity_group(subtype)}"
 
 
 def _simple_open_suffix() -> str:
@@ -200,8 +286,15 @@ def _simple_given_t_subject(old_a: str) -> str:
     if _is_california_voter(old_a):
         return "a registered voter in California"
     if _is_first_generation_student(old_a):
-        return "a first-generation student"
+        return "a student"
+    if _is_public_secondary_teacher(old_a):
+        return "a high school teacher"
     return _role_phrase(old_a)
+
+
+def _simple_setting_phrase(universe: str) -> str:
+    setting = _setting_phrase(universe)
+    return re.sub(r"\s*\([^)]*\)", "", setting)
 
 
 def _question_given_t(v: SimpleVignette) -> str:
@@ -209,7 +302,7 @@ def _question_given_t(v: SimpleVignette) -> str:
     event = _t_event_in_question(v.t)
     return (
         f"Given that {subject} {event}, "
-        f"what is the probability they were {v.c_group}?"
+        f"what is the probability they {_entity_answer_clause(v.old_c)}?"
     )
 
 
@@ -296,18 +389,32 @@ def build_mc_options(
     return labels, lures, normative_letter, option_letters
 
 
+def _narrative_entity_order(
+    v: SimpleVignette,
+) -> tuple[tuple[str, float, float], tuple[str, float, float]]:
+    """Return ((subtype, p, s), (subtype, p, s)) in narrative order."""
+    first = (v.old_c, v.p_c, v.s_c)
+    second = (v.old_d, v.p_d, v.s_d)
+    if re.search(r"other california registrant", v.old_c, re.I) and re.search(
+        r"southern california registrant", v.old_d, re.I
+    ):
+        first, second = second, first
+    return first, second
+
+
 def narrative_with_probs(v: SimpleVignette) -> str:
-    setting = _setting_phrase(v.universe)
+    setting = _simple_setting_phrase(v.universe)
+    (c_subtype, c_p, c_s), (d_subtype, d_p, d_s) = _narrative_entity_order(v)
     parts = [
         INTRO,
         "",
         (
-            f"{setting}, {_pct(v.p_c)} are {v.c_group} and "
-            f"{_pct(v.p_d)} are {v.d_group}."
+            f"{setting}, {_entity_share_clause(c_subtype, c_p)} and "
+            f"{_entity_share_clause(d_subtype, d_p)}."
         ),
         (
-            f"Among {v.c_group}, {_pct(v.s_c)} {_t_event(v.t)}; "
-            f"among {v.d_group}, {_pct(v.s_d)} {_t_event(v.t)}."
+            f"Among {_entity_among_group(c_subtype)}, {_simple_pct(c_s)} {_t_event(v.t)}; "
+            f"among {_entity_among_group(d_subtype)}, {_simple_pct(d_s)} {_t_event(v.t)}."
         ),
         "",
         _question_given_t(v),
