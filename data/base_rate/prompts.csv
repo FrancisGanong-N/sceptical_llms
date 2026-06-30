@@ -53,7 +53,7 @@ Among US registered voters, 13% are registered in California and the remainder a
 Among those registered in California, 60% are voters registered in Southern California and 38% are other California voters.
 Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
 
-Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
+Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in Southern California?
 
 Reply on two lines.
 Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
@@ -64,12 +64,12 @@ Among US registered voters, 13% are registered in California and the remainder a
 Among those registered in California, 60% are voters registered in Southern California and 38% are other California voters.
 Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
 
-Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
+Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in Southern California?
 
-A. About 10%
-B. About 1%
-C. About 4%
-D. About 6%
+A. About 6%
+B. About 10%
+C. About 1%
+D. About 4%
 E. About 13%
 
 Which answer is closest? Reply on two lines.
@@ -81,11 +81,11 @@ Among US registered voters, 13% are registered in California and the remainder a
 Among those registered in California, 60% are voters registered in Southern California and 38% are other California voters.
 Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
 
-Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
+Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in Southern California?
 
-A. About 10%
-B. About 4%
-C. About 6%
+A. About 6%
+B. About 10%
+C. About 4%
 D. About 1%
 E. About 13%
 F. Insufficient information
@@ -97,7 +97,7 @@ Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 healthcare_employment__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US employed adults, 11% are health care professionals and the remainder are other employed adults.
+Among US employed adults, 11% are health care professionals.
 Among health care professionals, 10% are physicians and 90% are health care professionals who are not physicians.
 Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital; among other employed adults, 1% work in a hospital.
 
@@ -108,7 +108,7 @@ Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insu
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 healthcare_employment__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US employed adults, 11% are health care professionals and the remainder are other employed adults.
+Among US employed adults, 11% are health care professionals.
 Among health care professionals, 10% are physicians and 90% are health care professionals who are not physicians.
 Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital; among other employed adults, 1% work in a hospital.
 
@@ -125,7 +125,7 @@ Line 1: only the letter (A, B, C, D, or E).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 healthcare_employment__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US employed adults, 11% are health care professionals and the remainder are other employed adults.
+Among US employed adults, 11% are health care professionals.
 Among health care professionals, 10% are physicians and 90% are health care professionals who are not physicians.
 Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital; among other employed adults, 1% work in a hospital.
 
@@ -313,7 +313,7 @@ Among undergraduate students enrolled at US postsecondary institutions, 26% are 
 Among first-generation students, 18% study STEM and 66% are employed while enrolled. An estimated 9% fall into both categories.
 Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
 
-Given that a student or other students returned for a second year, what is the probability the person was a first-generation student?
+Given that a student returned for a second year, what is the probability the person was a first-generation student?
 
 Reply on two lines.
 Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
@@ -324,7 +324,7 @@ Among undergraduate students enrolled at US postsecondary institutions, 26% are 
 Among first-generation students, 18% study STEM and 66% are employed while enrolled. An estimated 9% fall into both categories.
 Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
 
-Given that a student or other students returned for a second year, what is the probability the person was a first-generation student?
+Given that a student returned for a second year, what is the probability the person was a first-generation student?
 
 A. About 18%
 B. About 20%
@@ -341,7 +341,7 @@ Among undergraduate students enrolled at US postsecondary institutions, 26% are 
 Among first-generation students, 18% study STEM and 66% are employed while enrolled. An estimated 9% fall into both categories.
 Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
 
-Given that a student or other students returned for a second year, what is the probability the person was a first-generation student?
+Given that a student returned for a second year, what is the probability the person was a first-generation student?
 
 A. About 18%
 B. About 20%
@@ -361,7 +361,7 @@ Among undergraduate students enrolled at US postsecondary institutions, 26% are 
 Among first-generation students, 18% study STEM and 66% are employed while enrolled.
 Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
 
-Given that a student or other students returned for a second year, what is the probability the person was a first-generation student?
+Given that a student returned for a second year, what is the probability the person was a first-generation student?
 
 A. About 18%
 B. About 20%
@@ -377,7 +377,7 @@ Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 professional_drivers_speeding__overlap__explicit__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 2.4% are professional drivers and the remainder are other adults.
+Among employed adults in the United States, 2.4% are professional drivers.
 Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.30% fall into both categories.
 Among heavy truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
 
@@ -388,7 +388,7 @@ Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insu
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 professional_drivers_speeding__overlap__explicit__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 2.4% are professional drivers and the remainder are other adults.
+Among employed adults in the United States, 2.4% are professional drivers.
 Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.30% fall into both categories.
 Among heavy truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
 
@@ -404,7 +404,7 @@ Line 1: only the letter (A, B, C, or D).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 professional_drivers_speeding__overlap__explicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 2.4% are professional drivers and the remainder are other adults.
+Among employed adults in the United States, 2.4% are professional drivers.
 Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.30% fall into both categories.
 Among heavy truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
 
@@ -423,7 +423,7 @@ Line 1: only the letter (A, B, C, or D, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 professional_drivers_speeding__overlap__implicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 2.4% are professional drivers and the remainder are other adults.
+Among employed adults in the United States, 2.4% are professional drivers.
 Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers.
 Among heavy truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
 
@@ -442,7 +442,7 @@ Line 1: only the letter (A, B, C, or D, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 english_teacher_humanities__overlap__explicit__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 0.76% are high school teachers and the remainder are other employed adults.
+Among employed adults in the United States, 0.76% are high school teachers.
 Among high school teachers, 15% teach English as their primary assignment and 17% have a bachelor's degree in English. An estimated 11% fall into both categories.
 Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
 
@@ -453,7 +453,7 @@ Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insu
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 english_teacher_humanities__overlap__explicit__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 0.76% are high school teachers and the remainder are other employed adults.
+Among employed adults in the United States, 0.76% are high school teachers.
 Among high school teachers, 15% teach English as their primary assignment and 17% have a bachelor's degree in English. An estimated 11% fall into both categories.
 Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
 
@@ -468,7 +468,7 @@ Line 1: only the letter (A, B, or C).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 english_teacher_humanities__overlap__explicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 0.76% are high school teachers and the remainder are other employed adults.
+Among employed adults in the United States, 0.76% are high school teachers.
 Among high school teachers, 15% teach English as their primary assignment and 17% have a bachelor's degree in English. An estimated 11% fall into both categories.
 Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
 
@@ -486,7 +486,7 @@ Line 1: only the letter (A, B, or C, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 english_teacher_humanities__overlap__implicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 0.76% are high school teachers and the remainder are other employed adults.
+Among employed adults in the United States, 0.76% are high school teachers.
 Among high school teachers, 15% teach English as their primary assignment and 17% have a bachelor's degree in English.
 Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
 
@@ -508,13 +508,13 @@ Among US registered voters, 80% are registered in California and the remainder a
 Among those registered in California, 60% are voters registered in Southern California and 38% are other California voters.
 Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
 
-Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in California?
+Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in Southern California?
 
-A. About 75%
-B. About 17%
-C. About 63%
-D. About 55%
-E. About 28%
+A. About 43%
+B. About 75%
+C. About 17%
+D. About 63%
+E. About 55%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect
@@ -528,7 +528,7 @@ Among undergraduate students enrolled at US postsecondary institutions, 26% are 
 Among first-generation students, 18% study STEM and 20% are employed while enrolled. An estimated 9% fall into both categories.
 Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
 
-Given that a student or other students returned for a second year, what is the probability the person was a first-generation student?
+Given that a student returned for a second year, what is the probability the person was a first-generation student?
 
 A. About 8%
 B. About 11%
@@ -548,7 +548,7 @@ Among undergraduate students enrolled at US postsecondary institutions, 26% are 
 Among first-generation students, 18% study STEM and 20% are employed while enrolled.
 Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year; among other students, 88% returned for a second year.
 
-Given that a student or other students returned for a second year, what is the probability the person was a first-generation student?
+Given that a student returned for a second year, what is the probability the person was a first-generation student?
 
 A. About 8%
 B. About 11%
@@ -644,7 +644,7 @@ Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 english_teacher_humanities__overlap__explicit__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 0.76% are high school teachers and the remainder are other employed adults.
+Among employed adults in the United States, 0.76% are high school teachers.
 Among high school teachers, 15% teach English as their primary assignment and 17% have a bachelor's degree in English. An estimated 11% fall into both categories.
 Among those who teach English as their primary assignment, 10% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
 
@@ -662,7 +662,7 @@ Line 1: only the letter (A, B, or C, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 english_teacher_humanities__overlap__implicit__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 0.76% are high school teachers and the remainder are other employed adults.
+Among employed adults in the United States, 0.76% are high school teachers.
 Among high school teachers, 15% teach English as their primary assignment and 17% have a bachelor's degree in English.
 Among those who teach English as their primary assignment, 10% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher; among other employed adults, 15% hold a master's degree or higher.
 
@@ -680,7 +680,7 @@ Line 1: only the letter (A, B, or C, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 healthcare_employment__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US employed adults, 11% are health care professionals and the remainder are other employed adults.
+Among US employed adults, 11% are health care professionals.
 Among health care professionals, 10% are physicians and 90% are health care professionals who are not physicians.
 Among physicians, 5% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital; among other employed adults, 1% work in a hospital.
 
@@ -720,7 +720,7 @@ Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 professional_drivers_speeding__overlap__explicit__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 2.4% are professional drivers and the remainder are other adults.
+Among employed adults in the United States, 2.4% are professional drivers.
 Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers. An estimated 0.30% fall into both categories.
 Among heavy truck drivers, 90% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
 
@@ -739,7 +739,7 @@ Line 1: only the letter (A, B, C, or D, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 professional_drivers_speeding__overlap__implicit__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 2.4% are professional drivers and the remainder are other adults.
+Among employed adults in the United States, 2.4% are professional drivers.
 Among professional drivers, 53% are heavy truck drivers and 14% are bus drivers.
 Among heavy truck drivers, 90% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months; among other adults, 9% received a speeding ticket in the last 12 months.
 
