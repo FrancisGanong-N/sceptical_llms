@@ -175,3 +175,12 @@ class TestBuildAll:
         assert float(row["p_d"]) == 0.13 * 0.60
         assert float(row["p_t_given_c"]) == 0.31
         assert float(row["p_t_given_d"]) == 0.27
+
+    def test_intersection_size_by_vignette(self):
+        _, _, benchmark = build_all()
+        by_name = {row["vignette_name"]: row["intersection_size"] for row in benchmark}
+        assert by_name["discharged weapon (last year)"] == "0"
+        assert by_name["diabetes insulin obese"] == "large"
+        assert by_name["college STEM work"] == "medium"
+        assert by_name["professional drivers speeding"] == "small"
+        assert by_name["english teacher humanities"] == "large"

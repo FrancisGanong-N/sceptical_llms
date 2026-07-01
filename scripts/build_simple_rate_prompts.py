@@ -131,6 +131,7 @@ class SimpleVignette:
     p_d: float
     s_c: float
     s_d: float
+    intersection_size: str
 
     @property
     def c_label(self) -> str:
@@ -388,6 +389,7 @@ def _from_vignette(v: Vignette) -> SimpleVignette:
         p_d=v.p_a * v.q_d,
         s_c=v.s_c,
         s_d=v.s_d,
+        intersection_size=v.intersection_size,
     )
 
 
@@ -496,6 +498,7 @@ def _shared_item_fields(v: SimpleVignette) -> dict[str, str]:
     normative = v.target_posterior()
     return {
         "vignette_name": v.name,
+        "intersection_size": v.intersection_size,
         "well_posed": "true",
         "normative": "well_posed",
         "p_c_and_d_given_a": "0",
@@ -583,7 +586,7 @@ def build_all() -> tuple[list[dict[str, str]], list[dict[str, str]], list[dict[s
                 "example_id": item["example_id"],
                 "vignette_name": item["vignette_name"],
                 "problem_type": "well_posed",
-                "intersection_size": "0",
+                "intersection_size": item["intersection_size"],
                 "response_type": item["response_type"],
                 "has_statistics": "true",
                 "variant": item["variant"],

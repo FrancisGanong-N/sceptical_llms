@@ -17,9 +17,8 @@ from benchmarks.simple_rate import (
     write_merged_results_csv,
 )
 
-BASE_RATE_MAX_OUTPUT_TOKENS = 128
-BASE_RATE_N_JOBS = 1
-_active_max_output_tokens = BASE_RATE_MAX_OUTPUT_TOKENS
+SIMPLE_MAX_OUTPUT_TOKENS = 512
+SIMPLE_N_JOBS = 1
 
 
 def _kaggle_merged_results_path() -> Path:
@@ -46,12 +45,11 @@ def _llm_extra_api_params(token_cap: int) -> dict[str, int | dict[str, int]]:
     }
 
 
-def _prompt_llm(llm, prompt: str) -> str:
-    token_cap = _active_max_output_tokens
+def _prompt_llm(llm, prompt: str, *, max_output_tokens: int) -> str:
     return llm.prompt(
         prompt,
         reasoning="none",
-        extra_api_params=_llm_extra_api_params(token_cap),
+        extra_api_params=_llm_extra_api_params(max_output_tokens),
     )
 
 
@@ -59,8 +57,13 @@ def _prompt_llm(llm, prompt: str) -> str:
     store_task=False,
     description="One simple base-rate item: prompt, parsed lines, and reasoning.",
 )
-def simple_rate_prompt_response(llm, example_id: str, prompt: str) -> dict:
-    response = _prompt_llm(llm, prompt)
+def simple_rate_prompt_response(
+    llm,
+    example_id: str,
+    prompt: str,
+    max_output_tokens: int = SIMPLE_MAX_OUTPUT_TOKENS,
+) -> dict:
+    response = _prompt_llm(llm, prompt, max_output_tokens=max_output_tokens)
     item = load_benchmark()[example_id]
     parsed = parse_response(response, scoring_type=item.scoring_type)
     return {
@@ -83,12 +86,10 @@ def evaluate_simple_rate_benchmark(
     benchmark_path: str | Path | None = None,
     merged_results_path: str | Path | None = None,
     max_prompts: int | None = None,
-    max_output_tokens: int = BASE_RATE_MAX_OUTPUT_TOKENS,
-    n_jobs: int = BASE_RATE_N_JOBS,
+    max_output_tokens: int | None = None,
+    n_jobs: int = SIMPLE_N_JOBS,
 ):
     """Run simple benchmark prompts, score normative P(C|T), track P(T|C) confusion."""
-    global _active_max_output_tokens
-
     benchmark_path = Path(benchmark_path or BENCHMARK_CSV)
     llms = llm if isinstance(llm, list) else [llm]
     evaluation_data = prompts_to_dataframe(benchmark_path, max_prompts=max_prompts)
@@ -97,18 +98,19 @@ def evaluate_simple_rate_benchmark(
         if max_prompts is None
         else list(evaluation_data["example_id"])
     )
-    previous_max_output_tokens = _active_max_output_tokens
-    _active_max_output_tokens = max_output_tokens
-    try:
-        with kbench.client.enable_cache():
-            runs = simple_rate_prompt_response.evaluate(
-                llm=llms,
-                evaluation_data=evaluation_data,
-                n_jobs=n_jobs,
-                remove_run_files=True,
-            )
-    finally:
-        _active_max_output_tokens = previous_max_output_tokens
+    token_cap = (
+        SIMPLE_MAX_OUTPUT_TOKENS
+        if max_output_tokens is None
+        else max_output_tokens
+    )
+    with kbench.client.enable_cache():
+        runs = simple_rate_prompt_response.evaluate(
+            llm=llms,
+            evaluation_data=evaluation_data,
+            max_output_tokens=[token_cap],
+            n_jobs=n_jobs,
+            remove_run_files=True,
+        )
 
     run_rows = []
     for run in runs.runs:
