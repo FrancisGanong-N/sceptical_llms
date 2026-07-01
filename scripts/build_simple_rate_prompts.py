@@ -153,8 +153,23 @@ class SimpleVignette:
         den = num + self.s_d * self.p_d
         return num / den if den else 0.0
 
+    def posterior_d(self) -> float:
+        num = self.s_d * self.p_d
+        den = self.s_c * self.p_c + num
+        return num / den if den else 0.0
+
+    def question_target_subtype(self) -> str:
+        if self.name == "CA Trump voter":
+            return self.old_d
+        return self.old_c
+
+    def target_posterior(self) -> float:
+        if self.name == "CA Trump voter":
+            return self.posterior_d()
+        return self.posterior_c()
+
     def lure_percents(self) -> dict[str, float]:
-        norm = self.posterior_c() * 100
+        norm = self.target_posterior() * 100
         return {
             "normative": norm,
             "path_c": self.s_c * 100,
@@ -259,10 +274,63 @@ def _entity_answer_clause(subtype: str) -> str:
     if phrase == "study STEM":
         return "studied STEM"
     if phrase == "teach English as their primary assignment":
-        return "teach English as their primary assignment"
+        return "were an English teacher"
     if phrase.startswith(("use ", "are ")):
         return phrase
     return f"were {_entity_group(subtype)}"
+
+
+def _singularize_entity_group(group: str) -> str:
+    if group.endswith(" officers"):
+        return group.removesuffix(" officers") + " officer"
+    if group.endswith(" members"):
+        return group.removesuffix(" members") + " member"
+    if group.endswith(" drivers"):
+        return group.removesuffix(" drivers") + " driver"
+    if group.endswith(" residents"):
+        return group.removesuffix(" residents") + " resident"
+    if group.endswith(" voters"):
+        return group.removesuffix(" voters") + " voter"
+    if group == "physicians":
+        return "physician"
+    if group.endswith("s") and not group.endswith("ss"):
+        return group[:-1]
+    return group
+
+
+def _article_for(phrase: str) -> str:
+    if phrase.upper().startswith("US "):
+        return "a"
+    first = phrase[:1].lower()
+    if first in "aeiou":
+        return "an"
+    return "a"
+
+
+def _entity_question_predicate(subtype: str) -> str:
+    phrase = _entity_phrase(subtype)
+    if phrase == "voters registered in Southern California":
+        return "lives in Southern California"
+    if phrase == "study STEM":
+        return "studied STEM"
+    if phrase == "teach English as their primary assignment":
+        return "is an English teacher"
+    if phrase.startswith("are "):
+        return f"is {phrase[4:]}"
+    if phrase.startswith("use "):
+        return phrase.replace("use ", "uses ", 1)
+    group = _entity_group(subtype)
+    singular = _singularize_entity_group(group)
+    if singular.startswith("uS "):
+        singular = "US " + singular[3:]
+    return f"is {_article_for(singular)} {singular}"
+
+
+def _t_event_relative_clause(t: str) -> str:
+    event = _t_event_in_question(t)
+    if event == "discharged a weapon in the last year":
+        return "discharged his weapon in the last year"
+    return event
 
 
 def _simple_open_suffix() -> str:
@@ -280,7 +348,7 @@ def _simple_mc_suffix(*, letters: str) -> str:
 def _simple_given_t_subject(old_a: str) -> str:
     """Subject for simple-model P(C|T) questions (pool = old A = C union D)."""
     if _is_covid_vaccinated(old_a):
-        return "someone vaccinated for 2024-25 COVID"
+        return "an adult living in the US who is vaccinated for 2024-25 COVID"
     if _is_diabetic_adult(old_a):
         return "an adult with diagnosed diabetes"
     if _is_california_voter(old_a):
@@ -299,11 +367,13 @@ def _simple_setting_phrase(universe: str) -> str:
 
 def _question_given_t(v: SimpleVignette) -> str:
     subject = _simple_given_t_subject(v.old_a)
-    event = _t_event_in_question(v.t)
-    return (
-        f"Given that {subject} {event}, "
-        f"what is the probability they {_entity_answer_clause(v.old_c)}?"
-    )
+    relative_event = _t_event_relative_clause(v.t)
+    predicate = _entity_question_predicate(v.question_target_subtype())
+    if " who " in subject:
+        clause = f"{subject} and {relative_event}"
+    else:
+        clause = f"{subject} who {relative_event}"
+    return f"What is the probability that {clause} {predicate}?"
 
 
 def _from_vignette(v: Vignette) -> SimpleVignette:
@@ -423,7 +493,7 @@ def narrative_with_probs(v: SimpleVignette) -> str:
 
 
 def _shared_item_fields(v: SimpleVignette) -> dict[str, str]:
-    normative = v.posterior_c()
+    normative = v.target_posterior()
     return {
         "vignette_name": v.name,
         "well_posed": "true",

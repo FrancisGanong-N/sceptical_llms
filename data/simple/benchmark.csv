@@ -4,7 +4,7 @@ discharged_weapon_last_year__open_probs,discharged weapon (last year),well_posed
 Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
 Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
 
-Given that a police officer discharged a weapon in the last year, what is the probability they were urban police officers?
+What is the probability that a police officer who discharged his weapon in the last year is an urban police officer?
 
 Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.2992,0.132,0.003,0.002,,77.27,77%,false,,,false,77.27,,,,,,,,,,,,,,,,
 discharged_weapon_last_year__mc_numeric_probs,discharged weapon (last year),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
@@ -12,7 +12,7 @@ discharged_weapon_last_year__mc_numeric_probs,discharged weapon (last year),well
 Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
 Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
 
-Given that a police officer discharged a weapon in the last year, what is the probability they were urban police officers?
+What is the probability that a police officer who discharged his weapon in the last year is an urban police officer?
 
 A. About 77%
 B. About 0%
@@ -25,29 +25,29 @@ ca_trump_voter__open_probs,CA Trump voter,well_posed,0,open,true,open_probs,"You
 Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
 Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
 
-Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California voters?
+What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?
 
-Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0494,0.078,0.31,0.27,,42.1,42%,false,,,false,42.1,,,,,,,,,,,,,,,,
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0494,0.078,0.31,0.27,,57.9,58%,false,,,false,57.9,,,,,,,,,,,,,,,,
 ca_trump_voter__mc_numeric_probs,CA Trump voter,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
 Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
 
-Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California voters?
+What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?
 
-A. About 42%
+A. About 58%
 B. About 8%
 C. About 31%
 D. About 27%
 E. About 5%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0494,0.078,0.31,0.27,A,42.1,42%,false,42.1,A,false,n/a,About 42%,About 8%,About 31%,About 27%,About 5%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0494,0.078,0.31,0.27,A,57.9,58%,false,57.9,A,false,n/a,About 58%,About 8%,About 31%,About 27%,About 5%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,
 healthcare_employment__open_probs,healthcare employment,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
 Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
 
-Given that a health care professional works in a hospital, what is the probability they were physicians?
+What is the probability that a health care professional who works in a hospital is a physician?
 
 Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.011,0.099,0.54,0.6,,9.091,9.1%,false,,,false,9.091,,,,,,,,,,,,,,,,
 healthcare_employment__mc_numeric_probs,healthcare employment,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
@@ -55,7 +55,7 @@ healthcare_employment__mc_numeric_probs,healthcare employment,well_posed,0,mc,tr
 Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
 Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
 
-Given that a health care professional works in a hospital, what is the probability they were physicians?
+What is the probability that a health care professional who works in a hospital is a physician?
 
 A. About 9%
 B. About 10%
@@ -69,7 +69,7 @@ military_overseas_federal_pool__open_probs,military overseas (federal pool),well
 Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
 Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
 
-Given that an active-duty US military service member has worked overseas, what is the probability they were uS Army active-duty service members?
+What is the probability that an active-duty US military service member who has worked overseas is a US Army active-duty service member?
 
 Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.14,0.204,0.58,0.64,,38.35,38%,false,,,false,38.35,,,,,,,,,,,,,,,,
 military_overseas_federal_pool__mc_numeric_probs,military overseas (federal pool),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
@@ -77,7 +77,7 @@ military_overseas_federal_pool__mc_numeric_probs,military overseas (federal pool
 Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
 Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
 
-Given that an active-duty US military service member has worked overseas, what is the probability they were uS Army active-duty service members?
+What is the probability that an active-duty US military service member who has worked overseas is a US Army active-duty service member?
 
 A. About 38%
 B. About 37%
@@ -91,7 +91,7 @@ covid_vaccine_blue_red__open_probs,covid vaccine (blue/red),well_posed,0,open,tr
 Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
 Among blue-state residents, 8% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
 
-Given that an adult living in the US who is vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state residents?
+What is the probability that an adult living in the US who is vaccinated for 2024-25 COVID and had COVID-19 in the past 12 months is a blue-state resident?
 
 Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.1917,0.0783,0.08,0.1,,66.2,66%,false,,,false,66.2,,,,,,,,,,,,,,,,
 covid_vaccine_blue_red__mc_numeric_probs,covid vaccine (blue/red),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
@@ -99,7 +99,7 @@ covid_vaccine_blue_red__mc_numeric_probs,covid vaccine (blue/red),well_posed,0,m
 Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
 Among blue-state residents, 8% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
 
-Given that an adult living in the US who is vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state residents?
+What is the probability that an adult living in the US who is vaccinated for 2024-25 COVID and had COVID-19 in the past 12 months is a blue-state resident?
 
 A. About 66%
 B. About 1%
@@ -113,7 +113,7 @@ diabetes_insulin_obese__open_probs,diabetes insulin obese,well_posed,0,open,true
 Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
 Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
 
-Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they use insulin?
+What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?
 
 Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.031866,0.053223,0.2,0.16,,42.81,43%,false,,,false,42.81,,,,,,,,,,,,,,,,
 diabetes_insulin_obese__mc_numeric_probs,diabetes insulin obese,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
@@ -121,7 +121,7 @@ diabetes_insulin_obese__mc_numeric_probs,diabetes insulin obese,well_posed,0,mc,
 Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
 Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
 
-Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they use insulin?
+What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?
 
 A. About 43%
 B. About 5%
@@ -135,7 +135,7 @@ college_stem_work__open_probs,college STEM work,well_posed,0,open,true,open_prob
 Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
 Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
 
-Given that a student returned for a second year, what is the probability they studied STEM?
+What is the probability that a student who returned for a second year studied STEM?
 
 Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.04644,0.17028,0.85,0.74,,23.85,24%,false,,,false,23.85,,,,,,,,,,,,,,,,
 college_stem_work__mc_numeric_probs,college STEM work,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
@@ -143,7 +143,7 @@ college_stem_work__mc_numeric_probs,college STEM work,well_posed,0,mc,true,mc_nu
 Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
 Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
 
-Given that a student returned for a second year, what is the probability they studied STEM?
+What is the probability that a student who returned for a second year studied STEM?
 
 A. About 24%
 B. About 63%
@@ -157,7 +157,7 @@ professional_drivers_speeding__open_probs,professional drivers speeding,well_pos
 Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
 Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
 
-Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck drivers?
+What is the probability that a professional driver who received a speeding ticket in the last 12 months is a heavy and tractor-trailer truck driver?
 
 Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.012816,0.00348,0.16,0.1,,85.49,85%,false,,,false,85.49,,,,,,,,,,,,,,,,
 professional_drivers_speeding__mc_numeric_probs,professional drivers speeding,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
@@ -165,7 +165,7 @@ professional_drivers_speeding__mc_numeric_probs,professional drivers speeding,we
 Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
 Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
 
-Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck drivers?
+What is the probability that a professional driver who received a speeding ticket in the last 12 months is a heavy and tractor-trailer truck driver?
 
 A. About 85%
 B. About 0%
@@ -179,7 +179,7 @@ english_teacher_humanities__open_probs,english teacher humanities,well_posed,0,o
 Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
 Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
 
-Given that a high school teacher holds a master's degree or higher, what is the probability they were an English teacher?
+What is the probability that a high school teacher who holds a master's degree or higher is an English teacher?
 
 Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,,52.06,52%,false,,,false,52.06,,,,,,,,,,,,,,,,
 english_teacher_humanities__mc_numeric_probs,english teacher humanities,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
@@ -187,7 +187,7 @@ english_teacher_humanities__mc_numeric_probs,english teacher humanities,well_pos
 Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
 Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
 
-Given that a high school teacher holds a master's degree or higher, what is the probability they were an English teacher?
+What is the probability that a high school teacher who holds a master's degree or higher is an English teacher?
 
 A. About 52%
 B. About 69%

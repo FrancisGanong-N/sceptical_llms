@@ -15,6 +15,12 @@ TWO_CAUSE_CSV = ROOT / "docs" / "base-rate-two-cause-vignettes.csv"
 OVERLAP_CSV = ROOT / "docs" / "base-rate-overlap-vignettes.csv"
 IMPLAUSIBLE_CSV = OUT_DIR / "implausible_statistics.csv"
 
+EXCLUDED_VIGNETTE_NAMES = frozenset({"actor waiter overlap"})
+PROBLEM_TYPES = frozenset(
+    {"well_posed", "overlap_explicit", "overlap_implicit", "implausible"}
+)
+OVERLAP_DISCLOSURES = ("explicit", "implicit")
+
 IMPLAUSIBLE_PARAM_FIELD = {
     "P_A": "p_a",
     "P_C_given_A": "q_c",
@@ -165,15 +171,31 @@ def _asks_given_t_only(v: Vignette) -> bool:
     )
 
 
+def _asks_southern_california_target(v: Vignette) -> bool:
+    return _is_california_voter(v.a) and _is_non_california_voter(v.n)
+
+
+def _asks_english_teacher(v: Vignette) -> bool:
+    return _is_public_secondary_teacher(v.a) and _is_non_secondary_teacher_employed(v.n)
+
+
+def _question_target_phrase(v: Vignette) -> str:
+    if _asks_english_teacher(v):
+        return "an English teacher"
+    return _role_answer_phrase(v.a)
+
+
 def _target_outcome_phrase(v: Vignette) -> str:
     if _is_covid_vaccinated(v.a):
         return "they were vaccinated for 2024-25 COVID"
     if _is_diabetic_adult(v.a):
         return "they have diagnosed diabetes"
     if _is_california_voter(v.a):
-        return "they were registered in California"
+        return "they were registered in Southern California"
     if _is_health_care_professional(v.a):
         return "they were a health care professional"
+    if _asks_english_teacher(v):
+        return "they were an English teacher"
     return f"the person was {_role_answer_phrase(v.a)}"
 
 
@@ -183,9 +205,11 @@ def _estimate_target_phrase(v: Vignette) -> str:
     if _is_diabetic_adult(v.a):
         return "have diagnosed diabetes"
     if _is_california_voter(v.a):
-        return "was registered in California"
+        return "was registered in Southern California"
     if _is_health_care_professional(v.a):
         return "was a health care professional"
+    if _asks_english_teacher(v):
+        return "was an English teacher"
     return f"was {_role_answer_phrase(v.a)}"
 
 
@@ -198,7 +222,7 @@ def _role_core(text: str) -> str:
     if _is_other_employed_adult(text):
         return "other adult"
     if _is_public_secondary_teacher(text):
-        return "public grades 9-12 teacher"
+        return "high school teacher"
     if _is_non_secondary_teacher_employed(text):
         return "other employed adult"
     if _is_actor_holder(text):
@@ -291,29 +315,33 @@ def _subtype_phrase(text: str) -> str:
     if re.search(r"actor occupation is the secondary", head, re.I):
         return "have a secondary acting job"
     if re.search(r"stem field of study", head, re.I):
-        return "major in STEM"
+        return "study STEM"
     if re.search(r"employed while enrolled", head, re.I):
-        return "work while enrolled"
+        return "employed while enrolled"
     if re.search(r"blue-state resident", head, re.I):
         return "live in blue states"
     if re.search(r"red-state resident", head, re.I):
         return "live in red states"
     if re.search(r"southern california registrant", head, re.I):
-        return "registered in southern California"
+        return "voters registered in Southern California"
     if re.search(r"other california registrant", head, re.I):
-        return "registered in other parts of the state"
+        return "other California voters"
     if re.search(r"^bus driver", head, re.I):
         return "bus drivers"
     if re.search(r"heavy and tractor-trailer truck driver", head, re.I):
         return "heavy truck drivers"
     if re.search(r"main teaching assignment is English", head, re.I):
-        return "teach English/language arts"
+        return "teach English as their primary assignment"
     if re.search(r"bachelor.*major field is English", head, re.I):
-        return "majored in English/language arts"
+        return "have a bachelor's degree in English"
     if re.search(r"^physician", head, re.I):
         return "physicians"
     if re.search(r"non-physician health care professional", head, re.I):
-        return "non-physician health care professionals"
+        return "health care professionals who are not physicians"
+    if re.search(r"^uses insulin", head, re.I):
+        return "use insulin"
+    if re.search(r"^has obesity", head, re.I):
+        return "are obese"
     if re.search(r"^US Army active-duty", head, re.I):
         return "US Army active-duty service members"
     if re.search(r"^US Navy or US Air Force active-duty", head, re.I):
@@ -329,21 +357,24 @@ def _subtype_phrase(text: str) -> str:
 
 def _subtype_plural(text: str) -> str:
     label = _subtype_phrase(text)
-    if label == "major in STEM":
-        return "STEM majors"
-    if label == "work while enrolled":
-        return "students who work while enrolled"
-    if label in {"teach English/language arts", "majored in English/language arts"}:
+    if label == "study STEM":
+        return "those who studied STEM"
+    if label == "employed while enrolled":
+        return "those employed while enrolled"
+    if label in {
+        "teach English as their primary assignment",
+        "have a bachelor's degree in English",
+    }:
         return f"those who {label}"
+    if label in {"voters registered in Southern California", "other California voters"}:
+        return label
     if label == "also work as waiters":
         return "actors who also work as waiters"
     if label == "have a secondary acting job":
         return "actors whose acting job is secondary"
     if label.startswith("live in "):
         return f"those who {label}"
-    if label.startswith("registered in "):
-        return f"those {label}"
-    if label.startswith(("use ", "have ", "also work")):
+    if label.startswith(("use ", "have ", "are ", "also work")):
         return f"those who {label}"
     if label.endswith("members") or label.endswith("s"):
         return label
@@ -352,40 +383,51 @@ def _subtype_plural(text: str) -> str:
 
 def _subtype_some_phrase(text: str) -> str:
     label = _subtype_phrase(text)
+    if label in {
+        "study STEM",
+        "employed while enrolled",
+        "teach English as their primary assignment",
+        "have a bachelor's degree in English",
+        "voters registered in Southern California",
+        "other California voters",
+        "health care professionals who are not physicians",
+    }:
+        return label
     if label.startswith(
         (
             "live in ",
-            "registered in ",
             "also work",
             "have a secondary",
-            "major in",
-            "work while",
-            "teach ",
-            "majored in ",
         )
     ):
         return label
-    if label.startswith(("use ", "have ")):
+    if label.startswith(("use ", "have ", "are ")):
         return label
     return f"are {_subtype_plural(text)}"
 
 
 def _subtype_share_phrase(text: str, pct: float) -> str:
     label = _subtype_phrase(text)
+    if label == "study STEM":
+        return f"{_pct(pct)} study STEM"
+    if label == "employed while enrolled":
+        return f"{_pct(pct)} are employed while enrolled"
+    if label in {
+        "health care professionals who are not physicians",
+        "voters registered in Southern California",
+        "other California voters",
+    }:
+        return f"{_pct(pct)} are {label}"
     if label.startswith(
         (
             "live in ",
-            "registered in ",
             "also work",
             "have a secondary",
-            "major in",
-            "work while",
             "teach ",
-            "majored in ",
         )
     ):
         return f"{_pct(pct)} {label}"
-    if label.startswith(("use ", "have ")):
+    if label.startswith(("use ", "have ", "are ")):
         return f"{_pct(pct)} {label}"
     if label.endswith("members"):
         return f"{_pct(pct)} are {label}"
@@ -450,7 +492,7 @@ def _pool_phrase(a: str, n: str) -> str:
     if _is_professional_driver(a) and _is_other_employed_adult(n):
         return "a professional driver or other adult"
     if _is_public_secondary_teacher(a) and _is_non_secondary_teacher_employed(n):
-        return "a public grades 9-12 teacher or other employed adult"
+        return "a high school teacher or other employed adult"
     if _is_actor_holder(a) and _is_non_actor_labor(n):
         return "an actor or a non-actor"
     if _is_health_care_professional(a) and _is_non_health_care_employed(n):
@@ -461,6 +503,8 @@ def _pool_phrase(a: str, n: str) -> str:
         return "registered in California or elsewhere"
     if _is_diabetic_adult(a) and _is_non_diabetic_adult(n):
         return "with or without diagnosed diabetes"
+    if _is_first_generation_student(a) and _is_continuing_generation_student(n):
+        return "a student"
     return f"{_role_phrase(a)} or {_role_phrase(n)}"
 
 
@@ -468,13 +512,15 @@ def _setting_phrase(universe: str) -> str:
     """Opening phrase for the population line, e.g. 'Among US registered voters…'."""
     if universe.startswith("Employed "):
         tail = universe.removeprefix("Employed ")
-        return f"Among employed {tail[0].lower()}{tail[1:]}"
-    if universe.startswith("US "):
-        return f"Among {universe}"
-    if universe.startswith("Undergraduate "):
+        setting = f"Among employed {tail[0].lower()}{tail[1:]}"
+    elif universe.startswith("US "):
+        setting = f"Among {universe}"
+    elif universe.startswith("Undergraduate "):
         tail = universe.removeprefix("Undergraduate ")
-        return f"Among undergraduate {tail[0].lower()}{tail[1:]}"
-    return f"In {universe}"
+        setting = f"Among undergraduate {tail[0].lower()}{tail[1:]}"
+    else:
+        setting = f"In {universe}"
+    return re.sub(r"\s*\([^)]*\)", "", setting)
 
 
 def _population_split_line(v: Vignette, *, with_probs: bool) -> str:
@@ -490,23 +536,12 @@ def _population_split_line(v: Vignette, *, with_probs: bool) -> str:
         )
     if _is_professional_driver(v.a) and _is_other_employed_adult(v.n):
         if with_probs:
-            return (
-                f"{setting}, {_pct(v.p_a)} are professional drivers "
-                f"and the remainder are other adults."
-            )
-        return (
-            f"{setting}, some are professional drivers and the rest are other adults."
-        )
+            return f"{setting}, {_pct(v.p_a)} are professional drivers."
+        return f"{setting}, some are professional drivers."
     if _is_public_secondary_teacher(v.a) and _is_non_secondary_teacher_employed(v.n):
         if with_probs:
-            return (
-                f"{setting}, {_pct(v.p_a)} are public grades 9-12 teachers "
-                f"and the remainder are other employed adults."
-            )
-        return (
-            f"{setting}, some are public grades 9-12 teachers "
-            f"and the rest are other employed adults."
-        )
+            return f"{setting}, {_pct(v.p_a)} are high school teachers."
+        return f"{setting}, some are high school teachers."
     if _is_actor_holder(v.a) and _is_non_actor_labor(v.n):
         if with_probs:
             return (
@@ -516,14 +551,8 @@ def _population_split_line(v: Vignette, *, with_probs: bool) -> str:
         return f"{setting}, some are actors and the rest are non-actors."
     if _is_health_care_professional(v.a) and _is_non_health_care_employed(v.n):
         if with_probs:
-            return (
-                f"{setting}, {_pct(v.p_a)} are health care professionals "
-                f"and the remainder are other employed adults."
-            )
-        return (
-            f"{setting}, some are health care professionals "
-            f"and the rest are other employed adults."
-        )
+            return f"{setting}, {_pct(v.p_a)} are health care professionals."
+        return f"{setting}, some are health care professionals."
     if _is_military_service_member(v.a) and _is_federal_civilian(v.n):
         if with_probs:
             return (
@@ -585,7 +614,7 @@ def _among_a_phrase(v: Vignette) -> str:
     if _is_diabetic_adult(v.a):
         return "those with diagnosed diabetes"
     if _is_public_secondary_teacher(v.a):
-        return "public grades 9-12 teachers"
+        return "high school teachers"
     return _role_plural(v.a)
 
 
@@ -611,44 +640,50 @@ def _among_n_phrase(v: Vignette) -> str:
     return _role_plural(v.n)
 
 
+def _given_t_subject(v: Vignette) -> str:
+    if _is_covid_vaccinated(v.a) and _is_covid_unvaccinated(v.n):
+        return "an adult living in the US"
+    return "someone"
+
+
 def _question_given_t(v: Vignette) -> str:
     if _asks_given_t_only(v):
         return (
-            f"Given that someone {_t_event_in_question(v.t)}, "
+            f"Given that {_given_t_subject(v)} {_t_event_in_question(v.t)}, "
             f"what is the probability {_target_outcome_phrase(v)}?"
         )
     pool = _pool_phrase(v.a, v.n)
     event = _t_event_in_question(v.t)
     return (
         f"Given that {pool} {event}, "
-        f"what is the probability the person was {_role_answer_phrase(v.a)}?"
+        f"what is the probability the person was {_question_target_phrase(v)}?"
     )
 
 
 def _estimate_question(v: Vignette) -> str:
     if _asks_given_t_only(v):
         return (
-            f"Using knowledge of the world, please estimate the probability that someone "
+            f"Using knowledge of the world, please estimate the probability that {_given_t_subject(v)} "
             f"who {_t_event(v.t)} {_estimate_target_phrase(v)}."
         )
     pool = _pool_phrase(v.a, v.n)
     event = _t_event_in_question(v.t)
     return (
         f"Using knowledge of the world, please estimate the probability that a person who was {pool} "
-        f"and who {event} was {_role_answer_phrase(v.a)}."
+        f"and who {event} was {_question_target_phrase(v)}."
     )
 
 
-def _overlap_clause(v: Vignette) -> str:
-    if v.p_cd <= 0:
+def _overlap_clause(v: Vignette, overlap_disclosure: str | None) -> str:
+    if overlap_disclosure != "explicit" or v.p_cd <= 0:
         return ""
     return f" An estimated {_pct(v.p_cd)} fall into both categories."
 
 
 def _ca_geo_split(c: str, d: str) -> bool:
     return (
-        _subtype_phrase(c) == "registered in other parts of the state"
-        and _subtype_phrase(d) == "registered in southern California"
+        _subtype_phrase(c) == "other California voters"
+        and _subtype_phrase(d) == "voters registered in Southern California"
     )
 
 
@@ -672,8 +707,8 @@ def _subtype_partition_line(v: Vignette, a_plural: str, *, with_probs: bool) -> 
                 f"{_subtype_share_phrase(second, q_second)}."
             )
         return (
-            f"Among {a_plural}, some are registered in southern California "
-            f"and some in other parts of the state."
+            f"Among {a_plural}, some are voters registered in Southern California "
+            f"and some are other California voters."
         )
     if with_probs:
         return (
@@ -686,7 +721,7 @@ def _subtype_partition_line(v: Vignette, a_plural: str, *, with_probs: bool) -> 
     )
 
 
-def narrative_with_probs(v: Vignette) -> str:
+def narrative_with_probs(v: Vignette, *, overlap_disclosure: str | None = None) -> str:
     """Prose vignette with probabilities woven into definitions."""
     among_a = _among_a_phrase(v)
     among_n = _among_n_phrase(v)
@@ -696,7 +731,8 @@ def narrative_with_probs(v: Vignette) -> str:
         INTRO,
         "",
         _population_split_line(v, with_probs=True),
-        _subtype_partition_line(v, among_a, with_probs=True) + _overlap_clause(v),
+        _subtype_partition_line(v, among_a, with_probs=True)
+        + _overlap_clause(v, overlap_disclosure),
         (
             f"Among {_subtype_plural(first)}, {_pct(_s_for_subtype(v, first))} {_t_event(v.t)}; "
             f"among {_subtype_plural(second)}, {_pct(_s_for_subtype(v, second))} {_t_event(v.t)}; "
@@ -708,14 +744,14 @@ def narrative_with_probs(v: Vignette) -> str:
     return "\n".join(parts)
 
 
-def narrative_no_probs(v: Vignette) -> str:
+def narrative_no_probs(v: Vignette, *, overlap_disclosure: str | None = None) -> str:
     """Scenario description without numeric rates."""
     parts = [
         INTRO,
         "",
         _population_split_line(v, with_probs=False),
         _subtype_partition_line(v, _among_a_phrase(v), with_probs=False)
-        + (f"{_overlap_clause(v)}" if v.p_cd > 0 else ""),
+        + _overlap_clause(v, overlap_disclosure),
         "",
         _estimate_question(v),
     ]
@@ -733,10 +769,8 @@ def _f(value: str) -> float:
 
 
 def _pct(value: float) -> str:
-    if value < 0.001:
-        return f"{value * 100:.2f}%"
     if value < 0.01:
-        return f"{value * 100:.1f}%"
+        return f"{value * 100:.2f}%"
     if value < 0.1 and abs(value * 100 - round(value * 100)) > 0.05:
         return f"{value * 100:.1f}%"
     return f"{round(value * 100)}%"
@@ -844,6 +878,31 @@ class Vignette:
     def posterior_a(self) -> float:
         return self.posterior_with_p_t_a(self.p_t_given_a_conditional())
 
+    def posterior_english_teacher(self) -> float:
+        """P(A∩C | T): high school teacher whose primary assignment is English."""
+        p_t = self.p_t()
+        if p_t <= 0:
+            return 0.0
+        return self.s_c * self.p_a * self.q_c / p_t
+
+    def posterior_southern_california(self) -> float:
+        """P(A∩Southern CA | T): California registrant in Southern California."""
+        p_t = self.p_t()
+        if p_t <= 0:
+            return 0.0
+        if _subtype_phrase(self.c) == "voters registered in Southern California":
+            return self.s_c * self.p_a * self.q_c / p_t
+        if _subtype_phrase(self.d) == "voters registered in Southern California":
+            return self.s_d * self.p_a * self.q_d / p_t
+        raise ValueError(f"No Southern California subtype in vignette {self.name!r}")
+
+    def normative_posterior(self) -> float:
+        if _asks_english_teacher(self):
+            return self.posterior_english_teacher()
+        if _asks_southern_california_target(self):
+            return self.posterior_southern_california()
+        return self.posterior_a()
+
     def posterior_partition(self) -> float:
         return self.posterior_with_p_t_a(self.p_t_given_a_partition())
 
@@ -854,27 +913,35 @@ class Vignette:
             "product": self.posterior_with_p_t_a(a_path * b_path) * 100,
             "path_d": self.posterior_with_p_t_a(b_path) * 100,
             "path_c": self.posterior_with_p_t_a(a_path) * 100,
-            "normative": self.posterior_a() * 100,
+            "normative": self.normative_posterior() * 100,
             "partition": self.posterior_partition() * 100,
             "p_t_a": self.p_t_given_a_partition() * 100,
             "p_a": self.p_a * 100,
         }
 
-    def example_prefix(self) -> str:
+    def example_prefix(self, overlap_disclosure: str | None = None) -> str:
         base = slug(self.name)
         if not self.well_posed:
             base = f"{base}__overlap"
+            if overlap_disclosure:
+                base = f"{base}__{overlap_disclosure}"
         if self.normative == "implausible":
             base = f"{base}__implausible"
         return base
 
 
-def body_with_probs(v: Vignette) -> str:
-    return narrative_with_probs(v)
+def overlap_disclosures_for(v: Vignette) -> tuple[str | None, ...]:
+    if v.well_posed:
+        return (None,)
+    return OVERLAP_DISCLOSURES
 
 
-def body_no_probs(v: Vignette) -> str:
-    return narrative_no_probs(v)
+def body_with_probs(v: Vignette, *, overlap_disclosure: str | None = None) -> str:
+    return narrative_with_probs(v, overlap_disclosure=overlap_disclosure)
+
+
+def body_no_probs(v: Vignette, *, overlap_disclosure: str | None = None) -> str:
+    return narrative_no_probs(v, overlap_disclosure=overlap_disclosure)
 
 
 def _load_two_cause() -> list[Vignette]:
@@ -910,6 +977,8 @@ def _load_overlap() -> list[Vignette]:
     rows: list[Vignette] = []
     with OVERLAP_CSV.open(newline="", encoding="utf-8") as handle:
         for row in csv.DictReader(handle):
+            if row["name"] in EXCLUDED_VIGNETTE_NAMES:
+                continue
             rows.append(
                 Vignette(
                     name=row["name"],
@@ -955,6 +1024,8 @@ def _load_implausible() -> list[Vignette]:
             if not _implausible_value_is_set(implausible_value):
                 continue
             name = row["vignette_name"].strip()
+            if name in EXCLUDED_VIGNETTE_NAMES:
+                continue
             if name in edits:
                 raise ValueError(f"Multiple implausible values for vignette {name!r}")
             edits[name] = (row["parameter"].strip(), float(implausible_value))
@@ -975,6 +1046,15 @@ def _load_implausible() -> list[Vignette]:
 
 def load_vignettes() -> list[Vignette]:
     return _load_two_cause() + _load_overlap() + _load_implausible()
+
+
+def expected_prompt_count(vignettes: list[Vignette] | None = None) -> int:
+    vignettes = vignettes or load_vignettes()
+    return sum(
+        len(variants_for_vignette(v, disclosure))
+        for v in vignettes
+        for disclosure in overlap_disclosures_for(v)
+    )
 
 
 def _shuffle_lure_keys(example_id: str) -> tuple[str, ...]:
@@ -1094,22 +1174,32 @@ def _response_format(variant: str) -> str:
     raise ValueError(f"unknown variant: {variant}")
 
 
-def _problem_type(well_posed: bool) -> str:
-    return "well_posed" if well_posed else "overlap"
+def _problem_type(v: Vignette, overlap_disclosure: str | None) -> str:
+    if v.normative == "implausible" and v.well_posed:
+        return "implausible"
+    if v.well_posed:
+        return "well_posed"
+    if overlap_disclosure not in OVERLAP_DISCLOSURES:
+        raise ValueError(
+            f"overlap disclosure required for overlap vignette {v.name!r}, got {overlap_disclosure!r}"
+        )
+    return f"overlap_{overlap_disclosure}"
 
 
-def scepticism_required(v: Vignette) -> bool:
+def scepticism_required(v: Vignette, overlap_disclosure: str | None = None) -> bool:
     """Whether the item expects a sceptical meta response (F/G/H), not blind maths."""
     if v.normative == "implausible":
         return True
-    if v.intersection_size in {"medium", "large"}:
-        return True
+    if not v.well_posed:
+        return overlap_disclosure == "implicit"
     return False
 
 
-def variants_for_vignette(v: Vignette) -> tuple[str, ...]:
+def variants_for_vignette(
+    v: Vignette, overlap_disclosure: str | None = None
+) -> tuple[str, ...]:
     """Canonical vignettes get open + numeric + full MC; scepticism items get full MC only."""
-    if scepticism_required(v):
+    if scepticism_required(v, overlap_disclosure):
         return SCEPTICISM_VARIANTS
     return CANONICAL_VARIANTS
 
@@ -1129,24 +1219,18 @@ def _resolve_partition_letter(
     raise ValueError("partition lure missing from MC options")
 
 
-def _numeric_targets_round_same(v: Vignette) -> bool:
-    """True when overlap-aware and partition posteriors round to the same MC percent."""
-    normative_percent = v.posterior_a() * 100
-    partition_percent = v.posterior_partition() * 100
-    return _rounded_mc_percent(normative_percent) == _rounded_mc_percent(partition_percent)
-
-
 def _scoring_measure_fields(
     v: Vignette,
     variant: str,
     *,
+    overlap_disclosure: str | None = None,
     partition_letter: str = "",
     normative_letter: str = "",
 ) -> dict[str, str]:
     """Numeric (uncritical partition) and scepticism scoring metadata for one variant."""
     partition_percent = f"{v.posterior_partition() * 100:.4g}"
-    normative_percent = f"{v.posterior_a() * 100:.4g}"
-    required = scepticism_required(v)
+    normative_percent = f"{v.normative_posterior() * 100:.4g}"
+    required = scepticism_required(v, overlap_disclosure)
 
     if v.normative == "implausible":
         if variant.startswith("open"):
@@ -1162,21 +1246,14 @@ def _scoring_measure_fields(
             scepticism_target = "F|G|H"
         else:
             scepticism_target = partition_letter
-    elif _numeric_targets_round_same(v):
-        if variant.startswith("open"):
-            scepticism_target = normative_percent
-        elif variant.startswith("mc_numeric"):
-            scepticism_target = "n/a"
-        elif variant.startswith("mc_full"):
-            scepticism_target = normative_letter
-        else:
-            scepticism_target = normative_percent
+    elif variant.startswith("open"):
+        scepticism_target = normative_percent
     elif variant.startswith("mc_numeric"):
         scepticism_target = "n/a"
     elif variant.startswith("mc_full"):
-        scepticism_target = "F|G|H"
+        scepticism_target = normative_letter
     else:
-        scepticism_target = "meta"
+        scepticism_target = normative_percent
 
     return {
         "numeric_score_percent": partition_percent,
@@ -1186,16 +1263,18 @@ def _scoring_measure_fields(
     }
 
 
-def build_prompt(v: Vignette, variant: str) -> tuple[str, dict[str, str]]:
+def build_prompt(
+    v: Vignette, variant: str, *, overlap_disclosure: str | None = None
+) -> tuple[str, dict[str, str]]:
     """Return prompt text and item metadata fields for one variant."""
-    example_id = f"{v.example_prefix()}__{variant}"
-    body = body_with_probs(v)
+    example_id = f"{v.example_prefix(overlap_disclosure)}__{variant}"
+    body = body_with_probs(v, overlap_disclosure=overlap_disclosure)
     item: dict[str, str] = {
         "example_id": example_id,
         "vignette_name": v.name,
         "variant": variant,
         "well_posed": str(v.well_posed).lower(),
-        "problem_type": _problem_type(v.well_posed),
+        "problem_type": _problem_type(v, overlap_disclosure),
         "intersection_size": v.intersection_size,
         "response_format": _response_format(variant),
         "has_statistics": "true",
@@ -1206,10 +1285,10 @@ def build_prompt(v: Vignette, variant: str) -> tuple[str, dict[str, str]]:
 
     if variant.startswith("open"):
         item["response_type"] = "open"
-        item["normative_open"] = _pct(v.posterior_a())
-        item["normative_percent"] = f"{v.posterior_a() * 100:.4g}"
+        item["normative_open"] = _pct(v.normative_posterior())
+        item["normative_percent"] = f"{v.normative_posterior() * 100:.4g}"
         item["normative_choice"] = ""
-        item.update(_scoring_measure_fields(v, variant))
+        item.update(_scoring_measure_fields(v, variant, overlap_disclosure=overlap_disclosure))
         prompt = body + _open_suffix(with_meta=True)
         return prompt, item
 
@@ -1218,12 +1297,13 @@ def build_prompt(v: Vignette, variant: str) -> tuple[str, dict[str, str]]:
     )
     item["response_type"] = "mc"
     item["normative_choice"] = numeric_letter
-    item["normative_percent"] = f"{v.posterior_a() * 100:.4g}"
-    item["normative_open"] = _pct(v.posterior_a())
+    item["normative_percent"] = f"{v.normative_posterior() * 100:.4g}"
+    item["normative_open"] = _pct(v.normative_posterior())
     item.update(
         _scoring_measure_fields(
             v,
             variant,
+            overlap_disclosure=overlap_disclosure,
             partition_letter=partition_letter,
             normative_letter=numeric_letter,
         )
@@ -1265,10 +1345,13 @@ def build_all() -> tuple[list[dict[str, str]], list[dict[str, str]], list[dict[s
     items: list[dict[str, str]] = []
 
     for v in vignettes:
-        for variant in variants_for_vignette(v):
-            prompt, item = build_prompt(v, variant)
-            prompts.append({"example_id": item["example_id"], "prompt": prompt})
-            items.append(item)
+        for overlap_disclosure in overlap_disclosures_for(v):
+            for variant in variants_for_vignette(v, overlap_disclosure):
+                prompt, item = build_prompt(
+                    v, variant, overlap_disclosure=overlap_disclosure
+                )
+                prompts.append({"example_id": item["example_id"], "prompt": prompt})
+                items.append(item)
 
     benchmark = build_benchmark(prompts, items)
     return prompts, items, benchmark
@@ -1386,14 +1469,7 @@ def write_csvs() -> int:
 
 def main() -> int:
     count = write_csvs()
-    vignette_count = len(load_vignettes())
-    canonical = sum(1 for v in load_vignettes() if not scepticism_required(v))
-    scepticism = vignette_count - canonical
-    print(
-        f"Wrote {count} prompts "
-        f"({canonical} canonical × {len(CANONICAL_VARIANTS)} + "
-        f"{scepticism} scepticism × {len(SCEPTICISM_VARIANTS)})"
-    )
+    print(f"Wrote {count} prompts")
     print(f"Output: {OUT_DIR} (prompts.csv, items.csv, benchmark.csv)")
     return 0
 

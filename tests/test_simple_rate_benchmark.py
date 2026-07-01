@@ -25,7 +25,7 @@ class TestSimpleBenchmarkData:
 
     def test_load_benchmark(self):
         items = load_benchmark()
-        assert len(items) == 20
+        assert len(items) == 18
         assert {item.response_type for item in items.values()} == {"open", "mc_numeric"}
         discharged = items["discharged_weapon_last_year__open_probs"]
         assert discharged.p_t_given_c == 0.003

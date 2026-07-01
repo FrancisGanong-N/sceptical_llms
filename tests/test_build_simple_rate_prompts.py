@@ -25,13 +25,13 @@ class TestSimpleParameters:
         assert abs(s.posterior_c() - 0.7726) < 0.01
 
     def test_vignette_count(self):
-        assert len(load_simple_vignettes()) == 10
+        assert len(load_simple_vignettes()) == 9
 
 
 class TestBuildAll:
     def test_prompt_count(self):
         prompts, items, benchmark = build_all()
-        assert len(prompts) == 20
+        assert len(prompts) == 18
         assert len(items) == len(prompts)
         assert len(benchmark) == len(prompts)
 
@@ -60,10 +60,9 @@ class TestBuildAll:
             in english["prompt"]
         )
         assert (
-            "what is the probability they teach English as their primary assignment?"
+            "What is the probability that a high school teacher who holds a master's degree or higher is an English teacher?"
             in english["prompt"]
         )
-        assert "Given that a high school teacher holds a master's degree or higher" in english["prompt"]
         assert "public grades 9-12" not in english["prompt"]
 
     def test_ca_trump_voter_entity_labels(self, tmp_path: Path, monkeypatch):
@@ -84,7 +83,10 @@ class TestBuildAll:
             in ca["prompt"]
         )
         assert "among other California voters, 31% voted for Donald Trump" in ca["prompt"]
-        assert "what is the probability they were other California voters?" in ca["prompt"]
+        assert (
+            "What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?"
+            in ca["prompt"]
+        )
 
     def test_college_stem_work_entity_labels(self, tmp_path: Path, monkeypatch):
         monkeypatch.setattr(
@@ -104,7 +106,10 @@ class TestBuildAll:
         )
         assert "Among those who studied STEM, 85% returned for a second year" in college["prompt"]
         assert "among those employed while enrolled, 74% returned for a second year" in college["prompt"]
-        assert "Given that a student returned for a second year" in college["prompt"]
+        assert (
+            "What is the probability that a student who returned for a second year studied STEM?"
+            in college["prompt"]
+        )
         assert "first-generation" not in college["prompt"]
 
     def test_diabetes_insulin_obese_entity_labels(self, tmp_path: Path, monkeypatch):
@@ -124,7 +129,10 @@ class TestBuildAll:
         )
         assert "Among those who use insulin," in diabetes["prompt"]
         assert "among those who are obese," in diabetes["prompt"]
-        assert "what is the probability they use insulin?" in diabetes["prompt"]
+        assert (
+            "What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?"
+            in diabetes["prompt"]
+        )
 
     def test_healthcare_employment_entity_labels(self, tmp_path: Path, monkeypatch):
         monkeypatch.setattr(
@@ -141,7 +149,7 @@ class TestBuildAll:
         assert "non-physician health care professional among A" not in health["prompt"]
         assert "1.1% are physicians and 9.9% are health care professionals who are not physicians" in health["prompt"]
         assert (
-            "what is the probability they were physicians?"
+            "What is the probability that a health care professional who works in a hospital is a physician?"
             in health["prompt"]
         )
 

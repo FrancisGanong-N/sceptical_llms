@@ -1,45 +1,10 @@
 example_id,vignette_name,problem_type,intersection_size,response_type,has_statistics,variant,prompt,well_posed,normative,p_c_and_d_given_a,p_c,p_d,p_t_given_c,p_t_given_d,normative_choice,normative_percent,normative_open,confidence_required,numeric_score_percent,numeric_score_choice,scepticism_required,scepticism_score_target,option_a_label,option_b_label,option_c_label,option_d_label,option_e_label,option_a_lure,option_b_lure,option_c_lure,option_d_lure,option_e_lure,option_f_label,option_g_label,option_h_label,option_f_lure,option_g_lure,option_h_lure,model,llm_response,reasoning,answer_line,confidence_line,parsed_answer_type,parsed_percent,parsed_choice,parsed_confidence,scoring_type,parseable,score,path_c_confusion
-actor_waiter_overlap__mc_numeric_probs,actor waiter overlap,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.00% are also holds a waiter/waitress occupation in the same reference week (SOC 35-3031; includes primary waiter with secondary actor and primary actor with secondary waiter)s and 0.01% are actor occupation is the secondary job (primary occupation is something else; ~30% of actor job slots per NEA Artists Statistical Portrait 2017 Table 1)s.
-Among also holds a waiter/waitress occupation in the same reference week (SOC 35-3031; includes primary waiter with secondary actor and primary actor with secondary waiter)s, 65% worked part-time at their primary job in the reference week; among actor occupation is the secondary job (primary occupation is something else; ~30% of actor job slots per NEA Artists Statistical Portrait 2017 Table 1)s, 55% worked part-time at their primary job in the reference week.
-
-Given that an actor worked part-time at their primary job in the reference week, what is the probability they were also holds a waiter/waitress occupation in the same reference week (SOC 35-3031; includes primary waiter with secondary actor and primary actor with secondary waiter)s?
-
-A. About 12%
-B. About 55%
-C. About 36%
-D. About 0%
-E. About 65%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,1.19e-05,0.00010132,0.65,0.55,A,12.19,12%,false,12.19,A,false,n/a,About 12%,About 55%,About 36%,About 0%,About 65%,Bayes P(C|T),P(T|D) confusion,P(T|C)*P(T|D) confusion,P(D) confusion,P(T|C) confusion,,,,,,,google/gemini-2.5-flash,D,,D,,mc_choice,,D,,mc_numeric,true,false,false
-actor_waiter_overlap__open_probs,actor waiter overlap,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US labor force (CPS; employed and unemployed job-seekers; ~166.4 million in 2024 per NEA Indicator A.5), 0.00% are also holds a waiter/waitress occupation in the same reference week (SOC 35-3031; includes primary waiter with secondary actor and primary actor with secondary waiter)s and 0.01% are actor occupation is the secondary job (primary occupation is something else; ~30% of actor job slots per NEA Artists Statistical Portrait 2017 Table 1)s.
-Among also holds a waiter/waitress occupation in the same reference week (SOC 35-3031; includes primary waiter with secondary actor and primary actor with secondary waiter)s, 65% worked part-time at their primary job in the reference week; among actor occupation is the secondary job (primary occupation is something else; ~30% of actor job slots per NEA Artists Statistical Portrait 2017 Table 1)s, 55% worked part-time at their primary job in the reference week.
-
-Given that an actor worked part-time at their primary job in the reference week, what is the probability they were also holds a waiter/waitress occupation in the same reference week (SOC 35-3031; includes primary waiter with secondary actor and primary actor with secondary waiter)s?
-
-Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,1.19e-05,0.00010132,0.65,0.55,,12.19,12%,false,,,false,12.19,,,,,,,,,,,,,,,,,google/gemini-2.5-flash,"Let's define the following events:
-
-*   **W:** An individual holds a waiter/waitress occupation.
-*   **A:** An individual has an actor occupation as their secondary job.
-*   **PT_P:** An individual worked part-time at their primary job.
-
-We are given the following probabilities and conditional probabilities:
-
-*   $P(W) = 0.00\%$ (This is an unusually low number, and it implies that either the given value is an error or it means ""approximately zero"". Let's assume it's a non-zero but very small value,",,"Let's define the following events:
-*   **W:** An individual holds a waiter/waitress occupation.
-*   **A:** An individual has an actor occupation as their secondary job.
-*   **PT_P:** An individual worked part-time at their primary job.
-We are given the following probabilities and conditional probabilities:
-*   $P(W) = 0.00\%$ (This is an unusually low number, and it implies that either the given value is an error or it means ""approximately zero"". Let's assume it's a non-zero but very small value,",,probability,0,,,open,true,false,false
 ca_trump_voter__mc_numeric_probs,CA Trump voter,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US registered voters, 4.9% are other California registrants and 7.8% are southern California registrants.
-Among other California registrants, 31% voted for Donald Trump in the 2024 presidential election; among southern California registrants, 27% voted for Donald Trump in the 2024 presidential election.
+Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
 
-Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California registrants?
+Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California voters?
 
 A. About 42%
 B. About 8%
@@ -47,41 +12,232 @@ C. About 31%
 D. About 27%
 E. About 5%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0494,0.078,0.31,0.27,A,42.1,42%,false,42.1,A,false,n/a,About 42%,About 8%,About 31%,About 27%,About 5%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,,google/gemini-2.5-flash,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0494,0.078,0.31,0.27,A,42.1,42%,false,42.1,A,false,n/a,About 42%,About 8%,About 31%,About 27%,About 5%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(Other CA voter | Voted for Trump in CA).
+
+Given information:
+- P(Southern CA voter) = 0.078
+- P(Other CA voter) = 0.049
+- P(Trump | Southern CA voter) = 0.27
+- P(Trump | Other CA voter) = 0.31
+
+First, I need to find P(Trump and Other CA voter) and P(Trump and Southern CA voter):
+- P(Trump and Southern CA voter) = 0.078 × 0.27 = 0.02",,- P(Trump and Southern CA voter) = 0.078 × 0.27 = 0.02,,unparseable,,,,mc_numeric,false,false,false
+ca_trump_voter__mc_numeric_probs,CA Trump voter,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+
+Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California voters?
+
+A. About 42%
+B. About 8%
+C. About 31%
+D. About 27%
+E. About 5%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0494,0.078,0.31,0.27,A,42.1,42%,false,42.1,A,false,n/a,About 42%,About 8%,About 31%,About 27%,About 5%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,,anthropic/claude-opus-4-8@default,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+ca_trump_voter__mc_numeric_probs,CA Trump voter,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+
+Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California voters?
+
+A. About 42%
+B. About 8%
+C. About 31%
+D. About 27%
+E. About 5%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0494,0.078,0.31,0.27,A,42.1,42%,false,42.1,A,false,n/a,About 42%,About 8%,About 31%,About 27%,About 5%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(Other CA voter | Voted for Trump and is CA voter).
+
+Given information:
+- P(Southern CA voter) = 7.8% = 0.078
+- P(Other CA voter) = 4.9% = 0.049
+- P(Voted Trump | Southern CA voter) = 27% = 0.27
+- P(Voted Trump | Other CA voter) = 31% = 0.31
+
+First, I'll find the probability that a CA voter voted for Trump:
+P(Voted Trump | CA voter",,P(Voted Trump | CA voter,,unparseable,,,,mc_numeric,false,false,false
+ca_trump_voter__mc_numeric_probs,CA Trump voter,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+
+Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California voters?
+
+A. About 42%
+B. About 8%
+C. About 31%
+D. About 27%
+E. About 5%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0494,0.078,0.31,0.27,A,42.1,42%,false,42.1,A,false,n/a,About 42%,About 8%,About 31%,About 27%,About 5%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,,google/gemini-3-flash-preview,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+ca_trump_voter__mc_numeric_probs,CA Trump voter,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+
+Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California voters?
+
+A. About 42%
+B. About 8%
+C. About 31%
+D. About 27%
+E. About 5%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0494,0.078,0.31,0.27,A,42.1,42%,false,42.1,A,false,n/a,About 42%,About 8%,About 31%,About 27%,About 5%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,,google/gemini-3.5-flash,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+ca_trump_voter__mc_numeric_probs,CA Trump voter,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+
+Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California voters?
+
+A. About 42%
+B. About 8%
+C. About 31%
+D. About 27%
+E. About 5%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0494,0.078,0.31,0.27,A,42.1,42%,false,42.1,A,false,n/a,About 42%,About 8%,About 31%,About 27%,About 5%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,,openai/gpt-5.5-2026-04-23,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
 ca_trump_voter__open_probs,CA Trump voter,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US registered voters, 4.9% are other California registrants and 7.8% are southern California registrants.
-Among other California registrants, 31% voted for Donald Trump in the 2024 presidential election; among southern California registrants, 27% voted for Donald Trump in the 2024 presidential election.
+Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
 
-Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California registrants?
+Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California voters?
 
-Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0494,0.078,0.31,0.27,,42.1,42%,false,,,false,42.1,,,,,,,,,,,,,,,,,google/gemini-2.5-flash,"Let:
-$O$ = event that a registrant is from Other California
-$S$ = event that a registrant is from Southern California
-$T$ = event that a registrant voted for Donald Trump
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0494,0.078,0.31,0.27,,42.1,42%,false,,,false,42.1,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(Other CA voter | Voted for Trump in CA).
 
-We are given the following probabilities:
-$P(O) = 0.049$
-$P(S) = 0.078$
-$P(T|O) = 0.31$
-$P(T|S) = 0.27$
+Let me define:
+- S = Southern California voter
+- O = Other California voter  
+- T = Voted for Trump
 
-We want to find $P(O|T)$, the probability that a registered voter was from Other",,"Let:
-$O$ = event that a registrant is from Other California
-$S$ = event that a registrant is from Southern California
-$T$ = event that a registrant voted for Donald Trump
-We are given the following probabilities:
-$P(O) = 0.049$
-$P(S) = 0.078$
-$P(T|O) = 0.31$
-$P(T|S) = 0.27$
-We want to find $P(O|T)$, the probability that a registered voter was from Other",,probability,27,,,open,true,false,true
+Given information:
+- P(S) = 0.078 (7.8% of US voters are SoCal voters)
+- P(O) = 0.049 (4.9% of US voters are other CA voters)
+- P(T|S) = 0.27 (27% of SoCal voters voted for Trump)
+-",,"I need to find P(Other CA voter | Voted for Trump in CA).
+Let me define:
+- S = Southern California voter
+- O = Other California voter
+- T = Voted for Trump
+Given information:
+- P(S) = 0.078 (7.8% of US voters are SoCal voters)
+- P(O) = 0.049 (4.9% of US voters are other CA voters)
+- P(T|S) = 0.27 (27% of SoCal voters voted for Trump)
+-",,probability,27,,,open,true,false,false
+ca_trump_voter__open_probs,CA Trump voter,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+
+Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California voters?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0494,0.078,0.31,0.27,,42.1,42%,false,,,false,42.1,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(Other California | Voted Trump, in California).
+
+**Setup using the law of total probability within California:**
+
+Southern California voters: 7.8% of US voters
+- Trump rate: 27%
+- Trump voters: 0.078 × 0.27 = 0.02106
+
+Other California voters: 4.9% of US voters
+- Trump rate: 31%
+- Trump voters: 0.049",,"I need to find P(Other California | Voted Trump, in California).
+**Setup using the law of total probability within California:**
+Southern California voters: 7.8% of US voters
+- Trump rate: 27%
+- Trump voters: 0.078 × 0.27 = 0.02106
+Other California voters: 4.9% of US voters
+- Trump rate: 31%
+- Trump voters: 0.049",,probability,2.106,,,open,true,false,true
+ca_trump_voter__open_probs,CA Trump voter,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+
+Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California voters?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0494,0.078,0.31,0.27,,42.1,42%,false,,,false,42.1,,,,,,,,,,,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(Other California voter | Voted for Trump and is a California voter).
+
+Let me define the events:
+- S = Southern California voter
+- O = Other California voter  
+- T = Voted for Trump
+
+Given information:
+- P(S) = 7.8% = 0.078
+- P(O) = 4.9% = 0.049
+- P(T|S) = 27% = 0.27
+- P(T|O) = 31% = 0.31
+
+First, I need to",,"I need to find P(Other California voter | Voted for Trump and is a California voter).
+Let me define the events:
+- S = Southern California voter
+- O = Other California voter
+- T = Voted for Trump
+Given information:
+- P(S) = 7.8% = 0.078
+- P(O) = 4.9% = 0.049
+- P(T|S) = 27% = 0.27
+- P(T|O) = 31% = 0.31
+First, I need to",,probability,31,,,open,true,false,true
+ca_trump_voter__open_probs,CA Trump voter,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+
+Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California voters?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0494,0.078,0.31,0.27,,42.1,42%,false,,,false,42.1,,,,,,,,,,,,,,,,,google/gemini-3-flash-preview,"To find the probability that a California voter who voted for Donald Trump was from ""other California"" (non-Southern California), we use Bayes' Theorem.
+
+**1. Identify the given probabilities:**
+*   $P(\text{SoCal}) = 7.8\%$ of US voters.
+*   $P(\text{Other CA}) = 4.9\%$ of US voters.
+*   $P(\text{Trump} | \text{SoCal}) = 27\%$
+*   $P(\text{Trump} | \text{Other CA}) = 3",,"To find the probability that a California voter who voted for Donald Trump was from ""other California"" (non-Southern California), we use Bayes' Theorem.
+**1. Identify the given probabilities:**
+*   $P(\text{SoCal}) = 7.8\%$ of US voters.
+*   $P(\text{Other CA}) = 4.9\%$ of US voters.
+*   $P(\text{Trump} | \text{SoCal}) = 27\%$
+*   $P(\text{Trump} | \text{Other CA}) = 3",,probability,27,,,open,true,false,false
+ca_trump_voter__open_probs,CA Trump voter,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+
+Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California voters?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0494,0.078,0.31,0.27,,42.1,42%,false,,,false,42.1,,,,,,,,,,,,,,,,,google/gemini-3.5-flash,"To find the probability that a California voter who voted for Donald Trump was an ""other California voter,"" we can use Bayes' theorem. 
+
+First, let's define the probabilities based on the population of **all US registered voters**:
+*   $P(\text{Southern California}) = 7.8\% = 0.078$
+*   $P(\text{Other California}) = 4.9\% = 0.049$
+
+Since we are only interested in registered voters in **California**, we first restrict our universe to California voters:
+*   Total",,"To find the probability that a California voter who voted for Donald Trump was an ""other California voter,"" we can use Bayes' theorem.
+First, let's define the probabilities based on the population of **all US registered voters**:
+*   $P(\text{Southern California}) = 7.8\% = 0.078$
+*   $P(\text{Other California}) = 4.9\% = 0.049$
+Since we are only interested in registered voters in **California**, we first restrict our universe to California voters:
+*   Total",,probability,4.9,,,open,true,false,false
+ca_trump_voter__open_probs,CA Trump voter,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+
+Given that a registered voter in California voted for Donald Trump in the 2024 presidential election, what is the probability they were other California voters?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0494,0.078,0.31,0.27,,42.1,42%,false,,,false,42.1,,,,,,,,,,,,,,,,,openai/gpt-5.5-2026-04-23,42.0%,,42.0%,,probability,42,,,open,true,true,false
 college_stem_work__mc_numeric_probs,college STEM work,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), 4.6% are sTEM field of study among first-generation students (NCES broad STEM CIP grouping)s and 17% are employed while enrolled among first-generation students (paid job internship or work-study while taking classes; NPSASs.
-Among sTEM field of study among first-generation students (NCES broad STEM CIP grouping)s, 85% returned for a second year; among employed while enrolled among first-generation students (paid job internship or work-study while taking classes; NPSASs, 74% returned for a second year.
+Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
 
-Given that a first-generation student returned for a second year, what is the probability they were sTEM field of study among first-generation students (NCES broad STEM CIP grouping)s?
+Given that a student returned for a second year, what is the probability they studied STEM?
 
 A. About 24%
 B. About 63%
@@ -89,49 +245,235 @@ C. About 74%
 D. About 17%
 E. About 85%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.04644,0.17028,0.85,0.74,A,23.85,24%,false,23.85,A,false,n/a,About 24%,About 63%,About 74%,About 17%,About 85%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,P(T|C) confusion,,,,,,,google/gemini-2.5-flash,"Let's define the following events for a randomly selected first-generation student:
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.04644,0.17028,0.85,0.74,A,23.85,24%,false,23.85,A,false,n/a,About 24%,About 63%,About 74%,About 17%,About 85%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,P(T|C) confusion,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(STEM | returned for second year).
 
-*   **S:** The student is in a STEM field of study.
-*   **E:** The student is employed while enrolled.
-*   **R:** The student returned for a second year.
+Given information:
+- P(STEM) = 0.046
+- P(employed) = 0.17
+- P(return | STEM) = 0.85
+- P(return | employed) = 0.74
 
-We are given the following probabilities:
+Using Bayes' theorem:
+P(STEM | return) = P(return | STEM) × P(STEM) / P(return)
 
-*   P(S) = 0.046 (4.6% are STEM)
-*   P(E) = 0.17 (17% are employed)
-*   P(R|S) = 0.85 (85%",,*   P(E) = 0.17 (17% are employed),,mc_choice,,E,,mc_numeric,true,false,true
+First, I need to find P(return). Without complete information about the overlap between STEM and employment, and return",,"First, I need to find P(return). Without complete information about the overlap between STEM and employment, and return",,unparseable,,,,mc_numeric,false,false,false
+college_stem_work__mc_numeric_probs,college STEM work,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
+
+Given that a student returned for a second year, what is the probability they studied STEM?
+
+A. About 24%
+B. About 63%
+C. About 74%
+D. About 17%
+E. About 85%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.04644,0.17028,0.85,0.74,A,23.85,24%,false,23.85,A,false,n/a,About 24%,About 63%,About 74%,About 17%,About 85%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,P(T|C) confusion,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(STEM | returned).
+
+By Bayes' theorem:
+P(STEM | returned) = P(returned | STEM) × P(STEM) / P(returned)
+
+P(STEM) = 0.046
+P(returned | STEM) = 0.85
+
+For P(returned), I need overall return rate. The problem doesn't directly give this, but the only relevant numbers I can use suggest using the",,"For P(returned), I need overall return rate. The problem doesn't directly give this, but the only relevant numbers I can use suggest using the",,unparseable,,,,mc_numeric,false,false,false
+college_stem_work__mc_numeric_probs,college STEM work,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
+
+Given that a student returned for a second year, what is the probability they studied STEM?
+
+A. About 24%
+B. About 63%
+C. About 74%
+D. About 17%
+E. About 85%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.04644,0.17028,0.85,0.74,A,23.85,24%,false,23.85,A,false,n/a,About 24%,About 63%,About 74%,About 17%,About 85%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,P(T|C) confusion,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(STEM | returned for second year).
+
+Using Bayes' theorem:
+P(STEM | returned) = P(returned | STEM) × P(STEM) / P(returned)
+
+Given information:
+- P(STEM) = 0.046
+- P(employed) = 0.17
+- P(returned | STEM) = 0.85
+- P(returned | employed) = 0.74
+
+First, I need to find P(returned). However, I'm not given enough information to calculate this exactly since I",,"First, I need to find P(returned). However, I'm not given enough information to calculate this exactly since I",,unparseable,,,,mc_numeric,false,false,false
+college_stem_work__mc_numeric_probs,college STEM work,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
+
+Given that a student returned for a second year, what is the probability they studied STEM?
+
+A. About 24%
+B. About 63%
+C. About 74%
+D. About 17%
+E. About 85%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.04644,0.17028,0.85,0.74,A,23.85,24%,false,23.85,A,false,n/a,About 24%,About 63%,About 74%,About 17%,About 85%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,P(T|C) confusion,,,,,,,google/gemini-3-flash-preview,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+college_stem_work__mc_numeric_probs,college STEM work,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
+
+Given that a student returned for a second year, what is the probability they studied STEM?
+
+A. About 24%
+B. About 63%
+C. About 74%
+D. About 17%
+E. About 85%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.04644,0.17028,0.85,0.74,A,23.85,24%,false,23.85,A,false,n/a,About 24%,About 63%,About 74%,About 17%,About 85%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,P(T|C) confusion,,,,,,,google/gemini-3.5-flash,"The information provided in the prompt is insufficient to calculate a precise mathematical estimate of the conditional probability, as we do not know the overall retention rate of all students, nor do we know the overlap between STEM students and employed students. 
+
+However, we can deduce the most logical answer among the choices provided by analyzing the scale of the groups:
+* Let $S$ be the event that a student studies STEM ($P(S) = 4.6\% = 0.046$).
+* Let $R$ be the event that a student returns for a second year ($P(R|S",,* Let $R$ be the event that a student returns for a second year ($P(R|S,,unparseable,,,,mc_numeric,false,false,false
+college_stem_work__mc_numeric_probs,college STEM work,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
+
+Given that a student returned for a second year, what is the probability they studied STEM?
+
+A. About 24%
+B. About 63%
+C. About 74%
+D. About 17%
+E. About 85%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.04644,0.17028,0.85,0.74,A,23.85,24%,false,23.85,A,false,n/a,About 24%,About 63%,About 74%,About 17%,About 85%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,P(T|C) confusion,,,,,,,openai/gpt-5.5-2026-04-23,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
 college_stem_work__open_probs,college STEM work,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among undergraduate students enrolled at US postsecondary institutions (NPSAS:20 universe), 4.6% are sTEM field of study among first-generation students (NCES broad STEM CIP grouping)s and 17% are employed while enrolled among first-generation students (paid job internship or work-study while taking classes; NPSASs.
-Among sTEM field of study among first-generation students (NCES broad STEM CIP grouping)s, 85% returned for a second year; among employed while enrolled among first-generation students (paid job internship or work-study while taking classes; NPSASs, 74% returned for a second year.
+Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
 
-Given that a first-generation student returned for a second year, what is the probability they were sTEM field of study among first-generation students (NCES broad STEM CIP grouping)s?
+Given that a student returned for a second year, what is the probability they studied STEM?
 
-Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.04644,0.17028,0.85,0.74,,23.85,24%,false,,,false,23.85,,,,,,,,,,,,,,,,,google/gemini-2.5-flash,"Let $S$ be the event that a first-generation student is in a STEM field of study.
-Let $E$ be the event that a first-generation student is employed while enrolled.
-Let $R$ be the event that a first-generation student returned for a second year.
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.04644,0.17028,0.85,0.74,,23.85,24%,false,,,false,23.85,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(STEM | returned for second year) using Bayes' theorem.
 
-We are given the following probabilities for first-generation students:
-$P(S) = 0.046$
-$P(E) = 0.17$
+Given information:
+- P(STEM) = 0.046
+- P(employed) = 0.17
+- P(return | STEM) = 0.85
+- P(return | employed) = 0.74
 
-We are also given the following conditional probabilities:
-$P(R|S) = 0.85$
-$P",,"Let $S$ be the event that a first-generation student is in a STEM field of study.
-Let $E$ be the event that a first-generation student is employed while enrolled.
-Let $R$ be the event that a first-generation student returned for a second year.
-We are given the following probabilities for first-generation students:
-$P(S) = 0.046$
-$P(E) = 0.17$
-We are also given the following conditional probabilities:
-$P(R|S) = 0.85$
-$P",,probability,85,,,open,true,false,true
+To use Bayes' theorem, I need P(return) - the overall probability of returning for a second year.
+
+However, I don't have enough information to determine P(return) precisely because:
+1. I don't know P(",,"I need to find P(STEM | returned for second year) using Bayes' theorem.
+Given information:
+- P(STEM) = 0.046
+- P(employed) = 0.17
+- P(return | STEM) = 0.85
+- P(return | employed) = 0.74
+To use Bayes' theorem, I need P(return) - the overall probability of returning for a second year.
+However, I don't have enough information to determine P(return) precisely because:",1,probability,74,,1,open,true,false,true
+college_stem_work__open_probs,college STEM work,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
+
+Given that a student returned for a second year, what is the probability they studied STEM?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.04644,0.17028,0.85,0.74,,23.85,24%,false,,,false,23.85,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"# Estimating P(STEM | Returned)
+
+## Setting Up Bayes' Theorem
+
+I need to find P(STEM | Returned):
+
+$$P(\text{STEM} | \text{Returned}) = \frac{P(\text{Returned} | \text{STEM}) \cdot P(\text{STEM})}{P(\text{Returned})}$$
+
+## Known Values
+
+- P(ST",,"# Estimating P(STEM | Returned)
+## Setting Up Bayes' Theorem
+I need to find P(STEM | Returned):
+$$P(\text{STEM} | \text{Returned}) = \frac{P(\text{Returned} | \text{STEM}) \cdot P(\text{STEM})}{P(\text{Returned})}$$
+## Known Values
+- P(ST",,unparseable,,,,open,false,false,false
+college_stem_work__open_probs,college STEM work,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
+
+Given that a student returned for a second year, what is the probability they studied STEM?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.04644,0.17028,0.85,0.74,,23.85,24%,false,,,false,23.85,,,,,,,,,,,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(STEM | returned for second year) using Bayes' theorem.
+
+Given information:
+- P(STEM) = 4.6% = 0.046
+- P(employed) = 17% = 0.17
+- P(returned | STEM) = 85% = 0.85
+- P(returned | employed) = 74% = 0.74
+
+However, I notice that I don't have enough information to solve this completely. I need P(returned | not STEM) to calculate the total probability of returning.",,"I need to find P(STEM | returned for second year) using Bayes' theorem.
+Given information:
+- P(STEM) = 4.6% = 0.046
+- P(employed) = 17% = 0.17
+- P(returned | STEM) = 85% = 0.85
+- P(returned | employed) = 74% = 0.74
+However, I notice that I don't have enough information to solve this completely. I need P(returned | not STEM) to calculate the total probability of returning.",,probability,74,,,open,true,false,true
+college_stem_work__open_probs,college STEM work,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
+
+Given that a student returned for a second year, what is the probability they studied STEM?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.04644,0.17028,0.85,0.74,,23.85,24%,false,,,false,23.85,,,,,,,,,,,,,,,,,google/gemini-3-flash-preview,"To find the probability that a student studied STEM given that they returned for a second year, we use Bayes' Theorem:
+
+$$P(\text{STEM} \mid \text{Returned}) = \frac{P(\text{Returned} \mid \text{STEM}) \times P(\text{STEM})}{P(\text{Returned})}$$
+
+**1. Identify the given values:**
+*   $P(\text{STEM}) = 0.046$ (4.6%)
+*   $P(\text{Returned} \mid \text{STEM}) = 0.",,"To find the probability that a student studied STEM given that they returned for a second year, we use Bayes' Theorem:
+$$P(\text{STEM} \mid \text{Returned}) = \frac{P(\text{Returned} \mid \text{STEM}) \times P(\text{STEM})}{P(\text{Returned})}$$
+**1. Identify the given values:**
+*   $P(\text{STEM}) = 0.046$ (4.6%)
+*   $P(\text{Returned} \mid \text{STEM}) = 0.",,probability,4.6,,,open,true,false,false
+college_stem_work__open_probs,college STEM work,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
+
+Given that a student returned for a second year, what is the probability they studied STEM?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.04644,0.17028,0.85,0.74,,23.85,24%,false,,,false,23.85,,,,,,,,,,,,,,,,,google/gemini-3.5-flash,"To find the probability that a student studied STEM given that they returned for a second year, we can use Bayes' theorem. 
+
+Let:
+*   $P(\text{STEM}) = 0.046$ (the probability a student studies STEM)
+*   $P(\text{Returned} \mid \text{STEM}) = 0.85$ (the probability a student returns given they study STEM)
+
+We want to find $P(\text{STEM} \mid \text{Returned})$. According to Bayes' theorem:
+
+$$P(\text{STEM} \",,"To find the probability that a student studied STEM given that they returned for a second year, we can use Bayes' theorem.
+Let:
+*   $P(\text{STEM}) = 0.046$ (the probability a student studies STEM)
+*   $P(\text{Returned} \mid \text{STEM}) = 0.85$ (the probability a student returns given they study STEM)
+We want to find $P(\text{STEM} \mid \text{Returned})$. According to Bayes' theorem:
+$$P(\text{STEM} \",,probability,85,,,open,true,false,true
+college_stem_work__open_probs,college STEM work,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
+
+Given that a student returned for a second year, what is the probability they studied STEM?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.04644,0.17028,0.85,0.74,,23.85,24%,false,,,false,23.85,,,,,,,,,,,,,,,,,openai/gpt-5.5-2026-04-23,About **5.3%**,,About **5.3%**,,probability,5.3,,,open,true,false,false
 covid_vaccine_blue_red__mc_numeric_probs,covid vaccine (blue/red),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 19% are blue-state resident among As and 7.8% are red-state resident among As.
-Among blue-state resident among As, 8% had COVID-19 in the past 12 months; among red-state resident among As, 10% had COVID-19 in the past 12 months.
+Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
+Among blue-state residents, 8% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
 
-Given that someone vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state resident among As?
+Given that an adult living in the US who is vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state residents?
 
 A. About 66%
 B. About 1%
@@ -139,35 +481,215 @@ C. About 8%
 D. About 10%
 E. About 19%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.1917,0.0783,0.08,0.1,A,66.2,66%,false,66.2,A,false,n/a,About 66%,About 1%,About 8%,About 10%,About 19%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,,google/gemini-2.5-flash,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.1917,0.0783,0.08,0.1,A,66.2,66%,false,66.2,A,false,n/a,About 66%,About 1%,About 8%,About 10%,About 19%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(Blue state | Had COVID in past 12 months).
+
+Given information:
+- P(Blue state) = 0.19
+- P(Red state) = 0.078
+- P(COVID | Blue state) = 0.08
+- P(COVID | Red state) = 0.10
+
+Using Bayes' theorem:
+P(Blue state | COVID) = P(COVID | Blue state) × P(Blue state) / P(COVID)
+
+First, I need P(COVID):
+P(COVID) = P(COVID |",,P(COVID) = P(COVID |,,unparseable,,,,mc_numeric,false,false,false
+covid_vaccine_blue_red__mc_numeric_probs,covid vaccine (blue/red),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
+Among blue-state residents, 8% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
+
+Given that an adult living in the US who is vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state residents?
+
+A. About 66%
+B. About 1%
+C. About 8%
+D. About 10%
+E. About 19%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.1917,0.0783,0.08,0.1,A,66.2,66%,false,66.2,A,false,n/a,About 66%,About 1%,About 8%,About 10%,About 19%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,,anthropic/claude-opus-4-8@default,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+covid_vaccine_blue_red__mc_numeric_probs,covid vaccine (blue/red),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
+Among blue-state residents, 8% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
+
+Given that an adult living in the US who is vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state residents?
+
+A. About 66%
+B. About 1%
+C. About 8%
+D. About 10%
+E. About 19%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.1917,0.0783,0.08,0.1,A,66.2,66%,false,66.2,A,false,n/a,About 66%,About 1%,About 8%,About 10%,About 19%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(Blue-state | Vaccinated and had COVID).
+
+However, I notice that the problem asks for the probability given that someone is vaccinated AND had COVID in the past 12 months, but the given information doesn't provide any data about vaccination rates or the relationship between vaccination and having had COVID.
+
+Given only the information about state residence and COVID rates, I can calculate P(Blue-state | had COVID) using Bayes' theorem:
+
+Given:
+- P(Blue-state) = 0.19
+- P(Red-state) = 0.078",,- P(Red-state) = 0.078,,unparseable,,,,mc_numeric,false,false,false
+covid_vaccine_blue_red__mc_numeric_probs,covid vaccine (blue/red),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
+Among blue-state residents, 8% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
+
+Given that an adult living in the US who is vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state residents?
+
+A. About 66%
+B. About 1%
+C. About 8%
+D. About 10%
+E. About 19%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.1917,0.0783,0.08,0.1,A,66.2,66%,false,66.2,A,false,n/a,About 66%,About 1%,About 8%,About 10%,About 19%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,,google/gemini-3-flash-preview,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+covid_vaccine_blue_red__mc_numeric_probs,covid vaccine (blue/red),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
+Among blue-state residents, 8% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
+
+Given that an adult living in the US who is vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state residents?
+
+A. About 66%
+B. About 1%
+C. About 8%
+D. About 10%
+E. About 19%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.1917,0.0783,0.08,0.1,A,66.2,66%,false,66.2,A,false,n/a,About 66%,About 1%,About 8%,About 10%,About 19%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,,google/gemini-3.5-flash,"To find the correct probability, we can set up the conditional probability calculation based on the provided information.
+
+Let:
+* $B$ = Resident of a blue state ($P(B) = 0.19$)
+* $R$ = Resident of a red state ($P(R) = 0.078$)
+* $C$ = Had COVID-19 in the past 12 months
+* $P(C|B) = 0.08$
+* $P(C|R) = 0.10$
+
+We want to",,* $P(C|R) = 0.10$,,mc_choice,,C,,mc_numeric,true,false,true
+covid_vaccine_blue_red__mc_numeric_probs,covid vaccine (blue/red),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
+Among blue-state residents, 8% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
+
+Given that an adult living in the US who is vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state residents?
+
+A. About 66%
+B. About 1%
+C. About 8%
+D. About 10%
+E. About 19%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.1917,0.0783,0.08,0.1,A,66.2,66%,false,66.2,A,false,n/a,About 66%,About 1%,About 8%,About 10%,About 19%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,,openai/gpt-5.5-2026-04-23,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
 covid_vaccine_blue_red__open_probs,covid vaccine (blue/red),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 19% are blue-state resident among As and 7.8% are red-state resident among As.
-Among blue-state resident among As, 8% had COVID-19 in the past 12 months; among red-state resident among As, 10% had COVID-19 in the past 12 months.
+Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
+Among blue-state residents, 8% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
 
-Given that someone vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state resident among As?
+Given that an adult living in the US who is vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state residents?
 
-Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.1917,0.0783,0.08,0.1,,66.2,66%,false,,,false,66.2,,,,,,,,,,,,,,,,,google/gemini-2.5-flash,"Let $B$ be the event that a person is a blue-state resident among As.
-Let $R$ be the event that a person is a red-state resident among As.
-Let $C$ be the event that a person had COVID-19 in the past 12 months.
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.1917,0.0783,0.08,0.1,,66.2,66%,false,,,false,66.2,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(Blue-state | Had COVID in past 12 months).
 
-We are given the following probabilities:
-$P(B) = 0.19$ (19% are blue-state resident among As)
-$P(R) = 0.078$ (7.8% are red-state resident among As)
+Given information:
+- P(Blue-state) = 0.19
+- P(Red-state) = 0.078
+- P(COVID | Blue-state) = 0.08
+- P(COVID | Red-state) = 0.10
 
-We are also given",,"Let $B$ be the event that a person is a blue-state resident among As.
-Let $R$ be the event that a person is a red-state resident among As.
-Let $C$ be the event that a person had COVID-19 in the past 12 months.
-We are given the following probabilities:
-$P(B) = 0.19$ (19% are blue-state resident among As)
-$P(R) = 0.078$ (7.8% are red-state resident among As)
-We are also given",,probability,7.8,,,open,true,false,true
+First, I'll note that the question mentions ""someone vaccinated for 2024-25 COVID"" but doesn't provide vaccination rates or conditional probabilities involving vaccination. I'll proceed with the assumption that we're looking for the probability",,"I need to find P(Blue-state | Had COVID in past 12 months).
+Given information:
+- P(Blue-state) = 0.19
+- P(Red-state) = 0.078
+- P(COVID | Blue-state) = 0.08
+- P(COVID | Red-state) = 0.10
+First, I'll note that the question mentions ""someone vaccinated for 2024-25 COVID"" but doesn't provide vaccination rates or conditional probabilities involving vaccination. I'll proceed with the assumption that we're looking for the probability",,probability,10,,,open,true,false,true
+covid_vaccine_blue_red__open_probs,covid vaccine (blue/red),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
+Among blue-state residents, 8% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
+
+Given that an adult living in the US who is vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state residents?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.1917,0.0783,0.08,0.1,,66.2,66%,false,,,false,66.2,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(blue-state | had COVID).
+
+Wait, let me carefully examine the information given. The problem mentions ""vaccinated for 2024-25 COVID"" in the question, but the data provided doesn't include vaccination information. The data I have is about state residency and COVID infection.
+
+Let me work with what's available using Bayes' theorem for P(blue-state | had COVID).
+
+**Given information:",,"I need to find P(blue-state | had COVID).
+Wait, let me carefully examine the information given. The problem mentions ""vaccinated for 2024-25 COVID"" in the question, but the data provided doesn't include vaccination information. The data I have is about state residency and COVID infection.
+Let me work with what's available using Bayes' theorem for P(blue-state | had COVID).
+**Given information:",,unparseable,,,,open,false,false,false
+covid_vaccine_blue_red__open_probs,covid vaccine (blue/red),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
+Among blue-state residents, 8% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
+
+Given that an adult living in the US who is vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state residents?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.1917,0.0783,0.08,0.1,,66.2,66%,false,,,false,66.2,,,,,,,,,,,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(Blue-state | Had COVID-19), but I notice the problem mentions vaccination status in the question but doesn't provide any data about vaccination rates or the relationship between vaccination and having had COVID-19.
+
+Since no information is provided about vaccination status or its relationship to the other variables, I'll assume this might be a typo and calculate P(Blue-state | Had COVID-19) directly.
+
+Given information:
+- P(Blue-state) = 19% = 0.19
+- P(Red-state) = 7.8% = 0.078",,"I need to find P(Blue-state | Had COVID-19), but I notice the problem mentions vaccination status in the question but doesn't provide any data about vaccination rates or the relationship between vaccination and having had COVID-19.
+Since no information is provided about vaccination status or its relationship to the other variables, I'll assume this might be a typo and calculate P(Blue-state | Had COVID-19) directly.
+Given information:
+- P(Blue-state) = 19% = 0.19
+- P(Red-state) = 7.8% = 0.078",,probability,7.8,,,open,true,false,true
+covid_vaccine_blue_red__open_probs,covid vaccine (blue/red),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
+Among blue-state residents, 8% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
+
+Given that an adult living in the US who is vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state residents?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.1917,0.0783,0.08,0.1,,66.2,66%,false,,,false,66.2,,,,,,,,,,,,,,,,,google/gemini-3-flash-preview,"To calculate the probability that a person who had COVID-19 in the past 12 months was a blue-state resident, we use Bayes' Theorem.
+
+**1. Define the events:**
+*   $B$: Resident of a blue state ($P(B) = 0.19$)
+*   $R$: Resident of a red state ($P(R) = 0.078$)
+*   $C$: Had COVID-19 in the past 12 months
+
+**2. Identify conditional probabilities:**
+*   $P(C|B)",,"To calculate the probability that a person who had COVID-19 in the past 12 months was a blue-state resident, we use Bayes' Theorem.
+**1. Define the events:**
+*   $B$: Resident of a blue state ($P(B) = 0.19$)
+*   $R$: Resident of a red state ($P(R) = 0.078$)
+*   $C$: Had COVID-19 in the past 12 months
+**2. Identify conditional probabilities:**
+*   $P(C|B)",,probability,7.8,,,open,true,false,true
+covid_vaccine_blue_red__open_probs,covid vaccine (blue/red),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
+Among blue-state residents, 8% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
+
+Given that an adult living in the US who is vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state residents?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.1917,0.0783,0.08,0.1,,66.2,66%,false,,,false,66.2,,,,,,,,,,,,,,,,,google/gemini-3.5-flash,"Based on the information provided, there is insufficient data to calculate the exact conditional probability. 
+
+To determine the probability that a person is a blue-state resident given that they **were vaccinated for 2024-25 COVID** and had COVID-19 in the past 12 months, we would need additional statistical information. Specifically, we require:
+
+1. The vaccination rates for the 2024-25 COVID vaccine among blue-state residents who had COVID-19 in the past 12 months.
+2. The vaccination rates for the 202",,"Based on the information provided, there is insufficient data to calculate the exact conditional probability.
+To determine the probability that a person is a blue-state resident given that they **were vaccinated for 2024-25 COVID** and had COVID-19 in the past 12 months, we would need additional statistical information. Specifically, we require:
+1. The vaccination rates for the 2024-25 COVID vaccine among blue-state residents who had COVID-19 in the past 12 months.
+2. The vaccination rates for the 202",,unparseable,,,,open,false,false,false
+covid_vaccine_blue_red__open_probs,covid vaccine (blue/red),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
+Among blue-state residents, 8% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
+
+Given that an adult living in the US who is vaccinated for 2024-25 COVID had COVID-19 in the past 12 months, what is the probability they were blue-state residents?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.1917,0.0783,0.08,0.1,,66.2,66%,false,,,false,66.2,,,,,,,,,,,,,,,,,openai/gpt-5.5-2026-04-23,66%,,66%,,probability,66,,,open,true,true,false
 diabetes_insulin_obese__mc_numeric_probs,diabetes insulin obese,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 3.2% are uses insulin among adults with diagnosed diabetes (includes type 1 and insulin-treated type 2)s and 5.3% are has obesity among adults with diagnosed diabetes (BMI >= 30 kg/m2; measured BMI in NHANES clinical exam)s.
-Among uses insulin among adults with diagnosed diabetes (includes type 1 and insulin-treated type 2)s, 20% had hemoglobin A1c above 9.0%; among has obesity among adults with diagnosed diabetes (BMI >= 30 kg/m2; measured BMI in NHANES clinical exam)s, 16% had hemoglobin A1c above 9.0%.
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
 
-Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they were uses insulin among adults with diagnosed diabetes (includes type 1 and insulin-treated type 2)s?
+Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they use insulin?
 
 A. About 43%
 B. About 5%
@@ -175,47 +697,246 @@ C. About 16%
 D. About 20%
 E. About 3%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.031866,0.053223,0.2,0.16,A,42.81,43%,false,42.81,A,false,n/a,About 43%,About 5%,About 16%,About 20%,About 3%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,,,,,,,google/gemini-2.5-flash,"Let's define the events:
-- $I$: Uses insulin among adults with diagnosed diabetes
-- $O$: Has obesity among adults with diagnosed diabetes
-- $H$: Had hemoglobin A1c above 9.0%
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.031866,0.053223,0.2,0.16,A,42.81,43%,false,42.81,A,false,n/a,About 43%,About 5%,About 16%,About 20%,About 3%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(uses insulin | A1c > 9.0).
 
-We are given the following probabilities for US adults with diagnosed diabetes:
-- $P(I) = 0.032$
-- $P(O) = 0.053$
-- $P(H|I) = 0.20$
-- $P(H|O) = 0.16$
+Using Bayes' theorem:
+P(uses insulin | A1c > 9.0) = P(A1c > 9.0 | uses insulin) × P(uses insulin) / P(A1c > 9.0)
 
-We want to find",,- $P(H|O) = 0.16$,,mc_choice,,H,,mc_numeric,true,false,false
+Given information:
+- P(uses insulin) = 0.032
+- P(obese) = 0.053
+- P(A1c > 9.0 | uses insulin) = 0.20
+- P",,- P,,unparseable,,,,mc_numeric,false,false,false
+diabetes_insulin_obese__mc_numeric_probs,diabetes insulin obese,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
+
+Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they use insulin?
+
+A. About 43%
+B. About 5%
+C. About 16%
+D. About 20%
+E. About 3%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.031866,0.053223,0.2,0.16,A,42.81,43%,false,42.81,A,false,n/a,About 43%,About 5%,About 16%,About 20%,About 3%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,,,,,,,anthropic/claude-opus-4-8@default,"Using Bayes' theorem to find P(insulin | A1c > 9.0%):
+
+P(insulin and A1c>9) = 0.032 × 0.20 = 0.0064
+P(obese and A1c>9) = 0.053 × 0.16 = 0.00848
+
+P(insulin | A1c>9) = 0.0064 / (0.0064 + 0.00848) = 0.0",,P(insulin | A1c>9) = 0.0064 / (0.0064 + 0.00848) = 0.0,,unparseable,,,,mc_numeric,false,false,false
+diabetes_insulin_obese__mc_numeric_probs,diabetes insulin obese,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
+
+Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they use insulin?
+
+A. About 43%
+B. About 5%
+C. About 16%
+D. About 20%
+E. About 3%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.031866,0.053223,0.2,0.16,A,42.81,43%,false,42.81,A,false,n/a,About 43%,About 5%,About 16%,About 20%,About 3%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(uses insulin | diabetes and A1c > 9.0%).
+
+Let me define:
+- I = uses insulin
+- O = obese
+- H = A1c > 9.0%
+- D = diagnosed diabetes
+
+Given information:
+- P(I) = 0.032
+- P(O) = 0.053
+- P(H|I) = 0.20
+- P(H|O) = 0.16
+
+I need to find P(I|D ∩ H).
+
+The key insight",,I need to find P(I|D ∩ H).,,mc_choice,,H,,mc_numeric,true,false,false
+diabetes_insulin_obese__mc_numeric_probs,diabetes insulin obese,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
+
+Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they use insulin?
+
+A. About 43%
+B. About 5%
+C. About 16%
+D. About 20%
+E. About 3%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.031866,0.053223,0.2,0.16,A,42.81,43%,false,42.81,A,false,n/a,About 43%,About 5%,About 16%,About 20%,About 3%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,,,,,,,google/gemini-3-flash-preview,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+diabetes_insulin_obese__mc_numeric_probs,diabetes insulin obese,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
+
+Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they use insulin?
+
+A. About 43%
+B. About 5%
+C. About 16%
+D. About 20%
+E. About 3%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.031866,0.053223,0.2,0.16,A,42.81,43%,false,42.81,A,false,n/a,About 43%,About 5%,About 16%,About 20%,About 3%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,,,,,,,google/gemini-3.5-flash,"To find the conditional probability that an adult with diagnosed diabetes who has a hemoglobin A1c above 9.0% uses insulin, we can analyze the provided information. 
+
+Let:
+* $I$ = uses insulin (3.2% of US adults)
+* $O$ = is obese (5.3% of US adults)
+* $A$ = A1c above 9.0%
+
+We are given:
+* $P(A | I) = 20\%$ (0.20)
+* $P(A | O) = 1",,* $P(A | I) = 20\%$ (0.20),1,mc_choice,,A,1,mc_numeric,true,true,false
+diabetes_insulin_obese__mc_numeric_probs,diabetes insulin obese,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
+
+Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they use insulin?
+
+A. About 43%
+B. About 5%
+C. About 16%
+D. About 20%
+E. About 3%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.031866,0.053223,0.2,0.16,A,42.81,43%,false,42.81,A,false,n/a,About 43%,About 5%,About 16%,About 20%,About 3%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,,,,,,,openai/gpt-5.5-2026-04-23,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
 diabetes_insulin_obese__open_probs,diabetes insulin obese,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 3.2% are uses insulin among adults with diagnosed diabetes (includes type 1 and insulin-treated type 2)s and 5.3% are has obesity among adults with diagnosed diabetes (BMI >= 30 kg/m2; measured BMI in NHANES clinical exam)s.
-Among uses insulin among adults with diagnosed diabetes (includes type 1 and insulin-treated type 2)s, 20% had hemoglobin A1c above 9.0%; among has obesity among adults with diagnosed diabetes (BMI >= 30 kg/m2; measured BMI in NHANES clinical exam)s, 16% had hemoglobin A1c above 9.0%.
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
 
-Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they were uses insulin among adults with diagnosed diabetes (includes type 1 and insulin-treated type 2)s?
+Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they use insulin?
 
-Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.031866,0.053223,0.2,0.16,,42.81,43%,false,,,false,42.81,,,,,,,,,,,,,,,,,google/gemini-2.5-flash,"Let:
-* $I$ be the event that an adult with diagnosed diabetes uses insulin.
-* $O$ be the event that an adult with diagnosed diabetes has obesity.
-* $A$ be the event that an adult with diagnosed diabetes has hemoglobin A1c above 9.0%.
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.031866,0.053223,0.2,0.16,,42.81,43%,false,,,false,42.81,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(uses insulin | A1c > 9.0) for adults with diagnosed diabetes.
 
-We are given the following probabilities:
-* $P(I) = 0.032$
-* $P(O) = 0.053$
-* $P(A|I) = 0.20$
-* $P(A|O) = 0.",,"Let:
-* $I$ be the event that an adult with diagnosed diabetes uses insulin.
-* $O$ be the event that an adult with diagnosed diabetes has obesity.
-* $A$ be the event that an adult with diagnosed diabetes has hemoglobin A1c above 9.0%.
-We are given the following probabilities:
-* $P(I) = 0.032$
-* $P(O) = 0.053$
-* $P(A|I) = 0.20$
-* $P(A|O) = 0.",,probability,20,,,open,true,false,true
+Let me denote:
+- I = uses insulin
+- O = obese  
+- H = A1c > 9.0
+
+Given information:
+- P(I) = 0.032
+- P(O) = 0.053
+- P(H|I) = 0.20
+- P(H|O) = 0.16
+
+However, I notice the problem asks specifically about adults with diagnosed diabetes, but the given statistics are about",,"I need to find P(uses insulin | A1c > 9.0) for adults with diagnosed diabetes.
+Let me denote:
+- I = uses insulin
+- O = obese
+- H = A1c > 9.0
+Given information:
+- P(I) = 0.032
+- P(O) = 0.053
+- P(H|I) = 0.20
+- P(H|O) = 0.16
+However, I notice the problem asks specifically about adults with diagnosed diabetes, but the given statistics are about",,probability,16,,,open,true,false,true
+diabetes_insulin_obese__open_probs,diabetes insulin obese,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
+
+Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they use insulin?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.031866,0.053223,0.2,0.16,,42.81,43%,false,,,false,42.81,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(insulin | A1c > 9.0%).
+
+**Setting up with Bayes' theorem:**
+
+P(insulin | A1c>9) = P(A1c>9 | insulin) × P(insulin) / P(A1c>9)
+
+**Computing the numerator:**
+- P(A1c>9 | insulin) = 0.20
+- P(insulin) = 0.032
+- Num",,"I need to find P(insulin | A1c > 9.0%).
+**Setting up with Bayes' theorem:**
+P(insulin | A1c>9) = P(A1c>9 | insulin) × P(insulin) / P(A1c>9)
+**Computing the numerator:**
+- P(A1c>9 | insulin) = 0.20
+- P(insulin) = 0.032
+- Num",,probability,3.2,,,open,true,false,true
+diabetes_insulin_obese__open_probs,diabetes insulin obese,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
+
+Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they use insulin?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.031866,0.053223,0.2,0.16,,42.81,43%,false,,,false,42.81,,,,,,,,,,,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(uses insulin | diabetes and A1c > 9.0%).
+
+Let me define the events:
+- I = uses insulin
+- O = obese
+- A = A1c > 9.0%
+- D = diagnosed diabetes
+
+Given information:
+- P(I) = 3.2% = 0.032
+- P(O) = 5.3% = 0.053
+- P(A|I) = 20% = 0.20
+- P(A|O) = 16% = 0",,"I need to find P(uses insulin | diabetes and A1c > 9.0%).
+Let me define the events:
+- I = uses insulin
+- O = obese
+- A = A1c > 9.0%
+- D = diagnosed diabetes
+Given information:
+- P(I) = 3.2% = 0.032
+- P(O) = 5.3% = 0.053
+- P(A|I) = 20% = 0.20
+- P(A|O) = 16% = 0",,probability,16,,,open,true,false,true
+diabetes_insulin_obese__open_probs,diabetes insulin obese,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
+
+Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they use insulin?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.031866,0.053223,0.2,0.16,,42.81,43%,false,,,false,42.81,,,,,,,,,,,,,,,,,google/gemini-3-flash-preview,"To estimate the probability that a person uses insulin given that they have an A1c above 9.0%, we use Bayes' Theorem.
+
+**1. Identify the given values:**
+*   $P(\text{Insulin}) = 3.2\%$
+*   $P(\text{A1c} > 9 \mid \text{Insulin}) = 20\%$
+*   $P(\text{Obese}) = 5.3\%$
+*   $P(\text{A1c} > 9 \mid \text{Obese}) =",,"To estimate the probability that a person uses insulin given that they have an A1c above 9.0%, we use Bayes' Theorem.
+**1. Identify the given values:**
+*   $P(\text{Insulin}) = 3.2\%$
+*   $P(\text{A1c} > 9 \mid \text{Insulin}) = 20\%$
+*   $P(\text{Obese}) = 5.3\%$
+*   $P(\text{A1c} > 9 \mid \text{Obese}) =",,probability,5.3,,,open,true,false,true
+diabetes_insulin_obese__open_probs,diabetes insulin obese,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
+
+Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they use insulin?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.031866,0.053223,0.2,0.16,,42.81,43%,false,,,false,42.81,,,,,,,,,,,,,,,,,google/gemini-3.5-flash,"To estimate the probability that an adult with diagnosed diabetes who has a hemoglobin A1c above 9.0% uses insulin, we must address a limitation in the provided data: **the total number of adults with diagnosed diabetes is not specified in the prompt.** 
+
+To provide a statistically sound estimate, we can use established public health data from the Centers for Disease Control and Prevention (CDC) for the US adult population:
+1. **Prevalence of Diagnosed Diabetes:** Approximately **11.5%** of US adults have diagnosed diabetes.
+2. **Insulin Use:** Virtually all adult insulin users",,"To estimate the probability that an adult with diagnosed diabetes who has a hemoglobin A1c above 9.0% uses insulin, we must address a limitation in the provided data: **the total number of adults with diagnosed diabetes is not specified in the prompt.**
+To provide a statistically sound estimate, we can use established public health data from the Centers for Disease Control and Prevention (CDC) for the US adult population:
+1. **Prevalence of Diagnosed Diabetes:** Approximately **11.5%** of US adults have diagnosed diabetes.
+2. **Insulin Use:** Virtually all adult insulin users",,probability,11.5,,,open,true,false,false
+diabetes_insulin_obese__open_probs,diabetes insulin obese,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
+
+Given that an adult with diagnosed diabetes had hemoglobin A1c above 9.0%, what is the probability they use insulin?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.031866,0.053223,0.2,0.16,,42.81,43%,false,,,false,42.81,,,,,,,,,,,,,,,,,openai/gpt-5.5-2026-04-23,20%,,20%,,probability,20,,,open,true,false,true
 discharged_weapon_last_year__mc_numeric_probs,discharged weapon (last year),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
-Among urban police officers, 0.3% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.2% discharged a weapon in the last year.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
 
 Given that a police officer discharged a weapon in the last year, what is the probability they were urban police officers?
 
@@ -224,35 +945,214 @@ B. About 0%
 C. About 13%
 D. About 30%
 
-Which answer is closest? Reply with only the letter (A, B, C, or D).",true,well_posed,0,0.2992,0.132,0.003,0.002,A,77.27,77%,false,77.27,A,false,n/a,About 77%,About 0%,About 13%,About 30%,,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(C) confusion,,,,,,,,google/gemini-2.5-flash,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
-discharged_weapon_last_year__open_probs,discharged weapon (last year),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+Which answer is closest? Reply with only the letter (A, B, C, or D).",true,well_posed,0,0.2992,0.132,0.003,0.002,A,77.27,77%,false,77.27,A,false,n/a,About 77%,About 0%,About 13%,About 30%,,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(C) confusion,,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(Urban | Discharged weapon) using Bayes' theorem.
+
+Given information:
+- P(Urban) = 0.30
+- P(Rural) = 0.13  
+- P(Discharged | Urban) = 0.0030
+- P(Discharged | Rural) = 0.0020
+
+Using Bayes' theorem:
+P(Urban | Discharged) = P(Discharged | Urban) × P(Urban) / P(Discharged)
+
+First, I need P(Discharged):",,"First, I need P(Discharged):",,unparseable,,,,mc_numeric,false,false,false
+discharged_weapon_last_year__mc_numeric_probs,discharged weapon (last year),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
-Among urban police officers, 0.3% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.2% discharged a weapon in the last year.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
 
 Given that a police officer discharged a weapon in the last year, what is the probability they were urban police officers?
 
-Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.2992,0.132,0.003,0.002,,77.27,77%,false,,,false,77.27,,,,,,,,,,,,,,,,,google/gemini-2.5-flash,"Let $U$ be the event that a police officer is an urban police officer.
-Let $R$ be the event that a police officer is a rural/small-jurisdiction police officer.
-Let $D$ be the event that a police officer discharged a weapon in the last year.
+A. About 77%
+B. About 0%
+C. About 13%
+D. About 30%
 
-We are given the following probabilities:
-$P(U) = 0.30$ (30% are urban police officers)
-$P(R) = 0.13$ (13% are rural/small-jurisdiction police officers)
+Which answer is closest? Reply with only the letter (A, B, C, or D).",true,well_posed,0,0.2992,0.132,0.003,0.002,A,77.27,77%,false,77.27,A,false,n/a,About 77%,About 0%,About 13%,About 30%,,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(C) confusion,,,,,,,,anthropic/claude-opus-4-8@default,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+discharged_weapon_last_year__mc_numeric_probs,discharged weapon (last year),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-We are also given the conditional probabilities of discharging a",,"Let $U$ be the event that a police officer is an urban police officer.
-Let $R$ be the event that a police officer is a rural/small-jurisdiction police officer.
-Let $D$ be the event that a police officer discharged a weapon in the last year.
-We are given the following probabilities:
-$P(U) = 0.30$ (30% are urban police officers)
-$P(R) = 0.13$ (13% are rural/small-jurisdiction police officers)
-We are also given the conditional probabilities of discharging a",,probability,13,,,open,true,false,false
+Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
+
+Given that a police officer discharged a weapon in the last year, what is the probability they were urban police officers?
+
+A. About 77%
+B. About 0%
+C. About 13%
+D. About 30%
+
+Which answer is closest? Reply with only the letter (A, B, C, or D).",true,well_posed,0,0.2992,0.132,0.003,0.002,A,77.27,77%,false,77.27,A,false,n/a,About 77%,About 0%,About 13%,About 30%,,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(C) confusion,,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(Urban | Discharged weapon) using Bayes' theorem.
+
+Given information:
+- P(Urban) = 0.30
+- P(Rural/Small) = 0.13
+- P(Discharged | Urban) = 0.003
+- P(Discharged | Rural/Small) = 0.002
+
+First, I'll find P(Discharged) using the law of total probability:
+P(Discharged) = P(Discharged | Urban) × P(Urban) + P(Discharged | Rural",,P(Discharged) = P(Discharged | Urban) × P(Urban) + P(Discharged | Rural,,unparseable,,,,mc_numeric,false,false,false
+discharged_weapon_last_year__mc_numeric_probs,discharged weapon (last year),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
+
+Given that a police officer discharged a weapon in the last year, what is the probability they were urban police officers?
+
+A. About 77%
+B. About 0%
+C. About 13%
+D. About 30%
+
+Which answer is closest? Reply with only the letter (A, B, C, or D).",true,well_posed,0,0.2992,0.132,0.003,0.002,A,77.27,77%,false,77.27,A,false,n/a,About 77%,About 0%,About 13%,About 30%,,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(C) confusion,,,,,,,,google/gemini-3-flash-preview,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+discharged_weapon_last_year__mc_numeric_probs,discharged weapon (last year),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
+
+Given that a police officer discharged a weapon in the last year, what is the probability they were urban police officers?
+
+A. About 77%
+B. About 0%
+C. About 13%
+D. About 30%
+
+Which answer is closest? Reply with only the letter (A, B, C, or D).",true,well_posed,0,0.2992,0.132,0.003,0.002,A,77.27,77%,false,77.27,A,false,n/a,About 77%,About 0%,About 13%,About 30%,,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(C) confusion,,,,,,,,google/gemini-3.5-flash,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+discharged_weapon_last_year__mc_numeric_probs,discharged weapon (last year),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
+
+Given that a police officer discharged a weapon in the last year, what is the probability they were urban police officers?
+
+A. About 77%
+B. About 0%
+C. About 13%
+D. About 30%
+
+Which answer is closest? Reply with only the letter (A, B, C, or D).",true,well_posed,0,0.2992,0.132,0.003,0.002,A,77.27,77%,false,77.27,A,false,n/a,About 77%,About 0%,About 13%,About 30%,,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(C) confusion,,,,,,,,openai/gpt-5.5-2026-04-23,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+discharged_weapon_last_year__open_probs,discharged weapon (last year),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
+
+Given that a police officer discharged a weapon in the last year, what is the probability they were urban police officers?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.2992,0.132,0.003,0.002,,77.27,77%,false,,,false,77.27,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(Urban | Discharged weapon) using Bayes' theorem.
+
+Given information:
+- P(Urban) = 0.30 (30% are urban police officers)
+- P(Rural) = 0.13 (13% are rural/small-jurisdiction police officers)
+- P(Discharged | Urban) = 0.0030 (0.30% of urban officers discharged)
+- P(Discharged | Rural) = 0.0020 (0.20% of rural officers discharged)
+
+Using Ba",,"I need to find P(Urban | Discharged weapon) using Bayes' theorem.
+Given information:
+- P(Urban) = 0.30 (30% are urban police officers)
+- P(Rural) = 0.13 (13% are rural/small-jurisdiction police officers)
+- P(Discharged | Urban) = 0.0030 (0.30% of urban officers discharged)
+- P(Discharged | Rural) = 0.0020 (0.20% of rural officers discharged)
+Using Ba",,probability,20,,,open,true,false,true
+discharged_weapon_last_year__open_probs,discharged weapon (last year),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
+
+Given that a police officer discharged a weapon in the last year, what is the probability they were urban police officers?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.2992,0.132,0.003,0.002,,77.27,77%,false,,,false,77.27,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(urban | discharged weapon).
+
+**Setting up Bayes' theorem:**
+
+P(urban | discharged) = P(discharged | urban) × P(urban) / P(discharged)
+
+**Given information:**
+- P(urban) = 0.30
+- P(rural) = 0.13
+- P(discharged | urban) = 0.0030
+- P(discharged | rural) = 0.",,"I need to find P(urban | discharged weapon).
+**Setting up Bayes' theorem:**
+P(urban | discharged) = P(discharged | urban) × P(urban) / P(discharged)
+**Given information:**
+- P(urban) = 0.30
+- P(rural) = 0.13
+- P(discharged | urban) = 0.0030
+- P(discharged | rural) = 0.",,probability,0.3,,,open,true,false,true
+discharged_weapon_last_year__open_probs,discharged weapon (last year),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
+
+Given that a police officer discharged a weapon in the last year, what is the probability they were urban police officers?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.2992,0.132,0.003,0.002,,77.27,77%,false,,,false,77.27,,,,,,,,,,,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(Urban | Discharged weapon) using Bayes' theorem.
+
+Given information:
+- P(Urban) = 30% = 0.30
+- P(Rural/small-jurisdiction) = 13% = 0.13
+- P(Discharged | Urban) = 0.30% = 0.003
+- P(Discharged | Rural/small-jurisdiction) = 0.20% = 0.002
+
+Using Bayes' theorem:
+P(Urban | Discharged) = P(Discharged |",,"I need to find P(Urban | Discharged weapon) using Bayes' theorem.
+Given information:
+- P(Urban) = 30% = 0.30
+- P(Rural/small-jurisdiction) = 13% = 0.13
+- P(Discharged | Urban) = 0.30% = 0.003
+- P(Discharged | Rural/small-jurisdiction) = 0.20% = 0.002
+Using Bayes' theorem:
+P(Urban | Discharged) = P(Discharged |",,probability,20,,,open,true,false,true
+discharged_weapon_last_year__open_probs,discharged weapon (last year),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
+
+Given that a police officer discharged a weapon in the last year, what is the probability they were urban police officers?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.2992,0.132,0.003,0.002,,77.27,77%,false,,,false,77.27,,,,,,,,,,,,,,,,,google/gemini-3-flash-preview,"To find the probability that an officer is an urban police officer given that they discharged a weapon, we use Bayes' Theorem.
+
+**1. Identify the variables:**
+*   $P(\text{Urban}) = 30\% = 0.30$
+*   $P(\text{Rural}) = 13\% = 0.13$
+*   $P(\text{Discharge} | \text{Urban}) = 0.30\% = 0.003$
+*   $P(\text{Discharge} | \text{",,"To find the probability that an officer is an urban police officer given that they discharged a weapon, we use Bayes' Theorem.
+**1. Identify the variables:**
+*   $P(\text{Urban}) = 30\% = 0.30$
+*   $P(\text{Rural}) = 13\% = 0.13$
+*   $P(\text{Discharge} | \text{Urban}) = 0.30\% = 0.003$
+*   $P(\text{Discharge} | \text{",,probability,0.3,,,open,true,false,true
+discharged_weapon_last_year__open_probs,discharged weapon (last year),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
+
+Given that a police officer discharged a weapon in the last year, what is the probability they were urban police officers?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.2992,0.132,0.003,0.002,,77.27,77%,false,,,false,77.27,,,,,,,,,,,,,,,,,google/gemini-3.5-flash,"To find the probability that a police officer was an urban police officer given that they discharged a weapon in the last year, we can use Bayes' theorem.
+
+First, let's define the relevant events and probabilities among the population of interest (which is restricted to the police officers described in the prompt: urban and rural/small-jurisdiction police officers):
+
+*   **Total proportion of police officers in these two categories:** 
+    $30\% \text{ (urban)} + 13\% \text{ (rural)} = 43\%$ of the overall group.
+*   **",,"To find the probability that a police officer was an urban police officer given that they discharged a weapon in the last year, we can use Bayes' theorem.
+First, let's define the relevant events and probabilities among the population of interest (which is restricted to the police officers described in the prompt: urban and rural/small-jurisdiction police officers):
+*   **Total proportion of police officers in these two categories:**
+$30\% \text{ (urban)} + 13\% \text{ (rural)} = 43\%$ of the overall group.
+*   **",,probability,43,,,open,true,false,false
+discharged_weapon_last_year__open_probs,discharged weapon (last year),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
+
+Given that a police officer discharged a weapon in the last year, what is the probability they were urban police officers?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.2992,0.132,0.003,0.002,,77.27,77%,false,,,false,77.27,,,,,,,,,,,,,,,,,openai/gpt-5.5-2026-04-23,77.6%,,77.6%,,probability,77.6,,,open,true,true,false
 english_teacher_humanities__mc_numeric_probs,english teacher humanities,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States (~161 million; BLS occupational employment universe), 0.1% are main teaching assignment is English/language arts among public grades 9-12 teachers (NCES Table 209.50 2020-21)s and 0.1% are bachelor's degree major field is English and language arts among public grades 9-12 teachers (NCES Table 209.60 2020-21)s.
-Among main teaching assignment is English/language arts among public grades 9-12 teachers (NCES Table 209.50 2020-21)s, 69% hold a master's degree or higher; among bachelor's degree major field is English and language arts among public grades 9-12 teachers (NCES Table 209.60 2020-21)s, 55% hold a master's degree or higher.
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
 
-Given that a public grades 9-12 teacher holds a master's degree or higher, what is the probability they were main teaching assignment is English/language arts among public grades 9-12 teachers (NCES Table 209.50 2020-21)s?
+Given that a high school teacher holds a master's degree or higher, what is the probability they were an English teacher?
 
 A. About 52%
 B. About 69%
@@ -260,44 +1160,234 @@ C. About 55%
 D. About 0%
 E. About 38%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,A,52.06,52%,false,52.06,A,false,n/a,About 52%,About 69%,About 55%,About 0%,About 38%,Bayes P(C|T),P(T|C) confusion,P(T|D) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,,,,,,,google/gemini-2.5-flash,"Let's define the events:
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,A,52.06,52%,false,52.06,A,false,n/a,About 52%,About 69%,About 55%,About 0%,About 38%,Bayes P(C|T),P(T|C) confusion,P(T|D) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(teaches English | high school teacher with master's+).
 
-*   **E:** A public grades 9-12 teacher's main teaching assignment is English/language arts.
-*   **B:** A public grades 9-12 teacher's bachelor's degree major field is English and language arts.
-*   **M:** A public grades 9-12 teacher holds a master's degree or higher.
+Given information:
+- P(teaches English) = 0.0011
+- P(bachelor's in English) = 0.0013
+- P(master's+ | teaches English) = 0.69
+- P(master's+ | bachelor's in English) = 0.55
 
-We are given the following probabilities relative to the entire population of employed adults (which is ~161 million):
+Using Bayes' theorem:
+P(teaches English | HS teacher with master's+) = P(HS teacher with master's+ | teaches English) × P(teaches English) / P(",,P(teaches English | HS teacher with master's+) = P(HS teacher with master's+ | teaches English) × P(teaches English) / P(,,unparseable,,,,mc_numeric,false,false,false
+english_teacher_humanities__mc_numeric_probs,english teacher humanities,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-*   P(E) = 0.1% = 0.0",,*   P(E) = 0.1% = 0.0,,mc_choice,,E,,mc_numeric,true,false,false
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
+
+Given that a high school teacher holds a master's degree or higher, what is the probability they were an English teacher?
+
+A. About 52%
+B. About 69%
+C. About 55%
+D. About 0%
+E. About 38%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,A,52.06,52%,false,52.06,A,false,n/a,About 52%,About 69%,About 55%,About 0%,About 38%,Bayes P(C|T),P(T|C) confusion,P(T|D) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,,,,,,,anthropic/claude-opus-4-8@default,D,,D,,mc_choice,,D,,mc_numeric,true,false,false
+english_teacher_humanities__mc_numeric_probs,english teacher humanities,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
+
+Given that a high school teacher holds a master's degree or higher, what is the probability they were an English teacher?
+
+A. About 52%
+B. About 69%
+C. About 55%
+D. About 0%
+E. About 38%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,A,52.06,52%,false,52.06,A,false,n/a,About 52%,About 69%,About 55%,About 0%,About 38%,Bayes P(C|T),P(T|C) confusion,P(T|D) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(teaches English | holds master's degree or higher).
+
+Let me define events:
+- E = teaches English as primary assignment
+- B = has bachelor's degree in English
+- M = holds master's degree or higher
+
+Given information:
+- P(E) = 0.0011
+- P(B) = 0.0013
+- P(M|E) = 0.69
+- P(M|B) = 0.55
+
+Wait, I notice the question asks about ""a high school teacher"" but the given statistics are about ""employed",,- P(M|B) = 0.55,,mc_choice,,B,,mc_numeric,true,false,true
+english_teacher_humanities__mc_numeric_probs,english teacher humanities,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
+
+Given that a high school teacher holds a master's degree or higher, what is the probability they were an English teacher?
+
+A. About 52%
+B. About 69%
+C. About 55%
+D. About 0%
+E. About 38%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,A,52.06,52%,false,52.06,A,false,n/a,About 52%,About 69%,About 55%,About 0%,About 38%,Bayes P(C|T),P(T|C) confusion,P(T|D) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,,,,,,,google/gemini-3-flash-preview,D,,D,,mc_choice,,D,,mc_numeric,true,false,false
+english_teacher_humanities__mc_numeric_probs,english teacher humanities,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
+
+Given that a high school teacher holds a master's degree or higher, what is the probability they were an English teacher?
+
+A. About 52%
+B. About 69%
+C. About 55%
+D. About 0%
+E. About 38%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,A,52.06,52%,false,52.06,A,false,n/a,About 52%,About 69%,About 55%,About 0%,About 38%,Bayes P(C|T),P(T|C) confusion,P(T|D) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,,,,,,,google/gemini-3.5-flash,D,,D,,mc_choice,,D,,mc_numeric,true,false,false
+english_teacher_humanities__mc_numeric_probs,english teacher humanities,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
+
+Given that a high school teacher holds a master's degree or higher, what is the probability they were an English teacher?
+
+A. About 52%
+B. About 69%
+C. About 55%
+D. About 0%
+E. About 38%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,A,52.06,52%,false,52.06,A,false,n/a,About 52%,About 69%,About 55%,About 0%,About 38%,Bayes P(C|T),P(T|C) confusion,P(T|D) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,,,,,,,openai/gpt-5.5-2026-04-23,D,,D,,mc_choice,,D,,mc_numeric,true,false,false
 english_teacher_humanities__open_probs,english teacher humanities,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States (~161 million; BLS occupational employment universe), 0.1% are main teaching assignment is English/language arts among public grades 9-12 teachers (NCES Table 209.50 2020-21)s and 0.1% are bachelor's degree major field is English and language arts among public grades 9-12 teachers (NCES Table 209.60 2020-21)s.
-Among main teaching assignment is English/language arts among public grades 9-12 teachers (NCES Table 209.50 2020-21)s, 69% hold a master's degree or higher; among bachelor's degree major field is English and language arts among public grades 9-12 teachers (NCES Table 209.60 2020-21)s, 55% hold a master's degree or higher.
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
 
-Given that a public grades 9-12 teacher holds a master's degree or higher, what is the probability they were main teaching assignment is English/language arts among public grades 9-12 teachers (NCES Table 209.50 2020-21)s?
+Given that a high school teacher holds a master's degree or higher, what is the probability they were an English teacher?
 
-Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,,52.06,52%,false,,,false,52.06,,,,,,,,,,,,,,,,,google/gemini-2.5-flash,"Let's define the following events:
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,,52.06,52%,false,,,false,52.06,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(teaches English | high school teacher with master's+).
 
-*   **E:** A public grades 9-12 teacher's main teaching assignment is English/language arts.
-*   **B:** A public grades 9-12 teacher's bachelor's degree major field is English and language arts.
-*   **M:** A public grades 9-12 teacher holds a master's degree or higher.
+Let me define the events:
+- E = teaches English as primary assignment
+- B = has bachelor's degree in English  
+- M = holds master's degree or higher
+- H = is a high school teacher
 
-We are given the following probabilities from the general population of employed adults (which includes teachers):
+Given information:
+- P(E) = 0.0011
+- P(B) = 0.0013
+- P(M|E) = 0.69
+- P(M|B) = 0.55
 
-*   P(E) = 0.1% = 0.001
-*",,"Let's define the following events:
-*   **E:** A public grades 9-12 teacher's main teaching assignment is English/language arts.
-*   **B:** A public grades 9-12 teacher's bachelor's degree major field is English and language arts.
-*   **M:** A public grades 9-12 teacher holds a master's degree or higher.
-We are given the following probabilities from the general population of employed adults (which includes teachers):
-*   P(E) = 0.1% = 0.001
-*",,probability,10,,,open,true,false,false
+I need to find P(E|H",,"I need to find P(teaches English | high school teacher with master's+).
+Let me define the events:
+- E = teaches English as primary assignment
+- B = has bachelor's degree in English
+- M = holds master's degree or higher
+- H = is a high school teacher
+Given information:
+- P(E) = 0.0011
+- P(B) = 0.0013
+- P(M|E) = 0.69
+- P(M|B) = 0.55
+I need to find P(E|H",,probability,55,,,open,true,false,true
+english_teacher_humanities__open_probs,english teacher humanities,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
+
+Given that a high school teacher holds a master's degree or higher, what is the probability they were an English teacher?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,,52.06,52%,false,,,false,52.06,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"# Estimating the Conditional Probability
+
+## Setting Up the Problem
+
+I need to find P(teaches English | holds master's degree or higher).
+
+**Important consideration:** This question is structured like a base-rate problem. The key insight is that I should rely on the relevant base rate (how common English teaching is) rather than being swayed by the high percentage of English teachers who hold advanced degrees.
+
+## Appl",,"# Estimating the Conditional Probability
+## Setting Up the Problem
+I need to find P(teaches English | holds master's degree or higher).
+**Important consideration:** This question is structured like a base-rate problem. The key insight is that I should rely on the relevant base rate (how common English teaching is) rather than being swayed by the high percentage of English teachers who hold advanced degrees.
+## Appl",,unparseable,,,,open,false,false,false
+english_teacher_humanities__open_probs,english teacher humanities,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
+
+Given that a high school teacher holds a master's degree or higher, what is the probability they were an English teacher?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,,52.06,52%,false,,,false,52.06,,,,,,,,,,,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(teaches English | holds master's degree or higher).
+
+Let me define the events:
+- E = teaches English as primary assignment
+- B = has bachelor's degree in English
+- M = holds master's degree or higher
+
+Given information:
+- P(E) = 0.11% = 0.0011
+- P(B) = 0.13% = 0.0013
+- P(M|E) = 69% = 0.69
+- P(M|B) = 55% = 0.55
+
+Wait",,"I need to find P(teaches English | holds master's degree or higher).
+Let me define the events:
+- E = teaches English as primary assignment
+- B = has bachelor's degree in English
+- M = holds master's degree or higher
+Given information:
+- P(E) = 0.11% = 0.0011
+- P(B) = 0.13% = 0.0013
+- P(M|E) = 69% = 0.69
+- P(M|B) = 55% = 0.55
+Wait",,probability,55,,,open,true,false,true
+english_teacher_humanities__open_probs,english teacher humanities,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
+
+Given that a high school teacher holds a master's degree or higher, what is the probability they were an English teacher?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,,52.06,52%,false,,,false,52.06,,,,,,,,,,,,,,,,,google/gemini-3-flash-preview,"To estimate this probability based on the provided data, we must first address the fact that the population of ""high school teachers"" is not explicitly defined in your initial parameters. However, we can derive the conditional probability based on the relationship between English teachers and graduate degrees within the general workforce data provided.
+
+### 1. Identify the variables
+Let:
+*   $T$ = Teaches English as primary assignment (0.11% of employed adults)
+*   $M$ = Holds a master’s degree or higher
+*   $P(M|T)$ = Probability of having a master",,"To estimate this probability based on the provided data, we must first address the fact that the population of ""high school teachers"" is not explicitly defined in your initial parameters. However, we can derive the conditional probability based on the relationship between English teachers and graduate degrees within the general workforce data provided.
+### 1. Identify the variables
+Let:
+*   $T$ = Teaches English as primary assignment (0.11% of employed adults)
+*   $M$ = Holds a master’s degree or higher
+*   $P(M|T)$ = Probability of having a master",,probability,11,,,open,true,false,false
+english_teacher_humanities__open_probs,english teacher humanities,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
+
+Given that a high school teacher holds a master's degree or higher, what is the probability they were an English teacher?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,,52.06,52%,false,,,false,52.06,,,,,,,,,,,,,,,,,google/gemini-3.5-flash,"To estimate the probability that a high school teacher who holds a master's degree or higher teaches English as their primary assignment, we must evaluate the information provided. 
+
+However, the provided dataset contains a mismatch in the populations being analyzed:
+1. The initial rates (0.11% and 0.13%) and education levels are defined for **""employed adults in the United States.""**
+2. The final question asks about a specific subpopulation: **""a high school teacher.""**
+
+Because there is no data provided linking the rate of high school teachers within the general ""employed adult",,"To estimate the probability that a high school teacher who holds a master's degree or higher teaches English as their primary assignment, we must evaluate the information provided.
+However, the provided dataset contains a mismatch in the populations being analyzed:
+1. The initial rates (0.11% and 0.13%) and education levels are defined for **""employed adults in the United States.""**
+2. The final question asks about a specific subpopulation: **""a high school teacher.""**
+Because there is no data provided linking the rate of high school teachers within the general ""employed adult",,probability,13,,,open,true,false,false
+english_teacher_humanities__open_probs,english teacher humanities,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
+
+Given that a high school teacher holds a master's degree or higher, what is the probability they were an English teacher?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,,52.06,52%,false,,,false,52.06,,,,,,,,,,,,,,,,,openai/gpt-5.5-2026-04-23,69%,,69%,,probability,69,,,open,true,false,true
 healthcare_employment__mc_numeric_probs,healthcare employment,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US employed adults, 1.1% are physician (MD/DO) among health care professionals and 9.9% are non-physician health care professional among A (nurses, PAs, pharmacists, therapists, etc.)s.
-Among physician (MD/DO) among health care professionals, 54% work in a hospital; among non-physician health care professional among A (nurses, PAs, pharmacists, therapists, etc.)s, 60% work in a hospital.
+Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
 
-Given that a health care professional works in a hospital, what is the probability they were physician (MD/DO) among health care professionals?
+Given that a health care professional works in a hospital, what is the probability they were physicians?
 
 A. About 9%
 B. About 10%
@@ -305,39 +1395,230 @@ C. About 32%
 D. About 60%
 E. About 54%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.011,0.099,0.54,0.6,A,9.091,9.1%,false,9.091,A,false,n/a,About 9%,About 10%,About 32%,About 60%,About 54%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,,,,,,,google/gemini-2.5-flash,"Let P(MD) be the probability that a randomly selected health care professional is a physician (MD/DO).
-Let P(Non-MD) be the probability that a randomly selected health care professional is a non-physician health care professional.
-Let P(Hospital | MD) be the probability that a physician works in a hospital.
-Let P(Hospital | Non-MD) be the probability that a non-physician health care professional works in a hospital.
-We want to find P(MD | Hospital).
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.011,0.099,0.54,0.6,A,9.091,9.1%,false,9.091,A,false,n/a,About 9%,About 10%,About 32%,About 60%,About 54%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(physician | works in hospital AND healthcare professional).
 
-From the problem statement:
-""Among US employed adults, 1.1% are physician",,"""Among US employed adults, 1.1% are physician",,unparseable,,,,mc_numeric,false,false,false
+Given information:
+- P(physician) = 0.011
+- P(non-physician healthcare) = 0.099
+- P(works in hospital | physician) = 0.54
+- P(works in hospital | non-physician healthcare) = 0.60
+
+First, I'll note that all healthcare professionals = physicians + non-physician healthcare professionals.
+So P(healthcare professional) = 0.011 + 0.099 = 0.11
+
+Using Bayes' theorem:",,Using Bayes' theorem:,,unparseable,,,,mc_numeric,false,false,false
+healthcare_employment__mc_numeric_probs,healthcare employment,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
+
+Given that a health care professional works in a hospital, what is the probability they were physicians?
+
+A. About 9%
+B. About 10%
+C. About 32%
+D. About 60%
+E. About 54%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.011,0.099,0.54,0.6,A,9.091,9.1%,false,9.091,A,false,n/a,About 9%,About 10%,About 32%,About 60%,About 54%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,,,,,,,anthropic/claude-opus-4-8@default,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+healthcare_employment__mc_numeric_probs,healthcare employment,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
+
+Given that a health care professional works in a hospital, what is the probability they were physicians?
+
+A. About 9%
+B. About 10%
+C. About 32%
+D. About 60%
+E. About 54%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.011,0.099,0.54,0.6,A,9.091,9.1%,false,9.091,A,false,n/a,About 9%,About 10%,About 32%,About 60%,About 54%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(physician | healthcare worker in hospital).
+
+Let me define the events:
+- P = physician
+- H = healthcare professional (physician or non-physician)
+- B = works in hospital
+
+Given information:
+- P(P) = 0.011 (1.1% are physicians)
+- P(H and not P) = 0.099 (9.9% are non-physician healthcare workers)
+- P(B|P) = 0.54 (54% of physicians work in hospital)
+- P(B|H and not",,- P(B|H and not,,mc_choice,,H,,mc_numeric,true,false,false
+healthcare_employment__mc_numeric_probs,healthcare employment,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
+
+Given that a health care professional works in a hospital, what is the probability they were physicians?
+
+A. About 9%
+B. About 10%
+C. About 32%
+D. About 60%
+E. About 54%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.011,0.099,0.54,0.6,A,9.091,9.1%,false,9.091,A,false,n/a,About 9%,About 10%,About 32%,About 60%,About 54%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,,,,,,,google/gemini-3-flash-preview,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+healthcare_employment__mc_numeric_probs,healthcare employment,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
+
+Given that a health care professional works in a hospital, what is the probability they were physicians?
+
+A. About 9%
+B. About 10%
+C. About 32%
+D. About 60%
+E. About 54%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.011,0.099,0.54,0.6,A,9.091,9.1%,false,9.091,A,false,n/a,About 9%,About 10%,About 32%,About 60%,About 54%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,,,,,,,google/gemini-3.5-flash,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+healthcare_employment__mc_numeric_probs,healthcare employment,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
+
+Given that a health care professional works in a hospital, what is the probability they were physicians?
+
+A. About 9%
+B. About 10%
+C. About 32%
+D. About 60%
+E. About 54%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.011,0.099,0.54,0.6,A,9.091,9.1%,false,9.091,A,false,n/a,About 9%,About 10%,About 32%,About 60%,About 54%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,,,,,,,openai/gpt-5.5-2026-04-23,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
 healthcare_employment__open_probs,healthcare employment,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US employed adults, 1.1% are physician (MD/DO) among health care professionals and 9.9% are non-physician health care professional among A (nurses, PAs, pharmacists, therapists, etc.)s.
-Among physician (MD/DO) among health care professionals, 54% work in a hospital; among non-physician health care professional among A (nurses, PAs, pharmacists, therapists, etc.)s, 60% work in a hospital.
+Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
 
-Given that a health care professional works in a hospital, what is the probability they were physician (MD/DO) among health care professionals?
+Given that a health care professional works in a hospital, what is the probability they were physicians?
 
-Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.011,0.099,0.54,0.6,,9.091,9.1%,false,,,false,9.091,,,,,,,,,,,,,,,,,google/gemini-2.5-flash,"Let:
-- $P(MD)$ be the event that a health care professional is a physician (MD/DO).
-- $P(NPHC)$ be the event that a health care professional is a non-physician health care professional.
-- $P(Hospital)$ be the event that a health care professional works in a hospital.
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.011,0.099,0.54,0.6,,9.091,9.1%,false,,,false,9.091,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(physician | healthcare professional working in hospital).
 
-We are given the following information:
-1. Among US employed adults, 1.1% are physician (MD/DO) among health care professionals. This means: $P(MD) = 0.011$
-2. Among US employed adults",,"Let:
-- $P(MD)$ be the event that a health care professional is a physician (MD/DO).
-- $P(NPHC)$ be the event that a health care professional is a non-physician health care professional.
-- $P(Hospital)$ be the event that a health care professional works in a hospital.
-We are given the following information:
-1. Among US employed adults, 1.1% are physician (MD/DO) among health care professionals. This means: $P(MD) = 0.011$
-2. Among US employed adults",,probability,1.1,,,open,true,false,false
+Let me define the events:
+- P = physician
+- H = healthcare professional (includes physicians and non-physicians)
+- W = works in a hospital
+
+Given information:
+- P(physician) = 1.1% = 0.011
+- P(non-physician healthcare) = 9.9% = 0.099
+- P(works in hospital | physician) = 54% = 0.54
+- P(works in hospital | non-physician healthcare) = 60% = 0",,"I need to find P(physician | healthcare professional working in hospital).
+Let me define the events:
+- P = physician
+- H = healthcare professional (includes physicians and non-physicians)
+- W = works in a hospital
+Given information:
+- P(physician) = 1.1% = 0.011
+- P(non-physician healthcare) = 9.9% = 0.099
+- P(works in hospital | physician) = 54% = 0.54
+- P(works in hospital | non-physician healthcare) = 60% = 0",,probability,1.1,,,open,true,false,true
+healthcare_employment__open_probs,healthcare employment,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
+
+Given that a health care professional works in a hospital, what is the probability they were physicians?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.011,0.099,0.54,0.6,,9.091,9.1%,false,,,false,9.091,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(physician | health care professional AND works in hospital).
+
+**Setting up the groups** (using a base of all US employed adults):
+
+- Physicians: 1.1%, of whom 54% work in hospital
+- Other health care professionals: 9.9%, of whom 60% work in hospital
+
+**Computing each component:**
+
+- Physicians in hospital: 1.1% × 0.54 = 0",,"I need to find P(physician | health care professional AND works in hospital).
+**Setting up the groups** (using a base of all US employed adults):
+- Physicians: 1.1%, of whom 54% work in hospital
+- Other health care professionals: 9.9%, of whom 60% work in hospital
+**Computing each component:**
+- Physicians in hospital: 1.1% × 0.54 = 0",,probability,60,,,open,true,false,true
+healthcare_employment__open_probs,healthcare employment,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
+
+Given that a health care professional works in a hospital, what is the probability they were physicians?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.011,0.099,0.54,0.6,,9.091,9.1%,false,,,false,9.091,,,,,,,,,,,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(physician | healthcare professional working in hospital).
+
+Let me define the events:
+- P = physician
+- H = healthcare professional (not physician)
+- W = works in hospital
+
+Given information:
+- P(P) = 0.011 (1.1% of employed adults are physicians)
+- P(H) = 0.099 (9.9% of employed adults are healthcare professionals who are not physicians)
+- P(W|P) = 0.54 (54% of physicians work in hospital)
+- P(W|H",,"I need to find P(physician | healthcare professional working in hospital).
+Let me define the events:
+- P = physician
+- H = healthcare professional (not physician)
+- W = works in hospital
+Given information:
+- P(P) = 0.011 (1.1% of employed adults are physicians)
+- P(H) = 0.099 (9.9% of employed adults are healthcare professionals who are not physicians)
+- P(W|P) = 0.54 (54% of physicians work in hospital)
+- P(W|H",,probability,1.1,,,open,true,false,true
+healthcare_employment__open_probs,healthcare employment,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
+
+Given that a health care professional works in a hospital, what is the probability they were physicians?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.011,0.099,0.54,0.6,,9.091,9.1%,false,,,false,9.091,,,,,,,,,,,,,,,,,google/gemini-3-flash-preview,"To find the probability that a health care professional who works in a hospital is a physician, we use Bayes' Theorem.
+
+**1. Define the Groups and Probabilities:**
+*   $P(\text{Physician}) = 1.1\%$
+*   $P(\text{Other HCP}) = 9.9\%$
+*   $P(\text{Hospital} \mid \text{Physician}) = 54\%$
+*   $P(\text{Hospital} \mid \text{Other HCP}) = 60\%$
+
+**2. Calculate the Total Percentage of",,"To find the probability that a health care professional who works in a hospital is a physician, we use Bayes' Theorem.
+**1. Define the Groups and Probabilities:**
+*   $P(\text{Physician}) = 1.1\%$
+*   $P(\text{Other HCP}) = 9.9\%$
+*   $P(\text{Hospital} \mid \text{Physician}) = 54\%$
+*   $P(\text{Hospital} \mid \text{Other HCP}) = 60\%$
+**2. Calculate the Total Percentage of",,probability,60,,,open,true,false,true
+healthcare_employment__open_probs,healthcare employment,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
+
+Given that a health care professional works in a hospital, what is the probability they were physicians?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.011,0.099,0.54,0.6,,9.091,9.1%,false,,,false,9.091,,,,,,,,,,,,,,,,,google/gemini-3.5-flash,"To find the probability that a hospital-based health care professional is a physician, we can use Bayes' theorem. 
+
+First, let's identify the given probabilities:
+*   $P(\text{Physician}) = 1.1\%$ of all employed adults
+*   $P(\text{Non-Physician Health Care}) = 9.9\%$ of all employed adults
+*   $P(\text{Hospital} \mid \text{Physician}) = 54\%$ 
+*   $P(\text{Hospital} \mid \text{Non-Physician",,"To find the probability that a hospital-based health care professional is a physician, we can use Bayes' theorem.
+First, let's identify the given probabilities:
+*   $P(\text{Physician}) = 1.1\%$ of all employed adults
+*   $P(\text{Non-Physician Health Care}) = 9.9\%$ of all employed adults
+*   $P(\text{Hospital} \mid \text{Physician}) = 54\%$
+*   $P(\text{Hospital} \mid \text{Non-Physician",,probability,54,,,open,true,false,true
+healthcare_employment__open_probs,healthcare employment,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
+
+Given that a health care professional works in a hospital, what is the probability they were physicians?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.011,0.099,0.54,0.6,,9.091,9.1%,false,,,false,9.091,,,,,,,,,,,,,,,,,openai/gpt-5.5-2026-04-23,9%,,9%,,probability,9,,,open,true,true,false
 military_overseas_federal_pool__mc_numeric_probs,military overseas (federal pool),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service member (Space Force grouped with Air Force; Marine Corps and Coast Guard unassigned in C/D split)s.
-Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service member (Space Force grouped with Air Force; Marine Corps and Coast Guard unassigned in C/D split)s, 64% have worked overseas.
+Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
+Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
 
 Given that an active-duty US military service member has worked overseas, what is the probability they were uS Army active-duty service members?
 
@@ -347,55 +1628,225 @@ C. About 58%
 D. About 64%
 E. About 20%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.14,0.204,0.58,0.64,A,38.35,38%,false,38.35,A,false,n/a,About 38%,About 37%,About 58%,About 64%,About 20%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,,,,,,,google/gemini-2.5-flash,"A
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.14,0.204,0.58,0.64,A,38.35,38%,false,38.35,A,false,n/a,About 38%,About 37%,About 58%,About 64%,About 20%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(Army | worked overseas and active-duty military).
 
-Let's define the following events:
-- A: The service member is US Army active-duty.
-- NAF: The service member is US Navy or US Air Force active-duty.
-- O: The service member has worked overseas.
+Given information:
+- 14% are Army active-duty
+- 20% are Navy/Air Force active-duty  
+- 58% of Army have worked overseas
+- 64% of Navy/Air Force have worked overseas
 
-From the problem statement, we are given the following probabilities:
-- Among US active-duty military plus US federal civilian employees:
-    - P(A | Military or Civilian) = 0.14
-    - P(NAF | Military or Civilian) = 0.20
+Note: The question asks about active-duty military members only (not federal civilians).
 
-- Among US Army active-duty service members:
-",,- P(A | Military or Civilian) = 0.14,,mc_choice,,A,,mc_numeric,true,true,false
-military_overseas_federal_pool__open_probs,military overseas (federal pool),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+Among active-duty military:
+- Army represents 14/(14+20) = 14/34 = 41.2% of active-duty
+- Navy/Air Force represents 20",,- Navy/Air Force represents 20,,unparseable,,,,mc_numeric,false,false,false
+military_overseas_federal_pool__mc_numeric_probs,military overseas (federal pool),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service member (Space Force grouped with Air Force; Marine Corps and Coast Guard unassigned in C/D split)s.
-Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service member (Space Force grouped with Air Force; Marine Corps and Coast Guard unassigned in C/D split)s, 64% have worked overseas.
+Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
+Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
 
 Given that an active-duty US military service member has worked overseas, what is the probability they were uS Army active-duty service members?
 
-Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.14,0.204,0.58,0.64,,38.35,38%,false,,,false,38.35,,,,,,,,,,,,,,,,,google/gemini-2.5-flash,"Let A be the event that a person is a US Army active-duty service member.
-Let N be the event that a person is a US Navy or US Air Force active-duty service member.
-Let O be the event that a person has worked overseas.
+A. About 38%
+B. About 37%
+C. About 58%
+D. About 64%
+E. About 20%
 
-We are given the following probabilities:
-P(A) = 0.14
-P(N) = 0.20
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.14,0.204,0.58,0.64,A,38.35,38%,false,38.35,A,false,n/a,About 38%,About 37%,About 58%,About 64%,About 20%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,,,,,,,anthropic/claude-opus-4-8@default,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+military_overseas_federal_pool__mc_numeric_probs,military overseas (federal pool),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-We are also given the conditional probabilities:
-P(O|A) = 0.58
-P(O|N) = 0.64
+Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
+Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
 
-We need to find P(A|",,"Let A be the event that a person is a US Army active-duty service member.
-Let N be the event that a person is a US Navy or US Air Force active-duty service member.
-Let O be the event that a person has worked overseas.
-We are given the following probabilities:
-P(A) = 0.14
-P(N) = 0.20
-We are also given the conditional probabilities:
-P(O|A) = 0.58
-P(O|N) = 0.64
-We need to find P(A|",,probability,64,,,open,true,false,true
+Given that an active-duty US military service member has worked overseas, what is the probability they were uS Army active-duty service members?
+
+A. About 38%
+B. About 37%
+C. About 58%
+D. About 64%
+E. About 20%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.14,0.204,0.58,0.64,A,38.35,38%,false,38.35,A,false,n/a,About 38%,About 37%,About 58%,About 64%,About 20%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(Army | worked overseas) using Bayes' theorem.
+
+Given information:
+- P(Army) = 14% = 0.14
+- P(Navy or Air Force) = 20% = 0.20
+- P(worked overseas | Army) = 58% = 0.58
+- P(worked overseas | Navy or Air Force) = 64% = 0.64
+
+Using Bayes' theorem:
+P(Army | worked overseas) = P(worked overseas | Army) × P(Army) / P(worked overseas",,P(Army | worked overseas) = P(worked overseas | Army) × P(Army) / P(worked overseas,,unparseable,,,,mc_numeric,false,false,false
+military_overseas_federal_pool__mc_numeric_probs,military overseas (federal pool),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
+Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
+
+Given that an active-duty US military service member has worked overseas, what is the probability they were uS Army active-duty service members?
+
+A. About 38%
+B. About 37%
+C. About 58%
+D. About 64%
+E. About 20%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.14,0.204,0.58,0.64,A,38.35,38%,false,38.35,A,false,n/a,About 38%,About 37%,About 58%,About 64%,About 20%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,,,,,,,google/gemini-3-flash-preview,B,,B,,mc_choice,,B,,mc_numeric,true,false,false
+military_overseas_federal_pool__mc_numeric_probs,military overseas (federal pool),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
+Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
+
+Given that an active-duty US military service member has worked overseas, what is the probability they were uS Army active-duty service members?
+
+A. About 38%
+B. About 37%
+C. About 58%
+D. About 64%
+E. About 20%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.14,0.204,0.58,0.64,A,38.35,38%,false,38.35,A,false,n/a,About 38%,About 37%,About 58%,About 64%,About 20%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,,,,,,,google/gemini-3.5-flash,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+military_overseas_federal_pool__mc_numeric_probs,military overseas (federal pool),well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
+Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
+
+Given that an active-duty US military service member has worked overseas, what is the probability they were uS Army active-duty service members?
+
+A. About 38%
+B. About 37%
+C. About 58%
+D. About 64%
+E. About 20%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.14,0.204,0.58,0.64,A,38.35,38%,false,38.35,A,false,n/a,About 38%,About 37%,About 58%,About 64%,About 20%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,,,,,,,openai/gpt-5.5-2026-04-23,B,,B,,mc_choice,,B,,mc_numeric,true,false,false
+military_overseas_federal_pool__open_probs,military overseas (federal pool),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
+Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
+
+Given that an active-duty US military service member has worked overseas, what is the probability they were uS Army active-duty service members?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.14,0.204,0.58,0.64,,38.35,38%,false,,,false,38.35,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(Army | worked overseas), given that we're conditioning on being an active-duty military service member.
+
+Given information:
+- 14% are US Army active-duty
+- 20% are US Navy or US Air Force active-duty
+- P(worked overseas | Army) = 58% = 0.58
+- P(worked overseas | Navy or Air Force) = 64% = 0.64
+
+Since we're asked about active-duty military members only (not federal civilian employees), I need to focus just on the military members.
+
+Among active-duty",,"I need to find P(Army | worked overseas), given that we're conditioning on being an active-duty military service member.
+Given information:
+- 14% are US Army active-duty
+- 20% are US Navy or US Air Force active-duty
+- P(worked overseas | Army) = 58% = 0.58
+- P(worked overseas | Navy or Air Force) = 64% = 0.64
+Since we're asked about active-duty military members only (not federal civilian employees), I need to focus just on the military members.
+Among active-duty",,probability,58,,,open,true,false,true
+military_overseas_federal_pool__open_probs,military overseas (federal pool),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
+Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
+
+Given that an active-duty US military service member has worked overseas, what is the probability they were uS Army active-duty service members?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.14,0.204,0.58,0.64,,38.35,38%,false,,,false,38.35,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(Army | worked overseas) among active-duty service members.
+
+**Setting up the problem:**
+
+Let me use the population of US active-duty military + federal civilian employees as the base.
+
+- P(Army) = 14%
+- P(Navy or Air Force) = 20%
+- P(overseas | Army) = 58%
+- P(overseas | Navy/AF) = 64%
+
+The question asks:",,"I need to find P(Army | worked overseas) among active-duty service members.
+**Setting up the problem:**
+Let me use the population of US active-duty military + federal civilian employees as the base.
+- P(Army) = 14%
+- P(Navy or Air Force) = 20%
+- P(overseas | Army) = 58%
+- P(overseas | Navy/AF) = 64%
+The question asks:",,probability,64,,,open,true,false,true
+military_overseas_federal_pool__open_probs,military overseas (federal pool),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
+Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
+
+Given that an active-duty US military service member has worked overseas, what is the probability they were uS Army active-duty service members?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.14,0.204,0.58,0.64,,38.35,38%,false,,,false,38.35,,,,,,,,,,,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(Army | worked overseas) using Bayes' theorem.
+
+Given information:
+- P(Army) = 14% = 0.14
+- P(Navy or Air Force) = 20% = 0.20
+- P(worked overseas | Army) = 58% = 0.58
+- P(worked overseas | Navy or Air Force) = 64% = 0.64
+
+First, I need to clarify that the question asks for the probability among active-duty military service members, so I should focus only on the Army (14%)",,"I need to find P(Army | worked overseas) using Bayes' theorem.
+Given information:
+- P(Army) = 14% = 0.14
+- P(Navy or Air Force) = 20% = 0.20
+- P(worked overseas | Army) = 58% = 0.58
+- P(worked overseas | Navy or Air Force) = 64% = 0.64
+First, I need to clarify that the question asks for the probability among active-duty military service members, so I should focus only on the Army (14%)",,probability,58,,,open,true,false,true
+military_overseas_federal_pool__open_probs,military overseas (federal pool),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
+Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
+
+Given that an active-duty US military service member has worked overseas, what is the probability they were uS Army active-duty service members?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.14,0.204,0.58,0.64,,38.35,38%,false,,,false,38.35,,,,,,,,,,,,,,,,,google/gemini-3-flash-preview,"To find the probability that a service member is in the US Army given that they have worked overseas, we use Bayes' Theorem.
+
+**1. Define the relevant populations and probabilities:**
+The question limits the scope to **active-duty US military service members**. 
+From the information provided:
+*   $P(\text{Army}) = 14\%$
+*   $P(\text{Navy or Air Force}) = 20\%$
+
+To find the probability within the military subgroup, we first find the total proportion of the military represented here: $14\% + 20\%",,"To find the probability that a service member is in the US Army given that they have worked overseas, we use Bayes' Theorem.
+**1. Define the relevant populations and probabilities:**
+The question limits the scope to **active-duty US military service members**.
+From the information provided:
+*   $P(\text{Army}) = 14\%$
+*   $P(\text{Navy or Air Force}) = 20\%$
+To find the probability within the military subgroup, we first find the total proportion of the military represented here: $14\% + 20\%",,probability,20,,,open,true,false,false
+military_overseas_federal_pool__open_probs,military overseas (federal pool),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
+Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
+
+Given that an active-duty US military service member has worked overseas, what is the probability they were uS Army active-duty service members?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.14,0.204,0.58,0.64,,38.35,38%,false,,,false,38.35,,,,,,,,,,,,,,,,,google/gemini-3.5-flash,"To find the probability that an active-duty service member who has worked overseas is in the US Army, we can apply Bayes' theorem to the relevant population. 
+
+The question asks specifically about **active-duty US military service members** (excluding federal civilian employees). 
+
+First, we determine the relative proportion of the two active-duty groups mentioned within the active-duty military population:
+* **US Army active-duty:** 14% of the total (military + civilian)
+* **US Navy or US Air Force active-duty:** 20% of the total (military + civilian",,"To find the probability that an active-duty service member who has worked overseas is in the US Army, we can apply Bayes' theorem to the relevant population.
+The question asks specifically about **active-duty US military service members** (excluding federal civilian employees).
+First, we determine the relative proportion of the two active-duty groups mentioned within the active-duty military population:
+* **US Army active-duty:** 14% of the total (military + civilian)
+* **US Navy or US Air Force active-duty:** 20% of the total (military + civilian",,probability,20,,,open,true,false,false
+military_overseas_federal_pool__open_probs,military overseas (federal pool),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
+Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
+
+Given that an active-duty US military service member has worked overseas, what is the probability they were uS Army active-duty service members?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.14,0.204,0.58,0.64,,38.35,38%,false,,,false,38.35,,,,,,,,,,,,,,,,,openai/gpt-5.5-2026-04-23,31%,,31%,,probability,31,,,open,true,false,false
 professional_drivers_speeding__mc_numeric_probs,professional drivers speeding,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), 1.3% are heavy and tractor-trailer truck driver among professional drivers (SOC 53-3032; requires CDL; GVWR > 26000 lb)s and 0.3% are bus driver among professional drivers (SOC 53-3051 school plus 53-3052 transit/intercity bus; excludes shuttle chauffeur and taxi)s.
-Among heavy and tractor-trailer truck driver among professional drivers (SOC 53-3032; requires CDL; GVWR > 26000 lb)s, 16% received a speeding ticket in the last 12 months; among bus driver among professional drivers (SOC 53-3051 school plus 53-3052 transit/intercity bus; excludes shuttle chauffeur and taxi)s, 10% received a speeding ticket in the last 12 months.
+Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
+Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
 
-Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck driver among professional drivers (SOC 53-3032; requires CDL; GVWR > 26000 lb)s?
+Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck drivers?
 
 A. About 85%
 B. About 0%
@@ -403,25 +1854,218 @@ C. About 16%
 D. About 10%
 E. About 2%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.012816,0.00348,0.16,0.1,A,85.49,85%,false,85.49,A,false,n/a,About 85%,About 0%,About 16%,About 10%,About 2%,Bayes P(C|T),P(D) confusion,P(T|C) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,,,,,,,google/gemini-2.5-flash,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.012816,0.00348,0.16,0.1,A,85.49,85%,false,85.49,A,false,n/a,About 85%,About 0%,About 16%,About 10%,About 2%,Bayes P(C|T),P(D) confusion,P(T|C) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(truck driver | speeding ticket among professional drivers).
+
+Given information:
+- P(truck driver) = 1.3% = 0.013
+- P(bus driver) = 0.35% = 0.0035
+- P(speeding ticket | truck driver) = 16% = 0.16
+- P(speeding ticket | bus driver) = 10% = 0.10
+
+Since the question asks about professional drivers who received speeding tickets, I'll consider only truck drivers and bus drivers as the professional driver population.
+
+Using",,Using,,unparseable,,,,mc_numeric,false,false,false
+professional_drivers_speeding__mc_numeric_probs,professional drivers speeding,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
+Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
+
+Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck drivers?
+
+A. About 85%
+B. About 0%
+C. About 16%
+D. About 10%
+E. About 2%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.012816,0.00348,0.16,0.1,A,85.49,85%,false,85.49,A,false,n/a,About 85%,About 0%,About 16%,About 10%,About 2%,Bayes P(C|T),P(D) confusion,P(T|C) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,,,,,,,anthropic/claude-opus-4-8@default,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+professional_drivers_speeding__mc_numeric_probs,professional drivers speeding,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
+Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
+
+Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck drivers?
+
+A. About 85%
+B. About 0%
+C. About 16%
+D. About 10%
+E. About 2%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.012816,0.00348,0.16,0.1,A,85.49,85%,false,85.49,A,false,n/a,About 85%,About 0%,About 16%,About 10%,About 2%,Bayes P(C|T),P(D) confusion,P(T|C) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find P(truck driver | received speeding ticket).
+
+Using Bayes' theorem:
+P(truck driver | speeding ticket) = P(speeding ticket | truck driver) × P(truck driver) / P(speeding ticket)
+
+Given information:
+- P(truck driver) = 0.013 (1.3%)
+- P(bus driver) = 0.0035 (0.35%)
+- P(speeding ticket | truck driver) = 0.16 (16%)
+- P(speeding ticket | bus driver) =",,- P(speeding ticket | bus driver) =,,unparseable,,,,mc_numeric,false,false,false
+professional_drivers_speeding__mc_numeric_probs,professional drivers speeding,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
+Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
+
+Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck drivers?
+
+A. About 85%
+B. About 0%
+C. About 16%
+D. About 10%
+E. About 2%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.012816,0.00348,0.16,0.1,A,85.49,85%,false,85.49,A,false,n/a,About 85%,About 0%,About 16%,About 10%,About 2%,Bayes P(C|T),P(D) confusion,P(T|C) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,,,,,,,google/gemini-3-flash-preview,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+professional_drivers_speeding__mc_numeric_probs,professional drivers speeding,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
+Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
+
+Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck drivers?
+
+A. About 85%
+B. About 0%
+C. About 16%
+D. About 10%
+E. About 2%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.012816,0.00348,0.16,0.1,A,85.49,85%,false,85.49,A,false,n/a,About 85%,About 0%,About 16%,About 10%,About 2%,Bayes P(C|T),P(D) confusion,P(T|C) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,,,,,,,google/gemini-3.5-flash,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
+professional_drivers_speeding__mc_numeric_probs,professional drivers speeding,well_posed,0,mc,true,mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
+Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
+
+Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck drivers?
+
+A. About 85%
+B. About 0%
+C. About 16%
+D. About 10%
+E. About 2%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.012816,0.00348,0.16,0.1,A,85.49,85%,false,85.49,A,false,n/a,About 85%,About 0%,About 16%,About 10%,About 2%,Bayes P(C|T),P(D) confusion,P(T|C) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,,,,,,,openai/gpt-5.5-2026-04-23,A,,A,,mc_choice,,A,,mc_numeric,true,true,false
 professional_drivers_speeding__open_probs,professional drivers speeding,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States (BLS OES May 2023 occupational employment universe; ~161M employed), 1.3% are heavy and tractor-trailer truck driver among professional drivers (SOC 53-3032; requires CDL; GVWR > 26000 lb)s and 0.3% are bus driver among professional drivers (SOC 53-3051 school plus 53-3052 transit/intercity bus; excludes shuttle chauffeur and taxi)s.
-Among heavy and tractor-trailer truck driver among professional drivers (SOC 53-3032; requires CDL; GVWR > 26000 lb)s, 16% received a speeding ticket in the last 12 months; among bus driver among professional drivers (SOC 53-3051 school plus 53-3052 transit/intercity bus; excludes shuttle chauffeur and taxi)s, 10% received a speeding ticket in the last 12 months.
+Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
+Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
 
-Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck driver among professional drivers (SOC 53-3032; requires CDL; GVWR > 26000 lb)s?
+Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck drivers?
 
-Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.012816,0.00348,0.16,0.1,,85.49,85%,false,,,false,85.49,,,,,,,,,,,,,,,,,google/gemini-2.5-flash,"Let's define the following events:
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.012816,0.00348,0.16,0.1,,85.49,85%,false,,,false,85.49,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-1@20250805,"I need to find P(truck driver | speeding ticket among professional drivers).
 
-*   **T:** The professional driver is a heavy and tractor-trailer truck driver (SOC 53-3032).
-*   **B:** The professional driver is a bus driver (SOC 53-3051 + 53-3052).
-*   **S:** The professional driver received a speeding ticket in the last 12 months.
+Given information:
+- P(truck driver) = 1.3% = 0.013
+- P(bus driver) = 0.35% = 0.0035
+- P(speeding ticket | truck driver) = 16% = 0.16
+- P(speeding ticket | bus driver) = 10% = 0.10
 
-We are given the following probabilities:
+Assuming ""professional drivers"" refers to truck drivers and bus drivers combined:
+- Total professional drivers = 1.3% + 0.",,"I need to find P(truck driver | speeding ticket among professional drivers).
+Given information:
+- P(truck driver) = 1.3% = 0.013
+- P(bus driver) = 0.35% = 0.0035
+- P(speeding ticket | truck driver) = 16% = 0.16
+- P(speeding ticket | bus driver) = 10% = 0.10
+Assuming ""professional drivers"" refers to truck drivers and bus drivers combined:
+- Total professional drivers = 1.3% + 0.",,probability,0.35,,,open,true,false,true
+professional_drivers_speeding__open_probs,professional drivers speeding,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-*   P(T) = 1.3% = 0.013 (proportion of heavy and tractor-trailer truck",,"Let's define the following events:
-*   **T:** The professional driver is a heavy and tractor-trailer truck driver (SOC 53-3032).
-*   **B:** The professional driver is a bus driver (SOC 53-3051 + 53-3052).
-*   **S:** The professional driver received a speeding ticket in the last 12 months.
-We are given the following probabilities:
-*   P(T) = 1.3% = 0.013 (proportion of heavy and tractor-trailer truck",,probability,1.3,,,open,true,false,false
+Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
+Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
+
+Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck drivers?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.012816,0.00348,0.16,0.1,,85.49,85%,false,,,false,85.49,,,,,,,,,,,,,,,,,anthropic/claude-opus-4-8@default,"I need to find P(truck driver | speeding ticket), restricting to ""professional drivers"" (truck + bus drivers).
+
+**Setup using Bayes' theorem:**
+
+P(truck driver) = 0.013
+P(bus driver) = 0.0035
+
+P(ticket | truck) = 0.16
+P(ticket | bus) = 0.10
+
+**Joint probabilities (ticket and category):",,"I need to find P(truck driver | speeding ticket), restricting to ""professional drivers"" (truck + bus drivers).
+**Setup using Bayes' theorem:**
+P(truck driver) = 0.013
+P(bus driver) = 0.0035
+P(ticket | truck) = 0.16
+P(ticket | bus) = 0.10
+**Joint probabilities (ticket and category):",,probability,10,,,open,true,false,true
+professional_drivers_speeding__open_probs,professional drivers speeding,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
+Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
+
+Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck drivers?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.012816,0.00348,0.16,0.1,,85.49,85%,false,,,false,85.49,,,,,,,,,,,,,,,,,anthropic/claude-sonnet-4@20250514,"I need to find the probability that a professional driver who received a speeding ticket is a heavy and tractor-trailer truck driver.
+
+Let me define the events:
+- T = heavy and tractor-trailer truck driver
+- B = bus driver
+- S = received a speeding ticket
+
+Given information:
+- P(T) = 1.3% = 0.013
+- P(B) = 0.35% = 0.0035
+- P(S|T) = 16% = 0.16
+- P(S|B) = 10",,"I need to find the probability that a professional driver who received a speeding ticket is a heavy and tractor-trailer truck driver.
+Let me define the events:
+- T = heavy and tractor-trailer truck driver
+- B = bus driver
+- S = received a speeding ticket
+Given information:
+- P(T) = 1.3% = 0.013
+- P(B) = 0.35% = 0.0035
+- P(S|T) = 16% = 0.16
+- P(S|B) = 10",,probability,0.35,,,open,true,false,true
+professional_drivers_speeding__open_probs,professional drivers speeding,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
+Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
+
+Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck drivers?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.012816,0.00348,0.16,0.1,,85.49,85%,false,,,false,85.49,,,,,,,,,,,,,,,,,google/gemini-3-flash-preview,"To calculate the probability that a professional driver is a heavy and tractor-trailer truck driver given they received a speeding ticket, we use Bayes' Theorem.
+
+**1. Define the events:**
+*   $T$: The driver is a heavy and tractor-trailer truck driver.
+*   $B$: The driver is a bus driver.
+*   $S$: The driver received a speeding ticket.
+
+**2. Identify the given probabilities:**
+*   $P(T) = 1.3\%$
+*   $P(B) = 0.35\%$
+*   $",,"To calculate the probability that a professional driver is a heavy and tractor-trailer truck driver given they received a speeding ticket, we use Bayes' Theorem.
+**1. Define the events:**
+*   $T$: The driver is a heavy and tractor-trailer truck driver.
+*   $B$: The driver is a bus driver.
+*   $S$: The driver received a speeding ticket.
+**2. Identify the given probabilities:**
+*   $P(T) = 1.3\%$
+*   $P(B) = 0.35\%$
+*   $",,probability,35,,,open,true,false,false
+professional_drivers_speeding__open_probs,professional drivers speeding,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
+Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
+
+Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck drivers?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.012816,0.00348,0.16,0.1,,85.49,85%,false,,,false,85.49,,,,,,,,,,,,,,,,,google/gemini-3.5-flash,"To find the probability that a professional driver (defined here as either a truck driver or a bus driver) is a heavy and tractor-trailer truck driver, given that they received a speeding ticket, we can use Bayes' theorem.
+
+**1. Define the probabilities of belonging to each driver group:**
+*   Probability of being a truck driver, $P(\text{Truck}) = 1.3\% = 0.013$
+*   Probability of being a bus driver, $P(\text{Bus}) = 0.35\% = 0.0035$",,"To find the probability that a professional driver (defined here as either a truck driver or a bus driver) is a heavy and tractor-trailer truck driver, given that they received a speeding ticket, we can use Bayes' theorem.
+**1. Define the probabilities of belonging to each driver group:**
+*   Probability of being a truck driver, $P(\text{Truck}) = 1.3\% = 0.013$
+*   Probability of being a bus driver, $P(\text{Bus}) = 0.35\% = 0.0035$",,probability,0.35,,,open,true,false,false
+professional_drivers_speeding__open_probs,professional drivers speeding,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
+Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
+
+Given that a professional driver received a speeding ticket in the last 12 months, what is the probability they were heavy and tractor-trailer truck drivers?
+
+Reply with a percentage (for example, 16% or 16 percent).",true,well_posed,0,0.012816,0.00348,0.16,0.1,,85.49,85%,false,,,false,85.49,,,,,,,,,,,,,,,,,openai/gpt-5.5-2026-04-23,Approximately **86%**.,,Approximately **86%**.,,probability,86,,,open,true,false,false
