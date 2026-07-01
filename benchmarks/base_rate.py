@@ -90,6 +90,7 @@ class BaseRateBenchmarkItem:
     variant: str
     normative_percent: float
     normative_choice: str
+    scepticism_required: bool
     scepticism_score_target: str
     normative_type: str
     options: tuple[BaseRateOption, ...]
@@ -442,6 +443,7 @@ def _item_from_row(row: dict[str, str]) -> BaseRateBenchmarkItem:
         variant=row["variant"].strip(),
         normative_percent=float(row["normative_percent"]),
         normative_choice=(row.get("normative_choice") or "").strip().upper(),
+        scepticism_required=_as_bool(row.get("scepticism_required", "")),
         scepticism_score_target=(row.get("scepticism_score_target") or "").strip(),
         normative_type=(row.get("normative") or "").strip(),
         options=tuple(options),
@@ -480,6 +482,42 @@ def prompts_to_dataframe(
     if max_prompts is not None:
         rows = rows[:max_prompts]
     return pd.DataFrame(rows)
+
+
+def matches_normative_target(
+    item: BaseRateBenchmarkItem,
+    parsed: ParsedResponse,
+) -> bool:
+    """True when the parsed answer matches the blind Bayes / normative lure."""
+    if item.scoring_type == "open":
+        candidates: list[float] = []
+        if parsed.percent_candidates:
+            candidates.extend(parsed.percent_candidates)
+        elif parsed.percent is not None:
+            candidates.append(parsed.percent)
+        if not candidates:
+            return False
+        return any(
+            matches_percent_target(candidate, item.normative_percent)
+            for candidate in candidates
+        )
+
+    if parsed.choice is None:
+        return False
+    if parsed.choice == item.normative_choice:
+        return True
+    chosen = item.option_by_letter.get(parsed.choice)
+    normative_option = item.option_by_letter.get(item.normative_choice)
+    if (
+        chosen is not None
+        and normative_option is not None
+        and chosen.percent is not None
+        and normative_option.percent is not None
+        and _rounded_mc_percent(chosen.percent)
+        == _rounded_mc_percent(normative_option.percent)
+    ):
+        return True
+    return False
 
 
 def matches_scepticism_target(
@@ -568,6 +606,15 @@ def _is_parseable(item: BaseRateBenchmarkItem, parsed: ParsedResponse) -> bool:
     return parsed.choice is not None
 
 
+def _score_parseable(
+    item: BaseRateBenchmarkItem,
+    parsed: ParsedResponse,
+) -> bool:
+    if item.scepticism_required:
+        return matches_scepticism_target(item, parsed)
+    return matches_normative_target(item, parsed)
+
+
 def score_open_example(
     item: BaseRateBenchmarkItem,
     parsed: ParsedResponse,
@@ -580,7 +627,7 @@ def score_open_example(
         return scored
 
     scored.parseable = True
-    scored.score = matches_scepticism_target(item, parsed)
+    scored.score = _score_parseable(item, parsed)
     return scored
 
 
@@ -593,7 +640,7 @@ def score_mc_numeric_example(
         return scored
 
     scored.parseable = True
-    scored.score = matches_scepticism_target(item, parsed)
+    scored.score = _score_parseable(item, parsed)
     return scored
 
 
@@ -606,7 +653,7 @@ def score_mc_full_example(
         return scored
 
     scored.parseable = True
-    scored.score = matches_scepticism_target(item, parsed)
+    scored.score = _score_parseable(item, parsed)
     return scored
 
 

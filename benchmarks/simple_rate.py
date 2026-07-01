@@ -48,7 +48,7 @@ DEFAULT_MERGED_RESULTS_CSV = (
 )
 
 PATH_C_LURE_NAME = "P(T|C) confusion"
-CONDITION_COLUMN_ORDER = ("open_probs", "mc_numeric_probs")
+CONDITION_COLUMN_ORDER = ("open_probs", "mc_numeric_probs", "mc_full_probs")
 SIMPLE_MERGE_EXTRA_COLUMNS = ("path_c_confusion",)
 
 
@@ -115,6 +115,7 @@ def _item_from_row(row: dict[str, str]) -> SimpleRateBenchmarkItem:
         variant=base.variant,
         normative_percent=base.normative_percent,
         normative_choice=base.normative_choice,
+        scepticism_required=base.scepticism_required,
         scepticism_score_target=base.scepticism_score_target,
         normative_type=base.normative_type,
         options=base.options,

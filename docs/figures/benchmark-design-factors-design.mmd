@@ -1,0 +1,26 @@
+flowchart TD
+  V[Vignette source row]
+  IS[intersection_size]
+  WP[well_posed flag]
+  IMP[normative implausible?]
+  OD[overlap disclosure pass]
+
+  V --> IS
+  V --> WP
+  V --> IMP
+
+  WP -->|true| PT_WP[problem_type = well_posed]
+  WP -->|false| OD
+  IMP -->|true| PT_IMP[problem_type = implausible]
+  OD -->|explicit| PT_EX[problem_type = overlap_explicit]
+  OD -->|implicit| PT_IM[problem_type = overlap_implicit]
+
+  IMP --> SR_T[scepticism_required = true]
+  OD -->|implicit| SR_T
+  OD -->|explicit| SR_F[scepticism_required = false]
+  WP -->|partition| SR_F
+
+  SR_T --> VAR_S[variant = mc_full_probs only]
+  SR_F --> VAR_ALL[variant in open_probs, mc_numeric_probs, mc_full_probs]
+
+  VAR_ALL --> RT[response_type derived from variant prefix]

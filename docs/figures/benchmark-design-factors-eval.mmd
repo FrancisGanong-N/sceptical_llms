@@ -1,0 +1,24 @@
+flowchart LR
+  subgraph design [Design cell per example_id]
+    EID[example_id]
+    EID --> VN[vignette_name]
+    EID --> VAR[variant]
+    EID --> PT[problem_type]
+    EID --> SR[scepticism_required]
+    EID --> IS[intersection_size]
+  end
+
+  subgraph eval [Evaluation grid]
+    M1[model 1]
+    M2[model 2]
+    MN[model N]
+  end
+
+  EID --> ROW1[merged row]
+  EID --> ROW2[merged row]
+  EID --> ROWN[merged row]
+  M1 --> ROW1
+  M2 --> ROW2
+  MN --> ROWN
+
+  ROW1 --> OUT[llm_response, score, parseable, ...]

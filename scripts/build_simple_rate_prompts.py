@@ -7,7 +7,7 @@ import csv
 import hashlib
 import re
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -16,6 +16,9 @@ if str(ROOT) not in sys.path:
 
 from scripts.build_base_rate_prompts import (  # noqa: E402
     INTRO,
+    META_F,
+    META_G,
+    META_H,
     Vignette,
     _is_california_voter,
     _is_covid_vaccinated,
@@ -42,7 +45,14 @@ def _simple_pct(value: float) -> str:
     return _pct(value)
 
 OUT_DIR = ROOT / "data" / "simple"
-VARIANTS = ("open_probs", "mc_numeric_probs")
+IMPLAUSIBLE_P_C_D_CSV = OUT_DIR / "implausible_p_c_d.csv"
+IMPLAUSIBLE_P_T_GIVEN_CSV = OUT_DIR / "implausible_p_t_given.csv"
+PROBLEM_TYPE_WELL_POSED = "well_posed"
+PROBLEM_TYPE_IMPLAUSIBLE_C_D = "implausible_c_d"
+PROBLEM_TYPE_IMPLAUSIBLE_T = "implausible_t"
+CANONICAL_VARIANTS = ("open_probs", "mc_numeric_probs", "mc_full_probs")
+SCEPTICISM_VARIANTS = ("mc_full_probs",)
+VARIANTS = CANONICAL_VARIANTS
 
 SIMPLE_LURE_KEYS = ("product", "path_d", "path_c", "normative", "p_d")
 SIMPLE_RESERVE_LURE_KEYS = ("p_c",)
@@ -132,6 +142,7 @@ class SimpleVignette:
     s_c: float
     s_d: float
     intersection_size: str
+    problem_type: str = PROBLEM_TYPE_WELL_POSED
 
     @property
     def c_label(self) -> str:
@@ -181,7 +192,12 @@ class SimpleVignette:
         }
 
     def example_prefix(self) -> str:
-        return slug(self.name)
+        base = slug(self.name)
+        if self.problem_type == PROBLEM_TYPE_IMPLAUSIBLE_C_D:
+            return f"{base}__implausible_c_d"
+        if self.problem_type == PROBLEM_TYPE_IMPLAUSIBLE_T:
+            return f"{base}__implausible_t"
+        return base
 
 
 def _entity_phrase(subtype: str) -> str:
@@ -398,6 +414,63 @@ def load_simple_vignettes() -> list[SimpleVignette]:
     return [_from_vignette(v) for v in vignettes]
 
 
+def _implausible_value_is_set(value: str) -> bool:
+    text = (value or "").strip()
+    return bool(text) and text.upper() not in {"N/A", "NA"}
+
+
+def _parse_implausible_float(value: str, *, vignette_name: str, column: str) -> float:
+    text = (value or "").strip()
+    if not _implausible_value_is_set(text):
+        raise ValueError(
+            f"Missing implausible value for {vignette_name!r} column {column!r}"
+        )
+    try:
+        return float(text)
+    except ValueError as exc:
+        raise ValueError(
+            f"Invalid float {text!r} for {vignette_name!r} column {column!r}"
+        ) from exc
+
+
+def _load_implausible_p_c_d() -> dict[str, tuple[float, float]]:
+    if not IMPLAUSIBLE_P_C_D_CSV.is_file():
+        return {}
+    stats: dict[str, tuple[float, float]] = {}
+    with IMPLAUSIBLE_P_C_D_CSV.open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            name = row["vignette_name"].strip()
+            stats[name] = (
+                _parse_implausible_float(row["C"], vignette_name=name, column="C"),
+                _parse_implausible_float(row["D"], vignette_name=name, column="D"),
+            )
+    return stats
+
+
+def _load_implausible_p_t_given() -> dict[str, tuple[float, float]]:
+    if not IMPLAUSIBLE_P_T_GIVEN_CSV.is_file():
+        return {}
+    stats: dict[str, tuple[float, float]] = {}
+    with IMPLAUSIBLE_P_T_GIVEN_CSV.open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            name = row["vignette_name"].strip()
+            stats[name] = (
+                _parse_implausible_float(
+                    row["P(T|C)"], vignette_name=name, column="P(T|C)"
+                ),
+                _parse_implausible_float(
+                    row["P(T|D)"], vignette_name=name, column="P(T|D)"
+                ),
+            )
+    return stats
+
+
+def variants_for_vignette(v: SimpleVignette) -> tuple[str, ...]:
+    if v.problem_type in (PROBLEM_TYPE_IMPLAUSIBLE_C_D, PROBLEM_TYPE_IMPLAUSIBLE_T):
+        return SCEPTICISM_VARIANTS
+    return CANONICAL_VARIANTS
+
+
 def _shuffle_keys(example_id: str, keys: tuple[str, ...]) -> tuple[str, ...]:
     digest = hashlib.sha256(f"{example_id}:{':'.join(keys)}".encode()).hexdigest()
     ordered = list(keys)
@@ -495,12 +568,14 @@ def narrative_with_probs(v: SimpleVignette) -> str:
 
 
 def _shared_item_fields(v: SimpleVignette) -> dict[str, str]:
+    is_implausible = v.problem_type != PROBLEM_TYPE_WELL_POSED
     normative = v.target_posterior()
     return {
         "vignette_name": v.name,
+        "problem_type": v.problem_type,
         "intersection_size": v.intersection_size,
         "well_posed": "true",
-        "normative": "well_posed",
+        "normative": "implausible" if is_implausible else "well_posed",
         "p_c_and_d_given_a": "0",
         "p_c": f"{v.p_c:.6g}",
         "p_d": f"{v.p_d:.6g}",
@@ -509,7 +584,7 @@ def _shared_item_fields(v: SimpleVignette) -> dict[str, str]:
         "normative_percent": f"{normative * 100:.4g}",
         "normative_open": _pct(normative),
         "confidence_required": "false",
-        "scepticism_required": "false",
+        "scepticism_required": str(is_implausible).lower(),
     }
 
 
@@ -542,13 +617,21 @@ def build_prompt(v: SimpleVignette, variant: str) -> tuple[str, dict[str, str]]:
         return prompt, item
 
     labels, lures, normative_letter, option_letters = build_mc_options(v, example_id)
+    is_full_mc = variant == "mc_full_probs"
+    is_implausible = v.problem_type != PROBLEM_TYPE_WELL_POSED
+    if is_implausible and is_full_mc:
+        scepticism_target = "H"
+    elif is_full_mc:
+        scepticism_target = normative_letter
+    else:
+        scepticism_target = "n/a"
     item.update(
         {
-            "response_type": "mc",
+            "response_type": "mc_full" if is_full_mc else "mc",
             "normative_choice": normative_letter,
             "numeric_score_percent": item["normative_percent"],
             "numeric_score_choice": normative_letter,
-            "scepticism_score_target": "n/a",
+            "scepticism_score_target": scepticism_target,
         }
     )
     lines = [body, ""]
@@ -562,17 +645,55 @@ def build_prompt(v: SimpleVignette, variant: str) -> tuple[str, dict[str, str]]:
     for letter in "fgh":
         item[f"option_{letter}_label"] = ""
         item[f"option_{letter}_lure"] = ""
-    prompt = "\n".join(lines) + _simple_mc_suffix(
-        letters=_mc_letter_list(option_letters)
-    )
+    if is_full_mc:
+        for letter, label, lure in (
+            ("F", META_F, "insufficient information"),
+            ("G", META_G, "inconsistent information"),
+            ("H", META_H, "obviously incorrect premises"),
+        ):
+            item[f"option_{letter.lower()}_label"] = label
+            item[f"option_{letter.lower()}_lure"] = lure
+            lines.append(f"{letter}. {label}")
+        suffix_letters = f"{_mc_letter_list(option_letters)}, F, G, or H"
+    else:
+        suffix_letters = _mc_letter_list(option_letters)
+    prompt = "\n".join(lines) + _simple_mc_suffix(letters=suffix_letters)
     return prompt, item
 
 
 def build_all() -> tuple[list[dict[str, str]], list[dict[str, str]], list[dict[str, str]]]:
     prompts: list[dict[str, str]] = []
     items: list[dict[str, str]] = []
-    for vignette in load_simple_vignettes():
-        for variant in VARIANTS:
+    base_vignettes = load_simple_vignettes()
+    p_c_d_stats = _load_implausible_p_c_d()
+    p_t_stats = _load_implausible_p_t_given()
+
+    vignettes: list[SimpleVignette] = list(base_vignettes)
+    for vignette in base_vignettes:
+        if vignette.name in p_c_d_stats:
+            p_c, p_d = p_c_d_stats[vignette.name]
+            vignettes.append(
+                replace(
+                    vignette,
+                    p_c=p_c,
+                    p_d=p_d,
+                    problem_type=PROBLEM_TYPE_IMPLAUSIBLE_C_D,
+                )
+            )
+    for vignette in base_vignettes:
+        if vignette.name in p_t_stats:
+            s_c, s_d = p_t_stats[vignette.name]
+            vignettes.append(
+                replace(
+                    vignette,
+                    s_c=s_c,
+                    s_d=s_d,
+                    problem_type=PROBLEM_TYPE_IMPLAUSIBLE_T,
+                )
+            )
+
+    for vignette in vignettes:
+        for variant in variants_for_vignette(vignette):
             prompt, item = build_prompt(vignette, variant)
             prompts.append({"example_id": item["example_id"], "prompt": prompt})
             items.append(item)
@@ -585,7 +706,7 @@ def build_all() -> tuple[list[dict[str, str]], list[dict[str, str]], list[dict[s
             {
                 "example_id": item["example_id"],
                 "vignette_name": item["vignette_name"],
-                "problem_type": "well_posed",
+                "problem_type": item["problem_type"],
                 "intersection_size": item["intersection_size"],
                 "response_type": item["response_type"],
                 "has_statistics": "true",
@@ -622,9 +743,11 @@ def write_csvs() -> int:
 
 def main() -> int:
     count = write_csvs()
-    vignette_count = len(load_simple_vignettes())
+    base_count = len(load_simple_vignettes())
     print(
-        f"Wrote {count} prompts ({vignette_count} vignettes × {len(VARIANTS)} variants)"
+        f"Wrote {count} prompts "
+        f"({base_count} well_posed vignettes × {len(CANONICAL_VARIANTS)} variants "
+        f"+ implausible forks × {len(SCEPTICISM_VARIANTS)} variant)"
     )
     print(f"Output: {OUT_DIR} (prompts.csv, items.csv, benchmark.csv)")
     return 0

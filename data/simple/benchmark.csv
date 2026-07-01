@@ -20,6 +20,22 @@ C. About 13%
 D. About 30%
 
 Which answer is closest? Reply with only the letter (A, B, C, or D).",true,well_posed,0,0.2992,0.132,0.003,0.002,A,77.27,77%,false,77.27,A,false,n/a,About 77%,About 0%,About 13%,About 30%,,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(C) confusion,,,,,,,
+discharged_weapon_last_year__mc_full_probs,discharged weapon (last year),well_posed,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
+
+What is the probability that a police officer who discharged his weapon in the last year is an urban police officer?
+
+A. About 77%
+B. About 0%
+C. About 13%
+D. About 30%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, or D, F, G, or H).",true,well_posed,0,0.2992,0.132,0.003,0.002,A,77.27,77%,false,77.27,A,false,A,About 77%,About 0%,About 13%,About 30%,,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(D) confusion,P(C) confusion,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
 ca_trump_voter__open_probs,CA Trump voter,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
@@ -42,6 +58,23 @@ D. About 27%
 E. About 5%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0494,0.078,0.31,0.27,A,57.9,58%,false,57.9,A,false,n/a,About 58%,About 8%,About 31%,About 27%,About 5%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,
+ca_trump_voter__mc_full_probs,CA Trump voter,well_posed,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+
+What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?
+
+A. About 58%
+B. About 8%
+C. About 27%
+D. About 31%
+E. About 5%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,well_posed,0,0.0494,0.078,0.31,0.27,A,57.9,58%,false,57.9,A,false,A,About 58%,About 8%,About 27%,About 31%,About 5%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,P(C) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
 healthcare_employment__open_probs,healthcare employment,well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
@@ -64,6 +97,23 @@ D. About 60%
 E. About 54%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.011,0.099,0.54,0.6,A,9.091,9.1%,false,9.091,A,false,n/a,About 9%,About 10%,About 32%,About 60%,About 54%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,,,,,,
+healthcare_employment__mc_full_probs,healthcare employment,well_posed,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
+
+What is the probability that a health care professional who works in a hospital is a physician?
+
+A. About 9%
+B. About 54%
+C. About 32%
+D. About 60%
+E. About 10%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,well_posed,0,0.011,0.099,0.54,0.6,A,9.091,9.1%,false,9.091,A,false,A,About 9%,About 54%,About 32%,About 60%,About 10%,Bayes P(C|T),P(T|C) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
 military_overseas_federal_pool__open_probs,military overseas (federal pool),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
@@ -86,6 +136,23 @@ D. About 64%
 E. About 20%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.14,0.204,0.58,0.64,A,38.35,38%,false,38.35,A,false,n/a,About 38%,About 37%,About 58%,About 64%,About 20%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,,,,,,
+military_overseas_federal_pool__mc_full_probs,military overseas (federal pool),well_posed,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
+Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
+
+What is the probability that an active-duty US military service member who has worked overseas is a US Army active-duty service member?
+
+A. About 38%
+B. About 64%
+C. About 20%
+D. About 37%
+E. About 58%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,well_posed,0,0.14,0.204,0.58,0.64,A,38.35,38%,false,38.35,A,false,A,About 38%,About 64%,About 20%,About 37%,About 58%,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
 covid_vaccine_blue_red__open_probs,covid vaccine (blue/red),well_posed,0,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
@@ -108,6 +175,23 @@ D. About 10%
 E. About 19%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.1917,0.0783,0.08,0.1,A,66.2,66%,false,66.2,A,false,n/a,About 66%,About 1%,About 8%,About 10%,About 19%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,,,,,,
+covid_vaccine_blue_red__mc_full_probs,covid vaccine (blue/red),well_posed,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
+Among blue-state residents, 8% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
+
+What is the probability that an adult living in the US who is vaccinated for 2024-25 COVID and had COVID-19 in the past 12 months is a blue-state resident?
+
+A. About 66%
+B. About 10%
+C. About 8%
+D. About 1%
+E. About 19%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,well_posed,0,0.1917,0.0783,0.08,0.1,A,66.2,66%,false,66.2,A,false,A,About 66%,About 10%,About 8%,About 1%,About 19%,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,P(C) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
 diabetes_insulin_obese__open_probs,diabetes insulin obese,well_posed,large,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
@@ -130,6 +214,23 @@ D. About 20%
 E. About 3%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.031866,0.053223,0.2,0.16,A,42.81,43%,false,42.81,A,false,n/a,About 43%,About 5%,About 16%,About 20%,About 3%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,,,,,,
+diabetes_insulin_obese__mc_full_probs,diabetes insulin obese,well_posed,large,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
+
+What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?
+
+A. About 43%
+B. About 16%
+C. About 5%
+D. About 20%
+E. About 3%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,well_posed,0,0.031866,0.053223,0.2,0.16,A,42.81,43%,false,42.81,A,false,A,About 43%,About 16%,About 5%,About 20%,About 3%,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
 college_stem_work__open_probs,college STEM work,well_posed,medium,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
@@ -152,6 +253,23 @@ D. About 17%
 E. About 85%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.04644,0.17028,0.85,0.74,A,23.85,24%,false,23.85,A,false,n/a,About 24%,About 63%,About 74%,About 17%,About 85%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,P(T|C) confusion,,,,,,
+college_stem_work__mc_full_probs,college STEM work,well_posed,medium,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
+
+What is the probability that a student who returned for a second year studied STEM?
+
+A. About 24%
+B. About 63%
+C. About 85%
+D. About 74%
+E. About 17%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,well_posed,0,0.04644,0.17028,0.85,0.74,A,23.85,24%,false,23.85,A,false,A,About 24%,About 63%,About 85%,About 74%,About 17%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
 professional_drivers_speeding__open_probs,professional drivers speeding,well_posed,small,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
@@ -174,6 +292,23 @@ D. About 10%
 E. About 2%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.012816,0.00348,0.16,0.1,A,85.49,85%,false,85.49,A,false,n/a,About 85%,About 0%,About 16%,About 10%,About 2%,Bayes P(C|T),P(D) confusion,P(T|C) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,,,,,,
+professional_drivers_speeding__mc_full_probs,professional drivers speeding,well_posed,small,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
+Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
+
+What is the probability that a professional driver who received a speeding ticket in the last 12 months is a heavy and tractor-trailer truck driver?
+
+A. About 85%
+B. About 16%
+C. About 0%
+D. About 10%
+E. About 2%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,well_posed,0,0.012816,0.00348,0.16,0.1,A,85.49,85%,false,85.49,A,false,A,About 85%,About 16%,About 0%,About 10%,About 2%,Bayes P(C|T),P(T|C) confusion,P(D) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
 english_teacher_humanities__open_probs,english teacher humanities,well_posed,large,open,true,open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
@@ -196,3 +331,321 @@ D. About 0%
 E. About 38%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,A,52.06,52%,false,52.06,A,false,n/a,About 52%,About 69%,About 55%,About 0%,About 38%,Bayes P(C|T),P(T|C) confusion,P(T|D) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,,,,,,
+english_teacher_humanities__mc_full_probs,english teacher humanities,well_posed,large,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
+
+What is the probability that a high school teacher who holds a master's degree or higher is an English teacher?
+
+A. About 52%
+B. About 38%
+C. About 0%
+D. About 69%
+E. About 55%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,well_posed,0,0.0011248,0.0012996,0.69,0.55,A,52.06,52%,false,52.06,A,false,A,About 52%,About 38%,About 0%,About 69%,About 55%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(D) confusion,P(T|C) confusion,P(T|D) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+discharged_weapon_last_year__implausible_c_d__mc_full_probs,discharged weapon (last year),implausible_c_d,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 81% are urban police officers and 25% are rural/small-jurisdiction police officers.
+Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
+
+What is the probability that a police officer who discharged his weapon in the last year is an urban police officer?
+
+A. About 83%
+B. About 0%
+C. About 25%
+D. About 81%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, or D, F, G, or H).",true,implausible,0,0.81,0.25,0.003,0.002,A,82.94,83%,false,82.94,A,true,H,About 83%,About 0%,About 25%,About 81%,,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(C) confusion,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+ca_trump_voter__implausible_c_d__mc_full_probs,CA Trump voter,implausible_c_d,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 98% are voters registered in Southern California and 4.9% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+
+What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?
+
+A. About 95%
+B. About 27%
+C. About 8%
+D. About 98%
+E. About 31%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,implausible,0,0.0494,0.98,0.31,0.27,A,94.53,95%,false,94.53,A,true,H,About 95%,About 27%,About 8%,About 98%,About 31%,Bayes P(C|T),P(T|D) confusion,P(T|C)*P(T|D) confusion,P(D) confusion,P(T|C) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+healthcare_employment__implausible_c_d__mc_full_probs,healthcare employment,implausible_c_d,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 80% are physicians and 9.9% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
+
+What is the probability that a health care professional who works in a hospital is a physician?
+
+A. About 88%
+B. About 32%
+C. About 54%
+D. About 60%
+E. About 10%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,implausible,0,0.8,0.099,0.54,0.6,A,87.91,88%,false,87.91,A,true,H,About 88%,About 32%,About 54%,About 60%,About 10%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+military_overseas_federal_pool__implausible_c_d__mc_full_probs,military overseas (federal pool),implausible_c_d,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 50% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
+Among uS Army active-duty service members, 58% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
+
+What is the probability that an active-duty US military service member who has worked overseas is a US Army active-duty service member?
+
+A. About 69%
+B. About 20%
+C. About 37%
+D. About 64%
+E. About 58%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,implausible,0,0.5,0.204,0.58,0.64,A,68.96,69%,false,68.96,A,true,H,About 69%,About 20%,About 37%,About 64%,About 58%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+covid_vaccine_blue_red__implausible_c_d__mc_full_probs,covid vaccine (blue/red),implausible_c_d,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 90% are blue-state residents and 7.8% are red-state residents.
+Among blue-state residents, 8% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
+
+What is the probability that an adult living in the US who is vaccinated for 2024-25 COVID and had COVID-19 in the past 12 months is a blue-state resident?
+
+A. About 90%
+B. About 1%
+C. About 8%
+D. About 10%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, or D, F, G, or H).",true,implausible,0,0.9,0.0783,0.08,0.1,A,90.19,90%,false,90.19,A,true,H,About 90%,About 1%,About 8%,About 10%,,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+diabetes_insulin_obese__implausible_c_d__mc_full_probs,diabetes insulin obese,implausible_c_d,large,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 80% use insulin and 50% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
+
+What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?
+
+A. About 67%
+B. About 3%
+C. About 50%
+D. About 20%
+E. About 16%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,implausible,0,0.8,0.5,0.2,0.16,A,66.67,67%,false,66.67,A,true,H,About 67%,About 3%,About 50%,About 20%,About 16%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(D) confusion,P(T|C) confusion,P(T|D) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+college_stem_work__implausible_c_d__mc_full_probs,college STEM work,implausible_c_d,medium,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 85% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
+
+What is the probability that a student who returned for a second year studied STEM?
+
+A. About 6%
+B. About 85%
+C. About 74%
+D. About 63%
+E. About 5%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,implausible,0,0.04644,0.85,0.85,0.74,A,5.905,5.9%,false,5.905,A,true,H,About 6%,About 85%,About 74%,About 63%,About 5%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,P(C) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+professional_drivers_speeding__implausible_c_d__mc_full_probs,professional drivers speeding,implausible_c_d,small,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 50% are heavy and tractor-trailer truck drivers and 72% are bus drivers.
+Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
+
+What is the probability that a professional driver who received a speeding ticket in the last 12 months is a heavy and tractor-trailer truck driver?
+
+A. About 53%
+B. About 10%
+C. About 2%
+D. About 72%
+E. About 16%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,implausible,0,0.5,0.72,0.16,0.1,A,52.63,53%,false,52.63,A,true,H,About 53%,About 10%,About 2%,About 72%,About 16%,Bayes P(C|T),P(T|D) confusion,P(T|C)*P(T|D) confusion,P(D) confusion,P(T|C) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+english_teacher_humanities__implausible_c_d__mc_full_probs,english teacher humanities,implausible_c_d,large,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 10% teach English as their primary assignment and 30% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
+
+What is the probability that a high school teacher who holds a master's degree or higher is an English teacher?
+
+A. About 29%
+B. About 69%
+C. About 38%
+D. About 55%
+E. About 30%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,implausible,0,0.1,0.3,0.69,0.55,A,29.49,29%,false,29.49,A,true,H,About 29%,About 69%,About 38%,About 55%,About 30%,Bayes P(C|T),P(T|C) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+discharged_weapon_last_year__implausible_t__mc_full_probs,discharged weapon (last year),implausible_t,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
+Among urban police officers, 50% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 70% discharged a weapon in the last year.
+
+What is the probability that a police officer who discharged his weapon in the last year is an urban police officer?
+
+A. About 62%
+B. About 35%
+C. About 13%
+D. About 50%
+E. About 70%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,implausible,0,0.2992,0.132,0.5,0.7,A,61.82,62%,false,61.82,A,true,H,About 62%,About 35%,About 13%,About 50%,About 70%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(D) confusion,P(T|C) confusion,P(T|D) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+ca_trump_voter__implausible_t__mc_full_probs,CA Trump voter,implausible_t,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
+Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 98% voted for Donald Trump in the 2024 presidential election.
+
+What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?
+
+A. About 30%
+B. About 98%
+C. About 8%
+D. About 27%
+E. About 26%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,implausible,0,0.0494,0.078,0.98,0.27,A,30.31,30%,false,30.31,A,true,H,About 30%,About 98%,About 8%,About 27%,About 26%,Bayes P(C|T),P(T|C) confusion,P(D) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+healthcare_employment__implausible_t__mc_full_probs,healthcare employment,implausible_t,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
+Among physicians, 10% work in a hospital; among health care professionals who are not physicians, 70% work in a hospital.
+
+What is the probability that a health care professional who works in a hospital is a physician?
+
+A. About 2%
+B. About 7%
+C. About 10%
+D. About 70%
+E. About 1%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,implausible,0,0.011,0.099,0.1,0.7,A,1.562,1.6%,false,1.562,A,true,H,About 2%,About 7%,About 10%,About 70%,About 1%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(C) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+military_overseas_federal_pool__implausible_t__mc_full_probs,military overseas (federal pool),implausible_t,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
+Among uS Army active-duty service members, 2% have worked overseas; among uS Navy or US Air Force active-duty service members, 64% have worked overseas.
+
+What is the probability that an active-duty US military service member who has worked overseas is a US Army active-duty service member?
+
+A. About 2%
+B. About 1%
+C. About 64%
+D. About 20%
+E. About 14%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,implausible,0,0.14,0.204,0.02,0.64,A,2.1,2.1%,false,2.1,A,true,H,About 2%,About 1%,About 64%,About 20%,About 14%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,P(C) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+covid_vaccine_blue_red__implausible_t__mc_full_probs,covid vaccine (blue/red),implausible_t,0,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
+Among blue-state residents, 90% had COVID-19 in the past 12 months; among red-state residents, 10% had COVID-19 in the past 12 months.
+
+What is the probability that an adult living in the US who is vaccinated for 2024-25 COVID and had COVID-19 in the past 12 months is a blue-state resident?
+
+A. About 96%
+B. About 10%
+C. About 9%
+D. About 90%
+E. About 8%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,implausible,0,0.1917,0.0783,0.9,0.1,A,95.66,96%,false,95.66,A,true,H,About 96%,About 10%,About 9%,About 90%,About 8%,Bayes P(C|T),P(T|D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,P(D) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+diabetes_insulin_obese__implausible_t__mc_full_probs,diabetes insulin obese,implausible_t,large,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 0.10% had hemoglobin A1c above 9.0%.
+
+What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?
+
+A. About 99%
+B. About 0%
+C. About 20%
+D. About 5%
+E. About 3%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,implausible,0,0.031866,0.053223,0.2,0.001,A,99.17,99%,false,99.17,A,true,H,About 99%,About 0%,About 20%,About 5%,About 3%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(D) confusion,P(C) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+college_stem_work__implausible_t__mc_full_probs,college STEM work,implausible_t,medium,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
+Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 10% returned for a second year.
+
+What is the probability that a student who returned for a second year studied STEM?
+
+A. About 70%
+B. About 10%
+C. About 17%
+D. About 85%
+E. About 8%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).",true,implausible,0,0.04644,0.17028,0.85,0.1,A,69.86,70%,false,69.86,A,true,H,About 70%,About 10%,About 17%,About 85%,About 8%,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+professional_drivers_speeding__implausible_t__mc_full_probs,professional drivers speeding,implausible_t,small,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
+Among heavy and tractor-trailer truck drivers, 0.10% received a speeding ticket in the last 12 months; among bus drivers, 0.00% received a speeding ticket in the last 12 months.
+
+What is the probability that a professional driver who received a speeding ticket in the last 12 months is a heavy and tractor-trailer truck driver?
+
+A. About 100%
+B. About 0%
+C. About 1%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, or C, F, G, or H).",true,implausible,0,0.012816,0.00348,0.001,1e-05,A,99.73,100%,false,99.73,A,true,H,About 100%,About 0%,About 1%,,,Bayes P(C|T),P(T|D) confusion,P(C) confusion,,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises
+english_teacher_humanities__implausible_t__mc_full_probs,english teacher humanities,implausible_t,large,mc_full,true,mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among those who teach English as their primary assignment, 1% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
+
+What is the probability that a high school teacher who holds a master's degree or higher is an English teacher?
+
+A. About 2%
+B. About 1%
+C. About 0%
+D. About 55%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply with only the letter (A, B, C, or D, F, G, or H).",true,implausible,0,0.0011248,0.0012996,0.01,0.55,A,1.549,1.5%,false,1.549,A,true,H,About 2%,About 1%,About 0%,About 55%,,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(D) confusion,P(T|D) confusion,,Insufficient information,Inconsistent information,Provided information is obviously incorrect,insufficient information,inconsistent information,obviously incorrect premises

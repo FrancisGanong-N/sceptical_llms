@@ -1,0 +1,17 @@
+{
+  "theme": "base",
+  "themeVariables": {
+    "background": "#ffffff",
+    "primaryColor": "#eef2ff",
+    "primaryBorderColor": "#4f46e5",
+    "primaryTextColor": "#111827",
+    "lineColor": "#111827",
+    "arrowheadColor": "#111827",
+    "clusterBkg": "#fffbeb",
+    "clusterBorder": "#b45309",
+    "edgeLabelBackground": "#ffffff"
+  },
+  "flowchart": {
+    "curve": "basis"
+  }
+}

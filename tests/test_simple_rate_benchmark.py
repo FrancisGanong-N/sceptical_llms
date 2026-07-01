@@ -25,8 +25,12 @@ class TestSimpleBenchmarkData:
 
     def test_load_benchmark(self):
         items = load_benchmark()
-        assert len(items) == 18
-        assert {item.response_type for item in items.values()} == {"open", "mc_numeric"}
+        assert len(items) == 45
+        assert {item.response_type for item in items.values()} == {
+            "open",
+            "mc_numeric",
+            "mc_full",
+        }
         discharged = items["discharged_weapon_last_year__open_probs"]
         assert discharged.p_t_given_c == 0.003
 
@@ -64,6 +68,47 @@ class TestPathCScoring:
                     "model": "test-model",
                 }
             ],
+            items=items,
+        )
+        assert scored.examples[0].score is False
+
+
+class TestImplausibleScoring:
+    def test_implausible_mc_full_scores_h(self):
+        items = load_benchmark()
+        example_id = "ca_trump_voter__implausible_c_d__mc_full_probs"
+        item = items[example_id]
+        assert item.scepticism_required is True
+        assert item.scepticism_score_target == "H"
+        scored = score_run_rows(
+            [{"example_id": example_id, "response": "H", "model": "test-model"}],
+            items=items,
+        )
+        assert scored.examples[0].score is True
+
+    def test_implausible_mc_full_bayes_lure_not_scored(self):
+        items = load_benchmark()
+        example_id = "ca_trump_voter__implausible_c_d__mc_full_probs"
+        item = items[example_id]
+        scored = score_run_rows(
+            [
+                {
+                    "example_id": example_id,
+                    "response": item.normative_choice,
+                    "model": "test-model",
+                }
+            ],
+            items=items,
+        )
+        assert scored.examples[0].score is False
+
+    def test_well_posed_mc_full_scepticism_not_required(self):
+        items = load_benchmark()
+        example_id = "ca_trump_voter__mc_full_probs"
+        item = items[example_id]
+        assert item.scepticism_required is False
+        scored = score_run_rows(
+            [{"example_id": example_id, "response": "H", "model": "test-model"}],
             items=items,
         )
         assert scored.examples[0].score is False

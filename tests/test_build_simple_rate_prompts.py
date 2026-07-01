@@ -31,9 +31,15 @@ class TestSimpleParameters:
 class TestBuildAll:
     def test_prompt_count(self):
         prompts, items, benchmark = build_all()
-        assert len(prompts) == 18
+        assert len(prompts) == 45
         assert len(items) == len(prompts)
         assert len(benchmark) == len(prompts)
+        problem_types = {row["problem_type"] for row in benchmark}
+        assert problem_types == {
+            "well_posed",
+            "implausible_c_d",
+            "implausible_t",
+        }
 
     def test_english_teacher_humanities_entity_labels(self, tmp_path: Path, monkeypatch):
         monkeypatch.setattr(
@@ -184,3 +190,40 @@ class TestBuildAll:
         assert by_name["college STEM work"] == "medium"
         assert by_name["professional drivers speeding"] == "small"
         assert by_name["english teacher humanities"] == "large"
+
+    def test_mc_full_probs_includes_meta_options(self):
+        prompts, items, _ = build_all()
+        row = next(r for r in items if r["example_id"] == "ca_trump_voter__mc_full_probs")
+        prompt = next(r["prompt"] for r in prompts if r["example_id"] == row["example_id"])
+        assert row["variant"] == "mc_full_probs"
+        assert row["response_type"] == "mc_full"
+        assert row["scepticism_required"] == "false"
+        assert row["option_f_label"] == "Insufficient information"
+        assert row["option_h_label"] == "Provided information is obviously incorrect"
+        assert "F, G, or H" in prompt
+
+    def test_implausible_c_d_uses_csv_stats(self):
+        _, items, benchmark = build_all()
+        row = next(
+            r
+            for r in items
+            if r["example_id"] == "ca_trump_voter__implausible_c_d__mc_full_probs"
+        )
+        assert row["problem_type"] == "implausible_c_d"
+        assert float(row["p_c"]) == 0.0494
+        assert float(row["p_d"]) == 0.98
+        assert row["scepticism_required"] == "true"
+        assert row["scepticism_score_target"] == "H"
+        assert row["normative"] == "implausible"
+
+    def test_implausible_t_uses_csv_stats(self):
+        _, items, _ = build_all()
+        row = next(
+            r
+            for r in items
+            if r["example_id"] == "healthcare_employment__implausible_t__mc_full_probs"
+        )
+        assert row["problem_type"] == "implausible_t"
+        assert float(row["p_t_given_c"]) == 0.1
+        assert float(row["p_t_given_d"]) == 0.7
+        assert row["scepticism_score_target"] == "H"
