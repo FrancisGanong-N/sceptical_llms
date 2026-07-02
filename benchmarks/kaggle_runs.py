@@ -140,49 +140,114 @@ def base_rate_prompt_records_to_run_rows(
     ]
 
 
+def filter_run_rows_to_benchmark(
+    run_rows: list[dict[str, object]],
+    *,
+    benchmark_example_ids: set[str] | frozenset[str],
+) -> list[dict[str, object]]:
+    """Drop run rows whose ``example_id`` is not in the current benchmark CSV."""
+    allowed = frozenset(benchmark_example_ids)
+    return [
+        row
+        for row in run_rows
+        if str(row.get("example_id", "")).strip() in allowed
+    ]
+
+
 def load_base_rate_run_rows_from_tree(root: Path | str) -> list[dict[str, object]]:
     records = dedupe_base_rate_prompt_records(load_base_rate_prompt_records_from_tree(root))
     return base_rate_prompt_records_to_run_rows(records)
+
+
+def _run_rows_for_benchmark_merge(
+    root: Path | str,
+    *,
+    benchmark_path: Path | str,
+    task_slug: str,
+    download_hint: str,
+) -> list[dict[str, object]]:
+    from benchmarks.base_rate import load_benchmark_rows
+
+    benchmark_path = Path(benchmark_path)
+    run_rows = load_base_rate_run_rows_from_tree(root)
+    if not run_rows:
+        raise FileNotFoundError(
+            f"No per-prompt records found under {root}. "
+            "Download runs with:\n"
+            f"  {download_hint.format(slug=task_slug)}"
+        )
+    _, benchmark_rows = load_benchmark_rows(benchmark_path)
+    benchmark_example_ids = {row["example_id"] for row in benchmark_rows}
+    n_before = len(run_rows)
+    run_rows = filter_run_rows_to_benchmark(
+        run_rows,
+        benchmark_example_ids=benchmark_example_ids,
+    )
+    n_skipped = n_before - len(run_rows)
+    if n_skipped:
+        print(
+            f"Skipped {n_skipped} stale run row(s) with example_ids not in "
+            f"{benchmark_path.name}.",
+            flush=True,
+        )
+    if not run_rows:
+        raise FileNotFoundError(
+            f"No run rows left after filtering to {benchmark_path.name} "
+            f"({n_skipped} stale row(s) skipped under {root})."
+        )
+    return run_rows
 
 
 def merged_results_from_kaggle_runs(
     root: Path | str,
     *,
     benchmark_path: Path | str,
+    fill_missing: bool = False,
 ):
     """Build merged benchmark rows (list[dict]) from downloaded Kaggle run JSON files."""
     from benchmarks.base_rate import BENCHMARK_CSV, merge_run_results
 
     benchmark_path = Path(benchmark_path or BENCHMARK_CSV)
-    run_rows = load_base_rate_run_rows_from_tree(root)
-    if not run_rows:
-        raise FileNotFoundError(
-            f"No per-prompt base-rate records found under {root}. "
-            "Download runs with:\n"
-            f"  kaggle benchmarks tasks download {DEFAULT_BASE_RATE_TASK_SLUG} "
+    run_rows = _run_rows_for_benchmark_merge(
+        root,
+        benchmark_path=benchmark_path,
+        task_slug=DEFAULT_BASE_RATE_TASK_SLUG,
+        download_hint=(
+            "kaggle benchmarks tasks download {slug} "
             f"-o data/kaggle_runs/{DEFAULT_BASE_RATE_TASK_SLUG}"
-        )
-    return merge_run_results(run_rows, benchmark_path=benchmark_path)
+        ),
+    )
+    return merge_run_results(
+        run_rows,
+        benchmark_path=benchmark_path,
+        fill_missing=fill_missing,
+    )
 
 
 def merged_simple_results_from_kaggle_runs(
     root: Path | str,
     *,
     benchmark_path: Path | str,
+    fill_missing: bool = False,
 ):
     """Build merged simple-benchmark rows from downloaded Kaggle run JSON files."""
     from benchmarks.simple_rate import BENCHMARK_CSV, merge_run_results
 
     benchmark_path = Path(benchmark_path or BENCHMARK_CSV)
-    run_rows = load_base_rate_run_rows_from_tree(root)
-    if not run_rows:
-        raise FileNotFoundError(
-            f"No per-prompt simple-rate records found under {root}. "
-            "Download runs with:\n"
-            f"  python -m kaggle benchmarks tasks download {DEFAULT_SIMPLE_RATE_TASK_SLUG} "
+    run_rows = _run_rows_for_benchmark_merge(
+        root,
+        benchmark_path=benchmark_path,
+        task_slug=DEFAULT_SIMPLE_RATE_TASK_SLUG,
+        download_hint=(
+            "python -m kaggle benchmarks tasks download {slug} "
             f"-o data/kaggle_runs/{DEFAULT_SIMPLE_RATE_TASK_SLUG}"
-        )
-    return merge_run_results(run_rows, benchmark_path=benchmark_path)
+        ),
+    )
+    return merge_run_results(
+        run_rows,
+        benchmark_path=benchmark_path,
+        fill_missing=fill_missing,
+    )
 
 
 def kaggle_cmd(*args: str) -> list[str]:

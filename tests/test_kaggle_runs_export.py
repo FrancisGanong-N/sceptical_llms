@@ -8,6 +8,7 @@ from pathlib import Path
 from benchmarks.kaggle_runs import (
     BaseRatePromptRecord,
     dedupe_base_rate_prompt_records,
+    filter_run_rows_to_benchmark,
     load_base_rate_prompt_records_from_run_file,
     load_base_rate_run_rows_from_tree,
     merged_results_from_kaggle_runs,
@@ -109,6 +110,30 @@ class TestKaggleRunsExport:
         assert len(out) == 1
         assert out[0].response == "new"
 
+    def test_filter_run_rows_to_benchmark_drops_stale_example_ids(self):
+        from benchmarks.simple_rate import BENCHMARK_CSV, load_benchmark_rows
+
+        _, benchmark_rows = load_benchmark_rows(BENCHMARK_CSV)
+        benchmark_ids = {row["example_id"] for row in benchmark_rows}
+        run_rows = [
+            {
+                "example_id": "ca_trump_voter__open_probs",
+                "response": "10%",
+                "model": "test-model",
+            },
+            {
+                "example_id": "actor_waiter_overlap__open_probs",
+                "response": "5%",
+                "model": "test-model",
+            },
+        ]
+        filtered = filter_run_rows_to_benchmark(
+            run_rows,
+            benchmark_example_ids=benchmark_ids,
+        )
+        assert len(filtered) == 1
+        assert filtered[0]["example_id"] == "ca_trump_voter__open_probs"
+
     def test_merged_results_from_kaggle_runs(self, tmp_path: Path):
         from benchmarks.base_rate import BENCHMARK_CSV
 
@@ -118,6 +143,7 @@ class TestKaggleRunsExport:
         merged = merged_results_from_kaggle_runs(tmp_path, benchmark_path=BENCHMARK_CSV)
         models = {row["model"] for row in merged}
         assert models == {"google/gemini-2.5-flash"}
+        assert len(merged) == 2
         scored = [
             row
             for row in merged
@@ -137,4 +163,5 @@ class TestKaggleRunsExport:
         merged = merged_simple_results_from_kaggle_runs(tmp_path, benchmark_path=BENCHMARK_CSV)
         models = {row["model"] for row in merged}
         assert models == {"google/gemini-2.5-flash"}
+        assert len(merged) == 2
         assert "path_c_confusion" in merged[0]

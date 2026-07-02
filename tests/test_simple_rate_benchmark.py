@@ -5,6 +5,7 @@ from benchmarks.simple_rate import (
     PATH_C_LURE_NAME,
     load_benchmark,
     matches_path_c_confusion,
+    merge_run_results,
     parse_response,
     score_run_rows,
 )
@@ -71,6 +72,24 @@ class TestPathCScoring:
             items=items,
         )
         assert scored.examples[0].score is False
+
+
+class TestMergeResults:
+    def test_merge_fill_missing_false_only_includes_actual_runs(self):
+        items = load_benchmark()
+        example_id = "ca_trump_voter__open_probs"
+        run_rows = [
+            {
+                "example_id": example_id,
+                "response": "58%",
+                "reasoning": "",
+                "model": "test-model",
+            }
+        ]
+        merged = merge_run_results(run_rows, items=items, fill_missing=False)
+        assert len(merged) == 1
+        assert merged[0]["example_id"] == example_id
+        assert merged[0]["llm_response"] == "58%"
 
 
 class TestImplausibleScoring:

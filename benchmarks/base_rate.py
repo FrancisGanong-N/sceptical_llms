@@ -834,6 +834,7 @@ def merge_run_results(
     items: dict[str, BaseRateBenchmarkItem] | None = None,
     score: BaseRateScore | None = None,
     example_ids: list[str] | None = None,
+    fill_missing: bool = True,
 ) -> list[dict[str, str]]:
     items = items or load_benchmark(benchmark_path)
     benchmark_fields, benchmark_rows = load_benchmark_rows(benchmark_path)
@@ -855,38 +856,49 @@ def merge_run_results(
         for row in run_rows
     }
 
+    if fill_missing:
+        pair_keys = [
+            (example_id, model)
+            for example_id in sorted(benchmark_by_id)
+            for model in models
+        ]
+    else:
+        pair_keys = sorted(
+            (example_id, model)
+            for example_id, model in run_by_key
+            if example_id in benchmark_by_id
+        )
+
     full_run_rows: list[dict[str, object]] = []
-    for example_id in sorted(benchmark_by_id):
-        for model in models:
-            run_row = run_by_key.get((example_id, model), {})
-            full_run_rows.append(
-                {
-                    "example_id": example_id,
-                    "response": run_row.get("response", ""),
-                    "reasoning": run_row.get("reasoning", ""),
-                    "model": model,
-                }
-            )
+    for example_id, model in pair_keys:
+        run_row = run_by_key.get((example_id, model), {})
+        full_run_rows.append(
+            {
+                "example_id": example_id,
+                "response": run_row.get("response", ""),
+                "reasoning": run_row.get("reasoning", ""),
+                "model": model,
+            }
+        )
 
     score = score or score_run_rows(full_run_rows, items=items)
     score_by_key = {(example.example_id, example.model): example for example in score.examples}
 
     merged: list[dict[str, str]] = []
-    for example_id in sorted(benchmark_by_id):
-        for model in models:
-            benchmark_row = dict(benchmark_by_id[example_id])
-            run_row = run_by_key.get((example_id, model), {})
-            scored = score_by_key[(example_id, model)]
-            response = str(run_row.get("response") or "")
-            merge_fields = {
-                "model": model,
-                "llm_response": response,
-                "reasoning": _normalize_reasoning(run_row.get("reasoning")),
-                "answer_line": scored.answer_line,
-                "confidence_line": scored.confidence_line,
-                **example_score_to_merge_fields(scored),
-            }
-            merged.append({**benchmark_row, **merge_fields})
+    for example_id, model in pair_keys:
+        benchmark_row = dict(benchmark_by_id[example_id])
+        run_row = run_by_key.get((example_id, model), {})
+        scored = score_by_key[(example_id, model)]
+        response = str(run_row.get("response") or "")
+        merge_fields = {
+            "model": model,
+            "llm_response": response,
+            "reasoning": _normalize_reasoning(run_row.get("reasoning")),
+            "answer_line": scored.answer_line,
+            "confidence_line": scored.confidence_line,
+            **example_score_to_merge_fields(scored),
+        }
+        merged.append({**benchmark_row, **merge_fields})
 
     return merged
 
