@@ -72,7 +72,7 @@ Logic (`scripts/build_base_rate_prompts.py` → `_problem_type`):
 - Else if partition → `well_posed`
 - Else → `overlap_{explicit|implicit}` from the disclosure pass
 
-**Simple benchmark:** `well_posed` rows have `scepticism_required=false` (score = blind Bayes P(target|T)). `implausible_c_d` and `implausible_t` have `scepticism_required=true` (score = meta **H**, obviously incorrect premises).
+**Simple benchmark:** partition `well_posed` rows have `scepticism_required=false` (score = overlap-aware or disjoint Bayes P(target|T)). Only `implausible_c_d` / `implausible_t` have `scepticism_required=true` (score = meta **F**).
 
 ### `scepticism_required` (derived — scoring expectation)
 
@@ -114,7 +114,7 @@ scepticism_required = true   →  mc_full_probs only
 scepticism_required = false  →  open_probs, mc_numeric_probs, mc_full_probs
 ```
 
-**Simple benchmark:** `well_posed` vignettes get `open_probs`, `mc_numeric_probs`, and `mc_full_probs` (A–E plus **F, G, H** meta options; meta not keyed correct). `implausible_c_d` / `implausible_t` get `mc_full_probs` only with `scepticism_required=true` and keyed **H**.
+**Simple benchmark:** all vignettes get `open_probs`, `mc_numeric_probs`, and `mc_full_probs` when `well_posed`. Overlap vignettes disclose P(C∩D) in the narrative and score overlap-aware Bayes on A–E. `implausible_c_d` / `implausible_t` get `mc_full_probs` only with `scepticism_required=true` and keyed **F** (single merged meta option; optional comment line).
 
 ### `model` (evaluation — crosses every design cell)
 
@@ -127,7 +127,7 @@ Not in `benchmark.csv`; added when prompts are run on Kaggle (or locally) and me
 Properties:
 
 - **Independent of design factors** — every `example_id` is evaluated once per model in the run grid; `model` does not change the prompt or scoring keys.
-- **Full factorial with design** — merged rows are the Cartesian product of design items × models in the task run (e.g. simple: 45 prompts × 6 models → 270 rows).
+- **Full factorial with design** — merged rows are the Cartesian product of design items × models in the task run (e.g. simple: 35 prompts × 1 model → 35 rows in a single-model run).
 - **Dedup key** — when loading multiple downloads, `dedupe_base_rate_prompt_records` keeps the **last** record per `(model, example_id)` (`benchmarks/kaggle_runs.py`).
 - **Not in notebook cache id** — kbench caches by `(evaluation row index, model)` only; changing prompts without clearing `*.run.json` can reuse stale answers for the same model + row index.
 
@@ -175,35 +175,34 @@ npx @mermaid-js/mermaid-cli -c benchmark-design-mermaid-config.json \
 
 ## Actual combinations in the repo (current CSVs)
 
-### Simple benchmark (`data/simple/benchmark.csv`) — 45 rows
+### Simple benchmark (`data/simple/benchmark.csv`) — 35 rows
 
-9 vignettes × 3 variants (`well_posed`) plus 9 × `mc_full_probs` each for `implausible_c_d` and `implausible_t` (stats from `data/simple/implausible_p_c_d.csv` and `implausible_p_t_given.csv`).
+5 partition vignettes × 3 variants plus 2 overlap vignettes × 3 variants (explicit overlap clause), plus 7 × `mc_full_probs` each for `implausible_c_d` and `implausible_t`.
 
-| problem_type | scepticism_required | intersection_size | variants |
-|--------------|---------------------|---------------------|----------|
-| `well_posed` | `false` | `0` (5 vignettes), `small` (1), `medium` (1), `large` (2) | `open_probs`, `mc_numeric_probs`, `mc_full_probs` |
-| `implausible_c_d` | `true` | same per vignette | `mc_full_probs` only |
-| `implausible_t` | `true` | same per vignette | `mc_full_probs` only |
+| problem_type | scepticism_required | intersection_size | variants | scepticism target |
+|--------------|---------------------|---------------------|----------|-------------------|
+| `well_posed` | `false` | `0` (5 partition vignettes) | `open_probs`, `mc_numeric_probs`, `mc_full_probs` | normative P(C\|T) |
+| `well_posed` | `false` | `large` (2 overlap vignettes) | `open_probs`, `mc_numeric_probs`, `mc_full_probs` | overlap-aware normative P(C\|T) |
+| `implausible_c_d` | `true` | same per vignette | `mc_full_probs` only | **F** (merged meta) |
+| `implausible_t` | `true` | same per vignette | `mc_full_probs` only | **F** (merged meta) |
 
-No `overlap_*` or base-rate-style `implausible` fork; scepticism keyed to **H** (obviously incorrect premises).
+Overlap vignettes use `normative=underdetermined`, `well_posed=false`, and state “An estimated X% fall into both categories.” `mc_full_probs` uses a single meta option **F** (insufficient, inconsistent, or implausible) plus optional comment line.
 
 #### Simple vignette statistics
 
 One row per vignette (identical across `open_probs` / `mc_numeric_probs` / `mc_full_probs`). Source: `data/simple/items.csv` (`variant=open_probs`).
 
-**Simple two-path model:** pathway C = old A∧old C, pathway D = old A∧old D. Marginals `p_c` = P(A)·P(C|A) and `p_d` = P(A)·P(D|A) from the vignette source; `p_t_given_c` / `p_t_given_d` are P(T|C) and P(T|D). Overlap is stated explicitly in the prompt but `p_c_and_d_given_a` is always 0 in the simple scorer (disjoint-path Bayes). Normative answer is P(C|T) except **CA Trump voter**, which asks P(Southern California | T) = P(D|T).
+**Simple two-path model:** pathway C = old A∧old C, pathway D = old A∧old D. Marginals `p_c` = P(A)·P(C|A) and `p_d` = P(A)·P(D|A); `p_c_and_d_given_a` stores P(C∩D|A) for overlap vignettes. Overlap is stated explicitly in the prompt; normative P(C|T) uses overlap-aware Bayes when P(C∩D|A) > 0. Normative answer is P(C|T) except **CA Trump voter**, which asks P(Southern California | T) = P(D|T).
 
 | Vignette | ∩ size | P(C) | P(D) | P(T\|C) | P(T\|D) | P(target\|T) | Open label |
 |----------|--------|------|------|---------|---------|---------------|------------|
 | CA Trump voter | 0 | 4.94% | 7.80% | 31% | 27% | 57.9% (D) | 58% |
-| college STEM work | medium | 4.64% | 17.0% | 85% | 74% | 23.9% (C) | 24% |
 | covid vaccine (blue/red) | 0 | 19.2% | 7.83% | 8% | 10% | 66.2% (C) | 66% |
 | diabetes insulin obese | large | 3.19% | 5.32% | 20% | 16% | 42.8% (C) | 43% |
 | discharged weapon (last year) | 0 | 29.9% | 13.2% | 0.30% | 0.20% | 77.3% (C) | 77% |
 | english teacher humanities | large | 0.113% | 0.130% | 69% | 55% | 52.1% (C) | 52% |
 | healthcare employment | 0 | 1.10% | 9.90% | 54% | 60% | 9.09% (C) | 9.1% |
 | military overseas (federal pool) | 0 | 14.0% | 20.4% | 58% | 64% | 38.4% (C) | 38% |
-| professional drivers speeding | small | 1.28% | 0.348% | 16% | 10% | 85.5% (C) | 85% |
 
 P(target\|T) = `normative_percent`; (C) or (D) marks which pathway the question targets (`question_target_subtype` in `scripts/build_simple_rate_prompts.py`).
 
@@ -230,7 +229,7 @@ When scepticism is required, only the full MC menu (with F/G/H) is offered.
 
 | Benchmark | Design rows | Models (example run) | Merged rows |
 |-----------|-------------|----------------------|-------------|
-| Simple | 45 | 6 | 270 |
+| Simple | 35 | 1 (Opus) | 35 |
 | Base rate | 44 | varies by download | `44 × n_models` |
 
 Row count formula: **`n_example_ids × n_models`** (plus empty response rows if a model did not complete an item).

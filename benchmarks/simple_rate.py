@@ -18,6 +18,7 @@ from benchmarks.base_rate import (
     ParsedResponse,
     matches_percent_target,
     matches_scepticism_target,
+    open_scored_percent,
     parse_response,
     score_example,
 )
@@ -75,20 +76,12 @@ def matches_path_c_confusion(
     item: BaseRateBenchmarkItem,
     parsed: ParsedResponse,
 ) -> bool:
-    """True when the answer matches the P(T|C) lure (inverse conditional)."""
+    """True when the final answer matches the P(T|C) lure (inverse conditional)."""
     if item.scoring_type == "open":
-        target = path_c_percent(item)
-        candidates: list[float] = []
-        if parsed.percent_candidates:
-            candidates.extend(parsed.percent_candidates)
-        elif parsed.percent is not None:
-            candidates.append(parsed.percent)
-        if not candidates:
+        final = open_scored_percent(parsed)
+        if final is None:
             return False
-        return any(
-            matches_percent_target(candidate, target)
-            for candidate in candidates
-        )
+        return base_rate.matches_percent_target(final, path_c_percent(item))
 
     letter = path_c_letter(item)
     if letter is not None and parsed.choice == letter:

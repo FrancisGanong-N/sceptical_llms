@@ -138,8 +138,8 @@ def evaluate_simple_rate_benchmark(
 @kbench.task(
     name="simple_rate_normative_accuracy",
     description=(
-        "Simple base-rate benchmark (20 conditions): fraction of parseable answers "
-        "matching normative P(C|T). Higher is better."
+        "Simple base-rate benchmark (35 conditions): fraction of parseable answers "
+        "matching the keyed score (normative P(C|T) or scepticism target). Higher is better."
     ),
 )
 def simple_rate_normative_accuracy(llm) -> float:

@@ -59,6 +59,7 @@ MERGE_RESULT_COLUMNS = (
     "reasoning",
     "answer_line",
     "confidence_line",
+    "comment_line",
     "parsed_answer_type",
     "parsed_percent",
     "parsed_choice",
@@ -132,6 +133,7 @@ class ParsedResponse:
     answer_type: ParsedAnswerType
     answer_line: str = ""
     confidence_line: str = ""
+    comment_line: str = ""
     percent: float | None = None
     choice: str | None = None
     confidence: int | None = None
@@ -150,6 +152,7 @@ class ExampleScore:
     parsed_confidence: int | None
     parseable: bool
     score: bool
+    comment_line: str = ""
     model: str = "unknown"
 
 
@@ -208,8 +211,8 @@ def _is_standalone_mc_choice_line(line: str) -> bool:
     return bool(re.fullmatch(r"[A-H]", line.strip(), re.IGNORECASE))
 
 
-def split_mc_response_lines(response: str) -> tuple[str, str]:
-    """Parse MC answers from the last few lines, preserving answer-first format."""
+def split_mc_response_lines(response: str) -> tuple[str, str, str]:
+    """Parse MC answers; optional line 3+ is a free-text comment."""
     body, trailing_confidence = strip_trailing_confidence(response)
     lines = [line.strip() for line in body.splitlines() if line.strip()]
     confidence_line = (
@@ -221,14 +224,15 @@ def split_mc_response_lines(response: str) -> tuple[str, str]:
         and _is_standalone_mc_choice_line(lines[0])
         and _line_looks_like_confidence_only(lines[1])
     ):
-        return lines[0], lines[1]
+        comment_line = "\n".join(lines[2:]) if len(lines) > 2 else ""
+        return lines[0], lines[1], comment_line
 
     tail = lines
     for line in reversed(tail):
         if parse_mc_choice_from_line(line) is not None:
-            return line, confidence_line
+            return line, confidence_line, ""
 
-    return (lines[-1] if lines else body.strip()), confidence_line
+    return (lines[-1] if lines else body.strip()), confidence_line, ""
 
 
 def _line_looks_like_confidence_only(line: str) -> bool:
@@ -248,6 +252,25 @@ def _line_looks_like_confidence_only(line: str) -> bool:
             return False
         return True
     return False
+
+
+LABELED_FINAL_ANSWER_PATTERN = re.compile(
+    r"\b(?:final\s+)?answer\s*:",
+    re.IGNORECASE,
+)
+
+
+def _labeled_final_answer_line(lines: list[str]) -> str | None:
+    """Return the last line that looks like an explicit final-answer marker."""
+    for line in reversed(lines):
+        if LABELED_FINAL_ANSWER_PATTERN.search(line):
+            return line
+    return None
+
+
+def open_scored_percent(parsed: ParsedResponse) -> float | None:
+    """Single percentage used to score open responses (the model's final answer)."""
+    return parsed.percent
 
 
 def strip_trailing_confidence(response: str) -> tuple[str, int | None]:
@@ -297,7 +320,17 @@ def parse_open_response(response: str) -> ParsedResponse:
 
     candidates = extract_open_percent_candidates(body)
     first_pct = parse_probability_from_line(first_line) if first_line else None
-    if first_pct is not None and len(lines) == 1:
+    labeled_line = _labeled_final_answer_line(lines)
+    last_line = lines[-1] if lines else ""
+    last_line_pct = parse_probability_from_line(last_line)
+    labeled_pct = (
+        parse_probability_from_line(labeled_line) if labeled_line is not None else None
+    )
+    if labeled_pct is not None:
+        percent = labeled_pct
+    elif last_line_pct is not None:
+        percent = last_line_pct
+    elif first_pct is not None and len(lines) == 1:
         percent = first_pct
     elif candidates:
         percent = candidates[-1]
@@ -380,7 +413,7 @@ def parse_response(response: str, *, scoring_type: ScoringType) -> ParsedRespons
     if scoring_type == "open":
         return parse_open_response(response)
 
-    answer_line, confidence_line = split_mc_response_lines(response)
+    answer_line, confidence_line, comment_line = split_mc_response_lines(response)
     confidence = parse_confidence_line(confidence_line)
 
     choice = parse_mc_choice_from_line(answer_line)
@@ -389,12 +422,14 @@ def parse_response(response: str, *, scoring_type: ScoringType) -> ParsedRespons
             answer_type="unparseable",
             answer_line=answer_line,
             confidence_line=confidence_line,
+            comment_line=comment_line,
             confidence=confidence,
         )
     return ParsedResponse(
         answer_type="mc_choice",
         answer_line=answer_line,
         confidence_line=confidence_line,
+        comment_line=comment_line,
         choice=choice,
         confidence=confidence,
     )
@@ -490,17 +525,10 @@ def matches_normative_target(
 ) -> bool:
     """True when the parsed answer matches the blind Bayes / normative lure."""
     if item.scoring_type == "open":
-        candidates: list[float] = []
-        if parsed.percent_candidates:
-            candidates.extend(parsed.percent_candidates)
-        elif parsed.percent is not None:
-            candidates.append(parsed.percent)
-        if not candidates:
+        final = open_scored_percent(parsed)
+        if final is None:
             return False
-        return any(
-            matches_percent_target(candidate, item.normative_percent)
-            for candidate in candidates
-        )
+        return matches_percent_target(final, item.normative_percent)
 
     if parsed.choice is None:
         return False
@@ -592,6 +620,7 @@ def _example_score_base(
         answer_type=parsed.answer_type,
         answer_line=parsed.answer_line,
         confidence_line=parsed.confidence_line,
+        comment_line=parsed.comment_line,
         parsed_percent=parsed.percent,
         parsed_choice=parsed.choice,
         parsed_confidence=parsed.confidence,
@@ -821,6 +850,7 @@ def example_score_to_merge_fields(scored: ExampleScore) -> dict[str, str]:
         "parsed_confidence": ""
         if scored.parsed_confidence is None
         else str(scored.parsed_confidence),
+        "comment_line": scored.comment_line,
         "scoring_type": scored.scoring_type,
         "parseable": str(scored.parseable).lower(),
         "score": str(scored.score).lower(),

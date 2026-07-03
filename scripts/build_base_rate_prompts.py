@@ -456,7 +456,17 @@ def _t_event(t: str) -> str:
         return "worked part-time at their primary job in the reference week"
     if s.startswith("retained to year 2"):
         return "returned for a second year"
-    if s.startswith(("voted ", "received ", "discharged ")):
+    if s.startswith("at or above NAEP"):
+        return "scored at or above NAEP Proficient on grade-4 reading"
+    if re.search(r"^proficient reader", _head_match(t)):
+        return "are proficient readers"
+    if re.search(r"^on-time graduate", _head_match(t)):
+        return "are on-time graduates"
+    if s.startswith("attended an NFL or MLB"):
+        return "attended an NFL or MLB game in person"
+    if re.search(r"^played fantasy", _head_match(t)):
+        return "played fantasy sports for money"
+    if s.startswith(("voted ", "received ", "discharged ", "attended ")):
         return s
     if s.startswith("hemoglobin"):
         return f"had {s}"
@@ -470,6 +480,11 @@ def _t_event_in_question(t: str) -> str:
         "work in a hospital": "works in a hospital",
         "have worked overseas": "has worked overseas",
         "hold a master's degree or higher": "holds a master's degree or higher",
+        "scored at or above NAEP Proficient on grade-4 reading": (
+            "scored at or above NAEP Proficient on grade-4 reading"
+        ),
+        "are proficient readers": "is a proficient reader",
+        "are on-time graduates": "is an on-time graduate",
     }
     return singular.get(event, event)
 

@@ -31,11 +31,12 @@ A. About 77%
 B. About 0%
 C. About 13%
 D. About 30%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, or D, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, or D, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 ca_trump_voter__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
@@ -70,11 +71,12 @@ B. About 8%
 C. About 27%
 D. About 31%
 E. About 5%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 healthcare_employment__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
@@ -109,11 +111,12 @@ B. About 54%
 C. About 32%
 D. About 60%
 E. About 10%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 military_overseas_federal_pool__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
@@ -148,11 +151,12 @@ B. About 64%
 C. About 20%
 D. About 37%
 E. About 58%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 covid_vaccine_blue_red__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
@@ -187,14 +191,141 @@ B. About 10%
 C. About 8%
 D. About 1%
 E. About 19%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
+naep_grade_4_reading_ma_vs_nm__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among public school fourth graders in Massachusetts or New Mexico (66,751 enrolled in Massachusetts and 22,503 in New Mexico, fall 2022 CCD), 75% are from Massachusetts and 25% are from New Mexico.
+A proficient reader is a student who scores at or above NAEP Proficient on the grade-4 reading assessment (the same national standard in both states).
+Among fourth graders from Massachusetts, 40% are proficient readers; among fourth graders from New Mexico, 20% are proficient readers.
+
+What is the probability that a fourth grader in Massachusetts or New Mexico who is a proficient reader is from Massachusetts?
+
+Reply with a percentage (for example, 16% or 16 percent)."
+naep_grade_4_reading_ma_vs_nm__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among public school fourth graders in Massachusetts or New Mexico (66,751 enrolled in Massachusetts and 22,503 in New Mexico, fall 2022 CCD), 75% are from Massachusetts and 25% are from New Mexico.
+A proficient reader is a student who scores at or above NAEP Proficient on the grade-4 reading assessment (the same national standard in both states).
+Among fourth graders from Massachusetts, 40% are proficient readers; among fourth graders from New Mexico, 20% are proficient readers.
+
+What is the probability that a fourth grader in Massachusetts or New Mexico who is a proficient reader is from Massachusetts?
+
+A. About 86%
+B. About 25%
+C. About 20%
+D. About 40%
+E. About 8%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
+naep_grade_4_reading_ma_vs_nm__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among public school fourth graders in Massachusetts or New Mexico (66,751 enrolled in Massachusetts and 22,503 in New Mexico, fall 2022 CCD), 75% are from Massachusetts and 25% are from New Mexico.
+A proficient reader is a student who scores at or above NAEP Proficient on the grade-4 reading assessment (the same national standard in both states).
+Among fourth graders from Massachusetts, 40% are proficient readers; among fourth graders from New Mexico, 20% are proficient readers.
+
+What is the probability that a fourth grader in Massachusetts or New Mexico who is a proficient reader is from Massachusetts?
+
+A. About 86%
+B. About 20%
+C. About 40%
+D. About 25%
+E. About 8%
+F. Insufficient information, inconsistent information, or obviously incorrect premises
+
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
+hs_graduation_acgr_wv_vs_az__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among public school twelfth graders in West Virginia or Arizona (17,489 enrolled in West Virginia and 95,122 in Arizona, fall 2022 CCD), 16% are from West Virginia and 84% are from Arizona.
+An on-time graduate is a student who earns a regular high school diploma within four years of starting 9th grade, counted under the federal adjusted cohort graduation rate (ACGR—the same national methodology in both states).
+Among twelfth graders from West Virginia, 91% are on-time graduates; among twelfth graders from Arizona, 76% are on-time graduates.
+
+What is the probability that a twelfth grader in West Virginia or Arizona who is an on-time graduate is from West Virginia?
+
+Reply with a percentage (for example, 16% or 16 percent)."
+hs_graduation_acgr_wv_vs_az__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among public school twelfth graders in West Virginia or Arizona (17,489 enrolled in West Virginia and 95,122 in Arizona, fall 2022 CCD), 16% are from West Virginia and 84% are from Arizona.
+An on-time graduate is a student who earns a regular high school diploma within four years of starting 9th grade, counted under the federal adjusted cohort graduation rate (ACGR—the same national methodology in both states).
+Among twelfth graders from West Virginia, 91% are on-time graduates; among twelfth graders from Arizona, 76% are on-time graduates.
+
+What is the probability that a twelfth grader in West Virginia or Arizona who is an on-time graduate is from West Virginia?
+
+A. About 18%
+B. About 76%
+C. About 91%
+D. About 84%
+E. About 69%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
+hs_graduation_acgr_wv_vs_az__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among public school twelfth graders in West Virginia or Arizona (17,489 enrolled in West Virginia and 95,122 in Arizona, fall 2022 CCD), 16% are from West Virginia and 84% are from Arizona.
+An on-time graduate is a student who earns a regular high school diploma within four years of starting 9th grade, counted under the federal adjusted cohort graduation rate (ACGR—the same national methodology in both states).
+Among twelfth graders from West Virginia, 91% are on-time graduates; among twelfth graders from Arizona, 76% are on-time graduates.
+
+What is the probability that a twelfth grader in West Virginia or Arizona who is an on-time graduate is from West Virginia?
+
+A. About 18%
+B. About 84%
+C. About 69%
+D. About 76%
+E. About 91%
+F. Insufficient information, inconsistent information, or obviously incorrect premises
+
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
+fantasy_sports_male_vs_female__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 49% are men and 51% are women.
+Among men, 34% played fantasy sports for money; among women, 14% played fantasy sports for money.
+
+What is the probability that an adult who played fantasy sports for money is a man?
+
+Reply with a percentage (for example, 16% or 16 percent)."
+fantasy_sports_male_vs_female__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 49% are men and 51% are women.
+Among men, 34% played fantasy sports for money; among women, 14% played fantasy sports for money.
+
+What is the probability that an adult who played fantasy sports for money is a man?
+
+A. About 70%
+B. About 5%
+C. About 14%
+D. About 51%
+E. About 34%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
+fantasy_sports_male_vs_female__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 49% are men and 51% are women.
+Among men, 34% played fantasy sports for money; among women, 14% played fantasy sports for money.
+
+What is the probability that an adult who played fantasy sports for money is a man?
+
+A. About 70%
+B. About 5%
+C. About 34%
+D. About 14%
+E. About 51%
+F. Insufficient information, inconsistent information, or obviously incorrect premises
+
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 diabetes_insulin_obese__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese. An estimated 2.1% fall into both categories.
 Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
 
 What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?
@@ -202,12 +333,12 @@ What is the probability that an adult with diagnosed diabetes who had hemoglobin
 Reply with a percentage (for example, 16% or 16 percent)."
 diabetes_insulin_obese__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese. An estimated 2.1% fall into both categories.
 Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
 
 What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?
 
-A. About 43%
+A. About 54%
 B. About 5%
 C. About 16%
 D. About 20%
@@ -216,102 +347,25 @@ E. About 3%
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 diabetes_insulin_obese__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese. An estimated 2.1% fall into both categories.
 Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
 
 What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?
 
-A. About 43%
+A. About 54%
 B. About 16%
 C. About 5%
 D. About 20%
 E. About 3%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
-college_stem_work__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
-Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
-
-What is the probability that a student who returned for a second year studied STEM?
-
-Reply with a percentage (for example, 16% or 16 percent)."
-college_stem_work__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
-Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
-
-What is the probability that a student who returned for a second year studied STEM?
-
-A. About 24%
-B. About 63%
-C. About 74%
-D. About 17%
-E. About 85%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-college_stem_work__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
-Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
-
-What is the probability that a student who returned for a second year studied STEM?
-
-A. About 24%
-B. About 63%
-C. About 85%
-D. About 74%
-E. About 17%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
-professional_drivers_speeding__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
-Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
-
-What is the probability that a professional driver who received a speeding ticket in the last 12 months is a heavy and tractor-trailer truck driver?
-
-Reply with a percentage (for example, 16% or 16 percent)."
-professional_drivers_speeding__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
-Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
-
-What is the probability that a professional driver who received a speeding ticket in the last 12 months is a heavy and tractor-trailer truck driver?
-
-A. About 85%
-B. About 0%
-C. About 16%
-D. About 10%
-E. About 2%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-professional_drivers_speeding__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
-Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
-
-What is the probability that a professional driver who received a speeding ticket in the last 12 months is a heavy and tractor-trailer truck driver?
-
-A. About 85%
-B. About 16%
-C. About 0%
-D. About 10%
-E. About 2%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 english_teacher_humanities__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English. An estimated 0.09% fall into both categories.
 Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
 
 What is the probability that a high school teacher who holds a master's degree or higher is an English teacher?
@@ -319,12 +373,12 @@ What is the probability that a high school teacher who holds a master's degree o
 Reply with a percentage (for example, 16% or 16 percent)."
 english_teacher_humanities__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English. An estimated 0.09% fall into both categories.
 Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
 
 What is the probability that a high school teacher who holds a master's degree or higher is an English teacher?
 
-A. About 52%
+A. About 75%
 B. About 69%
 C. About 55%
 D. About 0%
@@ -333,21 +387,102 @@ E. About 38%
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 english_teacher_humanities__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English. An estimated 0.09% fall into both categories.
 Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
 
 What is the probability that a high school teacher who holds a master's degree or higher is an English teacher?
 
-A. About 52%
+A. About 75%
 B. About 38%
 C. About 0%
 D. About 69%
 E. About 55%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
+nfl_mlb_watch_attend__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 56% watch NFL and 33% watch MLB. An estimated 25% fall into both categories.
+Among those who watch NFL, 13% attended an NFL or MLB game in person; among those who watch MLB, 21% attended an NFL or MLB game in person.
+
+What is the probability that an adult who watched an NFL or MLB game in the past year and attended an NFL or MLB game in person watched an NFL game?
+
+Reply with a percentage (for example, 16% or 16 percent)."
+nfl_mlb_watch_attend__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 56% watch NFL and 33% watch MLB. An estimated 25% fall into both categories.
+Among those who watch NFL, 13% attended an NFL or MLB game in person; among those who watch MLB, 21% attended an NFL or MLB game in person.
+
+What is the probability that an adult who watched an NFL or MLB game in the past year and attended an NFL or MLB game in person watched an NFL game?
+
+A. About 83%
+B. About 21%
+C. About 33%
+D. About 13%
+E. About 3%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
+nfl_mlb_watch_attend__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 56% watch NFL and 33% watch MLB. An estimated 25% fall into both categories.
+Among those who watch NFL, 13% attended an NFL or MLB game in person; among those who watch MLB, 21% attended an NFL or MLB game in person.
+
+What is the probability that an adult who watched an NFL or MLB game in the past year and attended an NFL or MLB game in person watched an NFL game?
+
+A. About 83%
+B. About 33%
+C. About 3%
+D. About 13%
+E. About 21%
+F. Insufficient information, inconsistent information, or obviously incorrect premises
+
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
+fantasy_sports_under_45_vs_male__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 45% are under age 45 and 49% are men. An estimated 22% fall into both categories.
+Among those under age 45, 41% played fantasy sports for money; among men, 34% played fantasy sports for money.
+
+What is the probability that an adult who played fantasy sports for money is under age 45?
+
+Reply with a percentage (for example, 16% or 16 percent)."
+fantasy_sports_under_45_vs_male__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 45% are under age 45 and 49% are men. An estimated 22% fall into both categories.
+Among those under age 45, 41% played fantasy sports for money; among men, 34% played fantasy sports for money.
+
+What is the probability that an adult who played fantasy sports for money is under age 45?
+
+A. About 66%
+B. About 49%
+C. About 41%
+D. About 34%
+E. About 14%
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
+fantasy_sports_under_45_vs_male__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 45% are under age 45 and 49% are men. An estimated 22% fall into both categories.
+Among those under age 45, 41% played fantasy sports for money; among men, 34% played fantasy sports for money.
+
+What is the probability that an adult who played fantasy sports for money is under age 45?
+
+A. About 66%
+B. About 41%
+C. About 49%
+D. About 34%
+E. About 14%
+F. Insufficient information, inconsistent information, or obviously incorrect premises
+
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 discharged_weapon_last_year__implausible_c_d__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among employed police officers and security guards in the United States, 81% are urban police officers and 25% are rural/small-jurisdiction police officers.
@@ -359,11 +494,12 @@ A. About 83%
 B. About 0%
 C. About 25%
 D. About 81%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, or D, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, or D, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 ca_trump_voter__implausible_c_d__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 98% are voters registered in Southern California and 4.9% are other California voters.
@@ -376,11 +512,12 @@ B. About 27%
 C. About 8%
 D. About 98%
 E. About 31%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 healthcare_employment__implausible_c_d__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US employed adults, 80% are physicians and 9.9% are health care professionals who are not physicians.
@@ -393,11 +530,12 @@ B. About 32%
 C. About 54%
 D. About 60%
 E. About 10%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 military_overseas_federal_pool__implausible_c_d__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US active-duty military plus US federal civilian employees, 50% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
@@ -410,11 +548,12 @@ B. About 20%
 C. About 37%
 D. About 64%
 E. About 58%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 covid_vaccine_blue_red__implausible_c_d__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 90% are blue-state residents and 7.8% are red-state residents.
@@ -426,79 +565,140 @@ A. About 90%
 B. About 1%
 C. About 8%
 D. About 10%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, or D, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, or D, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
+naep_grade_4_reading_ma_vs_nm__implausible_c_d__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among public school fourth graders in Massachusetts or New Mexico (66,751 enrolled in Massachusetts and 22,503 in New Mexico, fall 2022 CCD), 98% are from Massachusetts and 25% are from New Mexico.
+A proficient reader is a student who scores at or above NAEP Proficient on the grade-4 reading assessment (the same national standard in both states).
+Among fourth graders from Massachusetts, 40% are proficient readers; among fourth graders from New Mexico, 20% are proficient readers.
+
+What is the probability that a fourth grader in Massachusetts or New Mexico who is a proficient reader is from Massachusetts?
+
+A. About 89%
+B. About 25%
+C. About 8%
+D. About 40%
+E. About 20%
+F. Insufficient information, inconsistent information, or obviously incorrect premises
+
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
+hs_graduation_acgr_wv_vs_az__implausible_c_d__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among public school twelfth graders in West Virginia or Arizona (17,489 enrolled in West Virginia and 95,122 in Arizona, fall 2022 CCD), 98% are from West Virginia and 25% are from Arizona.
+An on-time graduate is a student who earns a regular high school diploma within four years of starting 9th grade, counted under the federal adjusted cohort graduation rate (ACGR—the same national methodology in both states).
+Among twelfth graders from West Virginia, 91% are on-time graduates; among twelfth graders from Arizona, 76% are on-time graduates.
+
+What is the probability that a twelfth grader in West Virginia or Arizona who is an on-time graduate is from West Virginia?
+
+A. About 82%
+B. About 76%
+C. About 69%
+D. About 25%
+E. About 91%
+F. Insufficient information, inconsistent information, or obviously incorrect premises
+
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
+fantasy_sports_male_vs_female__implausible_c_d__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 20% are men and 90% are women.
+Among men, 34% played fantasy sports for money; among women, 14% played fantasy sports for money.
+
+What is the probability that an adult who played fantasy sports for money is a man?
+
+A. About 35%
+B. About 34%
+C. About 90%
+D. About 5%
+E. About 14%
+F. Insufficient information, inconsistent information, or obviously incorrect premises
+
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 diabetes_insulin_obese__implausible_c_d__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 80% use insulin and 50% are obese.
+Among US adults 18 years and older, 80% use insulin and 50% are obese. An estimated 2.1% fall into both categories.
 Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
 
 What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?
 
-A. About 67%
+A. About 68%
 B. About 3%
 C. About 50%
 D. About 20%
 E. About 16%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
-college_stem_work__implausible_c_d__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 85% are employed while enrolled.
-Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 74% returned for a second year.
-
-What is the probability that a student who returned for a second year studied STEM?
-
-A. About 6%
-B. About 85%
-C. About 74%
-D. About 63%
-E. About 5%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
-professional_drivers_speeding__implausible_c_d__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among employed adults in the United States, 50% are heavy and tractor-trailer truck drivers and 72% are bus drivers.
-Among heavy and tractor-trailer truck drivers, 16% received a speeding ticket in the last 12 months; among bus drivers, 10% received a speeding ticket in the last 12 months.
-
-What is the probability that a professional driver who received a speeding ticket in the last 12 months is a heavy and tractor-trailer truck driver?
-
-A. About 53%
-B. About 10%
-C. About 2%
-D. About 72%
-E. About 16%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 english_teacher_humanities__implausible_c_d__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 10% teach English as their primary assignment and 30% have a bachelor's degree in English.
+Among employed adults in the United States, 10% teach English as their primary assignment and 30% have a bachelor's degree in English. An estimated 0.09% fall into both categories.
 Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
 
 What is the probability that a high school teacher who holds a master's degree or higher is an English teacher?
 
-A. About 29%
+A. About 30%
 B. About 69%
 C. About 38%
 D. About 55%
-E. About 30%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+E. About 10%
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
+nfl_mlb_watch_attend__implausible_c_d__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 20% watch NFL and 90% watch MLB. An estimated 25% fall into both categories.
+Among those who watch NFL, 13% attended an NFL or MLB game in person; among those who watch MLB, 21% attended an NFL or MLB game in person.
+
+What is the probability that an adult who watched an NFL or MLB game in the past year and attended an NFL or MLB game in person watched an NFL game?
+
+A. About 24%
+B. About 21%
+C. About 90%
+D. About 3%
+E. About 13%
+F. Insufficient information, inconsistent information, or obviously incorrect premises
+
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
+fantasy_sports_under_45_vs_male__implausible_c_d__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 90% are under age 45 and 15% are men. An estimated 22% fall into both categories.
+Among those under age 45, 41% played fantasy sports for money; among men, 34% played fantasy sports for money.
+
+What is the probability that an adult who played fantasy sports for money is under age 45?
+
+A. About 100%
+B. About 14%
+C. About 15%
+D. About 41%
+E. About 34%
+F. Insufficient information, inconsistent information, or obviously incorrect premises
+
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 discharged_weapon_last_year__implausible_t__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
@@ -511,11 +711,12 @@ B. About 35%
 C. About 13%
 D. About 50%
 E. About 70%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 ca_trump_voter__implausible_t__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
@@ -528,11 +729,12 @@ B. About 98%
 C. About 8%
 D. About 27%
 E. About 26%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 healthcare_employment__implausible_t__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
@@ -545,11 +747,12 @@ B. About 7%
 C. About 10%
 D. About 70%
 E. About 1%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 military_overseas_federal_pool__implausible_t__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US active-duty military plus US federal civilian employees, 14% are uS Army active-duty service members and 20% are uS Navy or US Air Force active-duty service members.
@@ -562,11 +765,12 @@ B. About 1%
 C. About 64%
 D. About 20%
 E. About 14%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 covid_vaccine_blue_red__implausible_t__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 19% are blue-state residents and 7.8% are red-state residents.
@@ -579,14 +783,71 @@ B. About 10%
 C. About 9%
 D. About 90%
 E. About 8%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
+naep_grade_4_reading_ma_vs_nm__implausible_t__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among public school fourth graders in Massachusetts or New Mexico (66,751 enrolled in Massachusetts and 22,503 in New Mexico, fall 2022 CCD), 75% are from Massachusetts and 25% are from New Mexico.
+A proficient reader is a student who scores at or above NAEP Proficient on the grade-4 reading assessment (the same national standard in both states).
+Among fourth graders from Massachusetts, 20% are proficient readers; among fourth graders from New Mexico, 90% are proficient readers.
+
+What is the probability that a fourth grader in Massachusetts or New Mexico who is a proficient reader is from Massachusetts?
+
+A. About 40%
+B. About 25%
+C. About 20%
+D. About 90%
+E. About 18%
+F. Insufficient information, inconsistent information, or obviously incorrect premises
+
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
+hs_graduation_acgr_wv_vs_az__implausible_t__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among public school twelfth graders in West Virginia or Arizona (17,489 enrolled in West Virginia and 95,122 in Arizona, fall 2022 CCD), 16% are from West Virginia and 84% are from Arizona.
+An on-time graduate is a student who earns a regular high school diploma within four years of starting 9th grade, counted under the federal adjusted cohort graduation rate (ACGR—the same national methodology in both states).
+Among twelfth graders from West Virginia, 76% are on-time graduates; among twelfth graders from Arizona, 91% are on-time graduates.
+
+What is the probability that a twelfth grader in West Virginia or Arizona who is an on-time graduate is from West Virginia?
+
+A. About 13%
+B. About 84%
+C. About 69%
+D. About 91%
+E. About 76%
+F. Insufficient information, inconsistent information, or obviously incorrect premises
+
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
+fantasy_sports_male_vs_female__implausible_t__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 49% are men and 51% are women.
+Among men, 14% played fantasy sports for money; among women, 50% played fantasy sports for money.
+
+What is the probability that an adult who played fantasy sports for money is a man?
+
+A. About 21%
+B. About 7%
+C. About 51%
+D. About 50%
+E. About 14%
+F. Insufficient information, inconsistent information, or obviously incorrect premises
+
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 diabetes_insulin_obese__implausible_t__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese.
+Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese. An estimated 2.1% fall into both categories.
 Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 0.10% had hemoglobin A1c above 9.0%.
 
 What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?
@@ -596,56 +857,62 @@ B. About 0%
 C. About 20%
 D. About 5%
 E. About 3%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
-college_stem_work__implausible_t__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among undergraduate students enrolled at US postsecondary institutions, 4.6% study STEM and 17% are employed while enrolled.
-Among those who studied STEM, 85% returned for a second year; among those employed while enrolled, 10% returned for a second year.
-
-What is the probability that a student who returned for a second year studied STEM?
-
-A. About 70%
-B. About 10%
-C. About 17%
-D. About 85%
-E. About 8%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H)."
-professional_drivers_speeding__implausible_t__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among employed adults in the United States, 1.3% are heavy and tractor-trailer truck drivers and 0.35% are bus drivers.
-Among heavy and tractor-trailer truck drivers, 0.10% received a speeding ticket in the last 12 months; among bus drivers, 0.00% received a speeding ticket in the last 12 months.
-
-What is the probability that a professional driver who received a speeding ticket in the last 12 months is a heavy and tractor-trailer truck driver?
-
-A. About 100%
-B. About 0%
-C. About 1%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A, B, or C, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
 english_teacher_humanities__implausible_t__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English.
+Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English. An estimated 0.09% fall into both categories.
 Among those who teach English as their primary assignment, 1% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
 
 What is the probability that a high school teacher who holds a master's degree or higher is an English teacher?
 
-A. About 2%
+A. About 51%
 B. About 1%
 C. About 0%
 D. About 55%
-F. Insufficient information
-G. Inconsistent information
-H. Provided information is obviously incorrect
+F. Insufficient information, inconsistent information, or obviously incorrect premises
 
-Which answer is closest? Reply with only the letter (A, B, C, or D, F, G, or H)."
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, or D, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
+nfl_mlb_watch_attend__implausible_t__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 56% watch NFL and 33% watch MLB. An estimated 25% fall into both categories.
+Among those who watch NFL, 50% attended an NFL or MLB game in person; among those who watch MLB, 5% attended an NFL or MLB game in person.
+
+What is the probability that an adult who watched an NFL or MLB game in the past year and attended an NFL or MLB game in person watched an NFL game?
+
+A. About 98%
+B. About 2%
+C. About 50%
+D. About 33%
+E. About 5%
+F. Insufficient information, inconsistent information, or obviously incorrect premises
+
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."
+fantasy_sports_under_45_vs_male__implausible_t__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 45% are under age 45 and 49% are men. An estimated 22% fall into both categories.
+Among those under age 45, 10% played fantasy sports for money; among men, 50% played fantasy sports for money.
+
+What is the probability that an adult who played fantasy sports for money is under age 45?
+
+A. About 40%
+B. About 49%
+C. About 50%
+D. About 10%
+E. About 5%
+F. Insufficient information, inconsistent information, or obviously incorrect premises
+
+Which answer is closest? Reply on two or three lines.
+Line 1: only the letter (A, B, C, D, or E, or F).
+Line 2: your confidence from 1 (not confident) to 5 (very confident).
+Line 3 (optional): a brief comment explaining your choice."

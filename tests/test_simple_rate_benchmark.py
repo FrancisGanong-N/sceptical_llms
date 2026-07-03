@@ -26,7 +26,7 @@ class TestSimpleBenchmarkData:
 
     def test_load_benchmark(self):
         items = load_benchmark()
-        assert len(items) == 45
+        assert len(items) == 60
         assert {item.response_type for item in items.values()} == {
             "open",
             "mc_numeric",
@@ -48,6 +48,18 @@ class TestPathCScoring:
         item = items[example_id]
         parsed = parse_response("0.3%", scoring_type="open")
         assert matches_path_c_confusion(item, parsed) is True
+
+    def test_open_path_c_ignores_quoted_statistics(self):
+        items = load_benchmark()
+        item = items["ca_trump_voter__open_probs"]
+        response = (
+            "P(Trump | Southern California) = 27%; P(Trump | Other CA) = 31%.\n"
+            "Using Bayes, the posterior is 58.1%."
+        )
+        parsed = parse_response(response, scoring_type="open")
+        assert matches_path_c_confusion(item, parsed) is False
+        assert parsed.percent is not None
+        assert abs(parsed.percent - 58.1) < 0.2
 
     def test_mc_path_c_lure_detected(self):
         items = load_benchmark()
@@ -93,17 +105,33 @@ class TestMergeResults:
 
 
 class TestImplausibleScoring:
-    def test_implausible_mc_full_scores_h(self):
+    def test_implausible_mc_full_scores_f(self):
         items = load_benchmark()
         example_id = "ca_trump_voter__implausible_c_d__mc_full_probs"
         item = items[example_id]
         assert item.scepticism_required is True
-        assert item.scepticism_score_target == "H"
+        assert item.scepticism_score_target == "F"
         scored = score_run_rows(
-            [{"example_id": example_id, "response": "H", "model": "test-model"}],
+            [{"example_id": example_id, "response": "F\n4", "model": "test-model"}],
             items=items,
         )
         assert scored.examples[0].score is True
+
+    def test_implausible_mc_full_comment_parsed(self):
+        items = load_benchmark()
+        example_id = "ca_trump_voter__implausible_c_d__mc_full_probs"
+        scored = score_run_rows(
+            [
+                {
+                    "example_id": example_id,
+                    "response": "F\n4\nPremises contradict each other.",
+                    "model": "test-model",
+                }
+            ],
+            items=items,
+        )
+        assert scored.examples[0].score is True
+        assert scored.examples[0].comment_line == "Premises contradict each other."
 
     def test_implausible_mc_full_bayes_lure_not_scored(self):
         items = load_benchmark()
@@ -127,7 +155,30 @@ class TestImplausibleScoring:
         item = items[example_id]
         assert item.scepticism_required is False
         scored = score_run_rows(
-            [{"example_id": example_id, "response": "H", "model": "test-model"}],
+            [{"example_id": example_id, "response": "F", "model": "test-model"}],
             items=items,
         )
         assert scored.examples[0].score is False
+
+    def test_overlap_mc_full_scores_normative_with_explicit_overlap(self):
+        items = load_benchmark()
+        example_id = "diabetes_insulin_obese__mc_full_probs"
+        item = items[example_id]
+        assert item.scepticism_required is False
+        assert "diabetes_insulin_obese__open_probs" in items
+        scored_f = score_run_rows(
+            [{"example_id": example_id, "response": "F", "model": "test-model"}],
+            items=items,
+        )
+        assert scored_f.examples[0].score is False
+        scored_bayes = score_run_rows(
+            [
+                {
+                    "example_id": example_id,
+                    "response": item.normative_choice,
+                    "model": "test-model",
+                }
+            ],
+            items=items,
+        )
+        assert scored_bayes.examples[0].score is True

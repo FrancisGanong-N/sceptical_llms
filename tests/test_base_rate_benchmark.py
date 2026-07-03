@@ -55,16 +55,26 @@ class TestParsing:
         assert split_response_lines("91%\n4") == ("91%", "4")
 
     def test_split_mc_response_lines_uses_tail(self):
-        answer, confidence = split_mc_response_lines(
+        answer, confidence, comment = split_mc_response_lines(
             "Let me work through this.\n\nInsufficient information.\nG\n4"
         )
         assert answer == "G"
         assert confidence == "4"
+        assert comment == ""
 
     def test_split_mc_response_lines_keeps_answer_first_format(self):
-        answer, confidence = split_mc_response_lines("A\n4\n\nLet me verify.")
+        answer, confidence, comment = split_mc_response_lines("A\n4\n\nLet me verify.")
         assert answer == "A"
         assert confidence == "4"
+        assert comment == "Let me verify."
+
+    def test_split_mc_response_lines_optional_comment(self):
+        answer, confidence, comment = split_mc_response_lines(
+            "F\n5\nOverlap makes the partition shortcut invalid."
+        )
+        assert answer == "F"
+        assert confidence == "5"
+        assert comment == "Overlap makes the partition shortcut invalid."
 
     def test_parse_mc_choice(self):
         assert parse_mc_choice("B\n5") == "B"

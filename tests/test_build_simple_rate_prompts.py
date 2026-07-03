@@ -6,6 +6,7 @@ import csv
 from pathlib import Path
 
 from scripts.build_simple_rate_prompts import (
+    META_SCEPTICISM,
     _from_vignette,
     build_all,
     load_simple_vignettes,
@@ -25,13 +26,94 @@ class TestSimpleParameters:
         assert abs(s.posterior_c() - 0.7726) < 0.01
 
     def test_vignette_count(self):
-        assert len(load_simple_vignettes()) == 9
+        names = {v.name for v in load_simple_vignettes()}
+        assert len(names) == 12
+        assert "NAEP grade 4 reading (MA vs NM)" in names
+        assert "HS graduation ACGR (WV vs AZ)" in names
+        assert "NFL MLB watch attend" in names
+        assert "fantasy sports (male vs female)" in names
+        assert "fantasy sports (under 45 vs male)" in names
+        assert "actor waiter overlap" not in names
+        assert "college STEM work" not in names
+        assert "professional drivers speeding" not in names
+
+    def test_naep_ma_nm_posterior(self):
+        v = next(
+            x
+            for x in _load_two_cause()
+            if x.name == "NAEP grade 4 reading (MA vs NM)"
+        )
+        s = _from_vignette(v)
+        assert abs(s.p_a - 1.0) < 1e-9
+        assert abs(s.p_c - 0.748) < 0.001
+        assert abs(s.p_d - 0.252) < 0.001
+        assert abs(s.posterior_c() - 0.856) < 0.01
+
+    def test_graduation_wv_az_posterior(self):
+        v = next(
+            x
+            for x in _load_two_cause()
+            if x.name == "HS graduation ACGR (WV vs AZ)"
+        )
+        s = _from_vignette(v)
+        assert abs(s.p_a - 1.0) < 1e-9
+        assert abs(s.p_c - 0.155) < 0.001
+        assert abs(s.p_d - 0.845) < 0.001
+        assert abs(s.posterior_c() - 0.180) < 0.01
+
+    def test_graduation_wv_az_prompt_mentions_enrollment(self, tmp_path: Path, monkeypatch):
+        monkeypatch.setattr(
+            "scripts.build_simple_rate_prompts.OUT_DIR",
+            tmp_path / "simple",
+        )
+        write_csvs()
+        with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
+            rows = list(csv.DictReader(handle))
+        grad = next(
+            r
+            for r in rows
+            if r["example_id"] == "hs_graduation_acgr_wv_vs_az__open_probs"
+        )
+        assert "17,489 enrolled in West Virginia and 95,122 in Arizona" in grad["prompt"]
+        assert (
+            "An on-time graduate is a student who earns a regular high school diploma"
+            in grad["prompt"]
+        )
+        assert (
+            "a twelfth grader in West Virginia or Arizona who is an on-time graduate "
+            "is from West Virginia"
+            in grad["prompt"]
+        )
+
+    def test_naep_ma_nm_prompt_mentions_enrollment(self, tmp_path: Path, monkeypatch):
+        monkeypatch.setattr(
+            "scripts.build_simple_rate_prompts.OUT_DIR",
+            tmp_path / "simple",
+        )
+        write_csvs()
+        with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
+            rows = list(csv.DictReader(handle))
+        naep = next(
+            r
+            for r in rows
+            if r["example_id"] == "naep_grade_4_reading_ma_vs_nm__open_probs"
+        )
+        assert "66,751 enrolled in Massachusetts and 22,503 in New Mexico" in naep["prompt"]
+        assert (
+            "A proficient reader is a student who scores at or above NAEP Proficient"
+            in naep["prompt"]
+        )
+        assert (
+            "a fourth grader in Massachusetts or New Mexico who is a proficient reader "
+            "is from Massachusetts"
+            in naep["prompt"]
+        )
 
 
 class TestBuildAll:
     def test_prompt_count(self):
         prompts, items, benchmark = build_all()
-        assert len(prompts) == 45
+        assert len(prompts) == 60
         assert len(items) == len(prompts)
         assert len(benchmark) == len(prompts)
         problem_types = {row["problem_type"] for row in benchmark}
@@ -40,6 +122,109 @@ class TestBuildAll:
             "implausible_c_d",
             "implausible_t",
         }
+        overlap_well_posed = [
+            row
+            for row in benchmark
+            if row["problem_type"] == "well_posed"
+            and row["intersection_size"] not in ("", "0")
+        ]
+        assert len(overlap_well_posed) == 12
+        assert all(row["scepticism_required"] == "false" for row in overlap_well_posed)
+        assert {row["variant"] for row in overlap_well_posed} == {
+            "open_probs",
+            "mc_numeric_probs",
+            "mc_full_probs",
+        }
+
+    def test_fantasy_sports_male_female_partition(self, tmp_path: Path, monkeypatch):
+        v = next(
+            x
+            for x in _load_two_cause()
+            if x.name == "fantasy sports (male vs female)"
+        )
+        s = _from_vignette(v)
+        assert abs(s.p_c - 0.49) < 0.001
+        assert abs(s.p_d - 0.51) < 0.001
+        assert abs(s.posterior_c() - 0.70) < 0.01
+
+        monkeypatch.setattr(
+            "scripts.build_simple_rate_prompts.OUT_DIR",
+            tmp_path / "simple",
+        )
+        write_csvs()
+        with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
+            rows = list(csv.DictReader(handle))
+        fantasy = next(
+            r
+            for r in rows
+            if r["example_id"] == "fantasy_sports_male_vs_female__open_probs"
+        )
+        assert "49% are men and 51% are women" in fantasy["prompt"]
+        assert "Among men, 34% played fantasy sports for money" in fantasy["prompt"]
+        assert "among women, 14% played fantasy sports for money" in fantasy["prompt"]
+        assert (
+            "an adult who played fantasy sports for money is a man"
+            in fantasy["prompt"]
+        )
+
+    def test_fantasy_sports_under_45_male_overlap(self, tmp_path: Path, monkeypatch):
+        v = next(
+            x for x in load_simple_vignettes() if x.name == "fantasy sports (under 45 vs male)"
+        )
+        assert abs(v.p_c - 0.45) < 0.001
+        assert abs(v.p_d - 0.49) < 0.001
+        assert abs(v.p_cd_given_a - 0.22) < 0.001
+        assert abs(v.target_posterior() - 0.66) < 0.02
+        assert abs(v.posterior_c() - 0.53) < 0.02
+
+        monkeypatch.setattr(
+            "scripts.build_simple_rate_prompts.OUT_DIR",
+            tmp_path / "simple",
+        )
+        write_csvs()
+        with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
+            rows = list(csv.DictReader(handle))
+        fantasy = next(
+            r
+            for r in rows
+            if r["example_id"] == "fantasy_sports_under_45_vs_male__open_probs"
+        )
+        assert "45% are under age 45 and 49% are men" in fantasy["prompt"]
+        assert "An estimated 22% fall into both categories." in fantasy["prompt"]
+        assert "Among those under age 45, 41% played fantasy sports for money" in fantasy["prompt"]
+        assert "among men, 34% played fantasy sports for money" in fantasy["prompt"]
+        assert (
+            "an adult who played fantasy sports for money is under age 45"
+            in fantasy["prompt"]
+        )
+
+    def test_nfl_mlb_watch_attend_overlap(self, tmp_path: Path, monkeypatch):
+        v = next(x for x in load_simple_vignettes() if x.name == "NFL MLB watch attend")
+        assert abs(v.p_c - 0.56) < 0.001
+        assert abs(v.p_d - 0.33024) < 0.001
+        assert abs(v.p_cd_given_a - 0.391) < 0.001
+        assert abs(v.target_posterior() - 0.83) < 0.02
+        assert abs(v.posterior_c() - 0.51) < 0.02
+
+        monkeypatch.setattr(
+            "scripts.build_simple_rate_prompts.OUT_DIR",
+            tmp_path / "simple",
+        )
+        write_csvs()
+        with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
+            rows = list(csv.DictReader(handle))
+        sports = next(
+            r for r in rows if r["example_id"] == "nfl_mlb_watch_attend__open_probs"
+        )
+        assert "56% watch NFL and 33% watch MLB" in sports["prompt"]
+        assert "An estimated 25% fall into both categories." in sports["prompt"]
+        assert "Among those who watch NFL, 13% attended an NFL or MLB game in person" in sports["prompt"]
+        assert "among those who watch MLB, 21% attended an NFL or MLB game in person" in sports["prompt"]
+        assert (
+            "an adult who watched an NFL or MLB game in the past year and "
+            "attended an NFL or MLB game in person watched an NFL game"
+            in sports["prompt"]
+        )
 
     def test_english_teacher_humanities_entity_labels(self, tmp_path: Path, monkeypatch):
         monkeypatch.setattr(
@@ -50,13 +235,14 @@ class TestBuildAll:
         with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
         english = next(
-            r for r in rows if r["example_id"] == "english_teacher_humanities__open_probs"
+            r for r in rows if r["example_id"] == "english_teacher_humanities__mc_full_probs"
         )
         assert (
             "0.11% teach English as their primary assignment and "
             "0.13% have a bachelor's degree in English."
             in english["prompt"]
         )
+        assert "An estimated 0.09% fall into both categories." in english["prompt"]
         assert (
             "Among those who teach English as their primary assignment, 69% hold a master's degree or higher"
             in english["prompt"]
@@ -94,30 +280,6 @@ class TestBuildAll:
             in ca["prompt"]
         )
 
-    def test_college_stem_work_entity_labels(self, tmp_path: Path, monkeypatch):
-        monkeypatch.setattr(
-            "scripts.build_simple_rate_prompts.OUT_DIR",
-            tmp_path / "simple",
-        )
-        write_csvs()
-        with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
-            rows = list(csv.DictReader(handle))
-        college = next(
-            r for r in rows if r["example_id"] == "college_stem_work__open_probs"
-        )
-        assert "NPSAS:20 universe" not in college["prompt"]
-        assert (
-            "4.6% study STEM and 17% are employed while enrolled."
-            in college["prompt"]
-        )
-        assert "Among those who studied STEM, 85% returned for a second year" in college["prompt"]
-        assert "among those employed while enrolled, 74% returned for a second year" in college["prompt"]
-        assert (
-            "What is the probability that a student who returned for a second year studied STEM?"
-            in college["prompt"]
-        )
-        assert "first-generation" not in college["prompt"]
-
     def test_diabetes_insulin_obese_entity_labels(self, tmp_path: Path, monkeypatch):
         monkeypatch.setattr(
             "scripts.build_simple_rate_prompts.OUT_DIR",
@@ -127,12 +289,13 @@ class TestBuildAll:
         with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
         diabetes = next(
-            r for r in rows if r["example_id"] == "diabetes_insulin_obese__open_probs"
+            r for r in rows if r["example_id"] == "diabetes_insulin_obese__mc_full_probs"
         )
         assert (
             "3.2% use insulin and 5.3% are obese."
             in diabetes["prompt"]
         )
+        assert "An estimated 2.1% fall into both categories." in diabetes["prompt"]
         assert "Among those who use insulin," in diabetes["prompt"]
         assert "among those who are obese," in diabetes["prompt"]
         assert (
@@ -187,20 +350,38 @@ class TestBuildAll:
         by_name = {row["vignette_name"]: row["intersection_size"] for row in benchmark}
         assert by_name["discharged weapon (last year)"] == "0"
         assert by_name["diabetes insulin obese"] == "large"
-        assert by_name["college STEM work"] == "medium"
-        assert by_name["professional drivers speeding"] == "small"
         assert by_name["english teacher humanities"] == "large"
+        assert by_name["NFL MLB watch attend"] == "large"
+        assert by_name["fantasy sports (under 45 vs male)"] == "large"
+        assert by_name["fantasy sports (male vs female)"] == "0"
+        assert "college STEM work" not in by_name
+        assert "professional drivers speeding" not in by_name
+        assert "actor waiter overlap" not in by_name
 
-    def test_mc_full_probs_includes_meta_options(self):
+    def test_overlap_scores_overlap_aware_normative(self):
+        _, items, _ = build_all()
+        row = next(
+            r for r in items if r["example_id"] == "diabetes_insulin_obese__mc_full_probs"
+        )
+        assert row["scepticism_required"] == "false"
+        assert row["scepticism_score_target"] != "F"
+        assert row["normative"] == "underdetermined"
+        assert row["well_posed"] == "false"
+        assert float(row["p_c_and_d_given_a"]) > 0
+
+    def test_mc_full_probs_single_meta_option(self):
         prompts, items, _ = build_all()
         row = next(r for r in items if r["example_id"] == "ca_trump_voter__mc_full_probs")
         prompt = next(r["prompt"] for r in prompts if r["example_id"] == row["example_id"])
         assert row["variant"] == "mc_full_probs"
         assert row["response_type"] == "mc_full"
         assert row["scepticism_required"] == "false"
-        assert row["option_f_label"] == "Insufficient information"
-        assert row["option_h_label"] == "Provided information is obviously incorrect"
-        assert "F, G, or H" in prompt
+        assert row["option_f_label"] == META_SCEPTICISM
+        assert row["option_g_label"] == ""
+        assert row["option_h_label"] == ""
+        assert "or F" in prompt
+        assert "G" not in prompt.split("Which answer is closest?")[-1]
+        assert "Line 3 (optional)" in prompt
 
     def test_implausible_c_d_uses_csv_stats(self):
         _, items, benchmark = build_all()
@@ -213,7 +394,7 @@ class TestBuildAll:
         assert float(row["p_c"]) == 0.0494
         assert float(row["p_d"]) == 0.98
         assert row["scepticism_required"] == "true"
-        assert row["scepticism_score_target"] == "H"
+        assert row["scepticism_score_target"] == "F"
         assert row["normative"] == "implausible"
 
     def test_implausible_t_uses_csv_stats(self):
@@ -226,4 +407,4 @@ class TestBuildAll:
         assert row["problem_type"] == "implausible_t"
         assert float(row["p_t_given_c"]) == 0.1
         assert float(row["p_t_given_d"]) == 0.7
-        assert row["scepticism_score_target"] == "H"
+        assert row["scepticism_score_target"] == "F"

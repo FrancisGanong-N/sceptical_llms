@@ -16,19 +16,19 @@ if str(ROOT) not in sys.path:
 
 from scripts.build_base_rate_prompts import (  # noqa: E402
     INTRO,
-    META_F,
-    META_G,
-    META_H,
+    OVERLAP_CSV,
     Vignette,
+    _f,
+    _intersection_size_label,
     _is_california_voter,
     _is_covid_vaccinated,
     _is_diabetic_adult,
     _is_first_generation_student,
     _is_public_secondary_teacher,
-    _load_overlap,
     _load_two_cause,
     _mc_letter_list,
     _mc_rounded_label,
+    _overlap_p_cd,
     _pct,
     _role_phrase,
     _rounded_mc_percent,
@@ -36,6 +36,17 @@ from scripts.build_base_rate_prompts import (  # noqa: E402
     _t_event,
     _t_event_in_question,
     slug,
+)
+
+META_SCEPTICISM = (
+    "Insufficient information, inconsistent information, or obviously incorrect premises"
+)
+SIMPLE_EXCLUDED_OVERLAP_NAMES = frozenset(
+    {
+        "college STEM work",
+        "professional drivers speeding",
+        "actor waiter overlap",
+    }
 )
 
 
@@ -137,12 +148,15 @@ class SimpleVignette:
     old_c: str
     old_d: str
     t: str
+    p_a: float
     p_c: float
     p_d: float
+    p_cd_given_a: float
     s_c: float
     s_d: float
     intersection_size: str
     problem_type: str = PROBLEM_TYPE_WELL_POSED
+    s_n: float = 0.0
 
     @property
     def c_label(self) -> str:
@@ -160,15 +174,45 @@ class SimpleVignette:
     def d_group(self) -> str:
         return _entity_group(self.old_d)
 
+    def p_cd_universe(self) -> float:
+        return self.p_a * self.p_cd_given_a
+
+    def s_cd(self) -> float:
+        return (self.s_c + self.s_d) / 2.0
+
     def posterior_c(self) -> float:
         num = self.s_c * self.p_c
         den = num + self.s_d * self.p_d
         return num / den if den else 0.0
 
+    def posterior_c_overlap_aware(self) -> float:
+        p_cd = self.p_cd_universe()
+        p_c_only = max(0.0, self.p_c - p_cd)
+        p_ct = p_c_only * self.s_c + p_cd * self.s_cd()
+        p_t = (
+            p_c_only * self.s_c
+            + max(0.0, self.p_d - p_cd) * self.s_d
+            + p_cd * self.s_cd()
+        )
+        return p_ct / p_t if p_t else 0.0
+
     def posterior_d(self) -> float:
         num = self.s_d * self.p_d
         den = self.s_c * self.p_c + num
         return num / den if den else 0.0
+
+    def p_t_universe(self) -> float:
+        return (
+            self.s_c * self.p_c
+            + self.s_d * self.p_d
+            + self.s_n * max(0.0, 1.0 - self.p_a)
+        )
+
+    def posterior_c_with_n(self) -> float:
+        p_t = self.p_t_universe()
+        if p_t <= 0:
+            return 0.0
+        return self.s_c * self.p_c / p_t
 
     def question_target_subtype(self) -> str:
         if self.name == "CA Trump voter":
@@ -178,6 +222,8 @@ class SimpleVignette:
     def target_posterior(self) -> float:
         if self.name == "CA Trump voter":
             return self.posterior_d()
+        if self.p_cd_given_a > 0:
+            return self.posterior_c_overlap_aware()
         return self.posterior_c()
 
     def lure_percents(self) -> dict[str, float]:
@@ -226,10 +272,40 @@ def _entity_phrase(subtype: str) -> str:
         return "voters registered in Southern California"
     if re.search(r"other california registrant", head, re.I):
         return "other California voters"
+    if re.search(r"massachusetts fourth grader", head, re.I):
+        return "Massachusetts fourth graders"
+    if re.search(r"massachusetts public school fourth grader", head, re.I):
+        return "Massachusetts fourth graders"
+    if re.search(r"new mexico fourth grader", head, re.I):
+        return "New Mexico fourth graders"
+    if re.search(r"new mexico public school fourth grader", head, re.I):
+        return "New Mexico fourth graders"
+    if re.search(r"west virginia twelfth grader", head, re.I):
+        return "West Virginia twelfth graders"
+    if re.search(r"west virginia public school twelfth grader", head, re.I):
+        return "West Virginia twelfth graders"
+    if re.search(r"arizona twelfth grader", head, re.I):
+        return "Arizona twelfth graders"
+    if re.search(r"arizona public school twelfth grader", head, re.I):
+        return "Arizona twelfth graders"
+    if re.search(r"watched an entire NFL game", head, re.I):
+        return "watch NFL"
+    if re.search(r"watched an entire MLB game", head, re.I):
+        return "watch MLB"
+    if re.search(r"^male$", head, re.I):
+        return "men"
+    if re.search(r"^female$", head, re.I):
+        return "women"
+    if re.search(r"^under age 45$", head, re.I):
+        return "under age 45"
     if re.search(r"main teaching assignment is English", head, re.I):
         return "teach English as their primary assignment"
     if re.search(r"bachelor.*major field is English", head, re.I):
         return "have a bachelor's degree in English"
+    if re.search(r"also holds a waiter", head, re.I):
+        return "also work as waiters"
+    if re.search(r"actor occupation is the secondary", head, re.I):
+        return "have a secondary acting job"
     if s.startswith("uses "):
         return s.replace("uses ", "use ", 1)
     if s.startswith("has "):
@@ -243,7 +319,17 @@ def _entity_label(subtype: str) -> str:
 
 def _entity_group(subtype: str) -> str:
     phrase = _entity_phrase(subtype)
-    if phrase in {"voters registered in Southern California", "other California voters"}:
+    if phrase in {
+        "voters registered in Southern California",
+        "other California voters",
+        "Massachusetts fourth graders",
+        "New Mexico fourth graders",
+        "West Virginia twelfth graders",
+        "Arizona twelfth graders",
+        "men",
+        "women",
+        "under age 45",
+    }:
         return phrase
     if phrase.startswith(("use ", "have ", "are ")):
         return phrase
@@ -258,13 +344,29 @@ def _entity_share_clause(subtype: str, pct: float) -> str:
     phrase = _entity_phrase(subtype)
     if phrase == "study STEM":
         return f"{_simple_pct(pct)} study STEM"
+    if phrase == "watch NFL":
+        return f"{_simple_pct(pct)} watch NFL"
+    if phrase == "watch MLB":
+        return f"{_simple_pct(pct)} watch MLB"
+    if phrase == "under age 45":
+        return f"{_simple_pct(pct)} are under age 45"
+    if phrase == "men":
+        return f"{_simple_pct(pct)} are men"
+    if phrase == "women":
+        return f"{_simple_pct(pct)} are women"
     if phrase == "employed while enrolled":
         return f"{_simple_pct(pct)} are employed while enrolled"
     if phrase == "teach English as their primary assignment":
         return f"{_simple_pct(pct)} teach English as their primary assignment"
     if phrase == "have a bachelor's degree in English":
         return f"{_simple_pct(pct)} have a bachelor's degree in English"
-    if phrase.startswith(("use ", "are ")):
+    if phrase == "also work as waiters":
+        return f"{_simple_pct(pct)} also work as waiters"
+    if phrase == "have a secondary acting job":
+        return f"{_simple_pct(pct)} have a secondary acting job"
+    if phrase.startswith("also "):
+        return f"{_simple_pct(pct)} {phrase}"
+    if phrase.startswith(("use ", "have ", "are ")):
         return f"{_simple_pct(pct)} {phrase}"
     if phrase.endswith("members"):
         return f"{_simple_pct(pct)} are {phrase}"
@@ -273,14 +375,34 @@ def _entity_share_clause(subtype: str, pct: float) -> str:
 
 def _entity_among_group(subtype: str) -> str:
     phrase = _entity_phrase(subtype)
+    if phrase in {"Massachusetts fourth graders", "New Mexico fourth graders"}:
+        return phrase
+    if phrase in {"West Virginia twelfth graders", "Arizona twelfth graders"}:
+        return phrase
     if phrase == "study STEM":
         return "those who studied STEM"
+    if phrase == "watch NFL":
+        return "those who watch NFL"
+    if phrase == "watch MLB":
+        return "those who watch MLB"
+    if phrase == "under age 45":
+        return "those under age 45"
+    if phrase == "men":
+        return "men"
+    if phrase == "women":
+        return "women"
     if phrase == "employed while enrolled":
         return "those employed while enrolled"
     if phrase == "teach English as their primary assignment":
         return "those who teach English as their primary assignment"
     if phrase == "have a bachelor's degree in English":
         return "those who have a bachelor's degree in English"
+    if phrase == "also work as waiters":
+        return "those who also work as waiters"
+    if phrase == "have a secondary acting job":
+        return "those who have a secondary acting job"
+    if phrase.startswith("also "):
+        return f"those who {phrase[5:]}"
     if phrase.startswith(("use ", "have ", "are ")):
         return f"those who {phrase}"
     return _entity_group(subtype)
@@ -290,6 +412,10 @@ def _entity_answer_clause(subtype: str) -> str:
     phrase = _entity_phrase(subtype)
     if phrase == "study STEM":
         return "studied STEM"
+    if phrase == "also work as waiters":
+        return "also worked as a waiter"
+    if phrase == "have a secondary acting job":
+        return "had a secondary acting job"
     if phrase == "teach English as their primary assignment":
         return "were an English teacher"
     if phrase.startswith(("use ", "are ")):
@@ -326,6 +452,28 @@ def _article_for(phrase: str) -> str:
 
 def _entity_question_predicate(subtype: str) -> str:
     phrase = _entity_phrase(subtype)
+    if phrase == "Massachusetts fourth graders":
+        return "is from Massachusetts"
+    if phrase == "New Mexico fourth graders":
+        return "is a New Mexico fourth grader"
+    if phrase == "West Virginia twelfth graders":
+        return "is from West Virginia"
+    if phrase == "Arizona twelfth graders":
+        return "is an Arizona twelfth grader"
+    if phrase == "watch NFL":
+        return "watched an NFL game"
+    if phrase == "watch MLB":
+        return "watched an MLB game"
+    if phrase == "men":
+        return "is a man"
+    if phrase == "women":
+        return "is a woman"
+    if phrase == "under age 45":
+        return "is under age 45"
+    if phrase == "also work as waiters":
+        return "also works as a waiter"
+    if phrase == "have a secondary acting job":
+        return "has a secondary acting job"
     if phrase == "voters registered in Southern California":
         return "lives in Southern California"
     if phrase == "study STEM":
@@ -347,6 +495,10 @@ def _t_event_relative_clause(t: str) -> str:
     event = _t_event_in_question(t)
     if event == "discharged a weapon in the last year":
         return "discharged his weapon in the last year"
+    if event == "is a proficient reader":
+        return event
+    if event == "is an on-time graduate":
+        return event
     return event
 
 
@@ -362,8 +514,50 @@ def _simple_mc_suffix(*, letters: str) -> str:
     )
 
 
+def _simple_mc_full_suffix(*, letters: str) -> str:
+    return (
+        f"\n\nWhich answer is closest? Reply on two or three lines.\n"
+        f"Line 1: only the letter ({letters}).\n"
+        "Line 2: your confidence from 1 (not confident) to 5 (very confident).\n"
+        "Line 3 (optional): a brief comment explaining your choice."
+    )
+
+
+def _is_naep_ma_nm_pool(text: str) -> bool:
+    return bool(
+        re.search(r"massachusetts or new mexico", text, re.I)
+        and re.search(r"fourth grader", text, re.I)
+    )
+
+
+def _is_graduation_wv_az_pool(text: str) -> bool:
+    return bool(
+        re.search(r"west virginia or arizona", text, re.I)
+        and re.search(r"twelfth grader", text, re.I)
+    )
+
+
+def _is_nfl_mlb_watcher(text: str) -> bool:
+    return bool(
+        re.search(r"nfl or mlb", text, re.I)
+        or re.search(r"nfl and mlb", text, re.I)
+    )
+
+
+def _is_us_adult_universe(text: str) -> bool:
+    return bool(re.search(r"adult 18 years or older", text, re.I))
+
+
 def _simple_given_t_subject(old_a: str) -> str:
     """Subject for simple-model P(C|T) questions (pool = old A = C union D)."""
+    if _is_graduation_wv_az_pool(old_a):
+        return "a twelfth grader in West Virginia or Arizona"
+    if _is_naep_ma_nm_pool(old_a):
+        return "a fourth grader in Massachusetts or New Mexico"
+    if _is_nfl_mlb_watcher(old_a):
+        return "an adult who watched an NFL or MLB game in the past year"
+    if _is_us_adult_universe(old_a):
+        return "an adult"
     if _is_covid_vaccinated(old_a):
         return "an adult living in the US who is vaccinated for 2024-25 COVID"
     if _is_diabetic_adult(old_a):
@@ -374,7 +568,13 @@ def _simple_given_t_subject(old_a: str) -> str:
         return "a student"
     if _is_public_secondary_teacher(old_a):
         return "a high school teacher"
+    if _is_actor_occupation(old_a):
+        return "an actor in the US labor force"
     return _role_phrase(old_a)
+
+
+def _is_actor_occupation(old_a: str) -> bool:
+    return bool(re.search(r"actor occupation", old_a, re.I))
 
 
 def _simple_setting_phrase(universe: str) -> str:
@@ -401,16 +601,49 @@ def _from_vignette(v: Vignette) -> SimpleVignette:
         old_c=v.c,
         old_d=v.d,
         t=v.t,
+        p_a=v.p_a,
         p_c=v.p_a * v.q_c,
         p_d=v.p_a * v.q_d,
+        p_cd_given_a=v.p_cd,
         s_c=v.s_c,
         s_d=v.s_d,
+        s_n=v.f_n,
         intersection_size=v.intersection_size,
     )
 
 
+def _load_overlap_for_simple() -> list[Vignette]:
+    rows: list[Vignette] = []
+    with OVERLAP_CSV.open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            if row["name"] in SIMPLE_EXCLUDED_OVERLAP_NAMES:
+                continue
+            rows.append(
+                Vignette(
+                    name=row["name"],
+                    universe=row["universe"],
+                    a=row["A"],
+                    n=row["N"],
+                    c=row["C"],
+                    d=row["D"],
+                    t=row["T"],
+                    p_a=_f(row["P_A"]),
+                    q_c=_f(row["P_C_given_A"]),
+                    q_d=_f(row["P_D_given_A"]),
+                    s_c=_f(row["P_T_given_C"]),
+                    s_d=_f(row["P_T_given_D"]),
+                    f_n=_f(row["P_T_given_N"]),
+                    p_cd=_overlap_p_cd(row),
+                    well_posed=False,
+                    intersection_size=_intersection_size_label(row, well_posed=False),
+                    normative=row.get("normative", "underdetermined"),
+                )
+            )
+    return rows
+
+
 def load_simple_vignettes() -> list[SimpleVignette]:
-    vignettes = _load_two_cause() + _load_overlap()
+    vignettes = _load_two_cause() + _load_overlap_for_simple()
     return [_from_vignette(v) for v in vignettes]
 
 
@@ -465,8 +698,18 @@ def _load_implausible_p_t_given() -> dict[str, tuple[float, float]]:
     return stats
 
 
+def has_overlap(v: SimpleVignette) -> bool:
+    """True when pathways C and D may co-occur (non-zero intersection under A)."""
+    return (v.intersection_size or "").strip() not in ("", "0")
+
+
+def scepticism_required(v: SimpleVignette) -> bool:
+    """Only implausible forks require the scepticism meta option (F)."""
+    return v.problem_type != PROBLEM_TYPE_WELL_POSED
+
+
 def variants_for_vignette(v: SimpleVignette) -> tuple[str, ...]:
-    if v.problem_type in (PROBLEM_TYPE_IMPLAUSIBLE_C_D, PROBLEM_TYPE_IMPLAUSIBLE_T):
+    if scepticism_required(v):
         return SCEPTICISM_VARIANTS
     return CANONICAL_VARIANTS
 
@@ -547,16 +790,103 @@ def _narrative_entity_order(
     return first, second
 
 
-def narrative_with_probs(v: SimpleVignette) -> str:
-    setting = _simple_setting_phrase(v.universe)
+def _naep_ma_nm_share_line(v: SimpleVignette) -> str | None:
+    if v.name != "NAEP grade 4 reading (MA vs NM)":
+        return None
+    (c_subtype, c_p, _), (d_subtype, d_p, _) = _narrative_entity_order(v)
+    return (
+        "Among public school fourth graders in Massachusetts or New Mexico "
+        "(66,751 enrolled in Massachusetts and 22,503 in New Mexico, fall 2022 CCD), "
+        f"{_simple_pct(c_p)} are from Massachusetts and "
+        f"{_simple_pct(d_p)} are from New Mexico."
+    )
+
+
+NAEP_PROFICIENT_READER_DEFINITION = (
+    "A proficient reader is a student who scores at or above NAEP Proficient "
+    "on the grade-4 reading assessment (the same national standard in both states)."
+)
+
+
+def _naep_ma_nm_narrative_with_probs(v: SimpleVignette) -> str:
     (c_subtype, c_p, c_s), (d_subtype, d_p, d_s) = _narrative_entity_order(v)
     parts = [
         INTRO,
         "",
+        _naep_ma_nm_share_line(v),
+        NAEP_PROFICIENT_READER_DEFINITION,
         (
+            f"Among fourth graders from Massachusetts, {_simple_pct(c_s)} are proficient readers; "
+            f"among fourth graders from New Mexico, {_simple_pct(d_s)} are proficient readers."
+        ),
+        "",
+        _question_given_t(v),
+    ]
+    return "\n".join(parts)
+
+
+def _graduation_wv_az_share_line(v: SimpleVignette) -> str | None:
+    if v.name != "HS graduation ACGR (WV vs AZ)":
+        return None
+    (c_subtype, c_p, _), (d_subtype, d_p, _) = _narrative_entity_order(v)
+    return (
+        "Among public school twelfth graders in West Virginia or Arizona "
+        "(17,489 enrolled in West Virginia and 95,122 in Arizona, fall 2022 CCD), "
+        f"{_simple_pct(c_p)} are from West Virginia and "
+        f"{_simple_pct(d_p)} are from Arizona."
+    )
+
+
+HS_GRADUATION_ACGR_DEFINITION = (
+    "An on-time graduate is a student who earns a regular high school diploma "
+    "within four years of starting 9th grade, counted under the federal "
+    "adjusted cohort graduation rate (ACGR—the same national methodology in both states)."
+)
+
+
+def _graduation_wv_az_narrative_with_probs(v: SimpleVignette) -> str:
+    (c_subtype, c_p, c_s), (d_subtype, d_p, d_s) = _narrative_entity_order(v)
+    parts = [
+        INTRO,
+        "",
+        _graduation_wv_az_share_line(v),
+        HS_GRADUATION_ACGR_DEFINITION,
+        (
+            f"Among twelfth graders from West Virginia, {_simple_pct(c_s)} are on-time graduates; "
+            f"among twelfth graders from Arizona, {_simple_pct(d_s)} are on-time graduates."
+        ),
+        "",
+        _question_given_t(v),
+    ]
+    return "\n".join(parts)
+
+
+def _simple_overlap_clause(v: SimpleVignette) -> str:
+    if not has_overlap(v) or v.p_cd_given_a <= 0:
+        return ""
+    return (
+        f" An estimated {_simple_pct(v.p_cd_universe())} fall into both categories."
+    )
+
+
+def narrative_with_probs(v: SimpleVignette) -> str:
+    if v.name == "NAEP grade 4 reading (MA vs NM)":
+        return _naep_ma_nm_narrative_with_probs(v)
+    if v.name == "HS graduation ACGR (WV vs AZ)":
+        return _graduation_wv_az_narrative_with_probs(v)
+    setting = _simple_setting_phrase(v.universe)
+    (c_subtype, c_p, c_s), (d_subtype, d_p, d_s) = _narrative_entity_order(v)
+    share_line = _naep_ma_nm_share_line(v) or _graduation_wv_az_share_line(v)
+    if share_line is None:
+        share_line = (
             f"{setting}, {_entity_share_clause(c_subtype, c_p)} and "
             f"{_entity_share_clause(d_subtype, d_p)}."
-        ),
+            f"{_simple_overlap_clause(v)}"
+        )
+    parts = [
+        INTRO,
+        "",
+        share_line,
         (
             f"Among {_entity_among_group(c_subtype)}, {_simple_pct(c_s)} {_t_event(v.t)}; "
             f"among {_entity_among_group(d_subtype)}, {_simple_pct(d_s)} {_t_event(v.t)}."
@@ -569,14 +899,23 @@ def narrative_with_probs(v: SimpleVignette) -> str:
 
 def _shared_item_fields(v: SimpleVignette) -> dict[str, str]:
     is_implausible = v.problem_type != PROBLEM_TYPE_WELL_POSED
+    overlap = has_overlap(v) and not is_implausible
     normative = v.target_posterior()
+    if is_implausible:
+        normative_label = "implausible"
+    elif overlap:
+        normative_label = "underdetermined"
+    else:
+        normative_label = "well_posed"
     return {
         "vignette_name": v.name,
         "problem_type": v.problem_type,
         "intersection_size": v.intersection_size,
-        "well_posed": "true",
-        "normative": "implausible" if is_implausible else "well_posed",
-        "p_c_and_d_given_a": "0",
+        "well_posed": "false" if overlap else "true",
+        "normative": normative_label,
+        "p_c_and_d_given_a": (
+            f"{v.p_cd_given_a:.6g}" if v.p_cd_given_a > 0 else "0"
+        ),
         "p_c": f"{v.p_c:.6g}",
         "p_d": f"{v.p_d:.6g}",
         "p_t_given_c": f"{v.s_c:.6g}",
@@ -584,7 +923,7 @@ def _shared_item_fields(v: SimpleVignette) -> dict[str, str]:
         "normative_percent": f"{normative * 100:.4g}",
         "normative_open": _pct(normative),
         "confidence_required": "false",
-        "scepticism_required": str(is_implausible).lower(),
+        "scepticism_required": str(scepticism_required(v)).lower(),
     }
 
 
@@ -620,7 +959,7 @@ def build_prompt(v: SimpleVignette, variant: str) -> tuple[str, dict[str, str]]:
     is_full_mc = variant == "mc_full_probs"
     is_implausible = v.problem_type != PROBLEM_TYPE_WELL_POSED
     if is_implausible and is_full_mc:
-        scepticism_target = "H"
+        scepticism_target = "F"
     elif is_full_mc:
         scepticism_target = normative_letter
     else:
@@ -632,6 +971,7 @@ def build_prompt(v: SimpleVignette, variant: str) -> tuple[str, dict[str, str]]:
             "numeric_score_percent": item["normative_percent"],
             "numeric_score_choice": normative_letter,
             "scepticism_score_target": scepticism_target,
+            "confidence_required": str(is_full_mc).lower(),
         }
     )
     lines = [body, ""]
@@ -646,18 +986,14 @@ def build_prompt(v: SimpleVignette, variant: str) -> tuple[str, dict[str, str]]:
         item[f"option_{letter}_label"] = ""
         item[f"option_{letter}_lure"] = ""
     if is_full_mc:
-        for letter, label, lure in (
-            ("F", META_F, "insufficient information"),
-            ("G", META_G, "inconsistent information"),
-            ("H", META_H, "obviously incorrect premises"),
-        ):
-            item[f"option_{letter.lower()}_label"] = label
-            item[f"option_{letter.lower()}_lure"] = lure
-            lines.append(f"{letter}. {label}")
-        suffix_letters = f"{_mc_letter_list(option_letters)}, F, G, or H"
+        item["option_f_label"] = META_SCEPTICISM
+        item["option_f_lure"] = "scepticism (insufficient, inconsistent, or implausible)"
+        lines.append(f"F. {META_SCEPTICISM}")
+        suffix_letters = f"{_mc_letter_list(option_letters)}, or F"
+        prompt = "\n".join(lines) + _simple_mc_full_suffix(letters=suffix_letters)
     else:
         suffix_letters = _mc_letter_list(option_letters)
-    prompt = "\n".join(lines) + _simple_mc_suffix(letters=suffix_letters)
+        prompt = "\n".join(lines) + _simple_mc_suffix(letters=suffix_letters)
     return prompt, item
 
 
@@ -744,10 +1080,14 @@ def write_csvs() -> int:
 def main() -> int:
     count = write_csvs()
     base_count = len(load_simple_vignettes())
+    overlap_count = sum(1 for v in load_simple_vignettes() if has_overlap(v))
+    partition_count = base_count - overlap_count
+    implausible_count = count - partition_count * len(CANONICAL_VARIANTS) - overlap_count * len(CANONICAL_VARIANTS)
     print(
         f"Wrote {count} prompts "
-        f"({base_count} well_posed vignettes × {len(CANONICAL_VARIANTS)} variants "
-        f"+ implausible forks × {len(SCEPTICISM_VARIANTS)} variant)"
+        f"({partition_count} partition vignettes × {len(CANONICAL_VARIANTS)} variants "
+        f"+ {overlap_count} overlap vignettes × {len(CANONICAL_VARIANTS)} variants "
+        f"+ {implausible_count} implausible forks × {len(SCEPTICISM_VARIANTS)} variant)"
     )
     print(f"Output: {OUT_DIR} (prompts.csv, items.csv, benchmark.csv)")
     return 0

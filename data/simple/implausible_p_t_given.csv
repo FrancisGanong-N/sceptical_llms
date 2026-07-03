@@ -1,10 +1,13 @@
 vignette_name,P(T|C),P(T|D)
 CA Trump voter,0.98,0.27
-college STEM work,0.85,0.1
 covid vaccine (blue/red),0.9,0.1
 diabetes insulin obese,0.2,0.001
 discharged weapon (last year),0.5,0.7
 english teacher humanities,0.01,0.55
 healthcare employment,0.1,0.7
 military overseas (federal pool),0.02,0.64
-professional drivers speeding,0.001,0.00001
+NAEP grade 4 reading (MA vs NM),0.20,0.90
+HS graduation ACGR (WV vs AZ),0.76,0.91
+NFL MLB watch attend,0.50,0.05
+fantasy sports (male vs female),0.14,0.50
+fantasy sports (under 45 vs male),0.10,0.50
