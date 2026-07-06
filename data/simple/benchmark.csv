@@ -2100,7 +2100,7 @@ B. No — this answer is not appropriate for the customer.
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.22,0.45,0.49,0.41,0.34,B,65.82,66%,false,65.82,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
 fantasy_sports_under_45_vs_male__altered__mc_prob,fantasy sports (under 45 vs male),altered,altered,large,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% are under age 45 and 15% are men. An estimated 22% fall into both categories.
+Among US adults 18 years and older, 100% are under age 45 and 15% are men. An estimated 22% fall into both categories.
 Among those under age 45, 10% played fantasy sports for money; among men, 50% played fantasy sports for money.
 
 What is the probability that an adult who played fantasy sports for money is under age 45?
@@ -2111,10 +2111,10 @@ C. About 5%
 D. About 50%
 E. About 15%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",false,implausible,0.22,0.9,0.15,0.1,0.5,A,100,100%,false,100,A,false,n/a,About 100%,About 10%,About 5%,About 50%,About 15%,Bayes P(C|T),P(T|C) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,,,,,,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",false,implausible,0.22,1,0.15,0.1,0.5,A,100,100%,false,100,A,false,n/a,About 100%,About 10%,About 5%,About 50%,About 15%,Bayes P(C|T),P(T|C) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,,,,,,
 fantasy_sports_under_45_vs_male__altered__mc_w_meta,fantasy sports (under 45 vs male),altered,altered,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% are under age 45 and 15% are men. An estimated 22% fall into both categories.
+Among US adults 18 years and older, 100% are under age 45 and 15% are men. An estimated 22% fall into both categories.
 Among those under age 45, 10% played fantasy sports for money; among men, 50% played fantasy sports for money.
 
 What is the probability that an adult who played fantasy sports for money is under age 45?
@@ -2127,10 +2127,10 @@ E. About 10%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0.22,0.9,0.15,0.1,0.5,A,100,100%,false,100,A,true,F,About 100%,About 50%,About 15%,About 5%,About 10%,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0.22,1,0.15,0.1,0.5,A,100,100%,false,100,A,true,F,About 100%,About 50%,About 15%,About 5%,About 10%,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 fantasy_sports_under_45_vs_male__altered__data_audit,fantasy sports (under 45 vs male),altered,altered,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
-Among US adults 18 years and older, 90% are under age 45 and 15% are men. An estimated 22% fall into both categories.
+Among US adults 18 years and older, 100% are under age 45 and 15% are men. An estimated 22% fall into both categories.
 Among those under age 45, 10% played fantasy sports for money; among men, 50% played fantasy sports for money.
 
 What is the probability that an adult who played fantasy sports for money is under age 45?
@@ -2140,14 +2140,14 @@ Does this problem description give enough sensible information for a well-founde
 A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
 B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.22,0.9,0.15,0.1,0.5,B,100,100%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
+Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.22,1,0.15,0.1,0.5,B,100,100%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
 fantasy_sports_under_45_vs_male__altered__response_audit,fantasy sports (under 45 vs male),altered,altered,large,response_audit,true,response_audit,"You are a data auditor, checking the work of another AI.
 
 The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% are under age 45 and 15% are men. An estimated 22% fall into both categories.
+Among US adults 18 years and older, 100% are under age 45 and 15% are men. An estimated 22% fall into both categories.
 Among those under age 45, 10% played fantasy sports for money; among men, 50% played fantasy sports for money.
 
 What is the probability that an adult who played fantasy sports for money is under age 45?
@@ -2169,7 +2169,7 @@ Is this a good answer to give your customer?
 A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
-Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.22,0.9,0.15,0.1,0.5,B,100,100%,false,100,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
+Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.22,1,0.15,0.1,0.5,B,100,100%,false,100,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
 book_drama_streaming__natural__mc_prob,book drama streaming,natural,well_posed,large,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 75% read at least one book in the past 12 months and 83% watch streaming services.
@@ -2248,7 +2248,7 @@ B. No — this answer is not appropriate for the customer.
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.65,0.75,0.83,0.2,0.53,B,72.95,73%,false,72.95,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
 book_drama_streaming__altered__mc_prob,book drama streaming,altered,altered,large,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% read at least one book in the past 12 months and 15% watch streaming services.
+Among US adults 18 years and older, 1000% read at least one book in the past 12 months and 15% watch streaming services.
 An estimated 65% fall into both categories.
 Among adults who read books, 10% read at least one drama book in the past year. Among adults who watch streaming services, 50% watch drama films or shows as online content.
 
@@ -2260,10 +2260,10 @@ C. About 15%
 D. About 50%
 E. About 10%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",false,implausible,0.65,0.9,0.15,0.1,0.5,A,100,100%,false,100,A,false,n/a,About 100%,About 5%,About 15%,About 50%,About 10%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(D) confusion,P(T|D) confusion,P(T|C) confusion,,,,,,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",false,implausible,0.65,10,0.15,0.1,0.5,A,100,100%,false,100,A,false,n/a,About 100%,About 5%,About 15%,About 50%,About 10%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(D) confusion,P(T|D) confusion,P(T|C) confusion,,,,,,
 book_drama_streaming__altered__mc_w_meta,book drama streaming,altered,altered,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% read at least one book in the past 12 months and 15% watch streaming services.
+Among US adults 18 years and older, 1000% read at least one book in the past 12 months and 15% watch streaming services.
 An estimated 65% fall into both categories.
 Among adults who read books, 10% read at least one drama book in the past year. Among adults who watch streaming services, 50% watch drama films or shows as online content.
 
@@ -2277,10 +2277,10 @@ E. About 10%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0.65,0.9,0.15,0.1,0.5,A,100,100%,false,100,A,true,F,About 100%,About 5%,About 15%,About 50%,About 10%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(D) confusion,P(T|D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0.65,10,0.15,0.1,0.5,A,100,100%,false,100,A,true,F,About 100%,About 5%,About 15%,About 50%,About 10%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(D) confusion,P(T|D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 book_drama_streaming__altered__data_audit,book drama streaming,altered,altered,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
-Among US adults 18 years and older, 90% read at least one book in the past 12 months and 15% watch streaming services.
+Among US adults 18 years and older, 1000% read at least one book in the past 12 months and 15% watch streaming services.
 An estimated 65% fall into both categories.
 Among adults who read books, 10% read at least one drama book in the past year. Among adults who watch streaming services, 50% watch drama films or shows as online content.
 
@@ -2291,14 +2291,14 @@ Does this problem description give enough sensible information for a well-founde
 A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
 B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.65,0.9,0.15,0.1,0.5,B,100,100%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
+Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.65,10,0.15,0.1,0.5,B,100,100%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
 book_drama_streaming__altered__response_audit,book drama streaming,altered,altered,large,response_audit,true,response_audit,"You are a data auditor, checking the work of another AI.
 
 The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% read at least one book in the past 12 months and 15% watch streaming services.
+Among US adults 18 years and older, 1000% read at least one book in the past 12 months and 15% watch streaming services.
 An estimated 65% fall into both categories.
 Among adults who read books, 10% read at least one drama book in the past year. Among adults who watch streaming services, 50% watch drama films or shows as online content.
 
@@ -2321,7 +2321,7 @@ Is this a good answer to give your customer?
 A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
-Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.65,0.9,0.15,0.1,0.5,B,100,100%,false,100,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
+Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.65,10,0.15,0.1,0.5,B,100,100%,false,100,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
 dog_cat_household__natural__mc_prob,dog cat household,natural,well_posed,large,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US households, 43% own at least one dog and 33% own at least one cat.
@@ -2400,28 +2400,28 @@ B. No — this answer is not appropriate for the customer.
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.19,0.426,0.326,0.79,0.53,B,81.23,81%,false,81.23,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
 dog_cat_household__altered__mc_prob,dog cat household,altered,altered,large,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US households, 20% own at least one dog and 90% own at least one cat.
+Among US households, -0.10% own at least one dog and 90% own at least one cat.
 An estimated 19% fall into both categories.
 Among dog-owning households, 50% took at least one pet to a veterinarian in the past 12 months. Among cat-owning households, 5% did.
 
 What is the probability that a household that took at least one pet to a veterinarian in the past 12 months owns at least one dog?
 
-A. About 62%
+A. About 60%
 B. About 90%
 C. About 5%
 D. About 2%
 E. About 50%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",false,implausible,0.19,0.2,0.9,0.5,0.05,A,61.73,62%,false,61.73,A,false,n/a,About 62%,About 90%,About 5%,About 2%,About 50%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,,,,,,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",false,implausible,0.19,-0.001,0.9,0.5,0.05,A,59.54,60%,false,59.54,A,false,n/a,About 60%,About 90%,About 5%,About 2%,About 50%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,,,,,,
 dog_cat_household__altered__mc_w_meta,dog cat household,altered,altered,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US households, 20% own at least one dog and 90% own at least one cat.
+Among US households, -0.10% own at least one dog and 90% own at least one cat.
 An estimated 19% fall into both categories.
 Among dog-owning households, 50% took at least one pet to a veterinarian in the past 12 months. Among cat-owning households, 5% did.
 
 What is the probability that a household that took at least one pet to a veterinarian in the past 12 months owns at least one dog?
 
-A. About 62%
+A. About 60%
 B. About 5%
 C. About 2%
 D. About 90%
@@ -2429,10 +2429,10 @@ E. About 50%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0.19,0.2,0.9,0.5,0.05,A,61.73,62%,false,61.73,A,true,F,About 62%,About 5%,About 2%,About 90%,About 50%,Bayes P(C|T),P(T|D) confusion,P(T|C)*P(T|D) confusion,P(D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0.19,-0.001,0.9,0.5,0.05,A,59.54,60%,false,59.54,A,true,F,About 60%,About 5%,About 2%,About 90%,About 50%,Bayes P(C|T),P(T|D) confusion,P(T|C)*P(T|D) confusion,P(D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 dog_cat_household__altered__data_audit,dog cat household,altered,altered,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
-Among US households, 20% own at least one dog and 90% own at least one cat.
+Among US households, -0.10% own at least one dog and 90% own at least one cat.
 An estimated 19% fall into both categories.
 Among dog-owning households, 50% took at least one pet to a veterinarian in the past 12 months. Among cat-owning households, 5% did.
 
@@ -2443,20 +2443,20 @@ Does this problem description give enough sensible information for a well-founde
 A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
 B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.19,0.2,0.9,0.5,0.05,B,61.73,62%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
+Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.19,-0.001,0.9,0.5,0.05,B,59.54,60%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
 dog_cat_household__altered__response_audit,dog cat household,altered,altered,large,response_audit,true,response_audit,"You are a data auditor, checking the work of another AI.
 
 The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US households, 20% own at least one dog and 90% own at least one cat.
+Among US households, -0.10% own at least one dog and 90% own at least one cat.
 An estimated 19% fall into both categories.
 Among dog-owning households, 50% took at least one pet to a veterinarian in the past 12 months. Among cat-owning households, 5% did.
 
 What is the probability that a household that took at least one pet to a veterinarian in the past 12 months owns at least one dog?
 
-A. About 62%
+A. About 60%
 B. About 90%
 C. About 5%
 D. About 50%
@@ -2466,14 +2466,14 @@ Which answer is closest? Reply with only the letter (A, B, C, D, or E).
 
 And it gave the following response:
 
-About 62%
+About 60%
 
 Is this a good answer to give your customer?
 
 A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
-Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.19,0.2,0.9,0.5,0.05,B,61.73,62%,false,61.73,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
+Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.19,-0.001,0.9,0.5,0.05,B,59.54,60%,false,59.54,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
 youtube_facebook_news__natural__mc_prob,youtube facebook news,natural,well_posed,large,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 84% use YouTube and 71% use Facebook.
@@ -2552,7 +2552,7 @@ B. No — this answer is not appropriate for the customer.
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.65,0.84,0.71,0.45,0.57,B,92.42,92%,false,92.42,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
 youtube_facebook_news__altered__mc_prob,youtube facebook news,altered,altered,large,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% use YouTube and 15% use Facebook.
+Among US adults 18 years and older, -100.00% use YouTube and 15% use Facebook.
 An estimated 65% fall into both categories.
 Among YouTube users, 10% got news on YouTube in the past month. Among Facebook users, 50% got news on Facebook in the past month.
 
@@ -2564,10 +2564,10 @@ C. About 50%
 D. About 5%
 E. About 10%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",false,implausible,0.65,0.9,0.15,0.1,0.5,A,100,100%,false,100,A,false,n/a,About 100%,About 15%,About 50%,About 5%,About 10%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,,,,,,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",false,implausible,0.65,-1,0.15,0.1,0.5,A,100,100%,false,100,A,false,n/a,About 100%,About 15%,About 50%,About 5%,About 10%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,,,,,,
 youtube_facebook_news__altered__mc_w_meta,youtube facebook news,altered,altered,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% use YouTube and 15% use Facebook.
+Among US adults 18 years and older, -100.00% use YouTube and 15% use Facebook.
 An estimated 65% fall into both categories.
 Among YouTube users, 10% got news on YouTube in the past month. Among Facebook users, 50% got news on Facebook in the past month.
 
@@ -2581,10 +2581,10 @@ E. About 10%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0.65,0.9,0.15,0.1,0.5,A,100,100%,false,100,A,true,F,About 100%,About 15%,About 5%,About 50%,About 10%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0.65,-1,0.15,0.1,0.5,A,100,100%,false,100,A,true,F,About 100%,About 15%,About 5%,About 50%,About 10%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 youtube_facebook_news__altered__data_audit,youtube facebook news,altered,altered,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
-Among US adults 18 years and older, 90% use YouTube and 15% use Facebook.
+Among US adults 18 years and older, -100.00% use YouTube and 15% use Facebook.
 An estimated 65% fall into both categories.
 Among YouTube users, 10% got news on YouTube in the past month. Among Facebook users, 50% got news on Facebook in the past month.
 
@@ -2595,14 +2595,14 @@ Does this problem description give enough sensible information for a well-founde
 A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
 B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.65,0.9,0.15,0.1,0.5,B,100,100%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
+Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.65,-1,0.15,0.1,0.5,B,100,100%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
 youtube_facebook_news__altered__response_audit,youtube facebook news,altered,altered,large,response_audit,true,response_audit,"You are a data auditor, checking the work of another AI.
 
 The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% use YouTube and 15% use Facebook.
+Among US adults 18 years and older, -100.00% use YouTube and 15% use Facebook.
 An estimated 65% fall into both categories.
 Among YouTube users, 10% got news on YouTube in the past month. Among Facebook users, 50% got news on Facebook in the past month.
 
@@ -2625,7 +2625,7 @@ Is this a good answer to give your customer?
 A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
-Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.65,0.9,0.15,0.1,0.5,B,100,100%,false,100,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
+Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.65,-1,0.15,0.1,0.5,B,100,100%,false,100,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
 college_grad_professional_job__natural__mc_prob,college grad professional job,natural,well_posed,large,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults aged 25 years and older, 36% hold a bachelor's degree or higher and 36% are employed in a management, business, science, or arts occupation.
@@ -2704,7 +2704,7 @@ B. No — this answer is not appropriate for the customer.
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.28,0.357,0.36,0.344,0.48,B,78.7,79%,false,78.7,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
 college_grad_professional_job__altered__mc_prob,college grad professional job,altered,altered,large,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults aged 25 years and older, 90% hold a bachelor's degree or higher and 15% are employed in a management, business, science, or arts occupation.
+Among US adults aged 25 years and older, 100% hold a bachelor's degree or higher and 15% are employed in a management, business, science, or arts occupation.
 An estimated 28% fall into both categories.
 Among adults with a bachelor's degree or higher, 10% earned $100,000 or more in the past 12 months. Among adults employed in management, business, science, or arts occupations, 50% did.
 
@@ -2716,10 +2716,10 @@ C. About 10%
 D. About 50%
 E. About 15%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",false,implausible,0.28,0.9,0.15,0.1,0.5,A,100,100%,false,100,A,false,n/a,About 100%,About 5%,About 10%,About 50%,About 15%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,,,,,,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",false,implausible,0.28,1,0.15,0.1,0.5,A,100,100%,false,100,A,false,n/a,About 100%,About 5%,About 10%,About 50%,About 15%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,,,,,,
 college_grad_professional_job__altered__mc_w_meta,college grad professional job,altered,altered,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults aged 25 years and older, 90% hold a bachelor's degree or higher and 15% are employed in a management, business, science, or arts occupation.
+Among US adults aged 25 years and older, 100% hold a bachelor's degree or higher and 15% are employed in a management, business, science, or arts occupation.
 An estimated 28% fall into both categories.
 Among adults with a bachelor's degree or higher, 10% earned $100,000 or more in the past 12 months. Among adults employed in management, business, science, or arts occupations, 50% did.
 
@@ -2733,10 +2733,10 @@ E. About 5%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0.28,0.9,0.15,0.1,0.5,A,100,100%,false,100,A,true,F,About 100%,About 15%,About 10%,About 50%,About 5%,Bayes P(C|T),P(D) confusion,P(T|C) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0.28,1,0.15,0.1,0.5,A,100,100%,false,100,A,true,F,About 100%,About 15%,About 10%,About 50%,About 5%,Bayes P(C|T),P(D) confusion,P(T|C) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 college_grad_professional_job__altered__data_audit,college grad professional job,altered,altered,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
-Among US adults aged 25 years and older, 90% hold a bachelor's degree or higher and 15% are employed in a management, business, science, or arts occupation.
+Among US adults aged 25 years and older, 100% hold a bachelor's degree or higher and 15% are employed in a management, business, science, or arts occupation.
 An estimated 28% fall into both categories.
 Among adults with a bachelor's degree or higher, 10% earned $100,000 or more in the past 12 months. Among adults employed in management, business, science, or arts occupations, 50% did.
 
@@ -2747,14 +2747,14 @@ Does this problem description give enough sensible information for a well-founde
 A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
 B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.28,0.9,0.15,0.1,0.5,B,100,100%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
+Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.28,1,0.15,0.1,0.5,B,100,100%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
 college_grad_professional_job__altered__response_audit,college grad professional job,altered,altered,large,response_audit,true,response_audit,"You are a data auditor, checking the work of another AI.
 
 The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults aged 25 years and older, 90% hold a bachelor's degree or higher and 15% are employed in a management, business, science, or arts occupation.
+Among US adults aged 25 years and older, 100% hold a bachelor's degree or higher and 15% are employed in a management, business, science, or arts occupation.
 An estimated 28% fall into both categories.
 Among adults with a bachelor's degree or higher, 10% earned $100,000 or more in the past 12 months. Among adults employed in management, business, science, or arts occupations, 50% did.
 
@@ -2777,7 +2777,7 @@ Is this a good answer to give your customer?
 A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
-Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.28,0.9,0.15,0.1,0.5,B,100,100%,false,100,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
+Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.28,1,0.15,0.1,0.5,B,100,100%,false,100,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
 homeowner_suburban_mortgage__natural__mc_prob,homeowner suburban mortgage,natural,well_posed,large,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US households, 66% own their home and 48% are in suburban areas.
@@ -2856,7 +2856,7 @@ B. No — this answer is not appropriate for the customer.
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.43,0.659,0.48,0.612,0.47,B,94.07,94%,false,94.07,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
 homeowner_suburban_mortgage__altered__mc_prob,homeowner suburban mortgage,altered,altered,large,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US households, 90% own their home and 15% are in suburban areas.
+Among US households, 1000% own their home and 15% are in suburban areas.
 An estimated 43% fall into both categories.
 Among households that own their home, 10% have a mortgage. Among suburban households, 50% have a mortgage.
 
@@ -2868,10 +2868,10 @@ C. About 10%
 D. About 50%
 E. About 15%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",false,implausible,0.43,0.9,0.15,0.1,0.5,A,100,100%,false,100,A,false,n/a,About 100%,About 5%,About 10%,About 50%,About 15%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,,,,,,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",false,implausible,0.43,10,0.15,0.1,0.5,A,100,100%,false,100,A,false,n/a,About 100%,About 5%,About 10%,About 50%,About 15%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,,,,,,
 homeowner_suburban_mortgage__altered__mc_w_meta,homeowner suburban mortgage,altered,altered,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US households, 90% own their home and 15% are in suburban areas.
+Among US households, 1000% own their home and 15% are in suburban areas.
 An estimated 43% fall into both categories.
 Among households that own their home, 10% have a mortgage. Among suburban households, 50% have a mortgage.
 
@@ -2885,10 +2885,10 @@ E. About 5%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0.43,0.9,0.15,0.1,0.5,A,100,100%,false,100,A,true,F,About 100%,About 15%,About 50%,About 10%,About 5%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0.43,10,0.15,0.1,0.5,A,100,100%,false,100,A,true,F,About 100%,About 15%,About 50%,About 10%,About 5%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 homeowner_suburban_mortgage__altered__data_audit,homeowner suburban mortgage,altered,altered,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
-Among US households, 90% own their home and 15% are in suburban areas.
+Among US households, 1000% own their home and 15% are in suburban areas.
 An estimated 43% fall into both categories.
 Among households that own their home, 10% have a mortgage. Among suburban households, 50% have a mortgage.
 
@@ -2899,14 +2899,14 @@ Does this problem description give enough sensible information for a well-founde
 A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
 B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.43,0.9,0.15,0.1,0.5,B,100,100%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
+Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.43,10,0.15,0.1,0.5,B,100,100%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
 homeowner_suburban_mortgage__altered__response_audit,homeowner suburban mortgage,altered,altered,large,response_audit,true,response_audit,"You are a data auditor, checking the work of another AI.
 
 The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US households, 90% own their home and 15% are in suburban areas.
+Among US households, 1000% own their home and 15% are in suburban areas.
 An estimated 43% fall into both categories.
 Among households that own their home, 10% have a mortgage. Among suburban households, 50% have a mortgage.
 
@@ -2929,7 +2929,7 @@ Is this a good answer to give your customer?
 A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
-Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.43,0.9,0.15,0.1,0.5,B,100,100%,false,100,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
+Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.43,10,0.15,0.1,0.5,B,100,100%,false,100,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
 parent_married_dual_income__natural__mc_prob,parent married dual income,natural,well_posed,large,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 30% live with an own child under age 18 and 49% are currently married.
@@ -3008,7 +3008,7 @@ B. No — this answer is not appropriate for the customer.
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.22,0.3,0.49,0.64,0.52,B,56.02,56%,false,56.02,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
 parent_married_dual_income__altered__mc_prob,parent married dual income,altered,altered,large,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 20% live with an own child under age 18 and 90% are currently married.
+Among US adults 18 years and older, -0.01% live with an own child under age 18 and 90% are currently married.
 An estimated 22% fall into both categories.
 Among adults living with an own child under 18, 50% live in a dual-income household. Among married adults, 5% live in a dual-income household.
 
@@ -3020,10 +3020,10 @@ C. About 5%
 D. About 2%
 E. About 90%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",false,implausible,0.22,0.2,0.9,0.5,0.05,A,64.02,64%,false,64.02,A,false,n/a,About 64%,About 50%,About 5%,About 2%,About 90%,Bayes P(C|T),P(T|C) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,P(D) confusion,,,,,,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",false,implausible,0.22,-0.0001,0.9,0.5,0.05,A,64.02,64%,false,64.02,A,false,n/a,About 64%,About 50%,About 5%,About 2%,About 90%,Bayes P(C|T),P(T|C) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,P(D) confusion,,,,,,
 parent_married_dual_income__altered__mc_w_meta,parent married dual income,altered,altered,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 20% live with an own child under age 18 and 90% are currently married.
+Among US adults 18 years and older, -0.01% live with an own child under age 18 and 90% are currently married.
 An estimated 22% fall into both categories.
 Among adults living with an own child under 18, 50% live in a dual-income household. Among married adults, 5% live in a dual-income household.
 
@@ -3037,10 +3037,10 @@ E. About 2%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0.22,0.2,0.9,0.5,0.05,A,64.02,64%,false,64.02,A,true,F,About 64%,About 5%,About 90%,About 50%,About 2%,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0.22,-0.0001,0.9,0.5,0.05,A,64.02,64%,false,64.02,A,true,F,About 64%,About 5%,About 90%,About 50%,About 2%,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 parent_married_dual_income__altered__data_audit,parent married dual income,altered,altered,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
-Among US adults 18 years and older, 20% live with an own child under age 18 and 90% are currently married.
+Among US adults 18 years and older, -0.01% live with an own child under age 18 and 90% are currently married.
 An estimated 22% fall into both categories.
 Among adults living with an own child under 18, 50% live in a dual-income household. Among married adults, 5% live in a dual-income household.
 
@@ -3051,14 +3051,14 @@ Does this problem description give enough sensible information for a well-founde
 A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
 B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.22,0.2,0.9,0.5,0.05,B,64.02,64%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
+Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.22,-0.0001,0.9,0.5,0.05,B,64.02,64%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
 parent_married_dual_income__altered__response_audit,parent married dual income,altered,altered,large,response_audit,true,response_audit,"You are a data auditor, checking the work of another AI.
 
 The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 20% live with an own child under age 18 and 90% are currently married.
+Among US adults 18 years and older, -0.01% live with an own child under age 18 and 90% are currently married.
 An estimated 22% fall into both categories.
 Among adults living with an own child under 18, 50% live in a dual-income household. Among married adults, 5% live in a dual-income household.
 
@@ -3081,7 +3081,7 @@ Is this a good answer to give your customer?
 A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
-Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.22,0.2,0.9,0.5,0.05,B,64.02,64%,false,64.02,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
+Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.22,-0.0001,0.9,0.5,0.05,B,64.02,64%,false,64.02,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
 republican_gun_owner_ban__natural__mc_prob,republican gun owner ban,natural,well_posed,large,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 30% identify as Republican or lean Republican and 32% personally own a firearm.
@@ -3160,7 +3160,7 @@ B. No — this answer is not appropriate for the customer.
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.21,0.3,0.32,0.42,0.37,B,74.79,75%,false,74.79,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
 republican_gun_owner_ban__altered__mc_prob,republican gun owner ban,altered,altered,large,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% identify as Republican or lean Republican and 15% personally own a firearm.
+Among US adults 18 years and older, -100.00% identify as Republican or lean Republican and 15% personally own a firearm.
 An estimated 21% fall into both categories.
 Among Republicans, 10% favor banning assault-style weapons. Among firearm owners, 50% favor banning assault-style weapons.
 
@@ -3172,10 +3172,10 @@ C. About 15%
 D. About 50%
 E. About 5%
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",false,implausible,0.21,0.9,0.15,0.1,0.5,A,100,100%,false,100,A,false,n/a,About 100%,About 10%,About 15%,About 50%,About 5%,Bayes P(C|T),P(T|C) confusion,P(D) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,,,,,,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).",false,implausible,0.21,-1,0.15,0.1,0.5,A,100,100%,false,100,A,false,n/a,About 100%,About 10%,About 15%,About 50%,About 5%,Bayes P(C|T),P(T|C) confusion,P(D) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,,,,,,
 republican_gun_owner_ban__altered__mc_w_meta,republican gun owner ban,altered,altered,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% identify as Republican or lean Republican and 15% personally own a firearm.
+Among US adults 18 years and older, -100.00% identify as Republican or lean Republican and 15% personally own a firearm.
 An estimated 21% fall into both categories.
 Among Republicans, 10% favor banning assault-style weapons. Among firearm owners, 50% favor banning assault-style weapons.
 
@@ -3189,10 +3189,10 @@ E. About 15%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0.21,0.9,0.15,0.1,0.5,A,100,100%,false,100,A,true,F,About 100%,About 5%,About 10%,About 50%,About 15%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0.21,-1,0.15,0.1,0.5,A,100,100%,false,100,A,true,F,About 100%,About 5%,About 10%,About 50%,About 15%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 republican_gun_owner_ban__altered__data_audit,republican gun owner ban,altered,altered,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
-Among US adults 18 years and older, 90% identify as Republican or lean Republican and 15% personally own a firearm.
+Among US adults 18 years and older, -100.00% identify as Republican or lean Republican and 15% personally own a firearm.
 An estimated 21% fall into both categories.
 Among Republicans, 10% favor banning assault-style weapons. Among firearm owners, 50% favor banning assault-style weapons.
 
@@ -3203,14 +3203,14 @@ Does this problem description give enough sensible information for a well-founde
 A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
 B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.21,0.9,0.15,0.1,0.5,B,100,100%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
+Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.21,-1,0.15,0.1,0.5,B,100,100%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
 republican_gun_owner_ban__altered__response_audit,republican gun owner ban,altered,altered,large,response_audit,true,response_audit,"You are a data auditor, checking the work of another AI.
 
 The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% identify as Republican or lean Republican and 15% personally own a firearm.
+Among US adults 18 years and older, -100.00% identify as Republican or lean Republican and 15% personally own a firearm.
 An estimated 21% fall into both categories.
 Among Republicans, 10% favor banning assault-style weapons. Among firearm owners, 50% favor banning assault-style weapons.
 
@@ -3233,4 +3233,4 @@ Is this a good answer to give your customer?
 A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
-Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.21,0.9,0.15,0.1,0.5,B,100,100%,false,100,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
+Which answer is closest? Reply with only the letter (A or B).",false,implausible,0.21,-1,0.15,0.1,0.5,B,100,100%,false,100,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,

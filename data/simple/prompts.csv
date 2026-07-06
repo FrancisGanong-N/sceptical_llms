@@ -2100,7 +2100,7 @@ B. No — this answer is not appropriate for the customer.
 Which answer is closest? Reply with only the letter (A or B)."
 fantasy_sports_under_45_vs_male__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% are under age 45 and 15% are men. An estimated 22% fall into both categories.
+Among US adults 18 years and older, 100% are under age 45 and 15% are men. An estimated 22% fall into both categories.
 Among those under age 45, 10% played fantasy sports for money; among men, 50% played fantasy sports for money.
 
 What is the probability that an adult who played fantasy sports for money is under age 45?
@@ -2114,7 +2114,7 @@ E. About 15%
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 fantasy_sports_under_45_vs_male__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% are under age 45 and 15% are men. An estimated 22% fall into both categories.
+Among US adults 18 years and older, 100% are under age 45 and 15% are men. An estimated 22% fall into both categories.
 Among those under age 45, 10% played fantasy sports for money; among men, 50% played fantasy sports for money.
 
 What is the probability that an adult who played fantasy sports for money is under age 45?
@@ -2130,7 +2130,7 @@ F. The problem as stated is not sufficiently described, or is inconsistent, or i
 Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 fantasy_sports_under_45_vs_male__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
-Among US adults 18 years and older, 90% are under age 45 and 15% are men. An estimated 22% fall into both categories.
+Among US adults 18 years and older, 100% are under age 45 and 15% are men. An estimated 22% fall into both categories.
 Among those under age 45, 10% played fantasy sports for money; among men, 50% played fantasy sports for money.
 
 What is the probability that an adult who played fantasy sports for money is under age 45?
@@ -2147,7 +2147,7 @@ The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% are under age 45 and 15% are men. An estimated 22% fall into both categories.
+Among US adults 18 years and older, 100% are under age 45 and 15% are men. An estimated 22% fall into both categories.
 Among those under age 45, 10% played fantasy sports for money; among men, 50% played fantasy sports for money.
 
 What is the probability that an adult who played fantasy sports for money is under age 45?
@@ -2248,7 +2248,7 @@ B. No — this answer is not appropriate for the customer.
 Which answer is closest? Reply with only the letter (A or B)."
 book_drama_streaming__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% read at least one book in the past 12 months and 15% watch streaming services.
+Among US adults 18 years and older, 1000% read at least one book in the past 12 months and 15% watch streaming services.
 An estimated 65% fall into both categories.
 Among adults who read books, 10% read at least one drama book in the past year. Among adults who watch streaming services, 50% watch drama films or shows as online content.
 
@@ -2263,7 +2263,7 @@ E. About 10%
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 book_drama_streaming__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% read at least one book in the past 12 months and 15% watch streaming services.
+Among US adults 18 years and older, 1000% read at least one book in the past 12 months and 15% watch streaming services.
 An estimated 65% fall into both categories.
 Among adults who read books, 10% read at least one drama book in the past year. Among adults who watch streaming services, 50% watch drama films or shows as online content.
 
@@ -2280,7 +2280,7 @@ F. The problem as stated is not sufficiently described, or is inconsistent, or i
 Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 book_drama_streaming__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
-Among US adults 18 years and older, 90% read at least one book in the past 12 months and 15% watch streaming services.
+Among US adults 18 years and older, 1000% read at least one book in the past 12 months and 15% watch streaming services.
 An estimated 65% fall into both categories.
 Among adults who read books, 10% read at least one drama book in the past year. Among adults who watch streaming services, 50% watch drama films or shows as online content.
 
@@ -2298,7 +2298,7 @@ The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% read at least one book in the past 12 months and 15% watch streaming services.
+Among US adults 18 years and older, 1000% read at least one book in the past 12 months and 15% watch streaming services.
 An estimated 65% fall into both categories.
 Among adults who read books, 10% read at least one drama book in the past year. Among adults who watch streaming services, 50% watch drama films or shows as online content.
 
@@ -2400,13 +2400,13 @@ B. No — this answer is not appropriate for the customer.
 Which answer is closest? Reply with only the letter (A or B)."
 dog_cat_household__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US households, 20% own at least one dog and 90% own at least one cat.
+Among US households, -0.10% own at least one dog and 90% own at least one cat.
 An estimated 19% fall into both categories.
 Among dog-owning households, 50% took at least one pet to a veterinarian in the past 12 months. Among cat-owning households, 5% did.
 
 What is the probability that a household that took at least one pet to a veterinarian in the past 12 months owns at least one dog?
 
-A. About 62%
+A. About 60%
 B. About 90%
 C. About 5%
 D. About 2%
@@ -2415,13 +2415,13 @@ E. About 50%
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 dog_cat_household__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US households, 20% own at least one dog and 90% own at least one cat.
+Among US households, -0.10% own at least one dog and 90% own at least one cat.
 An estimated 19% fall into both categories.
 Among dog-owning households, 50% took at least one pet to a veterinarian in the past 12 months. Among cat-owning households, 5% did.
 
 What is the probability that a household that took at least one pet to a veterinarian in the past 12 months owns at least one dog?
 
-A. About 62%
+A. About 60%
 B. About 5%
 C. About 2%
 D. About 90%
@@ -2432,7 +2432,7 @@ F. The problem as stated is not sufficiently described, or is inconsistent, or i
 Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 dog_cat_household__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
-Among US households, 20% own at least one dog and 90% own at least one cat.
+Among US households, -0.10% own at least one dog and 90% own at least one cat.
 An estimated 19% fall into both categories.
 Among dog-owning households, 50% took at least one pet to a veterinarian in the past 12 months. Among cat-owning households, 5% did.
 
@@ -2450,13 +2450,13 @@ The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US households, 20% own at least one dog and 90% own at least one cat.
+Among US households, -0.10% own at least one dog and 90% own at least one cat.
 An estimated 19% fall into both categories.
 Among dog-owning households, 50% took at least one pet to a veterinarian in the past 12 months. Among cat-owning households, 5% did.
 
 What is the probability that a household that took at least one pet to a veterinarian in the past 12 months owns at least one dog?
 
-A. About 62%
+A. About 60%
 B. About 90%
 C. About 5%
 D. About 50%
@@ -2466,7 +2466,7 @@ Which answer is closest? Reply with only the letter (A, B, C, D, or E).
 
 And it gave the following response:
 
-About 62%
+About 60%
 
 Is this a good answer to give your customer?
 
@@ -2552,7 +2552,7 @@ B. No — this answer is not appropriate for the customer.
 Which answer is closest? Reply with only the letter (A or B)."
 youtube_facebook_news__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% use YouTube and 15% use Facebook.
+Among US adults 18 years and older, -100.00% use YouTube and 15% use Facebook.
 An estimated 65% fall into both categories.
 Among YouTube users, 10% got news on YouTube in the past month. Among Facebook users, 50% got news on Facebook in the past month.
 
@@ -2567,7 +2567,7 @@ E. About 10%
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 youtube_facebook_news__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% use YouTube and 15% use Facebook.
+Among US adults 18 years and older, -100.00% use YouTube and 15% use Facebook.
 An estimated 65% fall into both categories.
 Among YouTube users, 10% got news on YouTube in the past month. Among Facebook users, 50% got news on Facebook in the past month.
 
@@ -2584,7 +2584,7 @@ F. The problem as stated is not sufficiently described, or is inconsistent, or i
 Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 youtube_facebook_news__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
-Among US adults 18 years and older, 90% use YouTube and 15% use Facebook.
+Among US adults 18 years and older, -100.00% use YouTube and 15% use Facebook.
 An estimated 65% fall into both categories.
 Among YouTube users, 10% got news on YouTube in the past month. Among Facebook users, 50% got news on Facebook in the past month.
 
@@ -2602,7 +2602,7 @@ The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% use YouTube and 15% use Facebook.
+Among US adults 18 years and older, -100.00% use YouTube and 15% use Facebook.
 An estimated 65% fall into both categories.
 Among YouTube users, 10% got news on YouTube in the past month. Among Facebook users, 50% got news on Facebook in the past month.
 
@@ -2704,7 +2704,7 @@ B. No — this answer is not appropriate for the customer.
 Which answer is closest? Reply with only the letter (A or B)."
 college_grad_professional_job__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults aged 25 years and older, 90% hold a bachelor's degree or higher and 15% are employed in a management, business, science, or arts occupation.
+Among US adults aged 25 years and older, 100% hold a bachelor's degree or higher and 15% are employed in a management, business, science, or arts occupation.
 An estimated 28% fall into both categories.
 Among adults with a bachelor's degree or higher, 10% earned $100,000 or more in the past 12 months. Among adults employed in management, business, science, or arts occupations, 50% did.
 
@@ -2719,7 +2719,7 @@ E. About 15%
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 college_grad_professional_job__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults aged 25 years and older, 90% hold a bachelor's degree or higher and 15% are employed in a management, business, science, or arts occupation.
+Among US adults aged 25 years and older, 100% hold a bachelor's degree or higher and 15% are employed in a management, business, science, or arts occupation.
 An estimated 28% fall into both categories.
 Among adults with a bachelor's degree or higher, 10% earned $100,000 or more in the past 12 months. Among adults employed in management, business, science, or arts occupations, 50% did.
 
@@ -2736,7 +2736,7 @@ F. The problem as stated is not sufficiently described, or is inconsistent, or i
 Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 college_grad_professional_job__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
-Among US adults aged 25 years and older, 90% hold a bachelor's degree or higher and 15% are employed in a management, business, science, or arts occupation.
+Among US adults aged 25 years and older, 100% hold a bachelor's degree or higher and 15% are employed in a management, business, science, or arts occupation.
 An estimated 28% fall into both categories.
 Among adults with a bachelor's degree or higher, 10% earned $100,000 or more in the past 12 months. Among adults employed in management, business, science, or arts occupations, 50% did.
 
@@ -2754,7 +2754,7 @@ The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults aged 25 years and older, 90% hold a bachelor's degree or higher and 15% are employed in a management, business, science, or arts occupation.
+Among US adults aged 25 years and older, 100% hold a bachelor's degree or higher and 15% are employed in a management, business, science, or arts occupation.
 An estimated 28% fall into both categories.
 Among adults with a bachelor's degree or higher, 10% earned $100,000 or more in the past 12 months. Among adults employed in management, business, science, or arts occupations, 50% did.
 
@@ -2856,7 +2856,7 @@ B. No — this answer is not appropriate for the customer.
 Which answer is closest? Reply with only the letter (A or B)."
 homeowner_suburban_mortgage__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US households, 90% own their home and 15% are in suburban areas.
+Among US households, 1000% own their home and 15% are in suburban areas.
 An estimated 43% fall into both categories.
 Among households that own their home, 10% have a mortgage. Among suburban households, 50% have a mortgage.
 
@@ -2871,7 +2871,7 @@ E. About 15%
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 homeowner_suburban_mortgage__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US households, 90% own their home and 15% are in suburban areas.
+Among US households, 1000% own their home and 15% are in suburban areas.
 An estimated 43% fall into both categories.
 Among households that own their home, 10% have a mortgage. Among suburban households, 50% have a mortgage.
 
@@ -2888,7 +2888,7 @@ F. The problem as stated is not sufficiently described, or is inconsistent, or i
 Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 homeowner_suburban_mortgage__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
-Among US households, 90% own their home and 15% are in suburban areas.
+Among US households, 1000% own their home and 15% are in suburban areas.
 An estimated 43% fall into both categories.
 Among households that own their home, 10% have a mortgage. Among suburban households, 50% have a mortgage.
 
@@ -2906,7 +2906,7 @@ The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US households, 90% own their home and 15% are in suburban areas.
+Among US households, 1000% own their home and 15% are in suburban areas.
 An estimated 43% fall into both categories.
 Among households that own their home, 10% have a mortgage. Among suburban households, 50% have a mortgage.
 
@@ -3008,7 +3008,7 @@ B. No — this answer is not appropriate for the customer.
 Which answer is closest? Reply with only the letter (A or B)."
 parent_married_dual_income__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 20% live with an own child under age 18 and 90% are currently married.
+Among US adults 18 years and older, -0.01% live with an own child under age 18 and 90% are currently married.
 An estimated 22% fall into both categories.
 Among adults living with an own child under 18, 50% live in a dual-income household. Among married adults, 5% live in a dual-income household.
 
@@ -3023,7 +3023,7 @@ E. About 90%
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 parent_married_dual_income__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 20% live with an own child under age 18 and 90% are currently married.
+Among US adults 18 years and older, -0.01% live with an own child under age 18 and 90% are currently married.
 An estimated 22% fall into both categories.
 Among adults living with an own child under 18, 50% live in a dual-income household. Among married adults, 5% live in a dual-income household.
 
@@ -3040,7 +3040,7 @@ F. The problem as stated is not sufficiently described, or is inconsistent, or i
 Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 parent_married_dual_income__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
-Among US adults 18 years and older, 20% live with an own child under age 18 and 90% are currently married.
+Among US adults 18 years and older, -0.01% live with an own child under age 18 and 90% are currently married.
 An estimated 22% fall into both categories.
 Among adults living with an own child under 18, 50% live in a dual-income household. Among married adults, 5% live in a dual-income household.
 
@@ -3058,7 +3058,7 @@ The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 20% live with an own child under age 18 and 90% are currently married.
+Among US adults 18 years and older, -0.01% live with an own child under age 18 and 90% are currently married.
 An estimated 22% fall into both categories.
 Among adults living with an own child under 18, 50% live in a dual-income household. Among married adults, 5% live in a dual-income household.
 
@@ -3160,7 +3160,7 @@ B. No — this answer is not appropriate for the customer.
 Which answer is closest? Reply with only the letter (A or B)."
 republican_gun_owner_ban__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% identify as Republican or lean Republican and 15% personally own a firearm.
+Among US adults 18 years and older, -100.00% identify as Republican or lean Republican and 15% personally own a firearm.
 An estimated 21% fall into both categories.
 Among Republicans, 10% favor banning assault-style weapons. Among firearm owners, 50% favor banning assault-style weapons.
 
@@ -3175,7 +3175,7 @@ E. About 5%
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 republican_gun_owner_ban__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% identify as Republican or lean Republican and 15% personally own a firearm.
+Among US adults 18 years and older, -100.00% identify as Republican or lean Republican and 15% personally own a firearm.
 An estimated 21% fall into both categories.
 Among Republicans, 10% favor banning assault-style weapons. Among firearm owners, 50% favor banning assault-style weapons.
 
@@ -3192,7 +3192,7 @@ F. The problem as stated is not sufficiently described, or is inconsistent, or i
 Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 republican_gun_owner_ban__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
-Among US adults 18 years and older, 90% identify as Republican or lean Republican and 15% personally own a firearm.
+Among US adults 18 years and older, -100.00% identify as Republican or lean Republican and 15% personally own a firearm.
 An estimated 21% fall into both categories.
 Among Republicans, 10% favor banning assault-style weapons. Among firearm owners, 50% favor banning assault-style weapons.
 
@@ -3210,7 +3210,7 @@ The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-Among US adults 18 years and older, 90% identify as Republican or lean Republican and 15% personally own a firearm.
+Among US adults 18 years and older, -100.00% identify as Republican or lean Republican and 15% personally own a firearm.
 An estimated 21% fall into both categories.
 Among Republicans, 10% favor banning assault-style weapons. Among firearm owners, 50% favor banning assault-style weapons.
 
