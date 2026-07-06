@@ -263,6 +263,13 @@ def merge_run_results(
             if example_id in benchmark_by_id
         )
 
+    if not pair_keys:
+        raise ValueError(
+            "No run rows match the current benchmark example_ids. "
+            "Download fresh Kaggle runs for the updated benchmark "
+            f"({benchmark_path})."
+        )
+
     full_run_rows: list[dict[str, object]] = []
     for example_id, model in pair_keys:
         run_row = run_by_key.get((example_id, model), {})
