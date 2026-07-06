@@ -5,6 +5,7 @@ from pathlib import Path
 
 import kaggle_benchmarks as kbench
 
+from benchmarks.kbench_resume import evaluate_prompt_task_with_resume
 from benchmarks.simple_rate import (
     BENCHMARK_CSV,
     DEFAULT_MERGED_RESULTS_CSV,
@@ -103,14 +104,13 @@ def evaluate_simple_rate_benchmark(
         if max_output_tokens is None
         else max_output_tokens
     )
-    with kbench.client.enable_cache():
-        runs = simple_rate_prompt_response.evaluate(
-            llm=llms,
-            evaluation_data=evaluation_data,
-            max_output_tokens=[token_cap],
-            n_jobs=n_jobs,
-            remove_run_files=True,
-        )
+    runs = evaluate_prompt_task_with_resume(
+        simple_rate_prompt_response,
+        llm=llms,
+        evaluation_data=evaluation_data,
+        max_output_tokens=[token_cap],
+        n_jobs=n_jobs,
+    )
 
     run_rows = []
     for run in runs.runs:

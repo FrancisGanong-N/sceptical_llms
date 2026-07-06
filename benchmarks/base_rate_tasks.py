@@ -4,6 +4,7 @@ from pathlib import Path
 
 import kaggle_benchmarks as kbench
 
+from benchmarks.kbench_resume import evaluate_prompt_task_with_resume
 from benchmarks.base_rate import (
     BENCHMARK_CSV,
     DEFAULT_MERGED_RESULTS_CSV,
@@ -108,13 +109,12 @@ def evaluate_base_rate_benchmark(
     previous_max_output_tokens = _active_max_output_tokens
     _active_max_output_tokens = max_output_tokens
     try:
-        with kbench.client.enable_cache():
-            runs = base_rate_prompt_response.evaluate(
-                llm=llms,
-                evaluation_data=evaluation_data,
-                n_jobs=n_jobs,
-                remove_run_files=True,
-            )
+        runs = evaluate_prompt_task_with_resume(
+            base_rate_prompt_response,
+            llm=llms,
+            evaluation_data=evaluation_data,
+            n_jobs=n_jobs,
+        )
     finally:
         _active_max_output_tokens = previous_max_output_tokens
 
