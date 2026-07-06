@@ -29,7 +29,7 @@ from scripts.build_base_rate_prompts import (
 class TestVignetteLoad:
     def test_counts(self):
         assert len(_load_two_cause()) == 5
-        assert len(_load_overlap()) == 4
+        assert len(_load_overlap()) == 5
 
     def test_well_posed_p_cd_zero(self):
         for v in _load_two_cause():

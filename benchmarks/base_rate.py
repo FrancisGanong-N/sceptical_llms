@@ -27,7 +27,7 @@ MC_NUMERIC_LETTERS = frozenset("ABCDE")
 MC_FULL_LETTERS = frozenset("ABCDEFGH")
 META_LETTERS = frozenset("FGH")
 
-ScoringType = Literal["open", "mc_numeric", "mc_full"]
+ScoringType = Literal["open", "mc_numeric", "mc_full", "data_audit", "response_audit"]
 ParsedAnswerType = Literal[
     "probability",
     "meta_insufficient",
@@ -98,7 +98,12 @@ class BaseRateBenchmarkItem:
 
     @property
     def scoring_type(self) -> ScoringType:
-        return self.response_type  # type: ignore[return-value]
+        rt = self.response_type
+        if rt == "mc":
+            return "mc_numeric"
+        if rt in ("data_audit", "response_audit"):
+            return "mc_numeric"
+        return rt  # type: ignore[return-value]
 
     @property
     def is_open(self) -> bool:
@@ -410,7 +415,10 @@ def parse_mc_choice_from_line(answer_line: str) -> str | None:
 
 
 def parse_response(response: str, *, scoring_type: ScoringType) -> ParsedResponse:
-    if scoring_type == "open":
+    effective: ScoringType = scoring_type
+    if scoring_type in ("data_audit", "response_audit"):
+        effective = "mc_numeric"
+    if effective == "open":
         return parse_open_response(response)
 
     answer_line, confidence_line, comment_line = split_mc_response_lines(response)
@@ -695,7 +703,7 @@ def score_example(
     del items
     if item.scoring_type == "open":
         return score_open_example(item, parsed)
-    if item.scoring_type == "mc_numeric":
+    if item.scoring_type in ("mc_numeric", "data_audit", "response_audit"):
         return score_mc_numeric_example(item, parsed)
     return score_mc_full_example(item, parsed)
 

@@ -24,3 +24,4 @@ data/kaggle_runs/
 # OS
 .DS_Store
 Thumbs.db
+*out*.txt

@@ -239,6 +239,258 @@ H. Provided information is obviously incorrect
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+naep_grade_4_reading_ma_vs_nm__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+In Public school fourth graders in Massachusetts or New Mexico, 100% are public school fourth grader in Massachusetts or New Mexicos and the remainder are not applicable outside this universes.
+Among public school fourth grader in Massachusetts or New Mexicos, 75% are massachusetts public school fourth graders and 25% are new Mexico public school fourth graders.
+Among massachusetts public school fourth graders, 40% are proficient readers; among new Mexico public school fourth graders, 20% are proficient readers; among not applicable outside this universes, 0.00% are proficient readers.
+
+Given that a public school fourth grader in Massachusetts or New Mexico or a not applicable outside this universe is a proficient reader, what is the probability the person was a public school fourth grader in Massachusetts or New Mexico?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+naep_grade_4_reading_ma_vs_nm__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+In Public school fourth graders in Massachusetts or New Mexico, 100% are public school fourth grader in Massachusetts or New Mexicos and the remainder are not applicable outside this universes.
+Among public school fourth grader in Massachusetts or New Mexicos, 75% are massachusetts public school fourth graders and 25% are new Mexico public school fourth graders.
+Among massachusetts public school fourth graders, 40% are proficient readers; among new Mexico public school fourth graders, 20% are proficient readers; among not applicable outside this universes, 0.00% are proficient readers.
+
+Given that a public school fourth grader in Massachusetts or New Mexico or a not applicable outside this universe is a proficient reader, what is the probability the person was a public school fourth grader in Massachusetts or New Mexico?
+
+A. About 100%
+B. About 35%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+naep_grade_4_reading_ma_vs_nm__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+In Public school fourth graders in Massachusetts or New Mexico, 100% are public school fourth grader in Massachusetts or New Mexicos and the remainder are not applicable outside this universes.
+Among public school fourth grader in Massachusetts or New Mexicos, 75% are massachusetts public school fourth graders and 25% are new Mexico public school fourth graders.
+Among massachusetts public school fourth graders, 40% are proficient readers; among new Mexico public school fourth graders, 20% are proficient readers; among not applicable outside this universes, 0.00% are proficient readers.
+
+Given that a public school fourth grader in Massachusetts or New Mexico or a not applicable outside this universe is a proficient reader, what is the probability the person was a public school fourth grader in Massachusetts or New Mexico?
+
+A. About 100%
+B. About 35%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+hs_graduation_acgr_wv_vs_az__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+In Public school twelfth graders in West Virginia or Arizona, 100% are public school twelfth grader in West Virginia or Arizonas and the remainder are not applicable outside this universes.
+Among public school twelfth grader in West Virginia or Arizonas, 16% are west Virginia public school twelfth graders and 84% are arizona public school twelfth graders.
+Among west Virginia public school twelfth graders, 91% are on-time graduates; among arizona public school twelfth graders, 76% are on-time graduates; among not applicable outside this universes, 0.00% are on-time graduates.
+
+Given that a public school twelfth grader in West Virginia or Arizona or a not applicable outside this universe is an on-time graduate, what is the probability the person was a public school twelfth grader in West Virginia or Arizona?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+hs_graduation_acgr_wv_vs_az__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+In Public school twelfth graders in West Virginia or Arizona, 100% are public school twelfth grader in West Virginia or Arizonas and the remainder are not applicable outside this universes.
+Among public school twelfth grader in West Virginia or Arizonas, 16% are west Virginia public school twelfth graders and 84% are arizona public school twelfth graders.
+Among west Virginia public school twelfth graders, 91% are on-time graduates; among arizona public school twelfth graders, 76% are on-time graduates; among not applicable outside this universes, 0.00% are on-time graduates.
+
+Given that a public school twelfth grader in West Virginia or Arizona or a not applicable outside this universe is an on-time graduate, what is the probability the person was a public school twelfth grader in West Virginia or Arizona?
+
+A. About 100%
+B. About 78%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+hs_graduation_acgr_wv_vs_az__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+In Public school twelfth graders in West Virginia or Arizona, 100% are public school twelfth grader in West Virginia or Arizonas and the remainder are not applicable outside this universes.
+Among public school twelfth grader in West Virginia or Arizonas, 16% are west Virginia public school twelfth graders and 84% are arizona public school twelfth graders.
+Among west Virginia public school twelfth graders, 91% are on-time graduates; among arizona public school twelfth graders, 76% are on-time graduates; among not applicable outside this universes, 0.00% are on-time graduates.
+
+Given that a public school twelfth grader in West Virginia or Arizona or a not applicable outside this universe is an on-time graduate, what is the probability the person was a public school twelfth grader in West Virginia or Arizona?
+
+A. About 100%
+B. About 78%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+fantasy_sports_male_vs_female__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 49% are males and 51% are females.
+Among males, 34% played fantasy sports for money; among females, 14% played fantasy sports for money; among not applicable outside this universes, 0.00% played fantasy sports for money.
+
+Given that an adult 18 years or older or a not applicable outside this universe played fantasy sports for money, what is the probability the person was an adult 18 years or older?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+fantasy_sports_male_vs_female__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 49% are males and 51% are females.
+Among males, 34% played fantasy sports for money; among females, 14% played fantasy sports for money; among not applicable outside this universes, 0.00% played fantasy sports for money.
+
+Given that an adult 18 years or older or a not applicable outside this universe played fantasy sports for money, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 24%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+fantasy_sports_male_vs_female__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 49% are males and 51% are females.
+Among males, 34% played fantasy sports for money; among females, 14% played fantasy sports for money; among not applicable outside this universes, 0.00% played fantasy sports for money.
+
+Given that an adult 18 years or older or a not applicable outside this universe played fantasy sports for money, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 24%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+physician_vs_phd_research__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+In US-residing active physicians plus US-residing employed research doctorate holders in any science, engineering, or health field, 100% are member of this combined workforces and the remainder are not applicable outside this universes.
+Among member of this combined workforces, 54% are physicians and 46% are research doctorate holder without an MD in this workforces.
+Among physicians, 14% engaged in research as part of professional work; among research doctorate holder without an MD in this workforces, 39% engaged in research as part of professional work; among not applicable outside this universes, 0.00% engaged in research as part of professional work.
+
+Given that a member of this combined workforce or a not applicable outside this universe engaged in research as part of professional work, what is the probability the person was a member of this combined workforce?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+physician_vs_phd_research__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+In US-residing active physicians plus US-residing employed research doctorate holders in any science, engineering, or health field, 100% are member of this combined workforces and the remainder are not applicable outside this universes.
+Among member of this combined workforces, 54% are physicians and 46% are research doctorate holder without an MD in this workforces.
+Among physicians, 14% engaged in research as part of professional work; among research doctorate holder without an MD in this workforces, 39% engaged in research as part of professional work; among not applicable outside this universes, 0.00% engaged in research as part of professional work.
+
+Given that a member of this combined workforce or a not applicable outside this universe engaged in research as part of professional work, what is the probability the person was a member of this combined workforce?
+
+A. About 100%
+B. About 26%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+physician_vs_phd_research__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+In US-residing active physicians plus US-residing employed research doctorate holders in any science, engineering, or health field, 100% are member of this combined workforces and the remainder are not applicable outside this universes.
+Among member of this combined workforces, 54% are physicians and 46% are research doctorate holder without an MD in this workforces.
+Among physicians, 14% engaged in research as part of professional work; among research doctorate holder without an MD in this workforces, 39% engaged in research as part of professional work; among not applicable outside this universes, 0.00% engaged in research as part of professional work.
+
+Given that a member of this combined workforce or a not applicable outside this universe engaged in research as part of professional work, what is the probability the person was a member of this combined workforce?
+
+A. About 100%
+B. About 26%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+tax_mfj_single_ctc__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US individual income tax returns filed as married filing jointly or single, 100% are return in this filing-status pairs and the remainder are not applicable outside this universes.
+Among return in this filing-status pairs, 40% are married filing jointlys and 60% are singles.
+Among married filing jointlys, 36% claimed at least one qualifying child for the Child Tax Credit; among singles, 3% claimed at least one qualifying child for the Child Tax Credit; among not applicable outside this universes, 0.00% claimed at least one qualifying child for the Child Tax Credit.
+
+Given that a return in this filing-status pair or a not applicable outside this universe claimed at least one qualifying child for the Child Tax Credit, what is the probability the person was a return in this filing-status pair?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+tax_mfj_single_ctc__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US individual income tax returns filed as married filing jointly or single, 100% are return in this filing-status pairs and the remainder are not applicable outside this universes.
+Among return in this filing-status pairs, 40% are married filing jointlys and 60% are singles.
+Among married filing jointlys, 36% claimed at least one qualifying child for the Child Tax Credit; among singles, 3% claimed at least one qualifying child for the Child Tax Credit; among not applicable outside this universes, 0.00% claimed at least one qualifying child for the Child Tax Credit.
+
+Given that a return in this filing-status pair or a not applicable outside this universe claimed at least one qualifying child for the Child Tax Credit, what is the probability the person was a return in this filing-status pair?
+
+A. About 100%
+B. About 16%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+tax_mfj_single_ctc__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US individual income tax returns filed as married filing jointly or single, 100% are return in this filing-status pairs and the remainder are not applicable outside this universes.
+Among return in this filing-status pairs, 40% are married filing jointlys and 60% are singles.
+Among married filing jointlys, 36% claimed at least one qualifying child for the Child Tax Credit; among singles, 3% claimed at least one qualifying child for the Child Tax Credit; among not applicable outside this universes, 0.00% claimed at least one qualifying child for the Child Tax Credit.
+
+Given that a return in this filing-status pair or a not applicable outside this universe claimed at least one qualifying child for the Child Tax Credit, what is the probability the person was a return in this filing-status pair?
+
+A. About 100%
+B. About 16%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+homeownership_under_35_vs_65__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US occupied housing units where householder is under age 35 or age 65 or older, 100% are household in this age pairs and the remainder are not applicable outside this universes.
+Among household in this age pairs, 40% are householder under age 35s and 60% are householder age 65 or olders.
+Among householder under age 35s, 35% owner-occupied housing unit; among householder age 65 or olders, 79% owner-occupied housing unit; among not applicable outside this universes, 0.00% owner-occupied housing unit.
+
+Given that a household in this age pair or a not applicable outside this universe owner-occupied housing unit, what is the probability the person was a household in this age pair?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+homeownership_under_35_vs_65__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US occupied housing units where householder is under age 35 or age 65 or older, 100% are household in this age pairs and the remainder are not applicable outside this universes.
+Among household in this age pairs, 40% are householder under age 35s and 60% are householder age 65 or olders.
+Among householder under age 35s, 35% owner-occupied housing unit; among householder age 65 or olders, 79% owner-occupied housing unit; among not applicable outside this universes, 0.00% owner-occupied housing unit.
+
+Given that a household in this age pair or a not applicable outside this universe owner-occupied housing unit, what is the probability the person was a household in this age pair?
+
+A. About 100%
+B. About 61%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+homeownership_under_35_vs_65__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US occupied housing units where householder is under age 35 or age 65 or older, 100% are household in this age pairs and the remainder are not applicable outside this universes.
+Among household in this age pairs, 40% are householder under age 35s and 60% are householder age 65 or olders.
+Among householder under age 35s, 35% owner-occupied housing unit; among householder age 65 or olders, 79% owner-occupied housing unit; among not applicable outside this universes, 0.00% owner-occupied housing unit.
+
+Given that a household in this age pair or a not applicable outside this universe owner-occupied housing unit, what is the probability the person was a household in this age pair?
+
+A. About 100%
+B. About 61%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 diabetes_insulin_obese__overlap__explicit__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 11% have diagnosed diabetes and the remainder do not.
@@ -501,6 +753,540 @@ H. Provided information is obviously incorrect
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, or C, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+nfl_mlb_watch_attend__overlap__explicit__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 64% are watched an entire NFL or MLB game in the past years and the remainder are did not watch an entire NFL or MLB game in the past years.
+Among watched an entire NFL or MLB game in the past years, 88% are watched an entire NFL game in the past years and 52% are watched an entire MLB game in the past years. An estimated 39% fall into both categories.
+Among watched an entire NFL game in the past years, 13% attended an NFL or MLB game in person; among watched an entire MLB game in the past years, 21% attended an NFL or MLB game in person; among did not watch an entire NFL or MLB game in the past years, 0.00% attended an NFL or MLB game in person.
+
+Given that a watched an entire NFL or MLB game in the past year or a did not watch an entire NFL or MLB game in the past year attended an NFL or MLB game in person, what is the probability the person was a watched an entire NFL or MLB game in the past year?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+nfl_mlb_watch_attend__overlap__explicit__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 64% are watched an entire NFL or MLB game in the past years and the remainder are did not watch an entire NFL or MLB game in the past years.
+Among watched an entire NFL or MLB game in the past years, 88% are watched an entire NFL game in the past years and 52% are watched an entire MLB game in the past years. An estimated 39% fall into both categories.
+Among watched an entire NFL game in the past years, 13% attended an NFL or MLB game in person; among watched an entire MLB game in the past years, 21% attended an NFL or MLB game in person; among did not watch an entire NFL or MLB game in the past years, 0.00% attended an NFL or MLB game in person.
+
+Given that a watched an entire NFL or MLB game in the past year or a did not watch an entire NFL or MLB game in the past year attended an NFL or MLB game in person, what is the probability the person was a watched an entire NFL or MLB game in the past year?
+
+A. About 100%
+B. About 22%
+C. About 64%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, or C).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+nfl_mlb_watch_attend__overlap__explicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 64% are watched an entire NFL or MLB game in the past years and the remainder are did not watch an entire NFL or MLB game in the past years.
+Among watched an entire NFL or MLB game in the past years, 88% are watched an entire NFL game in the past years and 52% are watched an entire MLB game in the past years. An estimated 39% fall into both categories.
+Among watched an entire NFL game in the past years, 13% attended an NFL or MLB game in person; among watched an entire MLB game in the past years, 21% attended an NFL or MLB game in person; among did not watch an entire NFL or MLB game in the past years, 0.00% attended an NFL or MLB game in person.
+
+Given that a watched an entire NFL or MLB game in the past year or a did not watch an entire NFL or MLB game in the past year attended an NFL or MLB game in person, what is the probability the person was a watched an entire NFL or MLB game in the past year?
+
+A. About 100%
+B. About 64%
+C. About 22%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, or C, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+nfl_mlb_watch_attend__overlap__implicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 64% are watched an entire NFL or MLB game in the past years and the remainder are did not watch an entire NFL or MLB game in the past years.
+Among watched an entire NFL or MLB game in the past years, 88% are watched an entire NFL game in the past years and 52% are watched an entire MLB game in the past years.
+Among watched an entire NFL game in the past years, 13% attended an NFL or MLB game in person; among watched an entire MLB game in the past years, 21% attended an NFL or MLB game in person; among did not watch an entire NFL or MLB game in the past years, 0.00% attended an NFL or MLB game in person.
+
+Given that a watched an entire NFL or MLB game in the past year or a did not watch an entire NFL or MLB game in the past year attended an NFL or MLB game in person, what is the probability the person was a watched an entire NFL or MLB game in the past year?
+
+A. About 100%
+B. About 22%
+C. About 64%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A, B, or C, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+fantasy_sports_under_45_vs_male__overlap__explicit__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 45% are under age 45s and 49% are males. An estimated 22% fall into both categories.
+Among under age 45s, 41% played fantasy sports for money; among males, 34% played fantasy sports for money; among not applicable outside this universes, 8% played fantasy sports for money.
+
+Given that an adult 18 years or older or a not applicable outside this universe played fantasy sports for money, what is the probability the person was an adult 18 years or older?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+fantasy_sports_under_45_vs_male__overlap__explicit__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 45% are under age 45s and 49% are males. An estimated 22% fall into both categories.
+Among under age 45s, 41% played fantasy sports for money; among males, 34% played fantasy sports for money; among not applicable outside this universes, 8% played fantasy sports for money.
+
+Given that an adult 18 years or older or a not applicable outside this universe played fantasy sports for money, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 35%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+fantasy_sports_under_45_vs_male__overlap__explicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 45% are under age 45s and 49% are males. An estimated 22% fall into both categories.
+Among under age 45s, 41% played fantasy sports for money; among males, 34% played fantasy sports for money; among not applicable outside this universes, 8% played fantasy sports for money.
+
+Given that an adult 18 years or older or a not applicable outside this universe played fantasy sports for money, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 35%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+fantasy_sports_under_45_vs_male__overlap__implicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 45% are under age 45s and 49% are males.
+Among under age 45s, 41% played fantasy sports for money; among males, 34% played fantasy sports for money; among not applicable outside this universes, 8% played fantasy sports for money.
+
+Given that an adult 18 years or older or a not applicable outside this universe played fantasy sports for money, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 35%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+book_drama_streaming__overlap__explicit__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 75% are read at least one book in the past 12 months and 83% are watch streaming services. An estimated 65% fall into both categories.
+Among read at least one book in the past 12 months, 20% engaged with drama in the past year; among watch streaming services, 53% engaged with drama in the past year; among not applicable outside this universes, 0.00% engaged with drama in the past year.
+
+Given that an adult 18 years or older or a not applicable outside this universe engaged with drama in the past year, what is the probability the person was an adult 18 years or older?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+book_drama_streaming__overlap__explicit__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 75% are read at least one book in the past 12 months and 83% are watch streaming services. An estimated 65% fall into both categories.
+Among read at least one book in the past 12 months, 20% engaged with drama in the past year; among watch streaming services, 53% engaged with drama in the past year; among not applicable outside this universes, 0.00% engaged with drama in the past year.
+
+Given that an adult 18 years or older or a not applicable outside this universe engaged with drama in the past year, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 59%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+book_drama_streaming__overlap__explicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 75% are read at least one book in the past 12 months and 83% are watch streaming services. An estimated 65% fall into both categories.
+Among read at least one book in the past 12 months, 20% engaged with drama in the past year; among watch streaming services, 53% engaged with drama in the past year; among not applicable outside this universes, 0.00% engaged with drama in the past year.
+
+Given that an adult 18 years or older or a not applicable outside this universe engaged with drama in the past year, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 59%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+book_drama_streaming__overlap__implicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 75% are read at least one book in the past 12 months and 83% are watch streaming services.
+Among read at least one book in the past 12 months, 20% engaged with drama in the past year; among watch streaming services, 53% engaged with drama in the past year; among not applicable outside this universes, 0.00% engaged with drama in the past year.
+
+Given that an adult 18 years or older or a not applicable outside this universe engaged with drama in the past year, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 59%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+dog_cat_household__overlap__explicit__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US households, 100% are uS households and the remainder are not applicable outside this universes.
+Among uS households, 43% are household owns at least one dogs and 33% are household owns at least one cats. An estimated 19% fall into both categories.
+Among household owns at least one dogs, 79% took at least one household pet to a veterinarian in the past 12 months; among household owns at least one cats, 53% took at least one household pet to a veterinarian in the past 12 months; among not applicable outside this universes, 0.00% took at least one household pet to a veterinarian in the past 12 months.
+
+Given that a uS household or a not applicable outside this universe took at least one household pet to a veterinarian in the past 12 months, what is the probability the person was a uS household?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+dog_cat_household__overlap__explicit__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US households, 100% are uS households and the remainder are not applicable outside this universes.
+Among uS households, 43% are household owns at least one dogs and 33% are household owns at least one cats. An estimated 19% fall into both categories.
+Among household owns at least one dogs, 79% took at least one household pet to a veterinarian in the past 12 months; among household owns at least one cats, 53% took at least one household pet to a veterinarian in the past 12 months; among not applicable outside this universes, 0.00% took at least one household pet to a veterinarian in the past 12 months.
+
+Given that a uS household or a not applicable outside this universe took at least one household pet to a veterinarian in the past 12 months, what is the probability the person was a uS household?
+
+A. About 100%
+B. About 51%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+dog_cat_household__overlap__explicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US households, 100% are uS households and the remainder are not applicable outside this universes.
+Among uS households, 43% are household owns at least one dogs and 33% are household owns at least one cats. An estimated 19% fall into both categories.
+Among household owns at least one dogs, 79% took at least one household pet to a veterinarian in the past 12 months; among household owns at least one cats, 53% took at least one household pet to a veterinarian in the past 12 months; among not applicable outside this universes, 0.00% took at least one household pet to a veterinarian in the past 12 months.
+
+Given that a uS household or a not applicable outside this universe took at least one household pet to a veterinarian in the past 12 months, what is the probability the person was a uS household?
+
+A. About 100%
+B. About 51%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+dog_cat_household__overlap__implicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US households, 100% are uS households and the remainder are not applicable outside this universes.
+Among uS households, 43% are household owns at least one dogs and 33% are household owns at least one cats.
+Among household owns at least one dogs, 79% took at least one household pet to a veterinarian in the past 12 months; among household owns at least one cats, 53% took at least one household pet to a veterinarian in the past 12 months; among not applicable outside this universes, 0.00% took at least one household pet to a veterinarian in the past 12 months.
+
+Given that a uS household or a not applicable outside this universe took at least one household pet to a veterinarian in the past 12 months, what is the probability the person was a uS household?
+
+A. About 100%
+B. About 51%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+youtube_facebook_news__overlap__explicit__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 84% use YouTube and 71% use Facebook. An estimated 65% fall into both categories.
+Among those who use YouTube, 45% got news on the platform in the past month among platform users; among those who use Facebook, 57% got news on the platform in the past month among platform users; among not applicable outside this universes, 0.00% got news on the platform in the past month among platform users.
+
+Given that an adult 18 years or older or a not applicable outside this universe got news on the platform in the past month among platform users, what is the probability the person was an adult 18 years or older?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+youtube_facebook_news__overlap__explicit__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 84% use YouTube and 71% use Facebook. An estimated 65% fall into both categories.
+Among those who use YouTube, 45% got news on the platform in the past month among platform users; among those who use Facebook, 57% got news on the platform in the past month among platform users; among not applicable outside this universes, 0.00% got news on the platform in the past month among platform users.
+
+Given that an adult 18 years or older or a not applicable outside this universe got news on the platform in the past month among platform users, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 78%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+youtube_facebook_news__overlap__explicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 84% use YouTube and 71% use Facebook. An estimated 65% fall into both categories.
+Among those who use YouTube, 45% got news on the platform in the past month among platform users; among those who use Facebook, 57% got news on the platform in the past month among platform users; among not applicable outside this universes, 0.00% got news on the platform in the past month among platform users.
+
+Given that an adult 18 years or older or a not applicable outside this universe got news on the platform in the past month among platform users, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 78%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+youtube_facebook_news__overlap__implicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 84% use YouTube and 71% use Facebook.
+Among those who use YouTube, 45% got news on the platform in the past month among platform users; among those who use Facebook, 57% got news on the platform in the past month among platform users; among not applicable outside this universes, 0.00% got news on the platform in the past month among platform users.
+
+Given that an adult 18 years or older or a not applicable outside this universe got news on the platform in the past month among platform users, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 78%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+college_grad_professional_job__overlap__explicit__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults aged 25 years and older, 100% are adults aged 25 years or older and the remainder are not applicable outside this universes.
+Among adults aged 25 years or older, 36% are holds a bachelor's degree or highers and 36% are employed in a management business science or arts occupations. An estimated 28% fall into both categories.
+Among holds a bachelor's degree or highers, 34% earned $100000 or more in total money income in the past 12 months; among employed in a management business science or arts occupations, 48% earned $100000 or more in total money income in the past 12 months; among not applicable outside this universes, 0.00% earned $100000 or more in total money income in the past 12 months.
+
+Given that an adult aged 25 years or older or a not applicable outside this universe earned $100000 or more in total money income in the past 12 months, what is the probability the person was an adult aged 25 years or older?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+college_grad_professional_job__overlap__explicit__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults aged 25 years and older, 100% are adults aged 25 years or older and the remainder are not applicable outside this universes.
+Among adults aged 25 years or older, 36% are holds a bachelor's degree or highers and 36% are employed in a management business science or arts occupations. An estimated 28% fall into both categories.
+Among holds a bachelor's degree or highers, 34% earned $100000 or more in total money income in the past 12 months; among employed in a management business science or arts occupations, 48% earned $100000 or more in total money income in the past 12 months; among not applicable outside this universes, 0.00% earned $100000 or more in total money income in the past 12 months.
+
+Given that an adult aged 25 years or older or a not applicable outside this universe earned $100000 or more in total money income in the past 12 months, what is the probability the person was an adult aged 25 years or older?
+
+A. About 100%
+B. About 30%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+college_grad_professional_job__overlap__explicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults aged 25 years and older, 100% are adults aged 25 years or older and the remainder are not applicable outside this universes.
+Among adults aged 25 years or older, 36% are holds a bachelor's degree or highers and 36% are employed in a management business science or arts occupations. An estimated 28% fall into both categories.
+Among holds a bachelor's degree or highers, 34% earned $100000 or more in total money income in the past 12 months; among employed in a management business science or arts occupations, 48% earned $100000 or more in total money income in the past 12 months; among not applicable outside this universes, 0.00% earned $100000 or more in total money income in the past 12 months.
+
+Given that an adult aged 25 years or older or a not applicable outside this universe earned $100000 or more in total money income in the past 12 months, what is the probability the person was an adult aged 25 years or older?
+
+A. About 100%
+B. About 30%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+college_grad_professional_job__overlap__implicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults aged 25 years and older, 100% are adults aged 25 years or older and the remainder are not applicable outside this universes.
+Among adults aged 25 years or older, 36% are holds a bachelor's degree or highers and 36% are employed in a management business science or arts occupations.
+Among holds a bachelor's degree or highers, 34% earned $100000 or more in total money income in the past 12 months; among employed in a management business science or arts occupations, 48% earned $100000 or more in total money income in the past 12 months; among not applicable outside this universes, 0.00% earned $100000 or more in total money income in the past 12 months.
+
+Given that an adult aged 25 years or older or a not applicable outside this universe earned $100000 or more in total money income in the past 12 months, what is the probability the person was an adult aged 25 years or older?
+
+A. About 100%
+B. About 30%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+homeowner_suburban_mortgage__overlap__explicit__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US households, 100% are uS households and the remainder are not applicable outside this universes.
+Among uS households, 66% are owner-occupied housing units and 48% are located in a suburban areas. An estimated 43% fall into both categories.
+Among owner-occupied housing units, 61% have a mortgage on the home; among located in a suburban areas, 47% have a mortgage on the home; among not applicable outside this universes, 0.00% have a mortgage on the home.
+
+Given that a uS household or a not applicable outside this universe have a mortgage on the home, what is the probability the person was a uS household?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+homeowner_suburban_mortgage__overlap__explicit__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US households, 100% are uS households and the remainder are not applicable outside this universes.
+Among uS households, 66% are owner-occupied housing units and 48% are located in a suburban areas. An estimated 43% fall into both categories.
+Among owner-occupied housing units, 61% have a mortgage on the home; among located in a suburban areas, 47% have a mortgage on the home; among not applicable outside this universes, 0.00% have a mortgage on the home.
+
+Given that a uS household or a not applicable outside this universe have a mortgage on the home, what is the probability the person was a uS household?
+
+A. About 100%
+B. About 63%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+homeowner_suburban_mortgage__overlap__explicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US households, 100% are uS households and the remainder are not applicable outside this universes.
+Among uS households, 66% are owner-occupied housing units and 48% are located in a suburban areas. An estimated 43% fall into both categories.
+Among owner-occupied housing units, 61% have a mortgage on the home; among located in a suburban areas, 47% have a mortgage on the home; among not applicable outside this universes, 0.00% have a mortgage on the home.
+
+Given that a uS household or a not applicable outside this universe have a mortgage on the home, what is the probability the person was a uS household?
+
+A. About 100%
+B. About 63%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+homeowner_suburban_mortgage__overlap__implicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US households, 100% are uS households and the remainder are not applicable outside this universes.
+Among uS households, 66% are owner-occupied housing units and 48% are located in a suburban areas.
+Among owner-occupied housing units, 61% have a mortgage on the home; among located in a suburban areas, 47% have a mortgage on the home; among not applicable outside this universes, 0.00% have a mortgage on the home.
+
+Given that a uS household or a not applicable outside this universe have a mortgage on the home, what is the probability the person was a uS household?
+
+A. About 100%
+B. About 63%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+parent_married_dual_income__overlap__explicit__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 30% are lives with own child under age 18 in the households and 49% are currently marrieds. An estimated 22% fall into both categories.
+Among lives with own child under age 18 in the households, 64% lives in a household with two employed adults; among currently marrieds, 52% lives in a household with two employed adults; among not applicable outside this universes, 0.00% lives in a household with two employed adults.
+
+Given that an adult 18 years or older or a not applicable outside this universe lives in a household with two employed adults, what is the probability the person was an adult 18 years or older?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+parent_married_dual_income__overlap__explicit__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 30% are lives with own child under age 18 in the households and 49% are currently marrieds. An estimated 22% fall into both categories.
+Among lives with own child under age 18 in the households, 64% lives in a household with two employed adults; among currently marrieds, 52% lives in a household with two employed adults; among not applicable outside this universes, 0.00% lives in a household with two employed adults.
+
+Given that an adult 18 years or older or a not applicable outside this universe lives in a household with two employed adults, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 45%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+parent_married_dual_income__overlap__explicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 30% are lives with own child under age 18 in the households and 49% are currently marrieds. An estimated 22% fall into both categories.
+Among lives with own child under age 18 in the households, 64% lives in a household with two employed adults; among currently marrieds, 52% lives in a household with two employed adults; among not applicable outside this universes, 0.00% lives in a household with two employed adults.
+
+Given that an adult 18 years or older or a not applicable outside this universe lives in a household with two employed adults, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 45%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+parent_married_dual_income__overlap__implicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 30% are lives with own child under age 18 in the households and 49% are currently marrieds.
+Among lives with own child under age 18 in the households, 64% lives in a household with two employed adults; among currently marrieds, 52% lives in a household with two employed adults; among not applicable outside this universes, 0.00% lives in a household with two employed adults.
+
+Given that an adult 18 years or older or a not applicable outside this universe lives in a household with two employed adults, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 45%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+republican_gun_owner_ban__overlap__explicit__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 30% are identifies as Republican or leans Republicans and 32% are personally owns a firearms. An estimated 21% fall into both categories.
+Among identifies as Republican or leans Republicans, 42% favors banning assault-style weapons; among personally owns a firearms, 37% favors banning assault-style weapons; among not applicable outside this universes, 0.00% favors banning assault-style weapons.
+
+Given that an adult 18 years or older or a not applicable outside this universe favors banning assault-style weapons, what is the probability the person was an adult 18 years or older?
+
+Reply on two lines.
+Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+republican_gun_owner_ban__overlap__explicit__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 30% are identifies as Republican or leans Republicans and 32% are personally owns a firearms. An estimated 21% fall into both categories.
+Among identifies as Republican or leans Republicans, 42% favors banning assault-style weapons; among personally owns a firearms, 37% favors banning assault-style weapons; among not applicable outside this universes, 0.00% favors banning assault-style weapons.
+
+Given that an adult 18 years or older or a not applicable outside this universe favors banning assault-style weapons, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 24%
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+republican_gun_owner_ban__overlap__explicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 30% are identifies as Republican or leans Republicans and 32% are personally owns a firearms. An estimated 21% fall into both categories.
+Among identifies as Republican or leans Republicans, 42% favors banning assault-style weapons; among personally owns a firearms, 37% favors banning assault-style weapons; among not applicable outside this universes, 0.00% favors banning assault-style weapons.
+
+Given that an adult 18 years or older or a not applicable outside this universe favors banning assault-style weapons, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 24%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
+Line 2: your confidence from 1 (not confident) to 5 (very confident)."
+republican_gun_owner_ban__overlap__implicit__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+
+Among US adults 18 years and older, 100% are adults 18 years or older and the remainder are not applicable outside this universes.
+Among adults 18 years or older, 30% are identifies as Republican or leans Republicans and 32% are personally owns a firearms.
+Among identifies as Republican or leans Republicans, 42% favors banning assault-style weapons; among personally owns a firearms, 37% favors banning assault-style weapons; among not applicable outside this universes, 0.00% favors banning assault-style weapons.
+
+Given that an adult 18 years or older or a not applicable outside this universe favors banning assault-style weapons, what is the probability the person was an adult 18 years or older?
+
+A. About 100%
+B. About 24%
+F. Insufficient information
+G. Inconsistent information
+H. Provided information is obviously incorrect
+
+Which answer is closest? Reply on two lines.
+Line 1: only the letter (A or B, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
 ca_trump_voter__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 

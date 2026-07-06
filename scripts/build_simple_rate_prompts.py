@@ -15,6 +15,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.build_base_rate_prompts import (  # noqa: E402
+    COVID_VACCINE_SHORT,
     INTRO,
     OVERLAP_CSV,
     Vignette,
@@ -39,8 +40,25 @@ from scripts.build_base_rate_prompts import (  # noqa: E402
 )
 
 META_SCEPTICISM = (
-    "Insufficient information, inconsistent information, or obviously incorrect premises"
+    "The problem as stated is not sufficiently described, or is inconsistent, "
+    "or is obviously incorrect"
 )
+DATA_AUDIT_INTRO = (
+    "You are a data analyst. Your customer has asked you to make a prediction "
+    "for a particular problem."
+)
+DATA_AUDIT_QUESTION = (
+    "Does this problem description give enough sensible information for a "
+    "well-founded conclusion?"
+)
+DATA_AUDIT_YES = (
+    "Yes — the problem description gives enough sensible information for a "
+    "well-founded conclusion."
+)
+DATA_AUDIT_NO = f"No — {META_SCEPTICISM[0].lower()}{META_SCEPTICISM[1:]}"
+RESPONSE_AUDIT_GOOD = "Yes — this is a sound, well-founded answer."
+RESPONSE_AUDIT_BAD = "No — this answer is not appropriate for the customer."
+
 SIMPLE_EXCLUDED_OVERLAP_NAMES = frozenset(
     {
         "college STEM work",
@@ -59,10 +77,10 @@ OUT_DIR = ROOT / "data" / "simple"
 IMPLAUSIBLE_P_C_D_CSV = OUT_DIR / "implausible_p_c_d.csv"
 IMPLAUSIBLE_P_T_GIVEN_CSV = OUT_DIR / "implausible_p_t_given.csv"
 PROBLEM_TYPE_WELL_POSED = "well_posed"
-PROBLEM_TYPE_IMPLAUSIBLE_C_D = "implausible_c_d"
-PROBLEM_TYPE_IMPLAUSIBLE_T = "implausible_t"
-CANONICAL_VARIANTS = ("open_probs", "mc_numeric_probs", "mc_full_probs")
-SCEPTICISM_VARIANTS = ("mc_full_probs",)
+PROBLEM_TYPE_ALTERED = "altered"
+CONDITION_NATURAL = "natural"
+CONDITION_ALTERED = "altered"
+CANONICAL_VARIANTS = ("mc_prob", "mc_w_meta", "data_audit", "response_audit")
 VARIANTS = CANONICAL_VARIANTS
 
 SIMPLE_LURE_KEYS = ("product", "path_d", "path_c", "normative", "p_d")
@@ -79,6 +97,7 @@ SIMPLE_LURE_NAMES = {
 BENCHMARK_CONDITION_FIELDS = (
     "example_id",
     "vignette_name",
+    "condition",
     "problem_type",
     "intersection_size",
     "response_type",
@@ -114,6 +133,7 @@ BENCHMARK_FIELDS = BENCHMARK_CONDITION_FIELDS + BENCHMARK_SCORING_FIELDS
 ITEM_FIELDS = [
     "example_id",
     "vignette_name",
+    "condition",
     "variant",
     "well_posed",
     "normative",
@@ -155,6 +175,7 @@ class SimpleVignette:
     s_c: float
     s_d: float
     intersection_size: str
+    condition: str = CONDITION_NATURAL
     problem_type: str = PROBLEM_TYPE_WELL_POSED
     s_n: float = 0.0
 
@@ -238,12 +259,7 @@ class SimpleVignette:
         }
 
     def example_prefix(self) -> str:
-        base = slug(self.name)
-        if self.problem_type == PROBLEM_TYPE_IMPLAUSIBLE_C_D:
-            return f"{base}__implausible_c_d"
-        if self.problem_type == PROBLEM_TYPE_IMPLAUSIBLE_T:
-            return f"{base}__implausible_t"
-        return base
+        return f"{slug(self.name)}__{self.condition}"
 
 
 def _entity_phrase(subtype: str) -> str:
@@ -298,6 +314,8 @@ def _entity_phrase(subtype: str) -> str:
         return "women"
     if re.search(r"^under age 45$", head, re.I):
         return "under age 45"
+    if re.search(r"research doctorate holder without an md", head, re.I):
+        return "research doctorate holders without an MD"
     if re.search(r"main teaching assignment is English", head, re.I):
         return "teach English as their primary assignment"
     if re.search(r"bachelor.*major field is English", head, re.I):
@@ -703,15 +721,83 @@ def has_overlap(v: SimpleVignette) -> bool:
     return (v.intersection_size or "").strip() not in ("", "0")
 
 
-def scepticism_required(v: SimpleVignette) -> bool:
-    """Only implausible forks require the scepticism meta option (F)."""
-    return v.problem_type != PROBLEM_TYPE_WELL_POSED
+def is_well_posed_vignette(v: SimpleVignette) -> bool:
+    """Natural condition with disjoint C and D (no intersection under A)."""
+    return v.condition == CONDITION_NATURAL and not has_overlap(v)
+
+
+def scepticism_required_for_variant(v: SimpleVignette, variant: str) -> bool:
+    """Whether this variant scores against scepticism_score_target vs Bayes numeric."""
+    if is_well_posed_vignette(v):
+        return False
+    return variant in ("mc_w_meta", "data_audit", "response_audit")
 
 
 def variants_for_vignette(v: SimpleVignette) -> tuple[str, ...]:
-    if scepticism_required(v):
-        return SCEPTICISM_VARIANTS
     return CANONICAL_VARIANTS
+
+
+def _uses_absolute_c_d_shares(v: SimpleVignette) -> bool:
+    """Altered P(C)/P(D) are stated as universe shares, not conditional on A."""
+    return v.condition == CONDITION_ALTERED
+
+
+def _stub_ai_response(v: SimpleVignette) -> str:
+    return f"About {_rounded_mc_percent(v.target_posterior() * 100)}%"
+
+
+def _data_audit_normative_choice(v: SimpleVignette) -> str:
+    return "A" if is_well_posed_vignette(v) else "B"
+
+
+def _response_audit_normative_choice(v: SimpleVignette) -> str:
+    return "A" if is_well_posed_vignette(v) else "B"
+
+
+def _mc_w_meta_scepticism_target(v: SimpleVignette) -> str:
+    return "n/a" if is_well_posed_vignette(v) else "F"
+
+
+def _clear_mc_options(item: dict[str, str]) -> None:
+    for letter in "abcdefgh":
+        item[f"option_{letter}_label"] = ""
+        item[f"option_{letter}_lure"] = ""
+
+
+def _build_mc_prob_sections(
+    v: SimpleVignette, example_id: str
+) -> tuple[list[str], dict[str, str], dict[str, str], str, tuple[str, ...]]:
+    labels, lures, normative_letter, option_letters = build_mc_options(v, example_id)
+    lines: list[str] = []
+    for letter in option_letters:
+        lines.append(f"{letter}. {labels[letter]}")
+    return lines, labels, lures, normative_letter, option_letters
+
+
+def _prediction_problem_body(v: SimpleVignette) -> str:
+    """Scenario statistics and question, without the consultant role intro."""
+    text = narrative_with_probs(v)
+    if text.startswith(INTRO):
+        text = text[len(INTRO) :].lstrip("\n")
+    return text.strip()
+
+
+def _format_mc_prob_prompt(
+    v: SimpleVignette, example_id: str, *, include_intro: bool = True
+) -> str:
+    body = narrative_with_probs(v)
+    lines, _, _, _, option_letters = _build_mc_prob_sections(v, example_id)
+    parts = []
+    if include_intro:
+        parts.append(body)
+        parts.append("")
+    parts.extend(lines)
+    suffix_letters = _mc_letter_list(option_letters)
+    parts.append("")
+    parts.append(
+        f"Which answer is closest? Reply with only the letter ({suffix_letters})."
+    )
+    return "\n".join(parts)
 
 
 def _shuffle_keys(example_id: str, keys: tuple[str, ...]) -> tuple[str, ...]:
@@ -861,6 +947,363 @@ def _graduation_wv_az_narrative_with_probs(v: SimpleVignette) -> str:
     return "\n".join(parts)
 
 
+def _book_drama_streaming_share_line(v: SimpleVignette) -> str | None:
+    if v.name != "book drama streaming":
+        return None
+    return (
+        f"Among US adults 18 years and older, {_simple_pct(v.p_c)} read at least "
+        f"one book in the past 12 months and {_simple_pct(v.p_d)} watch streaming "
+        f"services."
+    )
+
+
+def _book_drama_streaming_question(v: SimpleVignette) -> str:
+    return (
+        "What is the probability that a US adult who read drama or watches dramas "
+        "online read at least one book in the past 12 months?"
+    )
+
+
+def _book_drama_streaming_narrative_with_probs(v: SimpleVignette) -> str:
+    parts = [
+        INTRO,
+        "",
+        _book_drama_streaming_share_line(v),
+        f"An estimated {_simple_pct(v.p_cd_universe())} fall into both categories.",
+        (
+            f"Among adults who read books, {_simple_pct(v.s_c)} read at least one "
+            f"drama book in the past year. Among adults who watch streaming services, "
+            f"{_simple_pct(v.s_d)} watch drama films or shows as online content."
+        ),
+        "",
+        _book_drama_streaming_question(v),
+    ]
+    return "\n".join(parts)
+
+
+def _dog_cat_household_narrative_with_probs(v: SimpleVignette) -> str:
+    parts = [
+        INTRO,
+        "",
+        (
+            f"Among US households, {_simple_pct(v.p_c)} own at least one dog and "
+            f"{_simple_pct(v.p_d)} own at least one cat."
+        ),
+        f"An estimated {_simple_pct(v.p_cd_universe())} fall into both categories.",
+        (
+            f"Among dog-owning households, {_simple_pct(v.s_c)} took at least one "
+            f"pet to a veterinarian in the past 12 months. Among cat-owning "
+            f"households, {_simple_pct(v.s_d)} did."
+        ),
+        "",
+        (
+            "What is the probability that a household that took at least one pet "
+            "to a veterinarian in the past 12 months owns at least one dog?"
+        ),
+    ]
+    return "\n".join(parts)
+
+
+def _youtube_facebook_news_narrative_with_probs(v: SimpleVignette) -> str:
+    parts = [
+        INTRO,
+        "",
+        (
+            f"Among US adults 18 years and older, {_simple_pct(v.p_c)} use YouTube "
+            f"and {_simple_pct(v.p_d)} use Facebook."
+        ),
+        f"An estimated {_simple_pct(v.p_cd_universe())} fall into both categories.",
+        (
+            f"Among YouTube users, {_simple_pct(v.s_c)} got news on YouTube in the "
+            f"past month. Among Facebook users, {_simple_pct(v.s_d)} got news on "
+            f"Facebook in the past month."
+        ),
+        "",
+        (
+            "What is the probability that a US adult who got news on YouTube or "
+            "Facebook in the past month uses YouTube?"
+        ),
+    ]
+    return "\n".join(parts)
+
+
+def _college_grad_professional_job_narrative_with_probs(v: SimpleVignette) -> str:
+    parts = [
+        INTRO,
+        "",
+        (
+            f"Among US adults aged 25 years and older, {_simple_pct(v.p_c)} hold a "
+            f"bachelor's degree or higher and {_simple_pct(v.p_d)} are employed in "
+            f"a management, business, science, or arts occupation."
+        ),
+        f"An estimated {_simple_pct(v.p_cd_universe())} fall into both categories.",
+        (
+            f"Among adults with a bachelor's degree or higher, {_simple_pct(v.s_c)} "
+            f"earned $100,000 or more in the past 12 months. Among adults employed "
+            f"in management, business, science, or arts occupations, "
+            f"{_simple_pct(v.s_d)} did."
+        ),
+        "",
+        (
+            "What is the probability that a US adult aged 25 or older who earned "
+            "$100,000 or more in the past 12 months holds a bachelor's degree or "
+            "higher?"
+        ),
+    ]
+    return "\n".join(parts)
+
+
+def _homeowner_suburban_mortgage_narrative_with_probs(v: SimpleVignette) -> str:
+    parts = [
+        INTRO,
+        "",
+        (
+            f"Among US households, {_simple_pct(v.p_c)} own their home and "
+            f"{_simple_pct(v.p_d)} are in suburban areas."
+        ),
+        f"An estimated {_simple_pct(v.p_cd_universe())} fall into both categories.",
+        (
+            f"Among households that own their home, {_simple_pct(v.s_c)} have a "
+            f"mortgage. Among suburban households, {_simple_pct(v.s_d)} have a "
+            f"mortgage."
+        ),
+        "",
+        (
+            "What is the probability that a US household with a mortgage "
+            "owns its home?"
+        ),
+    ]
+    return "\n".join(parts)
+
+
+def _parent_married_dual_income_narrative_with_probs(v: SimpleVignette) -> str:
+    parts = [
+        INTRO,
+        "",
+        (
+            f"Among US adults 18 years and older, {_simple_pct(v.p_c)} live with "
+            f"an own child under age 18 and {_simple_pct(v.p_d)} are currently "
+            f"married."
+        ),
+        f"An estimated {_simple_pct(v.p_cd_universe())} fall into both categories.",
+        (
+            f"Among adults living with an own child under 18, {_simple_pct(v.s_c)} "
+            f"live in a dual-income household. Among married adults, "
+            f"{_simple_pct(v.s_d)} live in a dual-income household."
+        ),
+        "",
+        (
+            "What is the probability that a US adult who lives in a dual-income "
+            "household lives with an own child under age 18?"
+        ),
+    ]
+    return "\n".join(parts)
+
+
+def _republican_gun_owner_ban_narrative_with_probs(v: SimpleVignette) -> str:
+    parts = [
+        INTRO,
+        "",
+        (
+            f"Among US adults 18 years and older, {_simple_pct(v.p_c)} identify as "
+            f"Republican or lean Republican and {_simple_pct(v.p_d)} personally own "
+            f"a firearm."
+        ),
+        f"An estimated {_simple_pct(v.p_cd_universe())} fall into both categories.",
+        (
+            f"Among Republicans, {_simple_pct(v.s_c)} favor banning assault-style "
+            f"weapons. Among firearm owners, {_simple_pct(v.s_d)} favor banning "
+            f"assault-style weapons."
+        ),
+        "",
+        (
+            "What is the probability that a US adult who favors banning "
+            "assault-style weapons identifies as Republican or leans Republican?"
+        ),
+    ]
+    return "\n".join(parts)
+
+
+def _physician_phd_research_share_line(v: SimpleVignette) -> str | None:
+    if v.name != "physician vs PhD research":
+        return None
+    return (
+        f"Among US-residing active physicians and employed research doctorate "
+        f"holders, {_simple_pct(v.p_c)} are physicians (MD/DO) and "
+        f"{_simple_pct(v.p_d)} hold a research doctorate without an MD."
+    )
+
+
+def _physician_phd_research_question(v: SimpleVignette) -> str:
+    return (
+        "What is the probability that a member of this workforce who engages "
+        "in research is a physician (MD/DO)?"
+    )
+
+
+def _physician_phd_research_narrative_with_probs(v: SimpleVignette) -> str:
+    parts = [
+        INTRO,
+        "",
+        _physician_phd_research_share_line(v),
+        (
+            f"Among physicians, {_simple_pct(v.s_c)} engage in research as part "
+            f"of professional work. Among research doctorate holders without an MD, "
+            f"{_simple_pct(v.s_d)} report research and development as their primary "
+            f"work activity."
+        ),
+        "",
+        _physician_phd_research_question(v),
+    ]
+    return "\n".join(parts)
+
+
+def _tax_mfj_single_ctc_narrative_with_probs(v: SimpleVignette) -> str:
+    parts = [
+        INTRO,
+        "",
+        (
+            "Among US individual income tax returns filed as married filing "
+            f"jointly or single, {_simple_pct(v.p_c)} are married filing jointly "
+            f"and {_simple_pct(v.p_d)} are single."
+        ),
+        (
+            f"Among married-filing-jointly returns, {_simple_pct(v.s_c)} claimed "
+            f"at least one qualifying child for the Child Tax Credit. Among single "
+            f"returns, {_simple_pct(v.s_d)} did."
+        ),
+        "",
+        (
+            "What is the probability that a return in this group that claimed a "
+            "qualifying child for the Child Tax Credit was married filing jointly?"
+        ),
+    ]
+    return "\n".join(parts)
+
+
+def _homeownership_under_35_vs_65_narrative_with_probs(v: SimpleVignette) -> str:
+    parts = [
+        INTRO,
+        "",
+        (
+            "Among US households headed by someone under 35 or age 65 or older, "
+            f"{_simple_pct(v.p_c)} are younger households (head under 35) and "
+            f"{_simple_pct(v.p_d)} are senior households (head age 65 or older)."
+        ),
+        (
+            f"Among younger households, {_simple_pct(v.s_c)} own their home. "
+            f"Among senior households, {_simple_pct(v.s_d)} do."
+        ),
+        "",
+        (
+            "What is the probability that a household in this group that owns "
+            "its home is a younger household?"
+        ),
+    ]
+    return "\n".join(parts)
+
+
+def _q_c_given_a(v: SimpleVignette) -> float:
+    return v.p_c / v.p_a if v.p_a else 0.0
+
+
+def _q_d_given_a(v: SimpleVignette) -> float:
+    return v.p_d / v.p_a if v.p_a else 0.0
+
+
+def _covid_vaccine_blue_red_narrative_with_probs(v: SimpleVignette) -> str:
+    if _uses_absolute_c_d_shares(v):
+        parts = [
+            INTRO,
+            "",
+            (
+                f"Among US adults 18 years and older, {_simple_pct(v.p_c)} live in "
+                f"blue states and {_simple_pct(v.p_d)} live in red states."
+            ),
+            (
+                f"Among adults in blue states, {_simple_pct(v.s_c)} had COVID-19 in "
+                f"the past 12 months; among adults in red states, "
+                f"{_simple_pct(v.s_d)} did."
+            ),
+            "",
+            (
+                "What is the probability that a vaccinated adult who had COVID-19 "
+                "in the past 12 months lives in a blue state?"
+            ),
+        ]
+        return "\n".join(parts)
+
+    unvaccinated = max(0.0, 1.0 - v.p_a)
+    parts = [
+        INTRO,
+        "",
+        (
+            f"Among US adults 18 years and older, {_simple_pct(v.p_a)} received "
+            f"{COVID_VACCINE_SHORT} and {_simple_pct(unvaccinated)} did not."
+        ),
+        (
+            f"Among the vaccinated, {_simple_pct(_q_c_given_a(v))} live in blue "
+            f"states and {_simple_pct(_q_d_given_a(v))} live in red states."
+        ),
+        (
+            f"Among vaccinated adults in blue states, {_simple_pct(v.s_c)} had "
+            f"COVID-19 in the past 12 months; among vaccinated adults in red "
+            f"states, {_simple_pct(v.s_d)} did."
+        ),
+        "",
+        (
+            "What is the probability that a vaccinated adult who had COVID-19 "
+            "in the past 12 months lives in a blue state?"
+        ),
+    ]
+    return "\n".join(parts)
+
+
+def _military_overseas_narrative_with_probs(v: SimpleVignette) -> str:
+    if _uses_absolute_c_d_shares(v):
+        parts = [
+            INTRO,
+            "",
+            (
+                "Among US active-duty military and federal civilian employees, "
+                f"{_simple_pct(v.p_c)} serve in the Army and "
+                f"{_simple_pct(v.p_d)} serve in the Navy or Air Force."
+            ),
+            (
+                f"Among soldiers in the Army, {_simple_pct(v.s_c)} have served "
+                f"overseas at least once since joining; among members of the Navy "
+                f"or Air Force, {_simple_pct(v.s_d)} have."
+            ),
+            "",
+            (
+                "What is the probability that an active-duty service member who "
+                "has served overseas serves in the Army?"
+            ),
+        ]
+        return "\n".join(parts)
+
+    parts = [
+        INTRO,
+        "",
+        (
+            "Among active-duty US military service members, "
+            f"{_simple_pct(_q_c_given_a(v))} serve in the Army and "
+            f"{_simple_pct(_q_d_given_a(v))} serve in the Navy or Air Force."
+        ),
+        (
+            f"Among soldiers in the Army, {_simple_pct(v.s_c)} have served "
+            f"overseas at least once since joining; among members of the Navy "
+            f"or Air Force, {_simple_pct(v.s_d)} have."
+        ),
+        "",
+        (
+            "What is the probability that an active-duty service member who "
+            "has served overseas serves in the Army?"
+        ),
+    ]
+    return "\n".join(parts)
+
+
 def _simple_overlap_clause(v: SimpleVignette) -> str:
     if not has_overlap(v) or v.p_cd_given_a <= 0:
         return ""
@@ -874,6 +1317,30 @@ def narrative_with_probs(v: SimpleVignette) -> str:
         return _naep_ma_nm_narrative_with_probs(v)
     if v.name == "HS graduation ACGR (WV vs AZ)":
         return _graduation_wv_az_narrative_with_probs(v)
+    if v.name == "book drama streaming":
+        return _book_drama_streaming_narrative_with_probs(v)
+    if v.name == "dog cat household":
+        return _dog_cat_household_narrative_with_probs(v)
+    if v.name == "youtube facebook news":
+        return _youtube_facebook_news_narrative_with_probs(v)
+    if v.name == "college grad professional job":
+        return _college_grad_professional_job_narrative_with_probs(v)
+    if v.name == "homeowner suburban mortgage":
+        return _homeowner_suburban_mortgage_narrative_with_probs(v)
+    if v.name == "parent married dual income":
+        return _parent_married_dual_income_narrative_with_probs(v)
+    if v.name == "republican gun owner ban":
+        return _republican_gun_owner_ban_narrative_with_probs(v)
+    if v.name == "physician vs PhD research":
+        return _physician_phd_research_narrative_with_probs(v)
+    if v.name == "tax MFJ single CTC":
+        return _tax_mfj_single_ctc_narrative_with_probs(v)
+    if v.name == "homeownership under 35 vs 65":
+        return _homeownership_under_35_vs_65_narrative_with_probs(v)
+    if v.name == "covid vaccine (blue/red)":
+        return _covid_vaccine_blue_red_narrative_with_probs(v)
+    if v.name == "military overseas (federal pool)":
+        return _military_overseas_narrative_with_probs(v)
     setting = _simple_setting_phrase(v.universe)
     (c_subtype, c_p, c_s), (d_subtype, d_p, d_s) = _narrative_entity_order(v)
     share_line = _naep_ma_nm_share_line(v) or _graduation_wv_az_share_line(v)
@@ -898,20 +1365,21 @@ def narrative_with_probs(v: SimpleVignette) -> str:
 
 
 def _shared_item_fields(v: SimpleVignette) -> dict[str, str]:
-    is_implausible = v.problem_type != PROBLEM_TYPE_WELL_POSED
-    overlap = has_overlap(v) and not is_implausible
+    is_altered = v.condition == CONDITION_ALTERED
+    well_posed = is_well_posed_vignette(v)
     normative = v.target_posterior()
-    if is_implausible:
+    if is_altered:
         normative_label = "implausible"
-    elif overlap:
+    elif has_overlap(v):
         normative_label = "underdetermined"
     else:
         normative_label = "well_posed"
     return {
         "vignette_name": v.name,
+        "condition": v.condition,
         "problem_type": v.problem_type,
         "intersection_size": v.intersection_size,
-        "well_posed": "false" if overlap else "true",
+        "well_posed": str(well_posed).lower(),
         "normative": normative_label,
         "p_c_and_d_given_a": (
             f"{v.p_cd_given_a:.6g}" if v.p_cd_given_a > 0 else "0"
@@ -923,7 +1391,6 @@ def _shared_item_fields(v: SimpleVignette) -> dict[str, str]:
         "normative_percent": f"{normative * 100:.4g}",
         "normative_open": _pct(normative),
         "confidence_required": "false",
-        "scepticism_required": str(scepticism_required(v)).lower(),
     }
 
 
@@ -935,66 +1402,189 @@ def build_prompt(v: SimpleVignette, variant: str) -> tuple[str, dict[str, str]]:
         "variant": variant,
         **_shared_item_fields(v),
     }
+    _clear_mc_options(item)
+    item["confidence_required"] = "false"
 
-    if variant == "open_probs":
+    if variant == "mc_prob":
+        lines, labels, lures, normative_letter, option_letters = _build_mc_prob_sections(
+            v, example_id
+        )
         item.update(
             {
-                "response_type": "open",
-                "normative_choice": "",
-                "numeric_score_percent": "",
-                "numeric_score_choice": "",
-                "scepticism_score_target": item["normative_percent"],
+                "response_type": "mc",
+                "normative_choice": normative_letter,
+                "numeric_score_percent": item["normative_percent"],
+                "numeric_score_choice": normative_letter,
+                "scepticism_required": "false",
+                "scepticism_score_target": "n/a",
             }
         )
-        for letter in "abcde":
-            item[f"option_{letter}_label"] = ""
-            item[f"option_{letter}_lure"] = ""
-        for letter in "fgh":
-            item[f"option_{letter}_label"] = ""
-            item[f"option_{letter}_lure"] = ""
-        prompt = body + _simple_open_suffix()
+        for letter in option_letters:
+            item[f"option_{letter.lower()}_label"] = labels[letter]
+            item[f"option_{letter.lower()}_lure"] = lures[letter]
+        prompt = _format_mc_prob_prompt(v, example_id)
         return prompt, item
 
-    labels, lures, normative_letter, option_letters = build_mc_options(v, example_id)
-    is_full_mc = variant == "mc_full_probs"
-    is_implausible = v.problem_type != PROBLEM_TYPE_WELL_POSED
-    if is_implausible and is_full_mc:
-        scepticism_target = "F"
-    elif is_full_mc:
-        scepticism_target = normative_letter
-    else:
-        scepticism_target = "n/a"
-    item.update(
-        {
-            "response_type": "mc_full" if is_full_mc else "mc",
-            "normative_choice": normative_letter,
-            "numeric_score_percent": item["normative_percent"],
-            "numeric_score_choice": normative_letter,
-            "scepticism_score_target": scepticism_target,
-            "confidence_required": str(is_full_mc).lower(),
-        }
-    )
-    lines = [body, ""]
-    for letter in "abcde":
-        item[f"option_{letter}_label"] = ""
-        item[f"option_{letter}_lure"] = ""
-    for letter in option_letters:
-        item[f"option_{letter.lower()}_label"] = labels[letter]
-        item[f"option_{letter.lower()}_lure"] = lures[letter]
-        lines.append(f"{letter}. {labels[letter]}")
-    for letter in "fgh":
-        item[f"option_{letter}_label"] = ""
-        item[f"option_{letter}_lure"] = ""
-    if is_full_mc:
+    if variant == "mc_w_meta":
+        lines, labels, lures, normative_letter, option_letters = _build_mc_prob_sections(
+            v, example_id
+        )
+        scepticism_target = _mc_w_meta_scepticism_target(v)
+        item.update(
+            {
+                "response_type": "mc_full",
+                "normative_choice": normative_letter,
+                "numeric_score_percent": item["normative_percent"],
+                "numeric_score_choice": normative_letter,
+                "scepticism_required": str(
+                    scepticism_required_for_variant(v, "mc_w_meta")
+                ).lower(),
+                "scepticism_score_target": scepticism_target,
+            }
+        )
+        for letter in option_letters:
+            item[f"option_{letter.lower()}_label"] = labels[letter]
+            item[f"option_{letter.lower()}_lure"] = lures[letter]
         item["option_f_label"] = META_SCEPTICISM
-        item["option_f_lure"] = "scepticism (insufficient, inconsistent, or implausible)"
-        lines.append(f"F. {META_SCEPTICISM}")
+        item["option_f_lure"] = "bad_data (insufficient, inconsistent, or incorrect)"
+        prompt_lines = [body, ""] + lines + [f"F. {META_SCEPTICISM}", ""]
         suffix_letters = f"{_mc_letter_list(option_letters)}, or F"
-        prompt = "\n".join(lines) + _simple_mc_full_suffix(letters=suffix_letters)
-    else:
-        suffix_letters = _mc_letter_list(option_letters)
-        prompt = "\n".join(lines) + _simple_mc_suffix(letters=suffix_letters)
-    return prompt, item
+        prompt = "\n".join(prompt_lines) + _simple_mc_suffix(letters=suffix_letters)
+        return prompt, item
+
+    if variant == "data_audit":
+        normative_letter = _data_audit_normative_choice(v)
+        problem_body = _prediction_problem_body(v)
+        item.update(
+            {
+                "response_type": "data_audit",
+                "normative_choice": normative_letter,
+                "numeric_score_percent": "",
+                "numeric_score_choice": "",
+                "scepticism_required": str(
+                    scepticism_required_for_variant(v, "data_audit")
+                ).lower(),
+                "scepticism_score_target": normative_letter,
+            }
+        )
+        item["option_a_label"] = DATA_AUDIT_YES
+        item["option_a_lure"] = "well_founded"
+        item["option_b_label"] = DATA_AUDIT_NO
+        item["option_b_lure"] = "bad_data"
+        prompt = "\n".join(
+            [
+                DATA_AUDIT_INTRO,
+                "",
+                problem_body,
+                "",
+                DATA_AUDIT_QUESTION,
+                "",
+                f"A. {DATA_AUDIT_YES}",
+                f"B. {DATA_AUDIT_NO}",
+                "",
+                "Which answer is closest? Reply with only the letter (A or B).",
+            ]
+        )
+        return prompt, item
+
+    if variant == "response_audit":
+        embedded = _format_mc_prob_prompt(v, example_id)
+        stub = _stub_ai_response(v)
+        normative_letter = _response_audit_normative_choice(v)
+        item.update(
+            {
+                "response_type": "response_audit",
+                "normative_choice": normative_letter,
+                "numeric_score_percent": item["normative_percent"],
+                "numeric_score_choice": "",
+                "scepticism_required": str(
+                    scepticism_required_for_variant(v, "response_audit")
+                ).lower(),
+                "scepticism_score_target": normative_letter,
+            }
+        )
+        item["option_a_label"] = RESPONSE_AUDIT_GOOD
+        item["option_a_lure"] = "good_response"
+        item["option_b_label"] = RESPONSE_AUDIT_BAD
+        item["option_b_lure"] = "bad_response"
+        prompt = "\n".join(
+            [
+                "You are a data auditor, checking the work of another AI.",
+                "",
+                "The AI was given the following prompt:",
+                "",
+                embedded,
+                "",
+                "And it gave the following response:",
+                "",
+                stub,
+                "",
+                "Is this a good answer to give your customer?",
+                "",
+                f"A. {RESPONSE_AUDIT_GOOD}",
+                f"B. {RESPONSE_AUDIT_BAD}",
+                "",
+                "Which answer is closest? Reply with only the letter (A or B).",
+            ]
+        )
+        return prompt, item
+
+    raise ValueError(f"unknown variant: {variant}")
+
+
+def _validate_implausible_csv_coverage(
+    base_vignettes: list[SimpleVignette],
+    p_c_d_stats: dict[str, tuple[float, float]],
+    p_t_stats: dict[str, tuple[float, float]],
+) -> None:
+    names = {v.name for v in base_vignettes}
+    missing_c_d = sorted(names - set(p_c_d_stats))
+    missing_t = sorted(names - set(p_t_stats))
+    if missing_c_d or missing_t:
+        parts: list[str] = []
+        if missing_c_d:
+            parts.append(
+                f"missing from {IMPLAUSIBLE_P_C_D_CSV.name}: {', '.join(missing_c_d)}"
+            )
+        if missing_t:
+            parts.append(
+                f"missing from {IMPLAUSIBLE_P_T_GIVEN_CSV.name}: {', '.join(missing_t)}"
+            )
+        raise ValueError(
+            "Every simple vignette needs altered stats in both implausible CSVs. "
+            + "; ".join(parts)
+        )
+
+
+def build_condition_vignettes(
+    base_vignettes: list[SimpleVignette],
+    p_c_d_stats: dict[str, tuple[float, float]],
+    p_t_stats: dict[str, tuple[float, float]],
+) -> list[SimpleVignette]:
+    _validate_implausible_csv_coverage(base_vignettes, p_c_d_stats, p_t_stats)
+    vignettes: list[SimpleVignette] = []
+    for vignette in base_vignettes:
+        vignettes.append(
+            replace(
+                vignette,
+                condition=CONDITION_NATURAL,
+                problem_type=PROBLEM_TYPE_WELL_POSED,
+            )
+        )
+        p_c, p_d = p_c_d_stats[vignette.name]
+        s_c, s_d = p_t_stats[vignette.name]
+        vignettes.append(
+            replace(
+                vignette,
+                p_c=p_c,
+                p_d=p_d,
+                s_c=s_c,
+                s_d=s_d,
+                condition=CONDITION_ALTERED,
+                problem_type=PROBLEM_TYPE_ALTERED,
+            )
+        )
+    return vignettes
 
 
 def build_all() -> tuple[list[dict[str, str]], list[dict[str, str]], list[dict[str, str]]]:
@@ -1003,30 +1593,7 @@ def build_all() -> tuple[list[dict[str, str]], list[dict[str, str]], list[dict[s
     base_vignettes = load_simple_vignettes()
     p_c_d_stats = _load_implausible_p_c_d()
     p_t_stats = _load_implausible_p_t_given()
-
-    vignettes: list[SimpleVignette] = list(base_vignettes)
-    for vignette in base_vignettes:
-        if vignette.name in p_c_d_stats:
-            p_c, p_d = p_c_d_stats[vignette.name]
-            vignettes.append(
-                replace(
-                    vignette,
-                    p_c=p_c,
-                    p_d=p_d,
-                    problem_type=PROBLEM_TYPE_IMPLAUSIBLE_C_D,
-                )
-            )
-    for vignette in base_vignettes:
-        if vignette.name in p_t_stats:
-            s_c, s_d = p_t_stats[vignette.name]
-            vignettes.append(
-                replace(
-                    vignette,
-                    s_c=s_c,
-                    s_d=s_d,
-                    problem_type=PROBLEM_TYPE_IMPLAUSIBLE_T,
-                )
-            )
+    vignettes = build_condition_vignettes(base_vignettes, p_c_d_stats, p_t_stats)
 
     for vignette in vignettes:
         for variant in variants_for_vignette(vignette):
@@ -1042,6 +1609,7 @@ def build_all() -> tuple[list[dict[str, str]], list[dict[str, str]], list[dict[s
             {
                 "example_id": item["example_id"],
                 "vignette_name": item["vignette_name"],
+                "condition": item["condition"],
                 "problem_type": item["problem_type"],
                 "intersection_size": item["intersection_size"],
                 "response_type": item["response_type"],
@@ -1079,15 +1647,13 @@ def write_csvs() -> int:
 
 def main() -> int:
     count = write_csvs()
-    base_count = len(load_simple_vignettes())
-    overlap_count = sum(1 for v in load_simple_vignettes() if has_overlap(v))
-    partition_count = base_count - overlap_count
-    implausible_count = count - partition_count * len(CANONICAL_VARIANTS) - overlap_count * len(CANONICAL_VARIANTS)
+    _, items, _ = build_all()
+    natural_count = sum(1 for row in items if row["condition"] == CONDITION_NATURAL)
+    altered_count = sum(1 for row in items if row["condition"] == CONDITION_ALTERED)
     print(
         f"Wrote {count} prompts "
-        f"({partition_count} partition vignettes × {len(CANONICAL_VARIANTS)} variants "
-        f"+ {overlap_count} overlap vignettes × {len(CANONICAL_VARIANTS)} variants "
-        f"+ {implausible_count} implausible forks × {len(SCEPTICISM_VARIANTS)} variant)"
+        f"({natural_count} natural + {altered_count} altered, "
+        f"× {len(CANONICAL_VARIANTS)} variants each)"
     )
     print(f"Output: {OUT_DIR} (prompts.csv, items.csv, benchmark.csv)")
     return 0

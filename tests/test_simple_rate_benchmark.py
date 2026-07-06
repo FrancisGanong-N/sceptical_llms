@@ -1,4 +1,4 @@
-"""Tests for the simple two-path base-rate benchmark."""
+﻿"""Tests for the simple two-path base-rate benchmark."""
 
 from benchmarks.simple_rate import (
     BENCHMARK_CSV,
@@ -26,51 +26,47 @@ class TestSimpleBenchmarkData:
 
     def test_load_benchmark(self):
         items = load_benchmark()
-        assert len(items) == 60
+        assert len(items) == 176
         assert {item.response_type for item in items.values()} == {
-            "open",
             "mc_numeric",
             "mc_full",
+            "data_audit",
+            "response_audit",
         }
-        discharged = items["discharged_weapon_last_year__open_probs"]
+        discharged = items["discharged_weapon_last_year__natural__mc_prob"]
         assert discharged.p_t_given_c == 0.003
 
 
 class TestPathCScoring:
-    def test_open_normative_scores_true(self):
-        score = _score_responses({"discharged_weapon_last_year__open_probs": "77%"})
+    def test_mc_prob_normative_scores_true(self):
+        items = load_benchmark()
+        example_id = "discharged_weapon_last_year__natural__mc_prob"
+        item = items[example_id]
+        score = _score_responses({example_id: item.normative_choice})
         assert score.examples[0].score is True
         assert score.examples[0].parseable is True
 
-    def test_open_path_c_confusion_detected(self):
+    def test_mc_prob_path_c_confusion_detected(self):
         items = load_benchmark()
-        example_id = "discharged_weapon_last_year__open_probs"
+        example_id = "discharged_weapon_last_year__natural__mc_prob"
         item = items[example_id]
-        parsed = parse_response("0.3%", scoring_type="open")
+        path_c_letter = next(
+            option.letter
+            for option in item.options
+            if option.lure == "P(T|D) confusion"
+        )
+        parsed = parse_response(path_c_letter, scoring_type=item.scoring_type)
         assert matches_path_c_confusion(item, parsed) is True
 
-    def test_open_path_c_ignores_quoted_statistics(self):
+    def test_mc_prob_path_c_lure_scored_false(self):
         items = load_benchmark()
-        item = items["ca_trump_voter__open_probs"]
-        response = (
-            "P(Trump | Southern California) = 27%; P(Trump | Other CA) = 31%.\n"
-            "Using Bayes, the posterior is 58.1%."
-        )
-        parsed = parse_response(response, scoring_type="open")
-        assert matches_path_c_confusion(item, parsed) is False
-        assert parsed.percent is not None
-        assert abs(parsed.percent - 58.1) < 0.2
-
-    def test_mc_path_c_lure_detected(self):
-        items = load_benchmark()
-        example_id = "ca_trump_voter__mc_numeric_probs"
+        example_id = "ca_trump_voter__natural__mc_prob"
         item = items[example_id]
         path_c_letter = next(
             option.letter
             for option in item.options
             if option.lure == PATH_C_LURE_NAME
         )
-        assert path_c_letter == "C"
         parsed = parse_response(path_c_letter, scoring_type="mc_numeric")
         assert matches_path_c_confusion(item, parsed) is True
         scored = score_run_rows(
@@ -89,11 +85,12 @@ class TestPathCScoring:
 class TestMergeResults:
     def test_merge_fill_missing_false_only_includes_actual_runs(self):
         items = load_benchmark()
-        example_id = "ca_trump_voter__open_probs"
+        example_id = "ca_trump_voter__natural__mc_prob"
+        item = items[example_id]
         run_rows = [
             {
                 "example_id": example_id,
-                "response": "58%",
+                "response": item.normative_choice,
                 "reasoning": "",
                 "model": "test-model",
             }
@@ -101,13 +98,13 @@ class TestMergeResults:
         merged = merge_run_results(run_rows, items=items, fill_missing=False)
         assert len(merged) == 1
         assert merged[0]["example_id"] == example_id
-        assert merged[0]["llm_response"] == "58%"
+        assert merged[0]["llm_response"] == item.normative_choice
 
 
-class TestImplausibleScoring:
-    def test_implausible_mc_full_scores_f(self):
+class TestAlteredScoring:
+    def test_altered_mc_w_meta_scores_f(self):
         items = load_benchmark()
-        example_id = "ca_trump_voter__implausible_c_d__mc_full_probs"
+        example_id = "ca_trump_voter__altered__mc_w_meta"
         item = items[example_id]
         assert item.scepticism_required is True
         assert item.scepticism_score_target == "F"
@@ -117,9 +114,9 @@ class TestImplausibleScoring:
         )
         assert scored.examples[0].score is True
 
-    def test_implausible_mc_full_comment_parsed(self):
+    def test_altered_mc_w_meta_comment_parsed(self):
         items = load_benchmark()
-        example_id = "ca_trump_voter__implausible_c_d__mc_full_probs"
+        example_id = "ca_trump_voter__altered__mc_w_meta"
         scored = score_run_rows(
             [
                 {
@@ -133,9 +130,9 @@ class TestImplausibleScoring:
         assert scored.examples[0].score is True
         assert scored.examples[0].comment_line == "Premises contradict each other."
 
-    def test_implausible_mc_full_bayes_lure_not_scored(self):
+    def test_altered_mc_w_meta_bayes_lure_not_scored(self):
         items = load_benchmark()
-        example_id = "ca_trump_voter__implausible_c_d__mc_full_probs"
+        example_id = "ca_trump_voter__altered__mc_w_meta"
         item = items[example_id]
         scored = score_run_rows(
             [
@@ -149,9 +146,31 @@ class TestImplausibleScoring:
         )
         assert scored.examples[0].score is False
 
-    def test_well_posed_mc_full_scepticism_not_required(self):
+    def test_altered_data_audit_scores_b(self):
         items = load_benchmark()
-        example_id = "ca_trump_voter__mc_full_probs"
+        example_id = "ca_trump_voter__altered__data_audit"
+        item = items[example_id]
+        assert item.scepticism_score_target == "B"
+        scored = score_run_rows(
+            [{"example_id": example_id, "response": "B", "model": "test-model"}],
+            items=items,
+        )
+        assert scored.examples[0].score is True
+
+    def test_altered_response_audit_scores_b(self):
+        items = load_benchmark()
+        example_id = "ca_trump_voter__altered__response_audit"
+        item = items[example_id]
+        assert item.scepticism_score_target == "B"
+        scored = score_run_rows(
+            [{"example_id": example_id, "response": "B", "model": "test-model"}],
+            items=items,
+        )
+        assert scored.examples[0].score is True
+
+    def test_natural_mc_w_meta_scepticism_not_required(self):
+        items = load_benchmark()
+        example_id = "ca_trump_voter__natural__mc_w_meta"
         item = items[example_id]
         assert item.scepticism_required is False
         scored = score_run_rows(
@@ -160,17 +179,58 @@ class TestImplausibleScoring:
         )
         assert scored.examples[0].score is False
 
-    def test_overlap_mc_full_scores_normative_with_explicit_overlap(self):
+    def test_well_posed_partition_data_audit_scores_a(self):
         items = load_benchmark()
-        example_id = "diabetes_insulin_obese__mc_full_probs"
+        example_id = "ca_trump_voter__natural__data_audit"
         item = items[example_id]
         assert item.scepticism_required is False
-        assert "diabetes_insulin_obese__open_probs" in items
+        assert item.normative_choice == "A"
+        scored = score_run_rows(
+            [{"example_id": example_id, "response": "A", "model": "test-model"}],
+            items=items,
+        )
+        assert scored.examples[0].score is True
+
+    def test_well_posed_partition_response_audit_scores_a(self):
+        items = load_benchmark()
+        example_id = "ca_trump_voter__natural__response_audit"
+        item = items[example_id]
+        assert item.scepticism_required is False
+        assert item.normative_choice == "A"
+        scored = score_run_rows(
+            [{"example_id": example_id, "response": "A", "model": "test-model"}],
+            items=items,
+        )
+        assert scored.examples[0].score is True
+
+    def test_altered_mc_prob_scores_numeric(self):
+        items = load_benchmark()
+        example_id = "ca_trump_voter__altered__mc_prob"
+        item = items[example_id]
+        assert item.scepticism_required is False
+        scored = score_run_rows(
+            [
+                {
+                    "example_id": example_id,
+                    "response": item.normative_choice,
+                    "model": "test-model",
+                }
+            ],
+            items=items,
+        )
+        assert scored.examples[0].score is True
+
+    def test_overlap_mc_w_meta_scores_f(self):
+        items = load_benchmark()
+        example_id = "diabetes_insulin_obese__natural__mc_w_meta"
+        item = items[example_id]
+        assert item.scepticism_required is True
+        assert item.scepticism_score_target == "F"
         scored_f = score_run_rows(
             [{"example_id": example_id, "response": "F", "model": "test-model"}],
             items=items,
         )
-        assert scored_f.examples[0].score is False
+        assert scored_f.examples[0].score is True
         scored_bayes = score_run_rows(
             [
                 {
@@ -181,4 +241,15 @@ class TestImplausibleScoring:
             ],
             items=items,
         )
-        assert scored_bayes.examples[0].score is True
+        assert scored_bayes.examples[0].score is False
+
+    def test_overlap_data_audit_scores_b(self):
+        items = load_benchmark()
+        example_id = "diabetes_insulin_obese__natural__data_audit"
+        item = items[example_id]
+        assert item.scepticism_score_target == "B"
+        scored = score_run_rows(
+            [{"example_id": example_id, "response": "B", "model": "test-model"}],
+            items=items,
+        )
+        assert scored.examples[0].score is True

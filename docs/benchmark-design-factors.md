@@ -18,15 +18,17 @@ Six fields stratify almost all analysis.[^derived]
 | Variable | Layer | Role |
 |----------|-------|------|
 | `vignette_name` | design | Which scenario (content domain, probabilities, wording) |
+| `condition` | design | **Simple only:** `natural` (source stats) vs `altered` (implausible CSVs) |
 | `variant` | design | Response format and option menu |
-| `problem_type` | design | Partition vs overlap (and disclosure) vs implausible |
+| `problem_type` | design | Partition vs overlap (base rate) or `well_posed` / `altered` (simple) |
+| `well_posed` | design | **Simple scoring flag:** `true` only for natural partition rows |
 | `scepticism_required` | design | Whether the keyed correct answer is sceptical/meta rather than blind Bayes |
 | `intersection_size` | design | Strength of C∩D overlap (`0` / `small` / `medium` / `large`) |
 | `model` | evaluation | Which LLM produced the response (Kaggle model slug) |
 
 **Observational unit (merged results):** `(vignette_name, variant, problem_type, model)` — equivalently `(example_id, model)`, since `example_id` encodes vignette × variant × disclosure fork.
 
-[^derived]: **`response_type`** is derived from `variant` (base rate: `open_probs` → `open`, `mc_numeric_probs` → `mc_numeric`, `mc_full_probs` → `mc_full`; simple CSV stores `mc` for `mc_numeric_probs`, normalized to `mc_numeric` at load, and `mc_full` for `mc_full_probs`). **`has_statistics`** is currently always `true` (no `*_no_probs` variants are built). Prefer `variant` over `response_type` in groupbys.
+[^derived]: **`response_type`** is derived from `variant` (base rate: `open_probs` → `open`, `mc_numeric_probs` → `mc_numeric`, `mc_full_probs` → `mc_full`; simple: `mc_prob` → `mc_numeric`, `mc_w_meta` → `mc_full`, audits → `data_audit` / `response_audit`). **`has_statistics`** is currently always `true`. Prefer `variant` over `response_type` in groupbys. **Simple benchmark** also has **`condition`** (`natural` | `altered`); see [Simple benchmark](#simple-benchmark-datasimplebenchmarkcsv--176-rows).
 
 ---
 
@@ -38,7 +40,7 @@ Human-readable scenario label (e.g. `CA Trump voter`, `college STEM work`). Fixe
 
 - **`intersection_size`** is fixed per vignette (see below).
 - **`problem_type`** / **`scepticism_required`** are determined by vignette class and disclosure pass (base rate only varies these across forks of the same name).
-- Nine vignettes in each of simple and base-rate builds today; simple reuses overlap vignettes with explicit overlap in the narrative.
+- Nine vignettes in the base-rate build; **22** in the simple build (11 partition + 11 overlap).
 
 Full list and overlap sizes: `docs/vignette-table.txt`.
 
@@ -72,7 +74,7 @@ Logic (`scripts/build_base_rate_prompts.py` → `_problem_type`):
 - Else if partition → `well_posed`
 - Else → `overlap_{explicit|implicit}` from the disclosure pass
 
-**Simple benchmark:** partition `well_posed` rows have `scepticism_required=false` (score = overlap-aware or disjoint Bayes P(target|T)). Only `implausible_c_d` / `implausible_t` have `scepticism_required=true` (score = meta **F**).
+**Simple benchmark:** see [Simple benchmark](#simple-benchmark-datasimplebenchmarkcsv--176-rows). `problem_type` is `well_posed` (natural) or `altered` (perturbed stats). Overlap natural rows use `normative=underdetermined` and `well_posed=false` on the scoring row.
 
 ### `scepticism_required` (derived — scoring expectation)
 
@@ -90,14 +92,21 @@ overlap + explicit disclosure        → false
 well_posed (partition)               → false
 ```
 
-**Simple benchmark:**
+**Simple benchmark:** `scepticism_required` depends on **`well_posed`** (scoring flag) and **`variant`**. See [Scoring keys](#scoring-keys-simple-benchmark).
 
 ```text
-implausible_c_d or implausible_t     → true
-well_posed                           → false
+well_posed = true  (natural partition only)
+  mc_prob, mc_w_meta     → scepticism_required = false  → score Bayes letter
+  data_audit, response_audit → scepticism_required = false  → score A (yes / sound)
+
+well_posed = false  (natural overlap, or any altered)
+  mc_prob                → scepticism_required = false  → score Bayes letter
+  mc_w_meta              → scepticism_required = true   → score F (bad data)
+  data_audit             → scepticism_required = true   → score B (not well-founded)
+  response_audit         → scepticism_required = true   → score B (not appropriate)
 ```
 
-When `scepticism_required=true`, the normative response is a **meta** answer (insufficient / inconsistent / obviously incorrect), not the overlap-aware Bayes posterior.
+When `scepticism_required=true`, the keyed answer is sceptical (meta or audit **B**), not the blind Bayes lure.
 
 ### `variant` (response format — crossed with every applicable vignette × disclosure cell)
 
@@ -107,14 +116,25 @@ When `scepticism_required=true`, the normative response is a **meta** answer (in
 | `mc_numeric_probs` | Multiple choice, numeric lures only | A–E (count varies: 4 or 5) |
 | `mc_full_probs` | Multiple choice, numeric + meta | A–E plus **F, G, H** (insufficient / inconsistent / obviously incorrect) |
 
-**Which variants are emitted** (`variants_for_vignette`):
+**Base-rate benchmark** (`variants_for_vignette`):
 
 ```text
 scepticism_required = true   →  mc_full_probs only
 scepticism_required = false  →  open_probs, mc_numeric_probs, mc_full_probs
 ```
 
-**Simple benchmark:** all vignettes get `open_probs`, `mc_numeric_probs`, and `mc_full_probs` when `well_posed`. Overlap vignettes disclose P(C∩D) in the narrative and score overlap-aware Bayes on A–E. `implausible_c_d` / `implausible_t` get `mc_full_probs` only with `scepticism_required=true` and keyed **F** (single merged meta option; optional comment line).
+**Simple benchmark** — four variants on every vignette × condition cell (no open-text variant):
+
+| Variant | Prompt shape | Options | Role |
+|---------|--------------|---------|------|
+| `mc_prob` | Statistical consultant; estimate P(target\|T) | Numeric lures only (A–E) | Blind Bayes / arithmetic on stated numbers |
+| `mc_w_meta` | Same scenario + question | Numeric lures + **F** | Same as `mc_prob`, but model may refuse bad premises |
+| `data_audit` | Data analyst: is this problem well-founded? | **A** yes / **B** no | Premise check before predicting |
+| `response_audit` | Data auditor: was the AI’s numeric answer OK? | **A** sound / **B** not appropriate | Critique of a stub Bayes answer |
+
+Meta option **F** (only in `mc_w_meta`): *“The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect.”*
+
+Audit **A** / **B** wording is fixed in `scripts/build_simple_rate_prompts.py` (`DATA_AUDIT_*`, `RESPONSE_AUDIT_*`).
 
 ### `model` (evaluation — crosses every design cell)
 
@@ -131,7 +151,7 @@ Properties:
 - **Dedup key** — when loading multiple downloads, `dedupe_base_rate_prompt_records` keeps the **last** record per `(model, example_id)` (`benchmarks/kaggle_runs.py`).
 - **Not in notebook cache id** — kbench caches by `(evaluation row index, model)` only; changing prompts without clearing `*.run.json` can reuse stale answers for the same model + row index.
 
-Current simple-benchmark run (example): 6 models × 45 `example_id`s = 270 merged rows.
+Current simple-benchmark run (example): 6 models × 176 `example_id`s = 1056 merged rows (if all models complete all items).
 
 ---
 
@@ -167,44 +187,88 @@ npx @mermaid-js/mermaid-cli -c benchmark-design-mermaid-config.json \
 |--------|----------------|
 | `response_type` | Derived from `variant` — see [^derived] |
 | `has_statistics` | Currently always `true` — see [^derived] |
-| `example_id` | Slug encoding `vignette_name` + variant + disclosure/implausible fork |
-| `well_posed` / `normative` (scoring) | Align with `problem_type` but used for scoring keys, not identical labels |
+| `example_id` | Slug encoding `vignette_name` + `condition` (simple) + `variant` + disclosure/implausible fork (base rate) |
+| `well_posed` / `normative` (scoring) | Simple: `well_posed` is the scoring-well-posed flag; `normative` labels `well_posed` / `underdetermined` / `implausible` |
 | `scepticism_score_target` | Scoring key that depends on `variant` + `scepticism_required` (percent, letter, `F\|G\|H`, `meta`, etc.) |
 
 ---
 
 ## Actual combinations in the repo (current CSVs)
 
-### Simple benchmark (`data/simple/benchmark.csv`) — 35 rows
+## Simple benchmark (`data/simple/benchmark.csv`) — 176 rows
 
-5 partition vignettes × 3 variants plus 2 overlap vignettes × 3 variants (explicit overlap clause), plus 7 × `mc_full_probs` each for `implausible_c_d` and `implausible_t`.
+22 vignettes (11 partition + 11 overlap) × **4 variants** × up to **2 conditions**.
 
-| problem_type | scepticism_required | intersection_size | variants | scepticism target |
-|--------------|---------------------|---------------------|----------|-------------------|
-| `well_posed` | `false` | `0` (5 partition vignettes) | `open_probs`, `mc_numeric_probs`, `mc_full_probs` | normative P(C\|T) |
-| `well_posed` | `false` | `large` (2 overlap vignettes) | `open_probs`, `mc_numeric_probs`, `mc_full_probs` | overlap-aware normative P(C\|T) |
-| `implausible_c_d` | `true` | same per vignette | `mc_full_probs` only | **F** (merged meta) |
-| `implausible_t` | `true` | same per vignette | `mc_full_probs` only | **F** (merged meta) |
+### Conditions
 
-Overlap vignettes use `normative=underdetermined`, `well_posed=false`, and state “An estimated X% fall into both categories.” `mc_full_probs` uses a single meta option **F** (insufficient, inconsistent, or implausible) plus optional comment line.
+| `condition` | Statistics | Rows |
+|-------------|------------|------|
+| `natural` | Source vignette probabilities | 22 × 4 = **88** |
+| `altered` | Both `data/simple/implausible_p_c_d.csv` (P(C), P(D)) and `data/simple/implausible_p_t_given.csv` (P(T\|C), P(T\|D)) applied | 22 × 4 = **88** |
 
-#### Simple vignette statistics
+`example_id` pattern: `{vignette_slug}__{condition}__{variant}` (e.g. `discharged_weapon_last_year__natural__mc_prob`).
 
-One row per vignette (identical across `open_probs` / `mc_numeric_probs` / `mc_full_probs`). Source: `data/simple/items.csv` (`variant=open_probs`).
+**Every vignette** must appear in **both** implausible CSVs; `build_condition_vignettes()` raises if any name is missing.
 
-**Simple two-path model:** pathway C = old A∧old C, pathway D = old A∧old D. Marginals `p_c` = P(A)·P(C|A) and `p_d` = P(A)·P(D|A); `p_c_and_d_given_a` stores P(C∩D|A) for overlap vignettes. Overlap is stated explicitly in the prompt; normative P(C|T) uses overlap-aware Bayes when P(C∩D|A) > 0. Normative answer is P(C|T) except **CA Trump voter**, which asks P(Southern California | T) = P(D|T).
+### Well-posed (scoring flag)
 
-| Vignette | ∩ size | P(C) | P(D) | P(T\|C) | P(T\|D) | P(target\|T) | Open label |
-|----------|--------|------|------|---------|---------|---------------|------------|
-| CA Trump voter | 0 | 4.94% | 7.80% | 31% | 27% | 57.9% (D) | 58% |
-| covid vaccine (blue/red) | 0 | 19.2% | 7.83% | 8% | 10% | 66.2% (C) | 66% |
-| diabetes insulin obese | large | 3.19% | 5.32% | 20% | 16% | 42.8% (C) | 43% |
-| discharged weapon (last year) | 0 | 29.9% | 13.2% | 0.30% | 0.20% | 77.3% (C) | 77% |
-| english teacher humanities | large | 0.113% | 0.130% | 69% | 55% | 52.1% (C) | 52% |
-| healthcare employment | 0 | 1.10% | 9.90% | 54% | 60% | 9.09% (C) | 9.1% |
-| military overseas (federal pool) | 0 | 14.0% | 20.4% | 58% | 64% | 38.4% (C) | 38% |
+**Well-posed** = `condition=natural` **and** `intersection_size=0` (partition vignettes only — 11 vignettes).
 
-P(target\|T) = `normative_percent`; (C) or (D) marks which pathway the question targets (`question_target_subtype` in `scripts/build_simple_rate_prompts.py`).
+| Class | `well_posed` (CSV) | `normative` (CSV) | Count (× 4 variants) |
+|-------|-------------------|-------------------|----------------------|
+| Natural partition | `true` | `well_posed` | 44 |
+| Natural overlap | `false` | `underdetermined` | 44 |
+| Altered | `false` | `implausible` | 88 |
+
+Overlap natural prompts **state** P(C∩D) explicitly (“An estimated X% fall into both categories”). Altered prompts use the same narrative templates with perturbed marginals (COVID / military use absolute-share wording where needed).
+
+### Scoring keys (simple benchmark)
+
+Keyed correct answer by **`well_posed`** × **`variant`**:
+
+| Variant | Well-posed (natural partition) | Not well-posed (overlap natural or altered) |
+|---------|-------------------------------|---------------------------------------------|
+| `mc_prob` | Bayes lure letter (normative P(target\|T)) | Bayes lure letter (same rule) |
+| `mc_w_meta` | Bayes lure letter | **F** (bad-data meta) |
+| `data_audit` | **A** (yes — well-founded) | **B** (no — not well-founded) |
+| `response_audit` | **A** (yes — sound answer) | **B** (no — not appropriate) |
+
+**`mc_prob` on not-well-posed items:** the keyed answer is still the Bayes letter computed from the stated numbers. Conceptually the “right” response might be *none of the above*, but **`mc_prob` does not offer that option** — scepticism is tested only in `mc_w_meta` and the two audit variants. That split is intentional:
+
+| Variant | What it measures on not-well-posed |
+|---------|-----------------------------------|
+| `mc_prob` | Can the model compute Bayes from broken or incomplete stats? |
+| `mc_w_meta` | Does it notice the problem is broken? |
+| `data_audit` | Does it flag bad premises before predicting? |
+| `response_audit` | Does it reject a confident numeric answer to bad premises? |
+
+Implementation: `is_well_posed_vignette()` and `scepticism_required_for_variant()` in `scripts/build_simple_rate_prompts.py`; scoring via `scepticism_required` + `scepticism_score_target` in `benchmarks/base_rate.py`.
+
+#### Cross-tab: `well_posed` × `variant` (simple)
+
+| | `mc_prob` | `mc_w_meta` | `data_audit` | `response_audit` |
+|--|:--:|:--:|:--:|:--:|
+| `well_posed=true` | Bayes | Bayes | A | A |
+| `well_posed=false` | Bayes | F | B | B |
+
+#### Simple vignette statistics (natural condition)
+
+One row per vignette (identical across variants within a condition). Source: `data/simple/items.csv`. Full scenario language: `docs/simple-benchmark-scenario-study-sheet.txt`.
+
+**Two-path model:** pathway C = old A∧old C, pathway D = old A∧old D. Marginals `p_c`, `p_d`; `p_c_and_d_given_a` = P(C∩D\|A) for overlap vignettes. Normative P(C\|T) uses overlap-aware Bayes when P(C∩D\|A) > 0. **CA Trump voter** asks P(Southern California \| T) = P(D\|T).
+
+| Vignette | ∩ size | P(C) | P(D) | P(T\|C) | P(T\|D) | P(target\|T) |
+|----------|--------|------|------|---------|---------|---------------|
+| discharged weapon (last year) | 0 | 29.9% | 13.2% | 0.30% | 0.20% | 77.3% (C) |
+| CA Trump voter | 0 | 4.94% | 7.80% | 31% | 27% | 57.9% (D) |
+| healthcare employment | 0 | 1.10% | 9.90% | 54% | 60% | 9.09% (C) |
+| military overseas (federal pool) | 0 | 14.0% | 20.4% | 58% | 64% | 38.4% (C) |
+| covid vaccine (blue/red) | 0 | 19.2% | 7.83% | 8% | 10% | 66.2% (C) |
+| … | … | … | … | … | … | … |
+| diabetes insulin obese | large | 3.19% | 5.32% | 20% | 16% | 42.8% (C) |
+| dog cat household | large | 42.6% | 32.6% | 79% | 53% | 81.2% (C) |
+
+P(target\|T) = `normative_percent`; (C) or (D) marks the question target. Altered rows overwrite P(C), P(D), P(T\|C), P(T\|D) from the implausible CSVs.
 
 ### Base-rate benchmark (`data/base_rate/benchmark.csv`) — 44 rows
 
@@ -229,7 +293,7 @@ When scepticism is required, only the full MC menu (with F/G/H) is offered.
 
 | Benchmark | Design rows | Models (example run) | Merged rows |
 |-----------|-------------|----------------------|-------------|
-| Simple | 35 | 1 (Opus) | 35 |
+| Simple | 176 | varies by download | `176 × n_models` |
 | Base rate | 44 | varies by download | `44 × n_models` |
 
 Row count formula: **`n_example_ids × n_models`** (plus empty response rows if a model did not complete an item).
@@ -239,7 +303,7 @@ Row count formula: **`n_example_ids × n_models`** (plus empty response rows if 
 ## What the main variables do *not* encode
 
 1. **Exact probabilities and prompt text** — fixed by `vignette_name` but not repeated in the six factor names (see `benchmark.csv` / `items.csv`).
-2. **Simple vs base-rate benchmark** — simple is a deliberate subset (two-path P(C|T); `implausible_c_d` / `implausible_t` forks with scepticism scoring; no overlap_implicit).
+2. **Simple vs base-rate benchmark** — simple is a two-path P(C\|T) subset with four variants (`mc_prob`, `mc_w_meta`, `data_audit`, `response_audit`) and natural/altered conditions; base rate keeps open + three MC variants and overlap_implicit / implausible forks.
 3. **Overlap disclosure** as its own column — folded into `problem_type` (`overlap_explicit` vs `overlap_implicit`).
 4. **Implausible parameter edits** — only distinguished by `problem_type=implausible` + `intersection_size=0`; which statistic was perturbed is in source CSVs.
 5. **Lure layout** (which letters map to normative vs P(T|C) confusion, etc.) — scoring metadata (`option_*_lure`), not a top-level factor.
@@ -252,15 +316,16 @@ Row count formula: **`n_example_ids × n_models`** (plus empty response rows if 
 | Question | Group by |
 |----------|----------|
 | Which scenario | `vignette_name` |
-| Open vs MC numeric vs MC full | `variant` |
-| Partition vs overlap vs implausible | `problem_type` |
-| Should model sceptically refuse? | `scepticism_required` |
-| Overlap strength | `intersection_size` (within overlap / well_posed rows) |
-| Model comparison | `model` (rows or columns in pivot tables) |
-| Model × condition interaction | `model` × `variant` (or × `problem_type`, etc.) |
-| Full design cell | `(vignette_name, variant, problem_type)` |
-| Single observational unit | `(example_id, model)` or `(vignette_name, variant, problem_type, model)` |
-| Content-only comparison | `vignette_name` holding `variant` and `model` fixed |
+| Natural vs altered stats | `condition` (simple) |
+| MC numeric vs meta vs audits | `variant` |
+| Partition vs overlap vs altered | `problem_type`, `intersection_size`, `well_posed` |
+| Should model sceptically refuse? | `scepticism_required` or `well_posed=false` |
+| Overlap strength | `intersection_size` |
+| Model comparison | `model` |
+| Model × condition interaction | `model` × `variant` (or × `condition`, etc.) |
+| Full design cell | `(vignette_name, condition, variant)` (simple) |
+| Single observational unit | `(example_id, model)` |
+| Content-only comparison | `vignette_name` holding `condition`, `variant`, and `model` fixed |
 
 ---
 
@@ -268,8 +333,11 @@ Row count formula: **`n_example_ids × n_models`** (plus empty response rows if 
 
 | Logic | File |
 |-------|------|
-| Factor definitions, variant gating, scepticism rules | `scripts/build_base_rate_prompts.py` |
-| Simple subset (3 variants, well_posed only) | `scripts/build_simple_rate_prompts.py` |
+| Factor definitions, variant gating, scepticism rules (base rate) | `scripts/build_base_rate_prompts.py` |
+| Simple benchmark: conditions, variants, well-posed, scoring keys | `scripts/build_simple_rate_prompts.py` |
+| Sync implausible CSVs to all vignettes | `scripts/sync_simple_implausible_csvs.py` |
+| Simple scoring / path-C confusion | `benchmarks/simple_rate.py`, `benchmarks/base_rate.py` |
+| Scenario language review sheet | `scripts/build_simple_scenario_study_sheet.py` → `docs/simple-benchmark-scenario-study-sheet.txt` |
 | Intersection size thresholds / vignette list | `docs/vignette-table.txt` |
 | Model slug from Kaggle runs, merge/dedupe | `benchmarks/kaggle_runs.py` |
 | Per-model evaluate grid | `benchmarks/simple_rate_tasks.py`, `benchmarks/base_rate_tasks.py` |

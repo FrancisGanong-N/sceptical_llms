@@ -1,13 +1,23 @@
 vignette_name,C,D
-CA Trump voter,0.0494,0.98
-covid vaccine (blue/red),0.90,0.0783
-diabetes insulin obese,0.80,0.50
 discharged weapon (last year),0.81,0.25
-english teacher humanities,0.1,0.3
+CA Trump voter,0.0494,0.98
 healthcare employment,0.8,0.099
 military overseas (federal pool),0.5,0.204
+covid vaccine (blue/red),0.9,0.0783
 NAEP grade 4 reading (MA vs NM),0.98,0.25
 HS graduation ACGR (WV vs AZ),0.98,0.25
-NFL MLB watch attend,0.20,0.90
-fantasy sports (male vs female),0.20,0.90
-fantasy sports (under 45 vs male),0.90,0.15
+fantasy sports (male vs female),0.2,0.9
+physician vs PhD research,0.9,0.15
+tax MFJ single CTC,0.9,0.15
+homeownership under 35 vs 65,0.9,0.15
+diabetes insulin obese,0.8,0.5
+english teacher humanities,0.1,0.3
+NFL MLB watch attend,0.2,0.9
+fantasy sports (under 45 vs male),1.0,0.15
+book drama streaming,10.0,0.15
+dog cat household,-.001,0.9
+youtube facebook news,-1.0,0.15
+college grad professional job,1.0,0.15
+homeowner suburban mortgage,10.0,0.15
+parent married dual income,-0.0001,0.9
+republican gun owner ban,-1.0,0.15
