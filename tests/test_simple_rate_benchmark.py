@@ -26,7 +26,7 @@ class TestSimpleBenchmarkData:
 
     def test_load_benchmark(self):
         items = load_benchmark()
-        assert len(items) == 176
+        assert len(items) == 99
         assert {item.response_type for item in items.values()} == {
             "mc_numeric",
             "mc_full",
@@ -127,9 +127,9 @@ class TestAlteredScoring:
 
 
 class TestNaturalScoring:
-    def test_natural_mc_w_meta_scepticism_not_required(self):
+    def test_partition_mc_prob_scepticism_not_required(self):
         items = load_benchmark()
-        example_id = "ca_trump_voter__natural__mc_w_meta"
+        example_id = "ca_trump_voter__natural__mc_prob"
         item = items[example_id]
         assert item.scepticism_required is False
         scored = score_run_rows(

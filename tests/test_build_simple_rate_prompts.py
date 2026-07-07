@@ -124,28 +124,36 @@ class TestSimpleParameters:
 class TestBuildAll:
     def test_prompt_count(self):
         prompts, items, benchmark = build_all()
-        assert len(prompts) == 176
+        assert len(prompts) == 99
         assert len(items) == len(prompts)
         assert len(benchmark) == len(prompts)
         conditions = {row["condition"] for row in benchmark}
         assert conditions == {"natural", "altered"}
         problem_types = {row["problem_type"] for row in benchmark}
         assert problem_types == {"well_posed", "altered"}
+        variant_counts = {row["variant"]: 0 for row in benchmark}
+        for row in benchmark:
+            variant_counts[row["variant"]] += 1
+        assert variant_counts == {
+            "mc_prob": 11,
+            "mc_w_meta": 22,
+            "data_audit": 33,
+            "response_audit": 33,
+        }
         overlap_natural = [
             row
             for row in benchmark
             if row["condition"] == "natural"
             and row["intersection_size"] not in ("", "0")
         ]
-        assert len(overlap_natural) == 44
+        assert len(overlap_natural) == 33
         overlap_mc_prob = [r for r in overlap_natural if r["variant"] == "mc_prob"]
-        assert len(overlap_mc_prob) == 11
-        assert all(row["scepticism_required"] == "false" for row in overlap_mc_prob)
+        assert len(overlap_mc_prob) == 0
         overlap_mc_w_meta = [r for r in overlap_natural if r["variant"] == "mc_w_meta"]
+        assert len(overlap_mc_w_meta) == 11
         assert all(row["scepticism_required"] == "true" for row in overlap_mc_w_meta)
         assert all(row["scepticism_score_target"] == "F" for row in overlap_mc_w_meta)
         assert {row["variant"] for row in overlap_natural} == {
-            "mc_prob",
             "mc_w_meta",
             "data_audit",
             "response_audit",
@@ -202,7 +210,7 @@ class TestBuildAll:
         fantasy = next(
             r
             for r in rows
-            if r["example_id"] == "fantasy_sports_under_45_vs_male__natural__mc_prob"
+            if r["example_id"] == "fantasy_sports_under_45_vs_male__natural__mc_w_meta"
         )
         assert "45% are under age 45 and 49% are men" in fantasy["prompt"]
         assert "An estimated 22% fall into both categories." in fantasy["prompt"]
@@ -229,7 +237,7 @@ class TestBuildAll:
         with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
         sports = next(
-            r for r in rows if r["example_id"] == "nfl_mlb_watch_attend__natural__mc_prob"
+            r for r in rows if r["example_id"] == "nfl_mlb_watch_attend__natural__mc_w_meta"
         )
         assert "56% watch NFL and 33% watch MLB" in sports["prompt"]
         assert "An estimated 25% fall into both categories." in sports["prompt"]
@@ -257,7 +265,7 @@ class TestBuildAll:
         with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
         drama = next(
-            r for r in rows if r["example_id"] == "book_drama_streaming__natural__mc_prob"
+            r for r in rows if r["example_id"] == "book_drama_streaming__natural__mc_w_meta"
         )
         assert (
             "75% read at least one book in the past 12 months and 83% watch streaming services"
@@ -569,13 +577,21 @@ class TestBuildAll:
         assert "professional drivers speeding" not in by_name
         assert "actor waiter overlap" not in by_name
 
-    def test_overlap_mc_prob_scores_numeric(self):
+    def test_overlap_has_mc_w_meta_not_mc_prob(self):
         _, items, _ = build_all()
+        overlap_mc_prob = [
+            r
+            for r in items
+            if r["condition"] == "natural"
+            and r["intersection_size"] not in ("", "0")
+            and r["variant"] == "mc_prob"
+        ]
+        assert overlap_mc_prob == []
         row = next(
-            r for r in items if r["example_id"] == "diabetes_insulin_obese__natural__mc_prob"
+            r for r in items if r["example_id"] == "diabetes_insulin_obese__natural__mc_w_meta"
         )
-        assert row["scepticism_required"] == "false"
-        assert row["scepticism_score_target"] == "n/a"
+        assert row["scepticism_required"] == "true"
+        assert row["scepticism_score_target"] == "F"
         assert row["normative"] == "underdetermined"
         assert row["well_posed"] == "false"
         assert float(row["p_c_and_d_given_a"]) > 0
@@ -591,11 +607,11 @@ class TestBuildAll:
 
     def test_mc_w_meta(self):
         prompts, items, _ = build_all()
-        row = next(r for r in items if r["example_id"] == "ca_trump_voter__natural__mc_w_meta")
+        row = next(r for r in items if r["example_id"] == "diabetes_insulin_obese__natural__mc_w_meta")
         prompt = next(r["prompt"] for r in prompts if r["example_id"] == row["example_id"])
         assert row["variant"] == "mc_w_meta"
         assert row["response_type"] == "mc_full"
-        assert row["scepticism_required"] == "false"
+        assert row["scepticism_required"] == "true"
         assert row["option_f_label"] == META_SCEPTICISM
         assert row["option_g_label"] == ""
         assert row["option_h_label"] == ""

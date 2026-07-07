@@ -12,21 +12,6 @@ C. About 13%
 D. About 30%
 
 Which answer is closest? Reply with only the letter (A, B, C, or D)."
-discharged_weapon_last_year__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
-Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
-
-What is the probability that a police officer who discharged his weapon in the last year is an urban police officer?
-
-A. About 77%
-B. About 0%
-C. About 13%
-D. About 30%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, or D, or F)."
 discharged_weapon_last_year__natural__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
@@ -82,22 +67,6 @@ D. About 27%
 E. About 5%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-ca_trump_voter__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
-Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
-
-What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?
-
-A. About 58%
-B. About 27%
-C. About 8%
-D. About 31%
-E. About 5%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 ca_trump_voter__natural__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
@@ -154,22 +123,6 @@ D. About 60%
 E. About 54%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-healthcare_employment__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
-Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
-
-What is the probability that a health care professional who works in a hospital is a physician?
-
-A. About 9%
-B. About 32%
-C. About 10%
-D. About 54%
-E. About 60%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 healthcare_employment__natural__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
@@ -226,22 +179,6 @@ D. About 20%
 E. About 58%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-military_overseas_federal_pool__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among active-duty US military service members, 35% serve in the Army and 51% serve in the Navy or Air Force.
-Among soldiers in the Army, 58% have served overseas at least once since joining; among members of the Navy or Air Force, 64% have.
-
-What is the probability that an active-duty service member who has served overseas serves in the Army?
-
-A. About 38%
-B. About 58%
-C. About 64%
-D. About 20%
-E. About 37%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 military_overseas_federal_pool__natural__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among active-duty US military service members, 35% serve in the Army and 51% serve in the Navy or Air Force.
@@ -299,23 +236,6 @@ D. About 1%
 E. About 19%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-covid_vaccine_blue_red__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 27% received the 2024-25 COVID vaccine and 73% did not.
-Among the vaccinated, 71% live in blue states and 29% live in red states.
-Among vaccinated adults in blue states, 8% had COVID-19 in the past 12 months; among vaccinated adults in red states, 10% did.
-
-What is the probability that a vaccinated adult who had COVID-19 in the past 12 months lives in a blue state?
-
-A. About 66%
-B. About 8%
-C. About 1%
-D. About 10%
-E. About 19%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 covid_vaccine_blue_red__natural__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US adults 18 years and older, 27% received the 2024-25 COVID vaccine and 73% did not.
@@ -375,23 +295,6 @@ D. About 40%
 E. About 8%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-naep_grade_4_reading_ma_vs_nm__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among public school fourth graders in Massachusetts or New Mexico (66,751 enrolled in Massachusetts and 22,503 in New Mexico, fall 2022 CCD), 75% are from Massachusetts and 25% are from New Mexico.
-A proficient reader is a student who scores at or above NAEP Proficient on the grade-4 reading assessment (the same national standard in both states).
-Among fourth graders from Massachusetts, 40% are proficient readers; among fourth graders from New Mexico, 20% are proficient readers.
-
-What is the probability that a fourth grader in Massachusetts or New Mexico who is a proficient reader is from Massachusetts?
-
-A. About 86%
-B. About 40%
-C. About 25%
-D. About 20%
-E. About 8%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 naep_grade_4_reading_ma_vs_nm__natural__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among public school fourth graders in Massachusetts or New Mexico (66,751 enrolled in Massachusetts and 22,503 in New Mexico, fall 2022 CCD), 75% are from Massachusetts and 25% are from New Mexico.
@@ -451,23 +354,6 @@ D. About 91%
 E. About 76%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-hs_graduation_acgr_wv_vs_az__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among public school twelfth graders in West Virginia or Arizona (17,489 enrolled in West Virginia and 95,122 in Arizona, fall 2022 CCD), 16% are from West Virginia and 84% are from Arizona.
-An on-time graduate is a student who earns a regular high school diploma within four years of starting 9th grade, counted under the federal adjusted cohort graduation rate (ACGR—the same national methodology in both states).
-Among twelfth graders from West Virginia, 91% are on-time graduates; among twelfth graders from Arizona, 76% are on-time graduates.
-
-What is the probability that a twelfth grader in West Virginia or Arizona who is an on-time graduate is from West Virginia?
-
-A. About 18%
-B. About 76%
-C. About 84%
-D. About 69%
-E. About 91%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 hs_graduation_acgr_wv_vs_az__natural__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among public school twelfth graders in West Virginia or Arizona (17,489 enrolled in West Virginia and 95,122 in Arizona, fall 2022 CCD), 16% are from West Virginia and 84% are from Arizona.
@@ -526,22 +412,6 @@ D. About 5%
 E. About 14%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-fantasy_sports_male_vs_female__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 49% are men and 51% are women.
-Among men, 34% played fantasy sports for money; among women, 14% played fantasy sports for money.
-
-What is the probability that an adult who played fantasy sports for money is a man?
-
-A. About 70%
-B. About 51%
-C. About 34%
-D. About 14%
-E. About 5%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 fantasy_sports_male_vs_female__natural__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US adults 18 years and older, 49% are men and 51% are women.
@@ -598,22 +468,6 @@ D. About 39%
 E. About 5%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-physician_vs_phd_research__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US-residing active physicians and employed research doctorate holders, 54% are physicians (MD/DO) and 46% hold a research doctorate without an MD.
-Among physicians, 14% engage in research as part of professional work. Among research doctorate holders without an MD, 39% report research and development as their primary work activity.
-
-What is the probability that a member of this workforce who engages in research is a physician (MD/DO)?
-
-A. About 30%
-B. About 5%
-C. About 14%
-D. About 46%
-E. About 39%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 physician_vs_phd_research__natural__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US-residing active physicians and employed research doctorate holders, 54% are physicians (MD/DO) and 46% hold a research doctorate without an MD.
@@ -670,22 +524,6 @@ D. About 60%
 E. About 3%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-tax_mfj_single_ctc__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US individual income tax returns filed as married filing jointly or single, 40% are married filing jointly and 60% are single.
-Among married-filing-jointly returns, 36% claimed at least one qualifying child for the Child Tax Credit. Among single returns, 3% did.
-
-What is the probability that a return in this group that claimed a qualifying child for the Child Tax Credit was married filing jointly?
-
-A. About 89%
-B. About 3%
-C. About 36%
-D. About 60%
-E. About 1%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 tax_mfj_single_ctc__natural__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US individual income tax returns filed as married filing jointly or single, 40% are married filing jointly and 60% are single.
@@ -742,22 +580,6 @@ D. About 79%
 E. About 60%
 
 Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-homeownership_under_35_vs_65__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US households headed by someone under 35 or age 65 or older, 40% are younger households (head under 35) and 60% are senior households (head age 65 or older).
-Among younger households, 35% own their home. Among senior households, 79% do.
-
-What is the probability that a household in this group that owns its home is a younger household?
-
-A. About 23%
-B. About 28%
-C. About 35%
-D. About 60%
-E. About 79%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
 homeownership_under_35_vs_65__natural__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US households headed by someone under 35 or age 65 or older, 40% are younger households (head under 35) and 60% are senior households (head age 65 or older).
@@ -800,20 +622,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-diabetes_insulin_obese__natural__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese. An estimated 2.1% fall into both categories.
-Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
-
-What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?
-
-A. About 54%
-B. About 16%
-C. About 5%
-D. About 20%
-E. About 3%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 diabetes_insulin_obese__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese. An estimated 2.1% fall into both categories.
@@ -872,20 +680,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-english_teacher_humanities__natural__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English. An estimated 0.09% fall into both categories.
-Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
-
-What is the probability that a high school teacher who holds a master's degree or higher is an English teacher?
-
-A. About 75%
-B. About 55%
-C. About 0%
-D. About 38%
-E. About 69%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 english_teacher_humanities__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English. An estimated 0.09% fall into both categories.
@@ -944,20 +738,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-nfl_mlb_watch_attend__natural__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 56% watch NFL and 33% watch MLB. An estimated 25% fall into both categories.
-Among those who watch NFL, 13% attended an NFL or MLB game in person; among those who watch MLB, 21% attended an NFL or MLB game in person.
-
-What is the probability that an adult who watched an NFL or MLB game in the past year and attended an NFL or MLB game in person watched an NFL game?
-
-A. About 83%
-B. About 21%
-C. About 3%
-D. About 33%
-E. About 13%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 nfl_mlb_watch_attend__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 56% watch NFL and 33% watch MLB. An estimated 25% fall into both categories.
@@ -1016,20 +796,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-fantasy_sports_under_45_vs_male__natural__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 45% are under age 45 and 49% are men. An estimated 22% fall into both categories.
-Among those under age 45, 41% played fantasy sports for money; among men, 34% played fantasy sports for money.
-
-What is the probability that an adult who played fantasy sports for money is under age 45?
-
-A. About 66%
-B. About 41%
-C. About 49%
-D. About 34%
-E. About 14%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 fantasy_sports_under_45_vs_male__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 45% are under age 45 and 49% are men. An estimated 22% fall into both categories.
@@ -1088,21 +854,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-book_drama_streaming__natural__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 75% read at least one book in the past 12 months and 83% watch streaming services.
-An estimated 65% fall into both categories.
-Among adults who read books, 20% read at least one drama book in the past year. Among adults who watch streaming services, 53% watch drama films or shows as online content.
-
-What is the probability that a US adult who read drama or watches dramas online read at least one book in the past 12 months?
-
-A. About 73%
-B. About 11%
-C. About 53%
-D. About 20%
-E. About 83%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 book_drama_streaming__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 75% read at least one book in the past 12 months and 83% watch streaming services.
@@ -1164,21 +915,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-dog_cat_household__natural__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US households, 43% own at least one dog and 33% own at least one cat.
-An estimated 19% fall into both categories.
-Among dog-owning households, 79% took at least one pet to a veterinarian in the past 12 months. Among cat-owning households, 53% did.
-
-What is the probability that a household that took at least one pet to a veterinarian in the past 12 months owns at least one dog?
-
-A. About 81%
-B. About 42%
-C. About 53%
-D. About 79%
-E. About 33%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 dog_cat_household__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US households, 43% own at least one dog and 33% own at least one cat.
@@ -1240,21 +976,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-youtube_facebook_news__natural__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 84% use YouTube and 71% use Facebook.
-An estimated 65% fall into both categories.
-Among YouTube users, 45% got news on YouTube in the past month. Among Facebook users, 57% got news on Facebook in the past month.
-
-What is the probability that a US adult who got news on YouTube or Facebook in the past month uses YouTube?
-
-A. About 92%
-B. About 71%
-C. About 45%
-D. About 26%
-E. About 57%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 youtube_facebook_news__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 84% use YouTube and 71% use Facebook.
@@ -1316,21 +1037,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-college_grad_professional_job__natural__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults aged 25 years and older, 36% hold a bachelor's degree or higher and 36% are employed in a management, business, science, or arts occupation.
-An estimated 28% fall into both categories.
-Among adults with a bachelor's degree or higher, 34% earned $100,000 or more in the past 12 months. Among adults employed in management, business, science, or arts occupations, 48% did.
-
-What is the probability that a US adult aged 25 or older who earned $100,000 or more in the past 12 months holds a bachelor's degree or higher?
-
-A. About 79%
-B. About 17%
-C. About 34%
-D. About 36%
-E. About 48%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 college_grad_professional_job__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults aged 25 years and older, 36% hold a bachelor's degree or higher and 36% are employed in a management, business, science, or arts occupation.
@@ -1392,21 +1098,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-homeowner_suburban_mortgage__natural__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US households, 66% own their home and 48% are in suburban areas.
-An estimated 43% fall into both categories.
-Among households that own their home, 61% have a mortgage. Among suburban households, 47% have a mortgage.
-
-What is the probability that a US household with a mortgage owns its home?
-
-A. About 94%
-B. About 61%
-C. About 48%
-D. About 29%
-E. About 47%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 homeowner_suburban_mortgage__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US households, 66% own their home and 48% are in suburban areas.
@@ -1468,21 +1159,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-parent_married_dual_income__natural__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 30% live with an own child under age 18 and 49% are currently married.
-An estimated 22% fall into both categories.
-Among adults living with an own child under 18, 64% live in a dual-income household. Among married adults, 52% live in a dual-income household.
-
-What is the probability that a US adult who lives in a dual-income household lives with an own child under age 18?
-
-A. About 56%
-B. About 64%
-C. About 49%
-D. About 33%
-E. About 52%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 parent_married_dual_income__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 30% live with an own child under age 18 and 49% are currently married.
@@ -1544,21 +1220,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-republican_gun_owner_ban__natural__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 30% identify as Republican or lean Republican and 32% personally own a firearm.
-An estimated 21% fall into both categories.
-Among Republicans, 42% favor banning assault-style weapons. Among firearm owners, 37% favor banning assault-style weapons.
-
-What is the probability that a US adult who favors banning assault-style weapons identifies as Republican or leans Republican?
-
-A. About 75%
-B. About 32%
-C. About 42%
-D. About 37%
-E. About 16%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 republican_gun_owner_ban__natural__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 30% identify as Republican or lean Republican and 32% personally own a firearm.
@@ -1620,20 +1281,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-discharged_weapon_last_year__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among employed police officers and security guards in the United States, 99% are urban police officers and 2% are rural/small-jurisdiction police officers.
-Among urban police officers, 50% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 98% discharged a weapon in the last year.
-
-What is the probability that a police officer who discharged his weapon in the last year is an urban police officer?
-
-A. About 96%
-B. About 98%
-C. About 2%
-D. About 49%
-E. About 50%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 discharged_weapon_last_year__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among employed police officers and security guards in the United States, 99% are urban police officers and 2% are rural/small-jurisdiction police officers.
@@ -1692,19 +1339,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-ca_trump_voter__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US registered voters, 2% are voters registered in Southern California and 99% are other California voters.
-Among voters registered in Southern California, 98% voted for Donald Trump in the 2024 presidential election; among other California voters, 98% voted for Donald Trump in the 2024 presidential election.
-
-What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?
-
-A. About 2%
-B. About 98%
-C. About 96%
-D. About 99%
-
-Which answer is closest? Reply with only the letter (A, B, C, or D)."
 ca_trump_voter__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 2% are voters registered in Southern California and 99% are other California voters.
@@ -1761,20 +1395,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-healthcare_employment__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US employed adults, 99% are physicians and 2% are health care professionals who are not physicians.
-Among physicians, 10% work in a hospital; among health care professionals who are not physicians, 0.10% work in a hospital.
-
-What is the probability that a health care professional who works in a hospital is a physician?
-
-A. About 100%
-B. About 2%
-C. About 0%
-D. About 10%
-E. About 99%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 healthcare_employment__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US employed adults, 99% are physicians and 2% are health care professionals who are not physicians.
@@ -1833,19 +1453,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-military_overseas_federal_pool__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US active-duty military and federal civilian employees, 99% serve in the Army and 2% serve in the Navy or Air Force.
-Among soldiers in the Army, 2% have served overseas at least once since joining; among members of the Navy or Air Force, 0.10% have.
-
-What is the probability that an active-duty service member who has served overseas serves in the Army?
-
-A. About 100%
-B. About 0%
-C. About 2%
-D. About 99%
-
-Which answer is closest? Reply with only the letter (A, B, C, or D)."
 military_overseas_federal_pool__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US active-duty military and federal civilian employees, 99% serve in the Army and 2% serve in the Navy or Air Force.
@@ -1902,20 +1509,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-covid_vaccine_blue_red__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 99% live in blue states and 2% live in red states.
-Among adults in blue states, 90% had COVID-19 in the past 12 months; among adults in red states, 10% did.
-
-What is the probability that a vaccinated adult who had COVID-19 in the past 12 months lives in a blue state?
-
-A. About 100%
-B. About 9%
-C. About 2%
-D. About 10%
-E. About 90%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 covid_vaccine_blue_red__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 99% live in blue states and 2% live in red states.
@@ -1974,21 +1567,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-naep_grade_4_reading_ma_vs_nm__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among public school fourth graders in Massachusetts or New Mexico (66,751 enrolled in Massachusetts and 22,503 in New Mexico, fall 2022 CCD), 99% are from Massachusetts and 2% are from New Mexico.
-A proficient reader is a student who scores at or above NAEP Proficient on the grade-4 reading assessment (the same national standard in both states).
-Among fourth graders from Massachusetts, 20% are proficient readers; among fourth graders from New Mexico, 90% are proficient readers.
-
-What is the probability that a fourth grader in Massachusetts or New Mexico who is a proficient reader is from Massachusetts?
-
-A. About 92%
-B. About 18%
-C. About 20%
-D. About 90%
-E. About 2%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 naep_grade_4_reading_ma_vs_nm__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among public school fourth graders in Massachusetts or New Mexico (66,751 enrolled in Massachusetts and 22,503 in New Mexico, fall 2022 CCD), 99% are from Massachusetts and 2% are from New Mexico.
@@ -2050,21 +1628,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-hs_graduation_acgr_wv_vs_az__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among public school twelfth graders in West Virginia or Arizona (17,489 enrolled in West Virginia and 95,122 in Arizona, fall 2022 CCD), 99% are from West Virginia and 2% are from Arizona.
-An on-time graduate is a student who earns a regular high school diploma within four years of starting 9th grade, counted under the federal adjusted cohort graduation rate (ACGR—the same national methodology in both states).
-Among twelfth graders from West Virginia, 76% are on-time graduates; among twelfth graders from Arizona, 91% are on-time graduates.
-
-What is the probability that a twelfth grader in West Virginia or Arizona who is an on-time graduate is from West Virginia?
-
-A. About 98%
-B. About 69%
-C. About 91%
-D. About 76%
-E. About 2%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 hs_graduation_acgr_wv_vs_az__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among public school twelfth graders in West Virginia or Arizona (17,489 enrolled in West Virginia and 95,122 in Arizona, fall 2022 CCD), 99% are from West Virginia and 2% are from Arizona.
@@ -2126,20 +1689,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-fantasy_sports_male_vs_female__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 99% are men and 2% are women.
-Among men, 14% played fantasy sports for money; among women, 50% played fantasy sports for money.
-
-What is the probability that an adult who played fantasy sports for money is a man?
-
-A. About 93%
-B. About 2%
-C. About 7%
-D. About 50%
-E. About 14%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 fantasy_sports_male_vs_female__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 99% are men and 2% are women.
@@ -2198,20 +1747,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-physician_vs_phd_research__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US-residing active physicians and employed research doctorate holders, 99% are physicians (MD/DO) and 2% hold a research doctorate without an MD.
-Among physicians, 10% engage in research as part of professional work. Among research doctorate holders without an MD, 50% report research and development as their primary work activity.
-
-What is the probability that a member of this workforce who engages in research is a physician (MD/DO)?
-
-A. About 91%
-B. About 5%
-C. About 2%
-D. About 10%
-E. About 50%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 physician_vs_phd_research__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US-residing active physicians and employed research doctorate holders, 99% are physicians (MD/DO) and 2% hold a research doctorate without an MD.
@@ -2270,20 +1805,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-tax_mfj_single_ctc__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US individual income tax returns filed as married filing jointly or single, 99% are married filing jointly and 2% are single.
-Among married-filing-jointly returns, 10% claimed at least one qualifying child for the Child Tax Credit. Among single returns, 50% did.
-
-What is the probability that a return in this group that claimed a qualifying child for the Child Tax Credit was married filing jointly?
-
-A. About 91%
-B. About 50%
-C. About 2%
-D. About 10%
-E. About 5%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 tax_mfj_single_ctc__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US individual income tax returns filed as married filing jointly or single, 99% are married filing jointly and 2% are single.
@@ -2342,20 +1863,6 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B)."
-homeownership_under_35_vs_65__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US households headed by someone under 35 or age 65 or older, 99% are younger households (head under 35) and 2% are senior households (head age 65 or older).
-Among younger households, 10% own their home. Among senior households, 50% do.
-
-What is the probability that a household in this group that owns its home is a younger household?
-
-A. About 91%
-B. About 5%
-C. About 50%
-D. About 2%
-E. About 10%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
 homeownership_under_35_vs_65__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US households headed by someone under 35 or age 65 or older, 99% are younger households (head under 35) and 2% are senior households (head age 65 or older).
@@ -2407,823 +1914,6 @@ Which answer is closest? Reply with only the letter (A, B, C, D, or E).
 And it gave the following response:
 
 About 91%
-
-Is this a good answer to give your customer?
-
-A. Yes — this is a sound, well-founded answer.
-B. No — this answer is not appropriate for the customer.
-
-Which answer is closest? Reply with only the letter (A or B)."
-diabetes_insulin_obese__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 99% use insulin and 2% are obese. An estimated 2.1% fall into both categories.
-Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 0.10% had hemoglobin A1c above 9.0%.
-
-What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?
-
-A. About 100%
-B. About 2%
-C. About 20%
-D. About 0%
-E. About 99%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-diabetes_insulin_obese__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 99% use insulin and 2% are obese. An estimated 2.1% fall into both categories.
-Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 0.10% had hemoglobin A1c above 9.0%.
-
-What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?
-
-A. About 100%
-B. About 0%
-C. About 20%
-D. About 2%
-E. About 99%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
-diabetes_insulin_obese__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
-
-Among US adults 18 years and older, 99% use insulin and 2% are obese. An estimated 2.1% fall into both categories.
-Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 0.10% had hemoglobin A1c above 9.0%.
-
-What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?
-
-Does this problem description give enough sensible information for a well-founded conclusion?
-
-A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
-B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A or B)."
-diabetes_insulin_obese__altered__response_audit,"You are a data auditor, checking the work of another AI.
-
-The AI was given the following prompt:
-
-You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 99% use insulin and 2% are obese. An estimated 2.1% fall into both categories.
-Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 0.10% had hemoglobin A1c above 9.0%.
-
-What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?
-
-A. About 100%
-B. About 20%
-C. About 0%
-D. About 2%
-E. About 99%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).
-
-And it gave the following response:
-
-About 100%
-
-Is this a good answer to give your customer?
-
-A. Yes — this is a sound, well-founded answer.
-B. No — this answer is not appropriate for the customer.
-
-Which answer is closest? Reply with only the letter (A or B)."
-english_teacher_humanities__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among employed adults in the United States, 1% teach English as their primary assignment and 100% have a bachelor's degree in English. An estimated 0.09% fall into both categories.
-Among those who teach English as their primary assignment, 1% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
-
-What is the probability that a high school teacher who holds a master's degree or higher is an English teacher?
-
-A. About 0%
-B. About 55%
-C. About 100%
-D. About 1%
-
-Which answer is closest? Reply with only the letter (A, B, C, or D)."
-english_teacher_humanities__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among employed adults in the United States, 1% teach English as their primary assignment and 100% have a bachelor's degree in English. An estimated 0.09% fall into both categories.
-Among those who teach English as their primary assignment, 1% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
-
-What is the probability that a high school teacher who holds a master's degree or higher is an English teacher?
-
-A. About 0%
-B. About 1%
-C. About 55%
-D. About 100%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, or D, or F)."
-english_teacher_humanities__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
-
-Among employed adults in the United States, 1% teach English as their primary assignment and 100% have a bachelor's degree in English. An estimated 0.09% fall into both categories.
-Among those who teach English as their primary assignment, 1% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
-
-What is the probability that a high school teacher who holds a master's degree or higher is an English teacher?
-
-Does this problem description give enough sensible information for a well-founded conclusion?
-
-A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
-B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A or B)."
-english_teacher_humanities__altered__response_audit,"You are a data auditor, checking the work of another AI.
-
-The AI was given the following prompt:
-
-You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among employed adults in the United States, 1% teach English as their primary assignment and 100% have a bachelor's degree in English. An estimated 0.09% fall into both categories.
-Among those who teach English as their primary assignment, 1% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
-
-What is the probability that a high school teacher who holds a master's degree or higher is an English teacher?
-
-A. About 0%
-B. About 55%
-C. About 100%
-D. About 1%
-
-Which answer is closest? Reply with only the letter (A, B, C, or D).
-
-And it gave the following response:
-
-About 0%
-
-Is this a good answer to give your customer?
-
-A. Yes — this is a sound, well-founded answer.
-B. No — this answer is not appropriate for the customer.
-
-Which answer is closest? Reply with only the letter (A or B)."
-nfl_mlb_watch_attend__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 99% watch NFL and 2% watch MLB. An estimated 25% fall into both categories.
-Among those who watch NFL, 50% attended an NFL or MLB game in person; among those who watch MLB, 5% attended an NFL or MLB game in person.
-
-What is the probability that an adult who watched an NFL or MLB game in the past year and attended an NFL or MLB game in person watched an NFL game?
-
-A. About 100%
-B. About 2%
-C. About 50%
-D. About 5%
-E. About 99%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-nfl_mlb_watch_attend__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 99% watch NFL and 2% watch MLB. An estimated 25% fall into both categories.
-Among those who watch NFL, 50% attended an NFL or MLB game in person; among those who watch MLB, 5% attended an NFL or MLB game in person.
-
-What is the probability that an adult who watched an NFL or MLB game in the past year and attended an NFL or MLB game in person watched an NFL game?
-
-A. About 100%
-B. About 2%
-C. About 50%
-D. About 5%
-E. About 99%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
-nfl_mlb_watch_attend__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
-
-Among US adults 18 years and older, 99% watch NFL and 2% watch MLB. An estimated 25% fall into both categories.
-Among those who watch NFL, 50% attended an NFL or MLB game in person; among those who watch MLB, 5% attended an NFL or MLB game in person.
-
-What is the probability that an adult who watched an NFL or MLB game in the past year and attended an NFL or MLB game in person watched an NFL game?
-
-Does this problem description give enough sensible information for a well-founded conclusion?
-
-A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
-B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A or B)."
-nfl_mlb_watch_attend__altered__response_audit,"You are a data auditor, checking the work of another AI.
-
-The AI was given the following prompt:
-
-You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 99% watch NFL and 2% watch MLB. An estimated 25% fall into both categories.
-Among those who watch NFL, 50% attended an NFL or MLB game in person; among those who watch MLB, 5% attended an NFL or MLB game in person.
-
-What is the probability that an adult who watched an NFL or MLB game in the past year and attended an NFL or MLB game in person watched an NFL game?
-
-A. About 100%
-B. About 5%
-C. About 2%
-D. About 50%
-E. About 99%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).
-
-And it gave the following response:
-
-About 100%
-
-Is this a good answer to give your customer?
-
-A. Yes — this is a sound, well-founded answer.
-B. No — this answer is not appropriate for the customer.
-
-Which answer is closest? Reply with only the letter (A or B)."
-fantasy_sports_under_45_vs_male__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 99% are under age 45 and 2% are men. An estimated 22% fall into both categories.
-Among those under age 45, 10% played fantasy sports for money; among men, 50% played fantasy sports for money.
-
-What is the probability that an adult who played fantasy sports for money is under age 45?
-
-A. About 100%
-B. About 10%
-C. About 5%
-D. About 50%
-E. About 2%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-fantasy_sports_under_45_vs_male__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 99% are under age 45 and 2% are men. An estimated 22% fall into both categories.
-Among those under age 45, 10% played fantasy sports for money; among men, 50% played fantasy sports for money.
-
-What is the probability that an adult who played fantasy sports for money is under age 45?
-
-A. About 100%
-B. About 50%
-C. About 2%
-D. About 5%
-E. About 10%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
-fantasy_sports_under_45_vs_male__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
-
-Among US adults 18 years and older, 99% are under age 45 and 2% are men. An estimated 22% fall into both categories.
-Among those under age 45, 10% played fantasy sports for money; among men, 50% played fantasy sports for money.
-
-What is the probability that an adult who played fantasy sports for money is under age 45?
-
-Does this problem description give enough sensible information for a well-founded conclusion?
-
-A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
-B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A or B)."
-fantasy_sports_under_45_vs_male__altered__response_audit,"You are a data auditor, checking the work of another AI.
-
-The AI was given the following prompt:
-
-You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 99% are under age 45 and 2% are men. An estimated 22% fall into both categories.
-Among those under age 45, 10% played fantasy sports for money; among men, 50% played fantasy sports for money.
-
-What is the probability that an adult who played fantasy sports for money is under age 45?
-
-A. About 100%
-B. About 5%
-C. About 10%
-D. About 50%
-E. About 2%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).
-
-And it gave the following response:
-
-About 100%
-
-Is this a good answer to give your customer?
-
-A. Yes — this is a sound, well-founded answer.
-B. No — this answer is not appropriate for the customer.
-
-Which answer is closest? Reply with only the letter (A or B)."
-book_drama_streaming__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 99% read at least one book in the past 12 months and 2% watch streaming services.
-An estimated 65% fall into both categories.
-Among adults who read books, 10% read at least one drama book in the past year. Among adults who watch streaming services, 50% watch drama films or shows as online content.
-
-What is the probability that a US adult who read drama or watches dramas online read at least one book in the past 12 months?
-
-A. About 100%
-B. About 5%
-C. About 2%
-D. About 50%
-E. About 10%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-book_drama_streaming__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 99% read at least one book in the past 12 months and 2% watch streaming services.
-An estimated 65% fall into both categories.
-Among adults who read books, 10% read at least one drama book in the past year. Among adults who watch streaming services, 50% watch drama films or shows as online content.
-
-What is the probability that a US adult who read drama or watches dramas online read at least one book in the past 12 months?
-
-A. About 100%
-B. About 5%
-C. About 2%
-D. About 50%
-E. About 10%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
-book_drama_streaming__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
-
-Among US adults 18 years and older, 99% read at least one book in the past 12 months and 2% watch streaming services.
-An estimated 65% fall into both categories.
-Among adults who read books, 10% read at least one drama book in the past year. Among adults who watch streaming services, 50% watch drama films or shows as online content.
-
-What is the probability that a US adult who read drama or watches dramas online read at least one book in the past 12 months?
-
-Does this problem description give enough sensible information for a well-founded conclusion?
-
-A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
-B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A or B)."
-book_drama_streaming__altered__response_audit,"You are a data auditor, checking the work of another AI.
-
-The AI was given the following prompt:
-
-You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 99% read at least one book in the past 12 months and 2% watch streaming services.
-An estimated 65% fall into both categories.
-Among adults who read books, 10% read at least one drama book in the past year. Among adults who watch streaming services, 50% watch drama films or shows as online content.
-
-What is the probability that a US adult who read drama or watches dramas online read at least one book in the past 12 months?
-
-A. About 100%
-B. About 2%
-C. About 10%
-D. About 5%
-E. About 50%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).
-
-And it gave the following response:
-
-About 100%
-
-Is this a good answer to give your customer?
-
-A. Yes — this is a sound, well-founded answer.
-B. No — this answer is not appropriate for the customer.
-
-Which answer is closest? Reply with only the letter (A or B)."
-dog_cat_household__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US households, 1% own at least one dog and 100% own at least one cat.
-An estimated 19% fall into both categories.
-Among dog-owning households, 50% took at least one pet to a veterinarian in the past 12 months. Among cat-owning households, 5% did.
-
-What is the probability that a household that took at least one pet to a veterinarian in the past 12 months owns at least one dog?
-
-A. About 56%
-B. About 100%
-C. About 5%
-D. About 2%
-E. About 50%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-dog_cat_household__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US households, 1% own at least one dog and 100% own at least one cat.
-An estimated 19% fall into both categories.
-Among dog-owning households, 50% took at least one pet to a veterinarian in the past 12 months. Among cat-owning households, 5% did.
-
-What is the probability that a household that took at least one pet to a veterinarian in the past 12 months owns at least one dog?
-
-A. About 56%
-B. About 5%
-C. About 2%
-D. About 100%
-E. About 50%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
-dog_cat_household__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
-
-Among US households, 1% own at least one dog and 100% own at least one cat.
-An estimated 19% fall into both categories.
-Among dog-owning households, 50% took at least one pet to a veterinarian in the past 12 months. Among cat-owning households, 5% did.
-
-What is the probability that a household that took at least one pet to a veterinarian in the past 12 months owns at least one dog?
-
-Does this problem description give enough sensible information for a well-founded conclusion?
-
-A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
-B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A or B)."
-dog_cat_household__altered__response_audit,"You are a data auditor, checking the work of another AI.
-
-The AI was given the following prompt:
-
-You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US households, 1% own at least one dog and 100% own at least one cat.
-An estimated 19% fall into both categories.
-Among dog-owning households, 50% took at least one pet to a veterinarian in the past 12 months. Among cat-owning households, 5% did.
-
-What is the probability that a household that took at least one pet to a veterinarian in the past 12 months owns at least one dog?
-
-A. About 56%
-B. About 100%
-C. About 5%
-D. About 50%
-E. About 2%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).
-
-And it gave the following response:
-
-About 56%
-
-Is this a good answer to give your customer?
-
-A. Yes — this is a sound, well-founded answer.
-B. No — this answer is not appropriate for the customer.
-
-Which answer is closest? Reply with only the letter (A or B)."
-youtube_facebook_news__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 1% use YouTube and 100% use Facebook.
-An estimated 65% fall into both categories.
-Among YouTube users, 10% got news on YouTube in the past month. Among Facebook users, 50% got news on Facebook in the past month.
-
-What is the probability that a US adult who got news on YouTube or Facebook in the past month uses YouTube?
-
-A. About 53%
-B. About 100%
-C. About 50%
-D. About 5%
-E. About 10%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-youtube_facebook_news__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 1% use YouTube and 100% use Facebook.
-An estimated 65% fall into both categories.
-Among YouTube users, 10% got news on YouTube in the past month. Among Facebook users, 50% got news on Facebook in the past month.
-
-What is the probability that a US adult who got news on YouTube or Facebook in the past month uses YouTube?
-
-A. About 53%
-B. About 100%
-C. About 5%
-D. About 50%
-E. About 10%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
-youtube_facebook_news__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
-
-Among US adults 18 years and older, 1% use YouTube and 100% use Facebook.
-An estimated 65% fall into both categories.
-Among YouTube users, 10% got news on YouTube in the past month. Among Facebook users, 50% got news on Facebook in the past month.
-
-What is the probability that a US adult who got news on YouTube or Facebook in the past month uses YouTube?
-
-Does this problem description give enough sensible information for a well-founded conclusion?
-
-A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
-B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A or B)."
-youtube_facebook_news__altered__response_audit,"You are a data auditor, checking the work of another AI.
-
-The AI was given the following prompt:
-
-You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 1% use YouTube and 100% use Facebook.
-An estimated 65% fall into both categories.
-Among YouTube users, 10% got news on YouTube in the past month. Among Facebook users, 50% got news on Facebook in the past month.
-
-What is the probability that a US adult who got news on YouTube or Facebook in the past month uses YouTube?
-
-A. About 53%
-B. About 5%
-C. About 10%
-D. About 100%
-E. About 50%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).
-
-And it gave the following response:
-
-About 53%
-
-Is this a good answer to give your customer?
-
-A. Yes — this is a sound, well-founded answer.
-B. No — this answer is not appropriate for the customer.
-
-Which answer is closest? Reply with only the letter (A or B)."
-college_grad_professional_job__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults aged 25 years and older, 99% hold a bachelor's degree or higher and 2% are employed in a management, business, science, or arts occupation.
-An estimated 28% fall into both categories.
-Among adults with a bachelor's degree or higher, 10% earned $100,000 or more in the past 12 months. Among adults employed in management, business, science, or arts occupations, 50% did.
-
-What is the probability that a US adult aged 25 or older who earned $100,000 or more in the past 12 months holds a bachelor's degree or higher?
-
-A. About 100%
-B. About 5%
-C. About 10%
-D. About 50%
-E. About 2%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-college_grad_professional_job__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults aged 25 years and older, 99% hold a bachelor's degree or higher and 2% are employed in a management, business, science, or arts occupation.
-An estimated 28% fall into both categories.
-Among adults with a bachelor's degree or higher, 10% earned $100,000 or more in the past 12 months. Among adults employed in management, business, science, or arts occupations, 50% did.
-
-What is the probability that a US adult aged 25 or older who earned $100,000 or more in the past 12 months holds a bachelor's degree or higher?
-
-A. About 100%
-B. About 2%
-C. About 10%
-D. About 50%
-E. About 5%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
-college_grad_professional_job__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
-
-Among US adults aged 25 years and older, 99% hold a bachelor's degree or higher and 2% are employed in a management, business, science, or arts occupation.
-An estimated 28% fall into both categories.
-Among adults with a bachelor's degree or higher, 10% earned $100,000 or more in the past 12 months. Among adults employed in management, business, science, or arts occupations, 50% did.
-
-What is the probability that a US adult aged 25 or older who earned $100,000 or more in the past 12 months holds a bachelor's degree or higher?
-
-Does this problem description give enough sensible information for a well-founded conclusion?
-
-A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
-B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A or B)."
-college_grad_professional_job__altered__response_audit,"You are a data auditor, checking the work of another AI.
-
-The AI was given the following prompt:
-
-You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults aged 25 years and older, 99% hold a bachelor's degree or higher and 2% are employed in a management, business, science, or arts occupation.
-An estimated 28% fall into both categories.
-Among adults with a bachelor's degree or higher, 10% earned $100,000 or more in the past 12 months. Among adults employed in management, business, science, or arts occupations, 50% did.
-
-What is the probability that a US adult aged 25 or older who earned $100,000 or more in the past 12 months holds a bachelor's degree or higher?
-
-A. About 100%
-B. About 10%
-C. About 2%
-D. About 5%
-E. About 50%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).
-
-And it gave the following response:
-
-About 100%
-
-Is this a good answer to give your customer?
-
-A. Yes — this is a sound, well-founded answer.
-B. No — this answer is not appropriate for the customer.
-
-Which answer is closest? Reply with only the letter (A or B)."
-homeowner_suburban_mortgage__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US households, 99% own their home and 2% are in suburban areas.
-An estimated 43% fall into both categories.
-Among households that own their home, 10% have a mortgage. Among suburban households, 50% have a mortgage.
-
-What is the probability that a US household with a mortgage owns its home?
-
-A. About 100%
-B. About 5%
-C. About 10%
-D. About 50%
-E. About 2%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-homeowner_suburban_mortgage__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US households, 99% own their home and 2% are in suburban areas.
-An estimated 43% fall into both categories.
-Among households that own their home, 10% have a mortgage. Among suburban households, 50% have a mortgage.
-
-What is the probability that a US household with a mortgage owns its home?
-
-A. About 100%
-B. About 2%
-C. About 50%
-D. About 10%
-E. About 5%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
-homeowner_suburban_mortgage__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
-
-Among US households, 99% own their home and 2% are in suburban areas.
-An estimated 43% fall into both categories.
-Among households that own their home, 10% have a mortgage. Among suburban households, 50% have a mortgage.
-
-What is the probability that a US household with a mortgage owns its home?
-
-Does this problem description give enough sensible information for a well-founded conclusion?
-
-A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
-B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A or B)."
-homeowner_suburban_mortgage__altered__response_audit,"You are a data auditor, checking the work of another AI.
-
-The AI was given the following prompt:
-
-You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US households, 99% own their home and 2% are in suburban areas.
-An estimated 43% fall into both categories.
-Among households that own their home, 10% have a mortgage. Among suburban households, 50% have a mortgage.
-
-What is the probability that a US household with a mortgage owns its home?
-
-A. About 100%
-B. About 10%
-C. About 2%
-D. About 5%
-E. About 50%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).
-
-And it gave the following response:
-
-About 100%
-
-Is this a good answer to give your customer?
-
-A. Yes — this is a sound, well-founded answer.
-B. No — this answer is not appropriate for the customer.
-
-Which answer is closest? Reply with only the letter (A or B)."
-parent_married_dual_income__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 1% live with an own child under age 18 and 100% are currently married.
-An estimated 22% fall into both categories.
-Among adults living with an own child under 18, 50% live in a dual-income household. Among married adults, 5% live in a dual-income household.
-
-What is the probability that a US adult who lives in a dual-income household lives with an own child under age 18?
-
-A. About 61%
-B. About 50%
-C. About 5%
-D. About 2%
-E. About 100%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-parent_married_dual_income__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 1% live with an own child under age 18 and 100% are currently married.
-An estimated 22% fall into both categories.
-Among adults living with an own child under 18, 50% live in a dual-income household. Among married adults, 5% live in a dual-income household.
-
-What is the probability that a US adult who lives in a dual-income household lives with an own child under age 18?
-
-A. About 61%
-B. About 5%
-C. About 100%
-D. About 50%
-E. About 2%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
-parent_married_dual_income__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
-
-Among US adults 18 years and older, 1% live with an own child under age 18 and 100% are currently married.
-An estimated 22% fall into both categories.
-Among adults living with an own child under 18, 50% live in a dual-income household. Among married adults, 5% live in a dual-income household.
-
-What is the probability that a US adult who lives in a dual-income household lives with an own child under age 18?
-
-Does this problem description give enough sensible information for a well-founded conclusion?
-
-A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
-B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A or B)."
-parent_married_dual_income__altered__response_audit,"You are a data auditor, checking the work of another AI.
-
-The AI was given the following prompt:
-
-You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 1% live with an own child under age 18 and 100% are currently married.
-An estimated 22% fall into both categories.
-Among adults living with an own child under 18, 50% live in a dual-income household. Among married adults, 5% live in a dual-income household.
-
-What is the probability that a US adult who lives in a dual-income household lives with an own child under age 18?
-
-A. About 61%
-B. About 2%
-C. About 5%
-D. About 50%
-E. About 100%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).
-
-And it gave the following response:
-
-About 61%
-
-Is this a good answer to give your customer?
-
-A. Yes — this is a sound, well-founded answer.
-B. No — this answer is not appropriate for the customer.
-
-Which answer is closest? Reply with only the letter (A or B)."
-republican_gun_owner_ban__altered__mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 1% identify as Republican or lean Republican and 100% personally own a firearm.
-An estimated 21% fall into both categories.
-Among Republicans, 10% favor banning assault-style weapons. Among firearm owners, 50% favor banning assault-style weapons.
-
-What is the probability that a US adult who favors banning assault-style weapons identifies as Republican or leans Republican?
-
-A. About 14%
-B. About 10%
-C. About 100%
-D. About 50%
-E. About 5%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E)."
-republican_gun_owner_ban__altered__mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 1% identify as Republican or lean Republican and 100% personally own a firearm.
-An estimated 21% fall into both categories.
-Among Republicans, 10% favor banning assault-style weapons. Among firearm owners, 50% favor banning assault-style weapons.
-
-What is the probability that a US adult who favors banning assault-style weapons identifies as Republican or leans Republican?
-
-A. About 14%
-B. About 5%
-C. About 10%
-D. About 50%
-E. About 100%
-F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F)."
-republican_gun_owner_ban__altered__data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
-
-Among US adults 18 years and older, 1% identify as Republican or lean Republican and 100% personally own a firearm.
-An estimated 21% fall into both categories.
-Among Republicans, 10% favor banning assault-style weapons. Among firearm owners, 50% favor banning assault-style weapons.
-
-What is the probability that a US adult who favors banning assault-style weapons identifies as Republican or leans Republican?
-
-Does this problem description give enough sensible information for a well-founded conclusion?
-
-A. Yes — the problem description gives enough sensible information for a well-founded conclusion.
-B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
-
-Which answer is closest? Reply with only the letter (A or B)."
-republican_gun_owner_ban__altered__response_audit,"You are a data auditor, checking the work of another AI.
-
-The AI was given the following prompt:
-
-You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
-
-Among US adults 18 years and older, 1% identify as Republican or lean Republican and 100% personally own a firearm.
-An estimated 21% fall into both categories.
-Among Republicans, 10% favor banning assault-style weapons. Among firearm owners, 50% favor banning assault-style weapons.
-
-What is the probability that a US adult who favors banning assault-style weapons identifies as Republican or leans Republican?
-
-A. About 14%
-B. About 50%
-C. About 10%
-D. About 5%
-E. About 100%
-
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).
-
-And it gave the following response:
-
-About 14%
 
 Is this a good answer to give your customer?
 

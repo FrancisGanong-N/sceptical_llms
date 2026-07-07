@@ -734,7 +734,21 @@ def scepticism_required_for_variant(v: SimpleVignette, variant: str) -> bool:
 
 
 def variants_for_vignette(v: SimpleVignette) -> tuple[str, ...]:
-    return CANONICAL_VARIANTS
+    """Variant gating aligned with problem-class scoring.
+
+    - mc_prob: natural disjoint only (11)
+    - mc_w_meta: natural overlap + altered disjoint (22)
+    - data_audit / response_audit: natural (all) + altered disjoint (33 each)
+    - altered overlap: no variants (overlap + implausible not scored)
+    """
+    disjoint = not has_overlap(v)
+    if v.condition == CONDITION_NATURAL and disjoint:
+        return ("mc_prob", "data_audit", "response_audit")
+    if v.condition == CONDITION_NATURAL and not disjoint:
+        return ("mc_w_meta", "data_audit", "response_audit")
+    if v.condition == CONDITION_ALTERED and disjoint:
+        return ("mc_w_meta", "data_audit", "response_audit")
+    return ()
 
 
 def _uses_absolute_c_d_shares(v: SimpleVignette) -> bool:
@@ -1671,8 +1685,7 @@ def main() -> int:
     if altered_count:
         print(
             f"Wrote {count} prompts "
-            f"({natural_count} natural + {altered_count} altered, "
-            f"× {len(CANONICAL_VARIANTS)} variants each)"
+            f"({natural_count} natural + {altered_count} altered; variant-gated)"
         )
     else:
         print(
