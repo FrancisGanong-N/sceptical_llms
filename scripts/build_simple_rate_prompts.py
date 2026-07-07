@@ -1558,10 +1558,11 @@ def _validate_implausible_csv_coverage(
 
 def build_condition_vignettes(
     base_vignettes: list[SimpleVignette],
-    p_c_d_stats: dict[str, tuple[float, float]],
-    p_t_stats: dict[str, tuple[float, float]],
+    *,
+    include_altered: bool = False,
+    p_c_d_stats: dict[str, tuple[float, float]] | None = None,
+    p_t_stats: dict[str, tuple[float, float]] | None = None,
 ) -> list[SimpleVignette]:
-    _validate_implausible_csv_coverage(base_vignettes, p_c_d_stats, p_t_stats)
     vignettes: list[SimpleVignette] = []
     for vignette in base_vignettes:
         vignettes.append(
@@ -1571,6 +1572,15 @@ def build_condition_vignettes(
                 problem_type=PROBLEM_TYPE_WELL_POSED,
             )
         )
+    if not include_altered:
+        return vignettes
+
+    if p_c_d_stats is None or p_t_stats is None:
+        raise ValueError(
+            "p_c_d_stats and p_t_stats are required when include_altered=True"
+        )
+    _validate_implausible_csv_coverage(base_vignettes, p_c_d_stats, p_t_stats)
+    for vignette in base_vignettes:
         p_c, p_d = p_c_d_stats[vignette.name]
         s_c, s_d = p_t_stats[vignette.name]
         vignettes.append(
@@ -1587,13 +1597,21 @@ def build_condition_vignettes(
     return vignettes
 
 
+INCLUDE_ALTERED = True
+
+
 def build_all() -> tuple[list[dict[str, str]], list[dict[str, str]], list[dict[str, str]]]:
     prompts: list[dict[str, str]] = []
     items: list[dict[str, str]] = []
     base_vignettes = load_simple_vignettes()
     p_c_d_stats = _load_implausible_p_c_d()
     p_t_stats = _load_implausible_p_t_given()
-    vignettes = build_condition_vignettes(base_vignettes, p_c_d_stats, p_t_stats)
+    vignettes = build_condition_vignettes(
+        base_vignettes,
+        include_altered=INCLUDE_ALTERED,
+        p_c_d_stats=p_c_d_stats,
+        p_t_stats=p_t_stats,
+    )
 
     for vignette in vignettes:
         for variant in variants_for_vignette(vignette):
@@ -1650,11 +1668,18 @@ def main() -> int:
     _, items, _ = build_all()
     natural_count = sum(1 for row in items if row["condition"] == CONDITION_NATURAL)
     altered_count = sum(1 for row in items if row["condition"] == CONDITION_ALTERED)
-    print(
-        f"Wrote {count} prompts "
-        f"({natural_count} natural + {altered_count} altered, "
-        f"× {len(CANONICAL_VARIANTS)} variants each)"
-    )
+    if altered_count:
+        print(
+            f"Wrote {count} prompts "
+            f"({natural_count} natural + {altered_count} altered, "
+            f"× {len(CANONICAL_VARIANTS)} variants each)"
+        )
+    else:
+        print(
+            f"Wrote {count} prompts "
+            f"({natural_count} natural vignettes × {len(CANONICAL_VARIANTS)} variants; "
+            "altered/implausible excluded)"
+        )
     print(f"Output: {OUT_DIR} (prompts.csv, items.csv, benchmark.csv)")
     return 0
 

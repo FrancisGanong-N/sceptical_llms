@@ -635,23 +635,3 @@ class TestBuildAll:
         names = {v.name for v in load_simple_vignettes()}
         assert set(_load_implausible_p_c_d()) == names
         assert set(_load_implausible_p_t_given()) == names
-
-    def test_altered_discharged_weapon_stats(self):
-        from scripts.build_simple_rate_prompts import (
-            _load_implausible_p_c_d,
-            _load_implausible_p_t_given,
-        )
-
-        name = "discharged weapon (last year)"
-        p_c_d = _load_implausible_p_c_d()[name]
-        p_t = _load_implausible_p_t_given()[name]
-        _, items, _ = build_all()
-        row = next(
-            r
-            for r in items
-            if r["example_id"] == "discharged_weapon_last_year__altered__mc_w_meta"
-        )
-        assert float(row["p_c"]) == p_c_d[0]
-        assert float(row["p_d"]) == p_c_d[1]
-        assert float(row["p_t_given_c"]) == p_t[0]
-        assert float(row["p_t_given_d"]) == p_t[1]

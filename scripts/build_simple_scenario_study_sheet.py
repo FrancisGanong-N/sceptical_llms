@@ -139,7 +139,7 @@ def build_study_sheet() -> str:
         f"Generated: {date.today().isoformat()}",
         f"Source: {BENCHMARK_CSV.relative_to(ROOT)}",
         "Format: mc_prob scenario text (consultant intro + statistics + question).",
-        "22 vignettes × natural condition; altered condition where CSV stats exist.",
+        "22 vignettes × natural condition only (altered/implausible excluded).",
         "",
         "QUICK INDEX",
         "-" * 80,
@@ -159,19 +159,6 @@ def build_study_sheet() -> str:
         if row:
             lines.extend(_vignette_block(row))
 
-    lines.extend(
-        [
-            "=" * 80,
-            "PART III — ALTERED CONDITION (mc_prob variant)",
-            "=" * 80,
-            "",
-        ]
-    )
-    for name in PARTITION_ORDER + OVERLAP_ORDER:
-        row = by_name_variant.get((name, "altered", "mc_prob"))
-        if row:
-            lines.extend(_vignette_block(row))
-
     return "\n".join(lines).rstrip() + "\n"
 
 
@@ -179,7 +166,7 @@ def main() -> None:
     text = build_study_sheet()
     OUT_PATH.write_text(text, encoding="utf-8")
     vignette_count = len(PARTITION_ORDER) + len(OVERLAP_ORDER)
-    print(f"Wrote {OUT_PATH.relative_to(ROOT)} ({vignette_count} vignettes, natural + altered)")
+    print(f"Wrote {OUT_PATH.relative_to(ROOT)} ({vignette_count} vignettes, natural only)")
 
 
 if __name__ == "__main__":

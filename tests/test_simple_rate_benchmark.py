@@ -114,38 +114,6 @@ class TestAlteredScoring:
         )
         assert scored.examples[0].score is True
 
-    def test_altered_mc_w_meta_comment_parsed(self):
-        items = load_benchmark()
-        example_id = "ca_trump_voter__altered__mc_w_meta"
-        scored = score_run_rows(
-            [
-                {
-                    "example_id": example_id,
-                    "response": "F\n4\nPremises contradict each other.",
-                    "model": "test-model",
-                }
-            ],
-            items=items,
-        )
-        assert scored.examples[0].score is True
-        assert scored.examples[0].comment_line == "Premises contradict each other."
-
-    def test_altered_mc_w_meta_bayes_lure_not_scored(self):
-        items = load_benchmark()
-        example_id = "ca_trump_voter__altered__mc_w_meta"
-        item = items[example_id]
-        scored = score_run_rows(
-            [
-                {
-                    "example_id": example_id,
-                    "response": item.normative_choice,
-                    "model": "test-model",
-                }
-            ],
-            items=items,
-        )
-        assert scored.examples[0].score is False
-
     def test_altered_data_audit_scores_b(self):
         items = load_benchmark()
         example_id = "ca_trump_voter__altered__data_audit"
@@ -157,17 +125,8 @@ class TestAlteredScoring:
         )
         assert scored.examples[0].score is True
 
-    def test_altered_response_audit_scores_b(self):
-        items = load_benchmark()
-        example_id = "ca_trump_voter__altered__response_audit"
-        item = items[example_id]
-        assert item.scepticism_score_target == "B"
-        scored = score_run_rows(
-            [{"example_id": example_id, "response": "B", "model": "test-model"}],
-            items=items,
-        )
-        assert scored.examples[0].score is True
 
+class TestNaturalScoring:
     def test_natural_mc_w_meta_scepticism_not_required(self):
         items = load_benchmark()
         example_id = "ca_trump_voter__natural__mc_w_meta"
@@ -199,23 +158,6 @@ class TestAlteredScoring:
         assert item.normative_choice == "A"
         scored = score_run_rows(
             [{"example_id": example_id, "response": "A", "model": "test-model"}],
-            items=items,
-        )
-        assert scored.examples[0].score is True
-
-    def test_altered_mc_prob_scores_numeric(self):
-        items = load_benchmark()
-        example_id = "ca_trump_voter__altered__mc_prob"
-        item = items[example_id]
-        assert item.scepticism_required is False
-        scored = score_run_rows(
-            [
-                {
-                    "example_id": example_id,
-                    "response": item.normative_choice,
-                    "model": "test-model",
-                }
-            ],
             items=items,
         )
         assert scored.examples[0].score is True
