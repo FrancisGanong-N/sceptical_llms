@@ -2,71 +2,137 @@
 
 **When the problem is well-posed, reason correctly. When it is not, say so.**
 
-Frontier language models are fluent at applying Bayes’ rule to vignettes. The harder question is whether they are *sceptical*: do they notice patently false premises, inconsistent priors, overlapping pathways left unspecified, and traps dressed up as word problems—or do they compute anyway and report a number?
+Frontier models are fluent at applying Bayes’ rule. Are they appropriately *sceptical*? Do they notice implausible probabilities or mistaken implicit assumptions—or do they compute anyway and report a number?
 
-This project benchmarks **meta-reasoning under uncertainty**: the discipline of knowing when a posterior is warranted, and when the honest answer is *insufficient information* or *the setup is inconsistent*.
+This project extends the Kaggle benchmark [Measuring Progress Toward AGI — Cognitive Abilities](https://www.kaggle.com/competitions/kaggle-measuring-agi) with a **Sceptical Bayes** task. Each item is a two-path problem: given statistics on two pathways **A** and **B** and a positive test **T**, the model must estimate **P(A | T)**—or decline when the premises do not support a posterior probability calculation.
+
+If \(A\) and \(B\) are disjoint and exhaustive, then Bayes' rule gives
+
+$$
+P(A \mid T)=\frac{P(T \mid A)P(A)}{P(T \mid A)P(A)+P(T \mid B)P(B)}
+$$
+
+
+In some of the cases, **A** and **B** are disjoint, so the adding their probabilities is sensible.
+
+```mermaid
+flowchart TB
+  subgraph pop["Population (A and B disjoint)"]
+    A["Pathway A<br/>P(A)"]
+    B["Pathway B<br/>P(B)"]
+  end
+  T(("Event T"))
+
+  A -->|"P(T|A)"| T
+  B -->|"P(T|B)"| T
+  T -.->|"P(A|T) = P(T|A)P(A) / P(T)"| A
+
+  linkStyle 2 stroke-dasharray: 5 5
+```
+
+Given **T**, the target posterior **P(A|T)** combines the two paths through the denominator **P(T) = P(T|A)P(A) + P(T|B)P(B)**.
+
+But in other cases **A** and **B** intersect, and so one needs information about their intersection, which is not provided in the problem posed to the LLMs.  In yet other cases, implausible information is presented to the LLMs (such as ...). In both cases of these later cases, an AI that does a blind Bayes posterior calculation will provide a precise numeric answer which is very likely incorrect.  A helpful AI would instead warn the user about the problem.  Thus, this is a simplified case of the alignment problem.
+
+
+
 
 ---
 
-## Manifesto
+## Simple Bayes model
 
-A sceptical model knows the normative answer when the graph is fully specified:
+Each vignette fixes a population **A** and two pathways **C** and **D** that may overlap. The prompt states marginal shares **P(C)** and **P(D)** (and **P(C ∩ D)** when overlap is explicit), plus **P(T | C)** and **P(T | D)**. The normative target is the Bayesian posterior **P(C | T)**.
 
-$$
-P(A \mid T) =
-\frac{(q_c s_c + q_d s_d)\,P(A)}
-{(q_c s_c + q_d s_d)\,P(A) + r_e s_e\,P(B) + f_n\,P(N)}
-$$
-
-**Notation** (multi-cause base-rate graph):
-
-| Symbol | Meaning |
-|--------|---------|
-| \(A, B, N\) | Mutually exclusive causes; \(P(N) = 1 - P(A) - P(B)\) |
-| \(C, D\) | Conditions driven by \(A\); mutually exclusive given \(A\) |
-| \(E\) | Condition driven by \(B\) |
-| \(T\) | Positive test |
-| \(q_c, q_d\) | \(P(C \mid A)\), \(P(D \mid A)\); require \(q_c + q_d \le 1\) |
-| \(r_e\) | \(P(E \mid B)\) |
-| \(s_c, s_d, s_e\) | \(P(T \mid C)\), \(P(T \mid D)\), \(P(T \mid E)\) |
-| \(f_n\) | \(P(T \mid N)\) — baseline false-positive rate |
-
-Likelihoods:
-
-$$
-P(T \mid A) = q_c s_c + q_d s_d, \qquad
-P(T \mid B) = r_e s_e, \qquad
-P(T \mid N) = f_n
-$$
-
-The manifesto is not the formula alone. It is the **pair**:
-
-1. **Compute** \(P(A \mid T)\) when the stated probabilities define a coherent model.
-2. **Refuse** when they do not—when priors do not partition, pathways overlap without specification, or opening claims contradict known facts and the problem never reconciles them.
-
-Blind application of the numerator is not intelligence; it is pattern matching. Scepticism is the guardrail.
+When **C** and **D** are disjoint and the numbers are coherent, blind Bayes is correct. When overlap is not fully specified, or when altered statistics are implausible, the keyed answer is sceptical: meta-option **F**, or audit **B** (not well-founded / not appropriate).
 
 ---
 
-## What we test
+## Problem classes
 
-| Failure mode | Sketch |
-|--------------|--------|
-| **False premises** | Real-world claims (prevalence, epidemiology) that are patently wrong |
-| **Inconsistent priors** | \(P(A) + P(B) + P(N) \neq 1\) |
-| **Inconsistent pathways** | \(q_c + q_d > 1\) or other structural violations |
-| **Underdetermined overlap** | \(C\) and \(D\) not stated mutually exclusive |
-| **Lure shortcuts** | \(q_c s_c + q_d s_d\) or \(P(T \mid A)\) mistaken for \(P(A \mid T)\) |
+The benchmark is organized around three problem classes. Each class uses a designated scoring variant (see below).
 
-Items are drawn from domains where humans and models alike reach for a number—medicine, law, security, marketing—and vary only in whether the setup *earns* that computation.
+| Problem class | Contents | Scoring variant |
+|---------------|----------|-----------------|
+| **Conventional Bayes** | Real data, disjoint subsets (`intersection_size == 0`) | `mc_prob` |
+| **Flawed Bayes — missing information** | Real data, intersecting subsets (overlap natural) | `mc_w_meta` |
+| **Flawed Bayes — implausible** | Disjoint subsets with altered statistics from implausible CSVs | `mc_w_meta` |
+
+**22 vignettes** (11 partition + 11 overlap), drawn from medicine, elections, education, sports, and similar domains. Source wording uses **natural** statistics; **altered** rows replace P(C), P(D), P(T|C), P(T|D) from `data/simple/implausible_p_c_d.csv` and `implausible_p_t_given.csv`.
+
+---
+
+## Prompt variants (`benchmark.csv` — 99 rows)
+
+Variants are **gated** by vignette class; not every vignette gets every variant.
+
+| Variant | Role | Count |
+|---------|------|-------|
+| `mc_prob` | Numeric MC only — blind Bayes on stated numbers | 11 |
+| `mc_w_meta` | Numeric MC + **F** (bad / inconsistent / incorrect premises) | 22 |
+| `data_audit` | Is the problem well-founded? **A** yes / **B** no | 33 |
+| `response_audit` | Is a stub Bayes answer appropriate? **A** sound / **B** not | 33 |
+
+**Gating rules**
+
+- **Natural, disjoint:** `mc_prob`, `data_audit`, `response_audit`
+- **Natural, overlap:** `mc_w_meta`, `data_audit`, `response_audit`
+- **Altered, disjoint:** `mc_w_meta`, `data_audit`, `response_audit`
+- **Altered, overlap:** excluded (no prompts)
+
+**Scoring:** `score=true` when the parsed answer matches the normative key for that row. On numeric variants, merged results also flag **`path_c_confusion`** when the model picks the **P(T | C)** lure instead of **P(C | T)**.
+
+Design detail: `docs/benchmark-design-factors.md`.
+
+---
+
+## Repository layout
+
+| Path | Purpose |
+|------|---------|
+| `data/simple/benchmark.csv` | Canonical prompt + scoring table (99 rows) |
+| `data/simple/implausible_p_*.csv` | Altered statistics per vignette |
+| `scripts/build_simple_rate_prompts.py` | Regenerate prompts, items, benchmark |
+| `benchmarks/simple_rate.py` | Load benchmark, parse responses, score runs |
+| `benchmarks/simple_rate_tasks.py` | Kaggle task (`simple_rate_normative_accuracy`) |
+| `benchmark/simple-benchmark.ipynb` | Run / publish on Kaggle |
+| `benchmark/simple-results.ipynb` | Merge Kaggle runs and analyze by model / class |
+
+---
+
+## Build locally
+
+```powershell
+python scripts/build_simple_rate_prompts.py
+python -m pytest tests/test_build_simple_rate_prompts.py tests/test_simple_rate_benchmark.py
+```
+
+Set `INCLUDE_ALTERED = True` in `build_simple_rate_prompts.py` (default) to include altered rows. Set to `False` for natural-only (66 rows).
+
+---
+
+## Run on Kaggle
+
+1. Push changes to the branch Kaggle pulls (`master` by default in `simple-benchmark.ipynb`).
+2. Open the **simple-rate-normative-accuracy** task notebook.
+3. **Secrets:** `GITHUB_TOKEN` (repo scope). **Internet:** ON.
+4. Run the setup cell (`FORCE_REPO_REFRESH = True` after a push).
+5. **Build task:** `SKIP_DRY_RUN_FOR_BUILD = True` → **Build task** (creates `.run.json` files).
+6. **AI quota:** right sidebar → **Benchmark Task** → Daily / Monthly AI Quota.
+
+Download results:
+
+```powershell
+python -m kaggle benchmarks tasks download simple-rate-normative-accuracy `
+  -o data/kaggle_runs/simple-rate-normative-accuracy
+```
+
+Then open `benchmark/simple-results.ipynb` with `LOAD_FROM_KAGGLE = True`.
 
 ---
 
 ## Status
 
-Early bootstrap. Benchmark items, scoring, and Kaggle tasks will land here as the suite is built.
-
-Sibling work: [cognitive-biases-in-llms](../cognitive-biases-in-llms) (bias susceptibility on Kaggle Community Benchmarks).
+Active development on the **simple** benchmark (99 prompts, four variants, three problem classes). Older multi-cause base-rate notebooks and data under `data/base_rate/` remain in the repo for reference but are not the focus of current runs.
 
 ---
 
