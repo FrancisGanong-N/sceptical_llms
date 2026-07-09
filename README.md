@@ -4,7 +4,22 @@
 
 Frontier models are fluent at applying Bayes’ rule. Are they appropriately *sceptical*? Do they notice implausible probabilities or mistaken implicit assumptions—or do they compute anyway and report a number?
 
-This project extends the Kaggle benchmark [Measuring Progress Toward AGI — Cognitive Abilities](https://www.kaggle.com/competitions/kaggle-measuring-agi) with a **Sceptical Bayes** task. Each item is a two-path problem: given statistics on two pathways **A** and **B** and a positive test **T**, the model must estimate **P(A | T)**—or decline when the premises do not support a posterior probability calculation.
+This project extends the Kaggle benchmark [Measuring Progress Toward AGI — Cognitive Abilities](https://www.kaggle.com/competitions/kaggle-measuring-agi) with a **Sceptical Bayes** task. Each item is a two-population problem: given statistics on **A** and **B** and a positive test **T**, the model must estimate **P(A | T)**—or decline when the premises do not support a posterior probability calculation.
+
+In some of the cases, **A** and **B** are disjoint, so adding their probabilities is sensible.
+
+```mermaid
+%%{init: {"flowchart": {"htmlLabels": true}} }%%
+flowchart TB
+  subgraph pop["<span style='white-space:nowrap'>Population (A and B disjoint)</span>"]
+    A["Population A<br/>P(A)"]
+    B["Population B<br/>P(B)"]
+  end
+  T(("test T"))
+
+  A -->|"P(T|A)"| T
+  B -->|"P(T|B)"| T
+```
 
 If \(A\) and \(B\) are disjoint and exhaustive, then Bayes' rule gives
 
@@ -12,27 +27,21 @@ $$
 P(A \mid T)=\frac{P(T \mid A)P(A)}{P(T \mid A)P(A)+P(T \mid B)P(B)}
 $$
 
-
-In some of the cases, **A** and **B** are disjoint, so the adding their probabilities is sensible.
+But in other cases **A** and **B** intersect:
 
 ```mermaid
+%%{init: {"flowchart": {"htmlLabels": true, "nodeSpacing": 0, "padding": 8}} }%%
 flowchart TB
-  subgraph pop["Population (A and B disjoint)"]
-    A["Pathway A<br/>P(A)"]
-    B["Pathway B<br/>P(B)"]
-  end
-  T(("Event T"))
+  venn["<svg xmlns='http://www.w3.org/2000/svg' width='302' height='182' font-family='trebuchet ms,verdana,sans-serif' font-size='13' fill='#333'><defs><marker id='sblms-arr' markerWidth='8' markerHeight='8' refX='7' refY='4' orient='auto'><path d='M0,0 L8,4 L0,8 z' fill='#333'/></marker></defs><text x='151' y='18' text-anchor='middle' font-size='14'>Population (A and B)</text><rect x='2' y='28' width='188' height='72' rx='14' fill='#e8f4fc' stroke='#2c5f8a' stroke-width='2'/><rect x='112' y='28' width='188' height='72' rx='14' fill='#fff3e0' stroke='#b86b00' stroke-width='2'/><rect x='115' y='28' width='72' height='72' rx='14' fill='#e8dff5' stroke='#6b4c9a' stroke-width='2'/><text x='52' y='57' text-anchor='middle'>Population A</text><text x='52' y='76' text-anchor='middle'>P(A)</text><text x='151' y='57' text-anchor='middle' font-size='12'>A ∩ B</text><text x='151' y='74' text-anchor='middle' font-size='11' fill='#555'>(unspecified)</text><text x='248' y='57' text-anchor='middle'>Population B</text><text x='248' y='76' text-anchor='middle'>P(B)</text><polyline points='96,100 96,124 133,141' fill='none' stroke='#333' stroke-width='1.5' marker-end='url(#sblms-arr)'/><polyline points='206,100 206,124 169,141' fill='none' stroke='#333' stroke-width='1.5' marker-end='url(#sblms-arr)'/><text x='96' y='117' text-anchor='middle' font-size='12'>P(T|A)</text><text x='206' y='117' text-anchor='middle' font-size='12'>P(T|B)</text><circle cx='151' cy='158' r='22' fill='white' stroke='#333' stroke-width='1.5'/><text x='151' y='162' text-anchor='middle' font-size='13'>test T</text></svg>"]
 
-  A -->|"P(T|A)"| T
-  B -->|"P(T|B)"| T
-  T -.->|"P(A|T) = P(T|A)P(A) / P(T)"| A
-
-  linkStyle 2 stroke-dasharray: 5 5
+  style venn fill:none,stroke:none
 ```
 
-Given **T**, the target posterior **P(A|T)** combines the two paths through the denominator **P(T) = P(T|A)P(A) + P(T|B)P(B)**.
+$$
+P(A \mid T)=\frac{P(T \mid A)P(A)}{P(T)\ =\ \text{??}}
+$$
 
-But in other cases **A** and **B** intersect, and so one needs information about their intersection, which is not provided in the problem posed to the LLMs.  In yet other cases, implausible information is presented to the LLMs (such as ...). In both cases of these later cases, an AI that does a blind Bayes posterior calculation will provide a precise numeric answer which is very likely incorrect.  A helpful AI would instead warn the user about the problem.  Thus, this is a simplified case of the alignment problem.
+and so one needs information about their intersection, which is not provided in the problem posed to the LLMs.  In yet other cases, implausible information is presented to the LLMs (such as ...). In both cases of these later cases, an AI that does a blind Bayes posterior calculation will provide a precise numeric answer which is very likely incorrect.  A helpful AI would instead warn the user about the problem.  Thus, this is a simplified case of the alignment problem.
 
 
 
