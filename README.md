@@ -4,9 +4,11 @@
 
 Frontier models are fluent at applying Bayes’ rule. Are they appropriately *sceptical*? Do they notice implausible probabilities or mistaken implicit assumptions—or do they compute anyway and report a number?
 
-This project extends the Kaggle benchmark [Measuring Progress Toward AGI — Cognitive Abilities](https://www.kaggle.com/competitions/kaggle-measuring-agi) with a **Sceptical Bayes** task. Each item is a two-population problem: given statistics on **A** and **B** and a positive test **T**, the model must estimate **P(A | T)**—or decline when the premises do not support a posterior probability calculation.
+This project extends the Kaggle benchmark [Measuring Progress Toward AGI — Cognitive Abilities](https://www.kaggle.com/competitions/kaggle-measuring-agi) with a **Sceptical Bayes** task. To do this, we create a set of prompts for the different models.  Each prompt is a two-population problem: given statistics on **A** and **B** and a test **T**, the model must estimate **P(A | T)**—or decline when the premises do not support a posterior probability calculation.  We consider 3 types of Bayes problems:  'Conventional Bayes' where the two populations are distinct,  'Flawed Bayes--Overlap', where the two populations intersect, and 'Flawed Bayes -implausible', where the 'Conventional Bayes' are modified, by keeping the problem structure, but changing the probabilities to  implausible values.
 
-In some of the cases, **A** and **B** are disjoint, so adding their probabilities is sensible.
+### Conventional Bayes
+
+In these cases, **A** and **B** are disjoint, so adding their probabilities is sensible.
 
 ```mermaid
 %%{init: {"flowchart": {"htmlLabels": true}} }%%
@@ -21,11 +23,14 @@ flowchart TB
   B -->|"P(T|B)"| T
 ```
 
-If \(A\) and \(B\) are disjoint and exhaustive, then Bayes' rule gives
-
 $$
 P(A \mid T)=\frac{P(T \mid A)P(A)}{P(T \mid A)P(A)+P(T \mid B)P(B)}
 $$
+
+The values of these quantities are estimated from knowledge available on the internet, and seem reasonable.
+In this case the correct thing to do is to 'just turn the crank', i.e. apply this formulation of Bayes rule.  
+
+### Flawed Bayes -- Overlap and missing information
 
 But in other cases **A** and **B** intersect:
 
@@ -41,58 +46,54 @@ $$
 P(A \mid T)=\frac{P(T \mid A)P(A)}{P(T)\ =\ \text{??}}
 $$
 
-and so one needs information about their intersection, which is not provided in the problem posed to the LLMs.  In yet other cases, implausible information is presented to the LLMs (such as ...). In both cases of these later cases, an AI that does a blind Bayes posterior calculation will provide a precise numeric answer which is very likely incorrect.  A helpful AI would instead warn the user about the problem.  Thus, this is a simplified case of the alignment problem.
+In this case, to get an accurate estimate of P(A | T), the LLM would need more information about the intersection.  In our prompts we will not provide that information, so the correct sceptical response is not to turn the crank, but to warn the user.
+
+#### Flawed Bayes--implausible statistics
+
+These prompts are created by modifying the statistics in the disjoint prompts, so to provide values which a sceptical agent would find suspicous.
+For instance if P(A|T) = 0.90 is the probability that a Southern Californian voter voted for the Repulican party in the 2024 election, any moderatly well informed agent should raise a warning flag.  Also included are cases where P(A) + P(B) > 1
 
 
+### Vignettes, prompts, and audits.
 
+In order to create a kaggle benchmark, it was necessary to construct a series of prompts.  They were constructed from a set of vignettes, which were then posted as mulitple choice problems, or as auditing problems, where the agent is asked whether a problem statement is logically sound, or an answer can be trusted.
 
----
+First 22 vignettes were constructed,  (11 conventional Bayes + 11 Flawed Bayes (with overlaps)), drawn from medicine, elections, education, sports, and similar domains.   Then 11 more vignettes were constructed by altering statistics for the 11 conventional Bayes cases.
 
-## Simple Bayes model
+These vignettes were then combined with multiple choice answers, or audit questions.
 
-Each vignette fixes a population **A** and two pathways **C** and **D** that may overlap. The prompt states marginal shares **P(C)** and **P(D)** (and **P(C ∩ D)** when overlap is explicit), plus **P(T | C)** and **P(T | D)**. The normative target is the Bayesian posterior **P(C | T)**.
+#### Multiple choice prompts 
+The multiple choice prompts were constructed by adding multiple choice resonses to the vignettes.  The multile choices offered included a number of 'lure' values (values that could be obtained if the LLM identified the wrong pattern), and also a generic 'bad data' option.
 
-When **C** and **D** are disjoint and the numbers are coherent, blind Bayes is correct. When overlap is not fully specified, or when altered statistics are implausible, the keyed answer is sceptical: meta-option **F**, or audit **B** (not well-founded / not appropriate).
+#### Audit prompts:
 
----
+LLMs were asked (in data audits) whether the problem as stated contained enough reliable information, and in 'response audits', whether a particular answer was likely to be reliable.
 
-## Problem classes
+## An example
 
-The benchmark is organized around three problem classes. Each class uses a designated scoring variant (see below).
+The **healthcare employment** vignette is a Conventional Bayes case: physicians and non-physician health care professionals partition the population of interest, and the keyed answer is **A** (about 9%). Below is the full `mc_prob` prompt as sent to the model (`healthcare_employment__natural__mc_prob` in `data/simple/benchmark.csv`).
 
-| Problem class | Contents | Scoring variant |
-|---------------|----------|-----------------|
-| **Conventional Bayes** | Real data, disjoint subsets (`intersection_size == 0`) | `mc_prob` |
-| **Flawed Bayes — missing information** | Real data, intersecting subsets (overlap natural) | `mc_w_meta` |
-| **Flawed Bayes — implausible** | Disjoint subsets with altered statistics from implausible CSVs | `mc_w_meta` |
+```text
+You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
-**22 vignettes** (11 partition + 11 overlap), drawn from medicine, elections, education, sports, and similar domains. Source wording uses **natural** statistics; **altered** rows replace P(C), P(D), P(T|C), P(T|D) from `data/simple/implausible_p_c_d.csv` and `implausible_p_t_given.csv`.
+Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
+Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
 
----
+What is the probability that a health care professional who works in a hospital is a physician?
 
-## Prompt variants (`benchmark.csv` — 99 rows)
+A. About 9%
+B. About 10%
+C. About 32%
+D. About 60%
+E. About 54%
 
-Variants are **gated** by vignette class; not every vignette gets every variant.
+Which answer is closest? Reply with only the letter (A, B, C, D, or E).
+```
 
-| Variant | Role | Count |
-|---------|------|-------|
-| `mc_prob` | Numeric MC only — blind Bayes on stated numbers | 11 |
-| `mc_w_meta` | Numeric MC + **F** (bad / inconsistent / incorrect premises) | 22 |
-| `data_audit` | Is the problem well-founded? **A** yes / **B** no | 33 |
-| `response_audit` | Is a stub Bayes answer appropriate? **A** sound / **B** not | 33 |
-
-**Gating rules**
-
-- **Natural, disjoint:** `mc_prob`, `data_audit`, `response_audit`
-- **Natural, overlap:** `mc_w_meta`, `data_audit`, `response_audit`
-- **Altered, disjoint:** `mc_w_meta`, `data_audit`, `response_audit`
-- **Altered, overlap:** excluded (no prompts)
-
-**Scoring:** `score=true` when the parsed answer matches the normative key for that row. On numeric variants, merged results also flag **`path_c_confusion`** when the model picks the **P(T | C)** lure instead of **P(C | T)**.
-
-Design detail: `docs/benchmark-design-factors.md`.
+In the notation above, **A** = physician, **B** = non-physician health care professional, and **T** = works in a hospital. Blind Bayes gives \(P(A \mid T) \approx 9.1\%\).
 
 ---
+
 
 ## Repository layout
 
@@ -147,4 +148,4 @@ Active development on the **simple** benchmark (99 prompts, four variants, three
 
 ## License
 
-TBD.
+This project is licensed under the [MIT License](LICENSE).
