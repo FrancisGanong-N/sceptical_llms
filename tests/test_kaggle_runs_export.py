@@ -15,6 +15,58 @@ from benchmarks.kaggle_runs import (
 )
 
 
+def _sample_simple_run() -> dict:
+    return {
+        "taskVersion": {"name": "simple_rate_normative_accuracy"},
+        "modelVersion": {"slug": "google/gemini-2.5-flash"},
+        "results": [{"numericResult": {"value": 0.45}, "type": "AGGREGATED"}],
+        "subruns": [
+            {
+                "taskVersion": {"name": "Simple Rate Prompt Response"},
+                "modelVersion": {"slug": "google/gemini-2.5-flash"},
+                "results": [
+                    {
+                        "dictResult": {
+                            "example_id": "ca_republican_voter__natural__mc_full",
+                            "response": "A",
+                            "reasoning": [],
+                            "answer_line": "A",
+                            "confidence_line": "",
+                            "parsed_answer_type": "mc_choice",
+                            "parsed_percent": None,
+                            "parsed_choice": "A",
+                            "parsed_confidence": None,
+                            "scoring_type": "mc_numeric",
+                        },
+                        "type": "AGGREGATED",
+                    }
+                ],
+            },
+            {
+                "taskVersion": {"name": "Simple Rate Prompt Response"},
+                "modelVersion": {"slug": "google/gemini-2.5-flash"},
+                "results": [
+                    {
+                        "dictResult": {
+                            "example_id": "ca_republican_voter__natural__data_audit",
+                            "response": "A",
+                            "reasoning": None,
+                            "answer_line": "A",
+                            "confidence_line": "",
+                            "parsed_answer_type": "mc_choice",
+                            "parsed_percent": None,
+                            "parsed_choice": "A",
+                            "parsed_confidence": None,
+                            "scoring_type": "data_audit",
+                        },
+                        "type": "AGGREGATED",
+                    }
+                ],
+            },
+        ],
+    }
+
+
 def _sample_aggregate_run() -> dict:
     return {
         "taskVersion": {"name": "base_rate_normative_accuracy"},
@@ -27,7 +79,7 @@ def _sample_aggregate_run() -> dict:
                 "results": [
                     {
                         "dictResult": {
-                            "example_id": "ca_trump_voter__open_probs",
+                            "example_id": "ca_republican_voter__open_probs",
                             "response": "About 10%\n3",
                             "reasoning": [],
                             "answer_line": "About 10%",
@@ -48,7 +100,7 @@ def _sample_aggregate_run() -> dict:
                 "results": [
                     {
                         "dictResult": {
-                            "example_id": "ca_trump_voter__mc_numeric_probs",
+                            "example_id": "ca_republican_voter__mc_numeric_probs",
                             "response": "D\n4",
                             "reasoning": None,
                             "answer_line": "D",
@@ -75,9 +127,9 @@ class TestKaggleRunsExport:
         records = load_base_rate_prompt_records_from_run_file(run_file)
         assert len(records) == 2
         by_id = {record.example_id: record for record in records}
-        assert by_id["ca_trump_voter__open_probs"].model == "google/gemini-2.5-flash"
-        assert "About 10%" in by_id["ca_trump_voter__open_probs"].response
-        assert by_id["ca_trump_voter__mc_numeric_probs"].response.startswith("D")
+        assert by_id["ca_republican_voter__open_probs"].model == "google/gemini-2.5-flash"
+        assert "About 10%" in by_id["ca_republican_voter__open_probs"].response
+        assert by_id["ca_republican_voter__mc_numeric_probs"].response.startswith("D")
 
     def test_load_run_rows_from_tree(self, tmp_path: Path):
         run_file = tmp_path / "nested" / "aggregate.run.json"
@@ -87,21 +139,21 @@ class TestKaggleRunsExport:
         rows = load_base_rate_run_rows_from_tree(tmp_path)
         assert len(rows) == 2
         assert {row["example_id"] for row in rows} == {
-            "ca_trump_voter__open_probs",
-            "ca_trump_voter__mc_numeric_probs",
+            "ca_republican_voter__open_probs",
+            "ca_republican_voter__mc_numeric_probs",
         }
 
     def test_dedupe_keeps_latest(self):
         first = BaseRatePromptRecord(
             model="google/gemini-2.5-flash",
-            example_id="ca_trump_voter__open_probs",
+            example_id="ca_republican_voter__open_probs",
             response="old",
             reasoning=None,
             run_file=Path("a.run.json"),
         )
         second = BaseRatePromptRecord(
             model="google/gemini-2.5-flash",
-            example_id="ca_trump_voter__open_probs",
+            example_id="ca_republican_voter__open_probs",
             response="new",
             reasoning=None,
             run_file=Path("b.run.json"),
@@ -117,13 +169,13 @@ class TestKaggleRunsExport:
         benchmark_ids = {row["example_id"] for row in benchmark_rows}
         run_rows = [
             {
-                "example_id": "ca_trump_voter__open_probs",
+                "example_id": "ca_trump_voter__natural__mc_full",
                 "response": "10%",
                 "model": "test-model",
             },
             {
-                "example_id": "actor_waiter_overlap__open_probs",
-                "response": "5%",
+                "example_id": "ca_republican_voter__natural__mc_full",
+                "response": "A",
                 "model": "test-model",
             },
         ]
@@ -132,7 +184,7 @@ class TestKaggleRunsExport:
             benchmark_example_ids=benchmark_ids,
         )
         assert len(filtered) == 1
-        assert filtered[0]["example_id"] == "ca_trump_voter__open_probs"
+        assert filtered[0]["example_id"] == "ca_republican_voter__natural__mc_full"
 
     def test_merged_results_from_kaggle_runs(self, tmp_path: Path):
         from benchmarks.base_rate import BENCHMARK_CSV
@@ -147,7 +199,7 @@ class TestKaggleRunsExport:
         scored = [
             row
             for row in merged
-            if row["example_id"] == "ca_trump_voter__open_probs"
+            if row["example_id"] == "ca_republican_voter__open_probs"
             and row["llm_response"]
         ]
         assert len(scored) == 1
@@ -158,7 +210,7 @@ class TestKaggleRunsExport:
         from benchmarks.kaggle_runs import merged_simple_results_from_kaggle_runs
 
         run_file = tmp_path / "simple_rate_normative_accuracy.run.json"
-        run_file.write_text(json.dumps(_sample_aggregate_run()), encoding="utf-8")
+        run_file.write_text(json.dumps(_sample_simple_run()), encoding="utf-8")
 
         merged = merged_simple_results_from_kaggle_runs(tmp_path, benchmark_path=BENCHMARK_CSV)
         models = {row["model"] for row in merged}

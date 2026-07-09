@@ -1,9 +1,9 @@
 vignette_name,problem_type,intersection_size,C,D,parameter,value,implausible_value
-CA Trump voter,well_posed,0,Other California registrant,Southern California registrant,P_A,0.13,0.8
-CA Trump voter,well_posed,0,Other California registrant,Southern California registrant,P_C_given_A,0.38,
-CA Trump voter,well_posed,0,Other California registrant,Southern California registrant,P_D_given_A,0.6,
-CA Trump voter,well_posed,0,Other California registrant,Southern California registrant,P_T_given_C,0.31,
-CA Trump voter,well_posed,0,Other California registrant,Southern California registrant,P_T_given_D,0.27,
+CA Republican voter,well_posed,0,Other California registrant,Southern California registrant,P_A,0.13,0.8
+CA Republican voter,well_posed,0,Other California registrant,Southern California registrant,P_C_given_A,0.38,
+CA Republican voter,well_posed,0,Other California registrant,Southern California registrant,P_D_given_A,0.6,
+CA Republican voter,well_posed,0,Other California registrant,Southern California registrant,P_T_given_C,0.31,
+CA Republican voter,well_posed,0,Other California registrant,Southern California registrant,P_T_given_D,0.27,
 actor waiter overlap,overlap,small,Also holds a waiter/waitress occup…,Actor occupation is the secondary …,P_A,0.00034,
 actor waiter overlap,overlap,small,Also holds a waiter/waitress occup…,Actor occupation is the secondary …,P_C_given_A,0.035,0.7
 actor waiter overlap,overlap,small,Also holds a waiter/waitress occup…,Actor occupation is the secondary …,P_D_given_A,0.298,

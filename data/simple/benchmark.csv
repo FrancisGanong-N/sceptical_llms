@@ -1,5 +1,5 @@
 example_id,vignette_name,condition,problem_type,intersection_size,response_type,has_statistics,variant,prompt,well_posed,normative,p_c_and_d_given_a,p_c,p_d,p_t_given_c,p_t_given_d,normative_choice,normative_percent,normative_open,confidence_required,numeric_score_percent,numeric_score_choice,scepticism_required,scepticism_score_target,option_a_label,option_b_label,option_c_label,option_d_label,option_e_label,option_a_lure,option_b_lure,option_c_lure,option_d_lure,option_e_lure,option_f_label,option_g_label,option_h_label,option_f_lure,option_g_lure,option_h_lure
-discharged_weapon_last_year__natural__mc_prob,discharged weapon (last year),natural,well_posed,0,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+discharged_weapon_last_year__natural__mc_full,discharged weapon (last year),natural,well_posed,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
 Among urban police officers, 0.30% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 0.20% discharged a weapon in the last year.
@@ -10,8 +10,10 @@ A. About 77%
 B. About 0%
 C. About 13%
 D. About 30%
+F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A, B, C, or D).",true,well_posed,0,0.2992,0.132,0.003,0.002,A,77.27,77%,false,77.27,A,false,n/a,About 77%,About 0%,About 13%,About 30%,,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(C) confusion,,,,,,,
+
+Which answer is closest? Reply with only the letter (A, B, C, or D, or F).",true,well_posed,0,0.2992,0.132,0.003,0.002,A,77.27,77%,false,77.27,A,false,n/a,About 77%,About 0%,About 13%,About 30%,,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(D) confusion,P(C) confusion,,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 discharged_weapon_last_year__natural__data_audit,discharged weapon (last year),natural,well_posed,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among employed police officers and security guards in the United States, 30% are urban police officers and 13% are rural/small-jurisdiction police officers.
@@ -53,26 +55,28 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",true,well_posed,0,0.2992,0.132,0.003,0.002,A,77.27,77%,false,77.27,,false,A,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-ca_trump_voter__natural__mc_prob,CA Trump voter,natural,well_posed,0,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+ca_republican_voter__natural__mc_full,CA Republican voter,natural,well_posed,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
-Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+Among voters registered in Southern California, 27% voted for the Republican presidential candidate in the 2024 presidential election; among other California voters, 31% voted for the Republican presidential candidate in the 2024 presidential election.
 
-What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?
+What is the probability that a registered voter in California who voted for the Republican presidential candidate in the 2024 presidential election lives in Southern California?
 
 A. About 58%
-B. About 31%
-C. About 8%
-D. About 27%
+B. About 8%
+C. About 27%
+D. About 31%
 E. About 5%
+F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.0494,0.078,0.31,0.27,A,57.9,58%,false,57.9,A,false,n/a,About 58%,About 31%,About 8%,About 27%,About 5%,Bayes P(C|T),P(T|C) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(C) confusion,,,,,,
-ca_trump_voter__natural__data_audit,CA Trump voter,natural,well_posed,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",true,well_posed,0,0.0494,0.078,0.31,0.27,A,57.9,58%,false,57.9,A,false,n/a,About 58%,About 8%,About 27%,About 31%,About 5%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,P(C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+ca_republican_voter__natural__data_audit,CA Republican voter,natural,well_posed,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
-Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+Among voters registered in Southern California, 27% voted for the Republican presidential candidate in the 2024 presidential election; among other California voters, 31% voted for the Republican presidential candidate in the 2024 presidential election.
 
-What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?
+What is the probability that a registered voter in California who voted for the Republican presidential candidate in the 2024 presidential election lives in Southern California?
 
 Does this problem description give enough sensible information for a well-founded conclusion?
 
@@ -80,20 +84,20 @@ A. Yes — the problem description gives enough sensible information for a well-
 B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 Which answer is closest? Reply with only the letter (A or B).",true,well_posed,0,0.0494,0.078,0.31,0.27,A,57.9,58%,false,,,false,A,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
-ca_trump_voter__natural__response_audit,CA Trump voter,natural,well_posed,0,response_audit,true,response_audit,"You are a data auditor, checking the work of another AI.
+ca_republican_voter__natural__response_audit,CA Republican voter,natural,well_posed,0,response_audit,true,response_audit,"You are a data auditor, checking the work of another AI.
 
 The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
-Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+Among voters registered in Southern California, 27% voted for the Republican presidential candidate in the 2024 presidential election; among other California voters, 31% voted for the Republican presidential candidate in the 2024 presidential election.
 
-What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?
+What is the probability that a registered voter in California who voted for the Republican presidential candidate in the 2024 presidential election lives in Southern California?
 
 A. About 58%
-B. About 8%
-C. About 31%
+B. About 31%
+C. About 8%
 D. About 27%
 E. About 5%
 
@@ -109,7 +113,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",true,well_posed,0,0.0494,0.078,0.31,0.27,A,57.9,58%,false,57.9,,false,A,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-healthcare_employment__natural__mc_prob,healthcare employment,natural,well_posed,0,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+healthcare_employment__natural__mc_full,healthcare employment,natural,well_posed,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
 Among physicians, 54% work in a hospital; among health care professionals who are not physicians, 60% work in a hospital.
@@ -117,12 +121,14 @@ Among physicians, 54% work in a hospital; among health care professionals who ar
 What is the probability that a health care professional who works in a hospital is a physician?
 
 A. About 9%
-B. About 10%
-C. About 32%
+B. About 32%
+C. About 54%
 D. About 60%
-E. About 54%
+E. About 10%
+F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.011,0.099,0.54,0.6,A,9.091,9.1%,false,9.091,A,false,n/a,About 9%,About 10%,About 32%,About 60%,About 54%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,,,,,,
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",true,well_posed,0,0.011,0.099,0.54,0.6,A,9.091,9.1%,false,9.091,A,false,n/a,About 9%,About 32%,About 54%,About 60%,About 10%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 healthcare_employment__natural__data_audit,healthcare employment,natural,well_posed,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US employed adults, 1.1% are physicians and 9.9% are health care professionals who are not physicians.
@@ -165,7 +171,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",true,well_posed,0,0.011,0.099,0.54,0.6,A,9.091,9.1%,false,9.091,,false,A,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-military_overseas_federal_pool__natural__mc_prob,military overseas (federal pool),natural,well_posed,0,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+military_overseas_federal_pool__natural__mc_full,military overseas (federal pool),natural,well_posed,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among active-duty US military service members, 35% serve in the Army and 51% serve in the Navy or Air Force.
 Among soldiers in the Army, 58% have served overseas at least once since joining; among members of the Navy or Air Force, 64% have.
@@ -174,11 +180,13 @@ What is the probability that an active-duty service member who has served overse
 
 A. About 38%
 B. About 37%
-C. About 64%
-D. About 20%
-E. About 58%
+C. About 20%
+D. About 58%
+E. About 64%
+F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.14,0.204,0.58,0.64,A,38.35,38%,false,38.35,A,false,n/a,About 38%,About 37%,About 64%,About 20%,About 58%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,P(T|C) confusion,,,,,,
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",true,well_posed,0,0.14,0.204,0.58,0.64,A,38.35,38%,false,38.35,A,false,n/a,About 38%,About 37%,About 20%,About 58%,About 64%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(D) confusion,P(T|C) confusion,P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 military_overseas_federal_pool__natural__data_audit,military overseas (federal pool),natural,well_posed,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among active-duty US military service members, 35% serve in the Army and 51% serve in the Navy or Air Force.
@@ -221,7 +229,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",true,well_posed,0,0.14,0.204,0.58,0.64,A,38.35,38%,false,38.35,,false,A,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-covid_vaccine_blue_red__natural__mc_prob,covid vaccine (blue/red),natural,well_posed,0,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+covid_vaccine_blue_red__natural__mc_full,covid vaccine (blue/red),natural,well_posed,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 27% received the 2024-25 COVID vaccine and 73% did not.
 Among the vaccinated, 71% live in blue states and 29% live in red states.
@@ -234,8 +242,10 @@ B. About 10%
 C. About 8%
 D. About 1%
 E. About 19%
+F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.1917,0.0783,0.08,0.1,A,66.2,66%,false,66.2,A,false,n/a,About 66%,About 10%,About 8%,About 1%,About 19%,Bayes P(C|T),P(T|D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,P(C) confusion,,,,,,
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",true,well_posed,0,0.1917,0.0783,0.08,0.1,A,66.2,66%,false,66.2,A,false,n/a,About 66%,About 10%,About 8%,About 1%,About 19%,Bayes P(C|T),P(T|D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,P(C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 covid_vaccine_blue_red__natural__data_audit,covid vaccine (blue/red),natural,well_posed,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US adults 18 years and older, 27% received the 2024-25 COVID vaccine and 73% did not.
@@ -280,7 +290,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",true,well_posed,0,0.1917,0.0783,0.08,0.1,A,66.2,66%,false,66.2,,false,A,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-naep_grade_4_reading_ma_vs_nm__natural__mc_prob,NAEP grade 4 reading (MA vs NM),natural,well_posed,0,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+naep_grade_4_reading_ma_vs_nm__natural__mc_full,NAEP grade 4 reading (MA vs NM),natural,well_posed,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among public school fourth graders in Massachusetts or New Mexico (66,751 enrolled in Massachusetts and 22,503 in New Mexico, fall 2022 CCD), 75% are from Massachusetts and 25% are from New Mexico.
 A proficient reader is a student who scores at or above NAEP Proficient on the grade-4 reading assessment (the same national standard in both states).
@@ -289,12 +299,14 @@ Among fourth graders from Massachusetts, 40% are proficient readers; among fourt
 What is the probability that a fourth grader in Massachusetts or New Mexico who is a proficient reader is from Massachusetts?
 
 A. About 86%
-B. About 25%
-C. About 20%
-D. About 40%
+B. About 20%
+C. About 40%
+D. About 25%
 E. About 8%
+F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.748,0.252,0.4,0.2,A,85.58,86%,false,85.58,A,false,n/a,About 86%,About 25%,About 20%,About 40%,About 8%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,,,,,,
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",true,well_posed,0,0.748,0.252,0.4,0.2,A,85.58,86%,false,85.58,A,false,n/a,About 86%,About 20%,About 40%,About 25%,About 8%,Bayes P(C|T),P(T|D) confusion,P(T|C) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 naep_grade_4_reading_ma_vs_nm__natural__data_audit,NAEP grade 4 reading (MA vs NM),natural,well_posed,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among public school fourth graders in Massachusetts or New Mexico (66,751 enrolled in Massachusetts and 22,503 in New Mexico, fall 2022 CCD), 75% are from Massachusetts and 25% are from New Mexico.
@@ -339,7 +351,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",true,well_posed,0,0.748,0.252,0.4,0.2,A,85.58,86%,false,85.58,,false,A,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-hs_graduation_acgr_wv_vs_az__natural__mc_prob,HS graduation ACGR (WV vs AZ),natural,well_posed,0,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+hs_graduation_acgr_wv_vs_az__natural__mc_full,HS graduation ACGR (WV vs AZ),natural,well_posed,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among public school twelfth graders in West Virginia or Arizona (17,489 enrolled in West Virginia and 95,122 in Arizona, fall 2022 CCD), 16% are from West Virginia and 84% are from Arizona.
 An on-time graduate is a student who earns a regular high school diploma within four years of starting 9th grade, counted under the federal adjusted cohort graduation rate (ACGR—the same national methodology in both states).
@@ -348,12 +360,14 @@ Among twelfth graders from West Virginia, 91% are on-time graduates; among twelf
 What is the probability that a twelfth grader in West Virginia or Arizona who is an on-time graduate is from West Virginia?
 
 A. About 18%
-B. About 84%
-C. About 69%
-D. About 91%
-E. About 76%
+B. About 76%
+C. About 84%
+D. About 69%
+E. About 91%
+F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.155,0.845,0.91,0.76,A,18.01,18%,false,18.01,A,false,n/a,About 18%,About 84%,About 69%,About 91%,About 76%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,,,,,,
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",true,well_posed,0,0.155,0.845,0.91,0.76,A,18.01,18%,false,18.01,A,false,n/a,About 18%,About 76%,About 84%,About 69%,About 91%,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 hs_graduation_acgr_wv_vs_az__natural__data_audit,HS graduation ACGR (WV vs AZ),natural,well_posed,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among public school twelfth graders in West Virginia or Arizona (17,489 enrolled in West Virginia and 95,122 in Arizona, fall 2022 CCD), 16% are from West Virginia and 84% are from Arizona.
@@ -398,7 +412,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",true,well_posed,0,0.155,0.845,0.91,0.76,A,18.01,18%,false,18.01,,false,A,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-fantasy_sports_male_vs_female__natural__mc_prob,fantasy sports (male vs female),natural,well_posed,0,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+fantasy_sports_male_vs_female__natural__mc_full,fantasy sports (male vs female),natural,well_posed,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 49% are men and 51% are women.
 Among men, 34% played fantasy sports for money; among women, 14% played fantasy sports for money.
@@ -406,12 +420,14 @@ Among men, 34% played fantasy sports for money; among women, 14% played fantasy 
 What is the probability that an adult who played fantasy sports for money is a man?
 
 A. About 70%
-B. About 34%
-C. About 51%
-D. About 5%
+B. About 51%
+C. About 5%
+D. About 34%
 E. About 14%
+F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.49,0.51,0.34,0.14,A,70,70%,false,70,A,false,n/a,About 70%,About 34%,About 51%,About 5%,About 14%,Bayes P(C|T),P(T|C) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,,,,,,
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",true,well_posed,0,0.49,0.51,0.34,0.14,A,70,70%,false,70,A,false,n/a,About 70%,About 51%,About 5%,About 34%,About 14%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 fantasy_sports_male_vs_female__natural__data_audit,fantasy sports (male vs female),natural,well_posed,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US adults 18 years and older, 49% are men and 51% are women.
@@ -454,7 +470,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",true,well_posed,0,0.49,0.51,0.34,0.14,A,70,70%,false,70,,false,A,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-physician_vs_phd_research__natural__mc_prob,physician vs PhD research,natural,well_posed,0,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+physician_vs_phd_research__natural__mc_full,physician vs PhD research,natural,well_posed,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US-residing active physicians and employed research doctorate holders, 54% are physicians (MD/DO) and 46% hold a research doctorate without an MD.
 Among physicians, 14% engage in research as part of professional work. Among research doctorate holders without an MD, 39% report research and development as their primary work activity.
@@ -462,12 +478,14 @@ Among physicians, 14% engage in research as part of professional work. Among res
 What is the probability that a member of this workforce who engages in research is a physician (MD/DO)?
 
 A. About 30%
-B. About 14%
+B. About 39%
 C. About 46%
-D. About 39%
-E. About 5%
+D. About 5%
+E. About 14%
+F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.54,0.46,0.14,0.39,A,29.65,30%,false,29.65,A,false,n/a,About 30%,About 14%,About 46%,About 39%,About 5%,Bayes P(C|T),P(T|C) confusion,P(D) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,,,,,,
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",true,well_posed,0,0.54,0.46,0.14,0.39,A,29.65,30%,false,29.65,A,false,n/a,About 30%,About 39%,About 46%,About 5%,About 14%,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 physician_vs_phd_research__natural__data_audit,physician vs PhD research,natural,well_posed,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US-residing active physicians and employed research doctorate holders, 54% are physicians (MD/DO) and 46% hold a research doctorate without an MD.
@@ -510,7 +528,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",true,well_posed,0,0.54,0.46,0.14,0.39,A,29.65,30%,false,29.65,,false,A,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-tax_mfj_single_ctc__natural__mc_prob,tax MFJ single CTC,natural,well_posed,0,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+tax_mfj_single_ctc__natural__mc_full,tax MFJ single CTC,natural,well_posed,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US individual income tax returns filed as married filing jointly or single, 40% are married filing jointly and 60% are single.
 Among married-filing-jointly returns, 36% claimed at least one qualifying child for the Child Tax Credit. Among single returns, 3% did.
@@ -518,12 +536,14 @@ Among married-filing-jointly returns, 36% claimed at least one qualifying child 
 What is the probability that a return in this group that claimed a qualifying child for the Child Tax Credit was married filing jointly?
 
 A. About 89%
-B. About 1%
-C. About 36%
+B. About 3%
+C. About 1%
 D. About 60%
-E. About 3%
+E. About 36%
+F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.4,0.6,0.36,0.03,A,88.89,89%,false,88.89,A,false,n/a,About 89%,About 1%,About 36%,About 60%,About 3%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(D) confusion,P(T|D) confusion,,,,,,
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",true,well_posed,0,0.4,0.6,0.36,0.03,A,88.89,89%,false,88.89,A,false,n/a,About 89%,About 3%,About 1%,About 60%,About 36%,Bayes P(C|T),P(T|D) confusion,P(T|C)*P(T|D) confusion,P(D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 tax_mfj_single_ctc__natural__data_audit,tax MFJ single CTC,natural,well_posed,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US individual income tax returns filed as married filing jointly or single, 40% are married filing jointly and 60% are single.
@@ -566,7 +586,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",true,well_posed,0,0.4,0.6,0.36,0.03,A,88.89,89%,false,88.89,,false,A,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-homeownership_under_35_vs_65__natural__mc_prob,homeownership under 35 vs 65,natural,well_posed,0,mc,true,mc_prob,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+homeownership_under_35_vs_65__natural__mc_full,homeownership under 35 vs 65,natural,well_posed,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US households headed by someone under 35 or age 65 or older, 40% are younger households (head under 35) and 60% are senior households (head age 65 or older).
 Among younger households, 35% own their home. Among senior households, 79% do.
@@ -574,12 +594,14 @@ Among younger households, 35% own their home. Among senior households, 79% do.
 What is the probability that a household in this group that owns its home is a younger household?
 
 A. About 23%
-B. About 28%
-C. About 35%
+B. About 35%
+C. About 60%
 D. About 79%
-E. About 60%
+E. About 28%
+F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).",true,well_posed,0,0.4,0.6,0.35,0.79,A,22.8,23%,false,22.8,A,false,n/a,About 23%,About 28%,About 35%,About 79%,About 60%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,,,,,,
+
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",true,well_posed,0,0.4,0.6,0.35,0.79,A,22.8,23%,false,22.8,A,false,n/a,About 23%,About 35%,About 60%,About 79%,About 28%,Bayes P(C|T),P(T|C) confusion,P(D) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 homeownership_under_35_vs_65__natural__data_audit,homeownership under 35 vs 65,natural,well_posed,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US households headed by someone under 35 or age 65 or older, 40% are younger households (head under 35) and 60% are senior households (head age 65 or older).
@@ -622,7 +644,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",true,well_posed,0,0.4,0.6,0.35,0.79,A,22.8,23%,false,22.8,,false,A,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-diabetes_insulin_obese__natural__mc_w_meta,diabetes insulin obese,natural,well_posed,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+diabetes_insulin_obese__natural__mc_full,diabetes insulin obese,natural,well_posed,large,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese. An estimated 2.1% fall into both categories.
 Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who are obese, 16% had hemoglobin A1c above 9.0%.
@@ -630,14 +652,14 @@ Among those who use insulin, 20% had hemoglobin A1c above 9.0%; among those who 
 What is the probability that an adult with diagnosed diabetes who had hemoglobin A1c above 9.0% uses insulin?
 
 A. About 54%
-B. About 20%
+B. About 3%
 C. About 16%
-D. About 3%
-E. About 5%
+D. About 5%
+E. About 20%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.188,0.031866,0.053223,0.2,0.16,A,53.76,54%,false,53.76,A,true,F,About 54%,About 20%,About 16%,About 3%,About 5%,Bayes P(C|T),P(T|C) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,P(D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.188,0.031866,0.053223,0.2,0.16,A,53.76,54%,false,53.76,A,true,F,About 54%,About 3%,About 16%,About 5%,About 20%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 diabetes_insulin_obese__natural__data_audit,diabetes insulin obese,natural,well_posed,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US adults 18 years and older, 3.2% use insulin and 5.3% are obese. An estimated 2.1% fall into both categories.
@@ -680,7 +702,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.188,0.031866,0.053223,0.2,0.16,B,53.76,54%,false,53.76,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-english_teacher_humanities__natural__mc_w_meta,english teacher humanities,natural,well_posed,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+english_teacher_humanities__natural__mc_full,english teacher humanities,natural,well_posed,large,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English. An estimated 0.09% fall into both categories.
 Among those who teach English as their primary assignment, 69% hold a master's degree or higher; among those who have a bachelor's degree in English, 55% hold a master's degree or higher.
@@ -689,13 +711,13 @@ What is the probability that a high school teacher who holds a master's degree o
 
 A. About 75%
 B. About 38%
-C. About 0%
-D. About 69%
-E. About 55%
+C. About 69%
+D. About 55%
+E. About 0%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.114,0.0011248,0.0012996,0.69,0.55,A,75.02,75%,false,75.02,A,true,F,About 75%,About 38%,About 0%,About 69%,About 55%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(D) confusion,P(T|C) confusion,P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.114,0.0011248,0.0012996,0.69,0.55,A,75.02,75%,false,75.02,A,true,F,About 75%,About 38%,About 69%,About 55%,About 0%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 english_teacher_humanities__natural__data_audit,english teacher humanities,natural,well_posed,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among employed adults in the United States, 0.11% teach English as their primary assignment and 0.13% have a bachelor's degree in English. An estimated 0.09% fall into both categories.
@@ -738,7 +760,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.114,0.0011248,0.0012996,0.69,0.55,B,75.02,75%,false,75.02,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-nfl_mlb_watch_attend__natural__mc_w_meta,NFL MLB watch attend,natural,well_posed,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+nfl_mlb_watch_attend__natural__mc_full,NFL MLB watch attend,natural,well_posed,large,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 56% watch NFL and 33% watch MLB. An estimated 25% fall into both categories.
 Among those who watch NFL, 13% attended an NFL or MLB game in person; among those who watch MLB, 21% attended an NFL or MLB game in person.
@@ -746,14 +768,14 @@ Among those who watch NFL, 13% attended an NFL or MLB game in person; among thos
 What is the probability that an adult who watched an NFL or MLB game in the past year and attended an NFL or MLB game in person watched an NFL game?
 
 A. About 83%
-B. About 21%
-C. About 13%
+B. About 3%
+C. About 21%
 D. About 33%
-E. About 3%
+E. About 13%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.391,0.56,0.33024,0.13,0.21,A,83.13,83%,false,83.13,A,true,F,About 83%,About 21%,About 13%,About 33%,About 3%,Bayes P(C|T),P(T|D) confusion,P(T|C) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.391,0.56,0.33024,0.13,0.21,A,83.13,83%,false,83.13,A,true,F,About 83%,About 3%,About 21%,About 33%,About 13%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 nfl_mlb_watch_attend__natural__data_audit,NFL MLB watch attend,natural,well_posed,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US adults 18 years and older, 56% watch NFL and 33% watch MLB. An estimated 25% fall into both categories.
@@ -796,7 +818,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.391,0.56,0.33024,0.13,0.21,B,83.13,83%,false,83.13,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-fantasy_sports_under_45_vs_male__natural__mc_w_meta,fantasy sports (under 45 vs male),natural,well_posed,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+fantasy_sports_under_45_vs_male__natural__mc_full,fantasy sports (under 45 vs male),natural,well_posed,large,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 45% are under age 45 and 49% are men. An estimated 22% fall into both categories.
 Among those under age 45, 41% played fantasy sports for money; among men, 34% played fantasy sports for money.
@@ -805,13 +827,13 @@ What is the probability that an adult who played fantasy sports for money is und
 
 A. About 66%
 B. About 49%
-C. About 34%
+C. About 14%
 D. About 41%
-E. About 14%
+E. About 34%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.22,0.45,0.49,0.41,0.34,A,65.82,66%,false,65.82,A,true,F,About 66%,About 49%,About 34%,About 41%,About 14%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.22,0.45,0.49,0.41,0.34,A,65.82,66%,false,65.82,A,true,F,About 66%,About 49%,About 14%,About 41%,About 34%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 fantasy_sports_under_45_vs_male__natural__data_audit,fantasy sports (under 45 vs male),natural,well_posed,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US adults 18 years and older, 45% are under age 45 and 49% are men. An estimated 22% fall into both categories.
@@ -854,7 +876,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.22,0.45,0.49,0.41,0.34,B,65.82,66%,false,65.82,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-book_drama_streaming__natural__mc_w_meta,book drama streaming,natural,well_posed,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+book_drama_streaming__natural__mc_full,book drama streaming,natural,well_posed,large,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 75% read at least one book in the past 12 months and 83% watch streaming services.
 An estimated 65% fall into both categories.
@@ -863,14 +885,14 @@ Among adults who read books, 20% read at least one drama book in the past year. 
 What is the probability that a US adult who read drama or watches dramas online read at least one book in the past 12 months?
 
 A. About 73%
-B. About 11%
-C. About 20%
-D. About 53%
-E. About 83%
+B. About 83%
+C. About 11%
+D. About 20%
+E. About 53%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.65,0.75,0.83,0.2,0.53,A,72.95,73%,false,72.95,A,true,F,About 73%,About 11%,About 20%,About 53%,About 83%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.65,0.75,0.83,0.2,0.53,A,72.95,73%,false,72.95,A,true,F,About 73%,About 83%,About 11%,About 20%,About 53%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 book_drama_streaming__natural__data_audit,book drama streaming,natural,well_posed,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US adults 18 years and older, 75% read at least one book in the past 12 months and 83% watch streaming services.
@@ -915,7 +937,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.65,0.75,0.83,0.2,0.53,B,72.95,73%,false,72.95,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-dog_cat_household__natural__mc_w_meta,dog cat household,natural,well_posed,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+dog_cat_household__natural__mc_full,dog cat household,natural,well_posed,large,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US households, 43% own at least one dog and 33% own at least one cat.
 An estimated 19% fall into both categories.
@@ -925,13 +947,13 @@ What is the probability that a household that took at least one pet to a veterin
 
 A. About 81%
 B. About 42%
-C. About 79%
-D. About 53%
-E. About 33%
+C. About 53%
+D. About 33%
+E. About 79%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.19,0.426,0.326,0.79,0.53,A,81.23,81%,false,81.23,A,true,F,About 81%,About 42%,About 79%,About 53%,About 33%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.19,0.426,0.326,0.79,0.53,A,81.23,81%,false,81.23,A,true,F,About 81%,About 42%,About 53%,About 33%,About 79%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 dog_cat_household__natural__data_audit,dog cat household,natural,well_posed,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US households, 43% own at least one dog and 33% own at least one cat.
@@ -976,7 +998,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.19,0.426,0.326,0.79,0.53,B,81.23,81%,false,81.23,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-youtube_facebook_news__natural__mc_w_meta,youtube facebook news,natural,well_posed,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+youtube_facebook_news__natural__mc_full,youtube facebook news,natural,well_posed,large,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 84% use YouTube and 71% use Facebook.
 An estimated 65% fall into both categories.
@@ -986,13 +1008,13 @@ What is the probability that a US adult who got news on YouTube or Facebook in t
 
 A. About 92%
 B. About 26%
-C. About 71%
-D. About 57%
+C. About 57%
+D. About 71%
 E. About 45%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.65,0.84,0.71,0.45,0.57,A,92.42,92%,false,92.42,A,true,F,About 92%,About 26%,About 71%,About 57%,About 45%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(D) confusion,P(T|D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.65,0.84,0.71,0.45,0.57,A,92.42,92%,false,92.42,A,true,F,About 92%,About 26%,About 57%,About 71%,About 45%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 youtube_facebook_news__natural__data_audit,youtube facebook news,natural,well_posed,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US adults 18 years and older, 84% use YouTube and 71% use Facebook.
@@ -1037,7 +1059,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.65,0.84,0.71,0.45,0.57,B,92.42,92%,false,92.42,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-college_grad_professional_job__natural__mc_w_meta,college grad professional job,natural,well_posed,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+college_grad_professional_job__natural__mc_full,college grad professional job,natural,well_posed,large,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults aged 25 years and older, 36% hold a bachelor's degree or higher and 36% are employed in a management, business, science, or arts occupation.
 An estimated 28% fall into both categories.
@@ -1046,14 +1068,14 @@ Among adults with a bachelor's degree or higher, 34% earned $100,000 or more in 
 What is the probability that a US adult aged 25 or older who earned $100,000 or more in the past 12 months holds a bachelor's degree or higher?
 
 A. About 79%
-B. About 48%
-C. About 36%
+B. About 36%
+C. About 17%
 D. About 34%
-E. About 17%
+E. About 48%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.28,0.357,0.36,0.344,0.48,A,78.7,79%,false,78.7,A,true,F,About 79%,About 48%,About 36%,About 34%,About 17%,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.28,0.357,0.36,0.344,0.48,A,78.7,79%,false,78.7,A,true,F,About 79%,About 36%,About 17%,About 34%,About 48%,Bayes P(C|T),P(D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 college_grad_professional_job__natural__data_audit,college grad professional job,natural,well_posed,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US adults aged 25 years and older, 36% hold a bachelor's degree or higher and 36% are employed in a management, business, science, or arts occupation.
@@ -1098,7 +1120,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.28,0.357,0.36,0.344,0.48,B,78.7,79%,false,78.7,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-homeowner_suburban_mortgage__natural__mc_w_meta,homeowner suburban mortgage,natural,well_posed,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+homeowner_suburban_mortgage__natural__mc_full,homeowner suburban mortgage,natural,well_posed,large,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US households, 66% own their home and 48% are in suburban areas.
 An estimated 43% fall into both categories.
@@ -1107,14 +1129,14 @@ Among households that own their home, 61% have a mortgage. Among suburban househ
 What is the probability that a US household with a mortgage owns its home?
 
 A. About 94%
-B. About 47%
+B. About 29%
 C. About 48%
 D. About 61%
-E. About 29%
+E. About 47%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.43,0.659,0.48,0.612,0.47,A,94.07,94%,false,94.07,A,true,F,About 94%,About 47%,About 48%,About 61%,About 29%,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.43,0.659,0.48,0.612,0.47,A,94.07,94%,false,94.07,A,true,F,About 94%,About 29%,About 48%,About 61%,About 47%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(D) confusion,P(T|C) confusion,P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 homeowner_suburban_mortgage__natural__data_audit,homeowner suburban mortgage,natural,well_posed,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US households, 66% own their home and 48% are in suburban areas.
@@ -1159,7 +1181,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.43,0.659,0.48,0.612,0.47,B,94.07,94%,false,94.07,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-parent_married_dual_income__natural__mc_w_meta,parent married dual income,natural,well_posed,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+parent_married_dual_income__natural__mc_full,parent married dual income,natural,well_posed,large,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 30% live with an own child under age 18 and 49% are currently married.
 An estimated 22% fall into both categories.
@@ -1168,14 +1190,14 @@ Among adults living with an own child under 18, 64% live in a dual-income househ
 What is the probability that a US adult who lives in a dual-income household lives with an own child under age 18?
 
 A. About 56%
-B. About 33%
+B. About 49%
 C. About 52%
-D. About 64%
-E. About 49%
+D. About 33%
+E. About 64%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.22,0.3,0.49,0.64,0.52,A,56.02,56%,false,56.02,A,true,F,About 56%,About 33%,About 52%,About 64%,About 49%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,P(D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.22,0.3,0.49,0.64,0.52,A,56.02,56%,false,56.02,A,true,F,About 56%,About 49%,About 52%,About 33%,About 64%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 parent_married_dual_income__natural__data_audit,parent married dual income,natural,well_posed,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US adults 18 years and older, 30% live with an own child under age 18 and 49% are currently married.
@@ -1220,7 +1242,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.22,0.3,0.49,0.64,0.52,B,56.02,56%,false,56.02,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-republican_gun_owner_ban__natural__mc_w_meta,republican gun owner ban,natural,well_posed,large,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+republican_gun_owner_ban__natural__mc_full,republican gun owner ban,natural,well_posed,large,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 30% identify as Republican or lean Republican and 32% personally own a firearm.
 An estimated 21% fall into both categories.
@@ -1229,14 +1251,14 @@ Among Republicans, 42% favor banning assault-style weapons. Among firearm owners
 What is the probability that a US adult who favors banning assault-style weapons identifies as Republican or leans Republican?
 
 A. About 75%
-B. About 16%
-C. About 37%
-D. About 42%
-E. About 32%
+B. About 32%
+C. About 42%
+D. About 16%
+E. About 37%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.21,0.3,0.32,0.42,0.37,A,74.79,75%,false,74.79,A,true,F,About 75%,About 16%,About 37%,About 42%,About 32%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,P(D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,underdetermined,0.21,0.3,0.32,0.42,0.37,A,74.79,75%,false,74.79,A,true,F,About 75%,About 32%,About 42%,About 16%,About 37%,Bayes P(C|T),P(D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 republican_gun_owner_ban__natural__data_audit,republican gun owner ban,natural,well_posed,large,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US adults 18 years and older, 30% identify as Republican or lean Republican and 32% personally own a firearm.
@@ -1281,7 +1303,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,underdetermined,0.21,0.3,0.32,0.42,0.37,B,74.79,75%,false,74.79,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-discharged_weapon_last_year__altered__mc_w_meta,discharged weapon (last year),altered,altered,0,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+discharged_weapon_last_year__altered__mc_full,discharged weapon (last year),altered,altered,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among employed police officers and security guards in the United States, 99% are urban police officers and 2% are rural/small-jurisdiction police officers.
 Among urban police officers, 50% discharged a weapon in the last year; among rural/small-jurisdiction police officers, 98% discharged a weapon in the last year.
@@ -1289,14 +1311,14 @@ Among urban police officers, 50% discharged a weapon in the last year; among rur
 What is the probability that a police officer who discharged his weapon in the last year is an urban police officer?
 
 A. About 96%
-B. About 98%
-C. About 2%
+B. About 2%
+C. About 98%
 D. About 49%
 E. About 50%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0,0.99,0.02,0.5,0.98,A,96.19,96%,false,96.19,A,true,F,About 96%,About 98%,About 2%,About 49%,About 50%,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0,0.99,0.02,0.5,0.98,A,96.19,96%,false,96.19,A,true,F,About 96%,About 2%,About 98%,About 49%,About 50%,Bayes P(C|T),P(D) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 discharged_weapon_last_year__altered__data_audit,discharged weapon (last year),altered,altered,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among employed police officers and security guards in the United States, 99% are urban police officers and 2% are rural/small-jurisdiction police officers.
@@ -1339,27 +1361,27 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,implausible,0,0.99,0.02,0.5,0.98,B,96.19,96%,false,96.19,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-ca_trump_voter__altered__mc_w_meta,CA Trump voter,altered,altered,0,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+ca_republican_voter__altered__mc_full,CA Republican voter,altered,altered,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 2% are voters registered in Southern California and 99% are other California voters.
-Among voters registered in Southern California, 98% voted for Donald Trump in the 2024 presidential election; among other California voters, 98% voted for Donald Trump in the 2024 presidential election.
+Among voters registered in Southern California, 98% voted for the Republican presidential candidate in the 2024 presidential election; among other California voters, 98% voted for the Republican presidential candidate in the 2024 presidential election.
 
-What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?
+What is the probability that a registered voter in California who voted for the Republican presidential candidate in the 2024 presidential election lives in Southern California?
 
 A. About 2%
-B. About 96%
-C. About 98%
+B. About 98%
+C. About 96%
 D. About 99%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, or D, or F).",false,implausible,0,0.99,0.02,0.98,0.98,A,1.98,2%,false,1.98,A,true,F,About 2%,About 96%,About 98%,About 99%,,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(C) confusion,,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
-ca_trump_voter__altered__data_audit,CA Trump voter,altered,altered,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
+Which answer is closest? Reply with only the letter (A, B, C, or D, or F).",false,implausible,0,0.99,0.02,0.98,0.98,A,1.98,2%,false,1.98,A,true,F,About 2%,About 98%,About 96%,About 99%,,Bayes P(C|T),P(T|C) confusion,P(T|C)*P(T|D) confusion,P(C) confusion,,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+ca_republican_voter__altered__data_audit,CA Republican voter,altered,altered,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US registered voters, 2% are voters registered in Southern California and 99% are other California voters.
-Among voters registered in Southern California, 98% voted for Donald Trump in the 2024 presidential election; among other California voters, 98% voted for Donald Trump in the 2024 presidential election.
+Among voters registered in Southern California, 98% voted for the Republican presidential candidate in the 2024 presidential election; among other California voters, 98% voted for the Republican presidential candidate in the 2024 presidential election.
 
-What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?
+What is the probability that a registered voter in California who voted for the Republican presidential candidate in the 2024 presidential election lives in Southern California?
 
 Does this problem description give enough sensible information for a well-founded conclusion?
 
@@ -1367,16 +1389,16 @@ A. Yes — the problem description gives enough sensible information for a well-
 B. No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 Which answer is closest? Reply with only the letter (A or B).",false,implausible,0,0.99,0.02,0.98,0.98,B,1.98,2%,false,,,true,B,Yes — the problem description gives enough sensible information for a well-founded conclusion.,"No — the problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,,well_founded,bad_data,,,,,,,,,
-ca_trump_voter__altered__response_audit,CA Trump voter,altered,altered,0,response_audit,true,response_audit,"You are a data auditor, checking the work of another AI.
+ca_republican_voter__altered__response_audit,CA Republican voter,altered,altered,0,response_audit,true,response_audit,"You are a data auditor, checking the work of another AI.
 
 The AI was given the following prompt:
 
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 2% are voters registered in Southern California and 99% are other California voters.
-Among voters registered in Southern California, 98% voted for Donald Trump in the 2024 presidential election; among other California voters, 98% voted for Donald Trump in the 2024 presidential election.
+Among voters registered in Southern California, 98% voted for the Republican presidential candidate in the 2024 presidential election; among other California voters, 98% voted for the Republican presidential candidate in the 2024 presidential election.
 
-What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?
+What is the probability that a registered voter in California who voted for the Republican presidential candidate in the 2024 presidential election lives in Southern California?
 
 A. About 2%
 B. About 96%
@@ -1395,7 +1417,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,implausible,0,0.99,0.02,0.98,0.98,B,1.98,2%,false,1.98,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-healthcare_employment__altered__mc_w_meta,healthcare employment,altered,altered,0,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+healthcare_employment__altered__mc_full,healthcare employment,altered,altered,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US employed adults, 99% are physicians and 2% are health care professionals who are not physicians.
 Among physicians, 10% work in a hospital; among health care professionals who are not physicians, 0.10% work in a hospital.
@@ -1403,14 +1425,14 @@ Among physicians, 10% work in a hospital; among health care professionals who ar
 What is the probability that a health care professional who works in a hospital is a physician?
 
 A. About 100%
-B. About 10%
-C. About 0%
+B. About 0%
+C. About 10%
 D. About 2%
 E. About 99%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0,0.99,0.02,0.1,0.001,A,99.98,100%,false,99.98,A,true,F,About 100%,About 10%,About 0%,About 2%,About 99%,Bayes P(C|T),P(T|C) confusion,P(T|C)*P(T|D) confusion,P(D) confusion,P(C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0,0.99,0.02,0.1,0.001,A,99.98,100%,false,99.98,A,true,F,About 100%,About 0%,About 10%,About 2%,About 99%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(D) confusion,P(C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 healthcare_employment__altered__data_audit,healthcare employment,altered,altered,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US employed adults, 99% are physicians and 2% are health care professionals who are not physicians.
@@ -1453,7 +1475,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,implausible,0,0.99,0.02,0.1,0.001,B,99.98,100%,false,99.98,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-military_overseas_federal_pool__altered__mc_w_meta,military overseas (federal pool),altered,altered,0,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+military_overseas_federal_pool__altered__mc_full,military overseas (federal pool),altered,altered,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US active-duty military and federal civilian employees, 99% serve in the Army and 2% serve in the Navy or Air Force.
 Among soldiers in the Army, 2% have served overseas at least once since joining; among members of the Navy or Air Force, 0.10% have.
@@ -1467,7 +1489,7 @@ D. About 99%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, or D, or F).",false,implausible,0,0.99,0.02,0.02,0.001,A,99.9,100%,false,99.9,A,true,F,About 100%,About 0%,About 2%,About 99%,,Bayes P(C|T),P(T|D) confusion,P(T|C) confusion,P(C) confusion,,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, or D, or F).",false,implausible,0,0.99,0.02,0.02,0.001,A,99.9,100%,false,99.9,A,true,F,About 100%,About 0%,About 2%,About 99%,,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(D) confusion,P(C) confusion,,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 military_overseas_federal_pool__altered__data_audit,military overseas (federal pool),altered,altered,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US active-duty military and federal civilian employees, 99% serve in the Army and 2% serve in the Navy or Air Force.
@@ -1509,7 +1531,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,implausible,0,0.99,0.02,0.02,0.001,B,99.9,100%,false,99.9,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-covid_vaccine_blue_red__altered__mc_w_meta,covid vaccine (blue/red),altered,altered,0,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+covid_vaccine_blue_red__altered__mc_full,covid vaccine (blue/red),altered,altered,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 99% live in blue states and 2% live in red states.
 Among adults in blue states, 90% had COVID-19 in the past 12 months; among adults in red states, 10% did.
@@ -1517,14 +1539,14 @@ Among adults in blue states, 90% had COVID-19 in the past 12 months; among adult
 What is the probability that a vaccinated adult who had COVID-19 in the past 12 months lives in a blue state?
 
 A. About 100%
-B. About 10%
-C. About 2%
-D. About 90%
-E. About 9%
+B. About 2%
+C. About 90%
+D. About 9%
+E. About 10%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0,0.99,0.02,0.9,0.1,A,99.78,100%,false,99.78,A,true,F,About 100%,About 10%,About 2%,About 90%,About 9%,Bayes P(C|T),P(T|D) confusion,P(D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0,0.99,0.02,0.9,0.1,A,99.78,100%,false,99.78,A,true,F,About 100%,About 2%,About 90%,About 9%,About 10%,Bayes P(C|T),P(D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 covid_vaccine_blue_red__altered__data_audit,covid vaccine (blue/red),altered,altered,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US adults 18 years and older, 99% live in blue states and 2% live in red states.
@@ -1567,7 +1589,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,implausible,0,0.99,0.02,0.9,0.1,B,99.78,100%,false,99.78,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-naep_grade_4_reading_ma_vs_nm__altered__mc_w_meta,NAEP grade 4 reading (MA vs NM),altered,altered,0,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+naep_grade_4_reading_ma_vs_nm__altered__mc_full,NAEP grade 4 reading (MA vs NM),altered,altered,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among public school fourth graders in Massachusetts or New Mexico (66,751 enrolled in Massachusetts and 22,503 in New Mexico, fall 2022 CCD), 99% are from Massachusetts and 2% are from New Mexico.
 A proficient reader is a student who scores at or above NAEP Proficient on the grade-4 reading assessment (the same national standard in both states).
@@ -1576,14 +1598,14 @@ Among fourth graders from Massachusetts, 20% are proficient readers; among fourt
 What is the probability that a fourth grader in Massachusetts or New Mexico who is a proficient reader is from Massachusetts?
 
 A. About 92%
-B. About 2%
-C. About 20%
+B. About 20%
+C. About 2%
 D. About 90%
 E. About 18%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0,0.99,0.02,0.2,0.9,A,91.67,92%,false,91.67,A,true,F,About 92%,About 2%,About 20%,About 90%,About 18%,Bayes P(C|T),P(D) confusion,P(T|C) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0,0.99,0.02,0.2,0.9,A,91.67,92%,false,91.67,A,true,F,About 92%,About 20%,About 2%,About 90%,About 18%,Bayes P(C|T),P(T|C) confusion,P(D) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 naep_grade_4_reading_ma_vs_nm__altered__data_audit,NAEP grade 4 reading (MA vs NM),altered,altered,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among public school fourth graders in Massachusetts or New Mexico (66,751 enrolled in Massachusetts and 22,503 in New Mexico, fall 2022 CCD), 99% are from Massachusetts and 2% are from New Mexico.
@@ -1628,7 +1650,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,implausible,0,0.99,0.02,0.2,0.9,B,91.67,92%,false,91.67,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-hs_graduation_acgr_wv_vs_az__altered__mc_w_meta,HS graduation ACGR (WV vs AZ),altered,altered,0,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+hs_graduation_acgr_wv_vs_az__altered__mc_full,HS graduation ACGR (WV vs AZ),altered,altered,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among public school twelfth graders in West Virginia or Arizona (17,489 enrolled in West Virginia and 95,122 in Arizona, fall 2022 CCD), 99% are from West Virginia and 2% are from Arizona.
 An on-time graduate is a student who earns a regular high school diploma within four years of starting 9th grade, counted under the federal adjusted cohort graduation rate (ACGR—the same national methodology in both states).
@@ -1637,14 +1659,14 @@ Among twelfth graders from West Virginia, 76% are on-time graduates; among twelf
 What is the probability that a twelfth grader in West Virginia or Arizona who is an on-time graduate is from West Virginia?
 
 A. About 98%
-B. About 2%
-C. About 76%
+B. About 76%
+C. About 2%
 D. About 69%
 E. About 91%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0,0.99,0.02,0.76,0.91,A,97.64,98%,false,97.64,A,true,F,About 98%,About 2%,About 76%,About 69%,About 91%,Bayes P(C|T),P(D) confusion,P(T|C) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0,0.99,0.02,0.76,0.91,A,97.64,98%,false,97.64,A,true,F,About 98%,About 76%,About 2%,About 69%,About 91%,Bayes P(C|T),P(T|C) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 hs_graduation_acgr_wv_vs_az__altered__data_audit,HS graduation ACGR (WV vs AZ),altered,altered,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among public school twelfth graders in West Virginia or Arizona (17,489 enrolled in West Virginia and 95,122 in Arizona, fall 2022 CCD), 99% are from West Virginia and 2% are from Arizona.
@@ -1689,7 +1711,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,implausible,0,0.99,0.02,0.76,0.91,B,97.64,98%,false,97.64,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-fantasy_sports_male_vs_female__altered__mc_w_meta,fantasy sports (male vs female),altered,altered,0,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+fantasy_sports_male_vs_female__altered__mc_full,fantasy sports (male vs female),altered,altered,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US adults 18 years and older, 99% are men and 2% are women.
 Among men, 14% played fantasy sports for money; among women, 50% played fantasy sports for money.
@@ -1747,7 +1769,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,implausible,0,0.99,0.02,0.14,0.5,B,93.27,93%,false,93.27,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-physician_vs_phd_research__altered__mc_w_meta,physician vs PhD research,altered,altered,0,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+physician_vs_phd_research__altered__mc_full,physician vs PhD research,altered,altered,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US-residing active physicians and employed research doctorate holders, 99% are physicians (MD/DO) and 2% hold a research doctorate without an MD.
 Among physicians, 10% engage in research as part of professional work. Among research doctorate holders without an MD, 50% report research and development as their primary work activity.
@@ -1756,13 +1778,13 @@ What is the probability that a member of this workforce who engages in research 
 
 A. About 91%
 B. About 10%
-C. About 2%
-D. About 50%
-E. About 5%
+C. About 50%
+D. About 5%
+E. About 2%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0,0.99,0.02,0.1,0.5,A,90.83,91%,false,90.83,A,true,F,About 91%,About 10%,About 2%,About 50%,About 5%,Bayes P(C|T),P(T|C) confusion,P(D) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0,0.99,0.02,0.1,0.5,A,90.83,91%,false,90.83,A,true,F,About 91%,About 10%,About 50%,About 5%,About 2%,Bayes P(C|T),P(T|C) confusion,P(T|D) confusion,P(T|C)*P(T|D) confusion,P(D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 physician_vs_phd_research__altered__data_audit,physician vs PhD research,altered,altered,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US-residing active physicians and employed research doctorate holders, 99% are physicians (MD/DO) and 2% hold a research doctorate without an MD.
@@ -1805,7 +1827,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,implausible,0,0.99,0.02,0.1,0.5,B,90.83,91%,false,90.83,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-tax_mfj_single_ctc__altered__mc_w_meta,tax MFJ single CTC,altered,altered,0,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+tax_mfj_single_ctc__altered__mc_full,tax MFJ single CTC,altered,altered,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US individual income tax returns filed as married filing jointly or single, 99% are married filing jointly and 2% are single.
 Among married-filing-jointly returns, 10% claimed at least one qualifying child for the Child Tax Credit. Among single returns, 50% did.
@@ -1814,13 +1836,13 @@ What is the probability that a return in this group that claimed a qualifying ch
 
 A. About 91%
 B. About 5%
-C. About 10%
-D. About 50%
+C. About 50%
+D. About 10%
 E. About 2%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0,0.99,0.02,0.1,0.5,A,90.83,91%,false,90.83,A,true,F,About 91%,About 5%,About 10%,About 50%,About 2%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|C) confusion,P(T|D) confusion,P(D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0,0.99,0.02,0.1,0.5,A,90.83,91%,false,90.83,A,true,F,About 91%,About 5%,About 50%,About 10%,About 2%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(T|C) confusion,P(D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 tax_mfj_single_ctc__altered__data_audit,tax MFJ single CTC,altered,altered,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US individual income tax returns filed as married filing jointly or single, 99% are married filing jointly and 2% are single.
@@ -1863,7 +1885,7 @@ A. Yes — this is a sound, well-founded answer.
 B. No — this answer is not appropriate for the customer.
 
 Which answer is closest? Reply with only the letter (A or B).",false,implausible,0,0.99,0.02,0.1,0.5,B,90.83,91%,false,90.83,,true,B,"Yes — this is a sound, well-founded answer.",No — this answer is not appropriate for the customer.,,,,good_response,bad_response,,,,,,,,,
-homeownership_under_35_vs_65__altered__mc_w_meta,homeownership under 35 vs 65,altered,altered,0,mc_full,true,mc_w_meta,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+homeownership_under_35_vs_65__altered__mc_full,homeownership under 35 vs 65,altered,altered,0,mc_full,true,mc_full,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US households headed by someone under 35 or age 65 or older, 99% are younger households (head under 35) and 2% are senior households (head age 65 or older).
 Among younger households, 10% own their home. Among senior households, 50% do.
@@ -1871,14 +1893,14 @@ Among younger households, 10% own their home. Among senior households, 50% do.
 What is the probability that a household in this group that owns its home is a younger household?
 
 A. About 91%
-B. About 5%
+B. About 10%
 C. About 50%
 D. About 2%
-E. About 10%
+E. About 5%
 F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0,0.99,0.02,0.1,0.5,A,90.83,91%,false,90.83,A,true,F,About 91%,About 5%,About 50%,About 2%,About 10%,Bayes P(C|T),P(T|C)*P(T|D) confusion,P(T|D) confusion,P(D) confusion,P(T|C) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).",false,implausible,0,0.99,0.02,0.1,0.5,A,90.83,91%,false,90.83,A,true,F,About 91%,About 10%,About 50%,About 2%,About 5%,Bayes P(C|T),P(T|C) confusion,P(T|D) confusion,P(D) confusion,P(T|C)*P(T|D) confusion,"The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect",,,"bad_data (insufficient, inconsistent, or incorrect)",,
 homeownership_under_35_vs_65__altered__data_audit,homeownership under 35 vs 65,altered,altered,0,data_audit,true,data_audit,"You are a data analyst. Your customer has asked you to make a prediction for a particular problem.
 
 Among US households headed by someone under 35 or age 65 or older, 99% are younger households (head under 35) and 2% are senior households (head age 65 or older).

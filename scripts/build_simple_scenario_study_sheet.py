@@ -14,7 +14,7 @@ OUT_PATH = ROOT / "docs" / "simple-benchmark-scenario-study-sheet.txt"
 
 PARTITION_ORDER = [
     "discharged weapon (last year)",
-    "CA Trump voter",
+    "CA Republican voter",
     "healthcare employment",
     "military overseas (federal pool)",
     "covid vaccine (blue/red)",
@@ -138,7 +138,7 @@ def build_study_sheet() -> str:
         "",
         f"Generated: {date.today().isoformat()}",
         f"Source: {BENCHMARK_CSV.relative_to(ROOT)}",
-        "Format: mc_prob scenario text (consultant intro + statistics + question).",
+        "Format: mc_full scenario text (consultant intro + statistics + question).",
         "22 vignettes × natural condition only (altered/implausible excluded).",
         "",
         "QUICK INDEX",
@@ -149,13 +149,13 @@ def build_study_sheet() -> str:
 
     lines.extend(["=" * 80, "PART I — PARTITION VIGNETTES (natural)", "=" * 80, ""])
     for name in PARTITION_ORDER:
-        row = by_name_variant.get((name, "natural", "mc_prob"))
+        row = by_name_variant.get((name, "natural", "mc_full"))
         if row:
             lines.extend(_vignette_block(row))
 
     lines.extend(["=" * 80, "PART II — OVERLAP VIGNETTES (natural)", "=" * 80, ""])
     for name in OVERLAP_ORDER:
-        row = by_name_variant.get((name, "natural", "mc_prob"))
+        row = by_name_variant.get((name, "natural", "mc_full"))
         if row:
             lines.extend(_vignette_block(row))
 

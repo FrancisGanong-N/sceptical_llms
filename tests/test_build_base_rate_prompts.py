@@ -52,7 +52,7 @@ class TestVignetteLoad:
         assert by_name["english teacher humanities"].intersection_size == "large"
 
     def test_ca_trump_posterior(self):
-        v = next(v for v in _load_two_cause() if v.name == "CA Trump voter")
+        v = next(v for v in _load_two_cause() if v.name == "CA Republican voter")
         assert abs(v.posterior_southern_california() - 0.057) < 0.015
 
     def test_diabetes_overlap_posterior_below_partition(self):
@@ -101,7 +101,7 @@ class TestBuildAll:
             assert variants == expected, prefix
 
     def test_ca_trump_posterior(self):
-        v = next(v for v in _load_two_cause() if v.name == "CA Trump voter")
+        v = next(v for v in _load_two_cause() if v.name == "CA Republican voter")
         assert abs(v.posterior_southern_california() - 0.057) < 0.015
 
     def test_all_mc_full_normative_is_numeric_letter(self):
@@ -163,7 +163,7 @@ class TestBuildAll:
     def test_ca_trump_geo_phrasing(self):
         prompts, _, _ = build_all()
         pmap = {r["example_id"]: r["prompt"] for r in prompts}
-        ca = pmap[f"{slug('CA Trump voter')}__open_probs"]
+        ca = pmap[f"{slug('CA Republican voter')}__open_probs"]
         assert "voters registered in Southern California" in ca
         assert "other California voters" in ca
         assert "other parts of the state" not in ca
@@ -225,7 +225,7 @@ class TestBuildAll:
         assert "first-generation student or" not in college
         assert "In Undergraduate" not in college
 
-        ca = pmap[f"{slug('CA Trump voter')}__open_probs"]
+        ca = pmap[f"{slug('CA Republican voter')}__open_probs"]
         assert "registered in California" in ca
         assert (
             "what is the probability they were registered in Southern California?"
@@ -273,7 +273,7 @@ class TestBuildAll:
         assert "fall into both categories" in dia
         dia_implicit = pmap["diabetes_insulin_obese__overlap__implicit__mc_full_probs"]
         assert "fall into both categories" not in dia_implicit
-        ca = pmap[f"{slug('CA Trump voter')}__open_probs"]
+        ca = pmap[f"{slug('CA Republican voter')}__open_probs"]
         assert "fall into both categories" not in ca
 
     def test_confidence_instruction(self):
@@ -499,8 +499,8 @@ class TestImplausibleVignettes:
     def test_ca_trump_implausible_changes_p_a_in_prompt(self):
         prompts, _, _ = build_all()
         pmap = {row["example_id"]: row["prompt"] for row in prompts}
-        base = pmap[f"{slug('CA Trump voter')}__open_probs"]
-        implausible = pmap[f"{slug('CA Trump voter')}__implausible__mc_full_probs"]
+        base = pmap[f"{slug('CA Republican voter')}__open_probs"]
+        implausible = pmap[f"{slug('CA Republican voter')}__implausible__mc_full_probs"]
         assert "13%" in base
         assert "80%" in implausible
         assert "80%" not in base

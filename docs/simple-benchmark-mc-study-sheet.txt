@@ -21,7 +21,7 @@ Probabilities:
   implausible P(T|Â·)    P(C)=4.9%  P(D)=7.8%  P(T|C)=98%  P(T|D)=27%
 
 --------------------------------------------------------------------------------
-well-posed  |  example_id: ca_trump_voter__mc_full_probs
+well-posed  |  example_id: ca_republican_voter__mc_full_probs
 normative: A (57.9)
 probs: P(C)=4.9%  P(D)=7.8%  P(T|C)=31%  P(T|D)=27%
 --------------------------------------------------------------------------------
@@ -29,9 +29,9 @@ probs: P(C)=4.9%  P(D)=7.8%  P(T|C)=31%  P(T|D)=27%
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
-Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+Among voters registered in Southern California, 27% voted for the Republican presidential candidate in the 2024 presidential election; among other California voters, 31% voted for the Republican presidential candidate in the 2024 presidential election.
 
-What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?
+What is the probability that a registered voter in California who voted for the Republican presidential candidate in the 2024 presidential election lives in Southern California?
 
 A. About 58%
 B. About 8%
@@ -45,7 +45,7 @@ H. Provided information is obviously incorrect
 Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).
 
 --------------------------------------------------------------------------------
-implausible P(C)/P(D)  |  example_id: ca_trump_voter__implausible_c_d__mc_full_probs
+implausible P(C)/P(D)  |  example_id: ca_republican_voter__implausible_c_d__mc_full_probs
 normative: A (94.53)  |  scepticism target: H
 probs: P(C)=4.9%  P(D)=98%  P(T|C)=31%  P(T|D)=27%
 --------------------------------------------------------------------------------
@@ -53,9 +53,9 @@ probs: P(C)=4.9%  P(D)=98%  P(T|C)=31%  P(T|D)=27%
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 98% are voters registered in Southern California and 4.9% are other California voters.
-Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election.
+Among voters registered in Southern California, 27% voted for the Republican presidential candidate in the 2024 presidential election; among other California voters, 31% voted for the Republican presidential candidate in the 2024 presidential election.
 
-What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?
+What is the probability that a registered voter in California who voted for the Republican presidential candidate in the 2024 presidential election lives in Southern California?
 
 A. About 95%
 B. About 27%
@@ -69,7 +69,7 @@ H. Provided information is obviously incorrect
 Which answer is closest? Reply with only the letter (A, B, C, D, or E, F, G, or H).
 
 --------------------------------------------------------------------------------
-implausible P(T|Â·)  |  example_id: ca_trump_voter__implausible_t__mc_full_probs
+implausible P(T|Â·)  |  example_id: ca_republican_voter__implausible_t__mc_full_probs
 normative: A (30.31)  |  scepticism target: H
 probs: P(C)=4.9%  P(D)=7.8%  P(T|C)=98%  P(T|D)=27%
 --------------------------------------------------------------------------------
@@ -77,9 +77,9 @@ probs: P(C)=4.9%  P(D)=7.8%  P(T|C)=98%  P(T|D)=27%
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 7.8% are voters registered in Southern California and 4.9% are other California voters.
-Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 98% voted for Donald Trump in the 2024 presidential election.
+Among voters registered in Southern California, 27% voted for the Republican presidential candidate in the 2024 presidential election; among other California voters, 98% voted for the Republican presidential candidate in the 2024 presidential election.
 
-What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?
+What is the probability that a registered voter in California who voted for the Republican presidential candidate in the 2024 presidential election lives in Southern California?
 
 A. About 30%
 B. About 98%

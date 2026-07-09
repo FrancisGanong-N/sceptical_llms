@@ -1,6 +1,6 @@
 vignette_name,P(T|C),P(T|D)
 discharged weapon (last year),0.5,0.98
-CA Trump voter,0.98,0.98
+CA Republican voter,0.98,0.98
 healthcare employment,0.1,0.001
 military overseas (federal pool),0.02,0.001
 covid vaccine (blue/red),0.9,0.1

@@ -49,7 +49,7 @@ DEFAULT_MERGED_RESULTS_CSV = (
 )
 
 PATH_C_LURE_NAME = "P(T|C) confusion"
-CONDITION_COLUMN_ORDER = ("mc_prob", "mc_w_meta", "data_audit", "response_audit")
+CONDITION_COLUMN_ORDER = ("mc_full", "data_audit", "response_audit")
 SIMPLE_MERGE_EXTRA_COLUMNS = ("path_c_confusion",)
 
 

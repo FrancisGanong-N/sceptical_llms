@@ -80,7 +80,7 @@ PROBLEM_TYPE_WELL_POSED = "well_posed"
 PROBLEM_TYPE_ALTERED = "altered"
 CONDITION_NATURAL = "natural"
 CONDITION_ALTERED = "altered"
-CANONICAL_VARIANTS = ("mc_prob", "mc_w_meta", "data_audit", "response_audit")
+CANONICAL_VARIANTS = ("mc_full", "data_audit", "response_audit")
 VARIANTS = CANONICAL_VARIANTS
 
 SIMPLE_LURE_KEYS = ("product", "path_d", "path_c", "normative", "p_d")
@@ -236,12 +236,12 @@ class SimpleVignette:
         return self.s_c * self.p_c / p_t
 
     def question_target_subtype(self) -> str:
-        if self.name == "CA Trump voter":
+        if self.name == "CA Republican voter":
             return self.old_d
         return self.old_c
 
     def target_posterior(self) -> float:
-        if self.name == "CA Trump voter":
+        if self.name == "CA Republican voter":
             return self.posterior_d()
         if self.p_cd_given_a > 0:
             return self.posterior_c_overlap_aware()
@@ -730,24 +730,23 @@ def scepticism_required_for_variant(v: SimpleVignette, variant: str) -> bool:
     """Whether this variant scores against scepticism_score_target vs Bayes numeric."""
     if is_well_posed_vignette(v):
         return False
-    return variant in ("mc_w_meta", "data_audit", "response_audit")
+    return variant in ("mc_full", "data_audit", "response_audit")
 
 
 def variants_for_vignette(v: SimpleVignette) -> tuple[str, ...]:
     """Variant gating aligned with problem-class scoring.
 
-    - mc_prob: natural disjoint only (11)
-    - mc_w_meta: natural overlap + altered disjoint (22)
-    - data_audit / response_audit: natural (all) + altered disjoint (33 each)
+    - mc_full: natural disjoint + natural overlap + altered disjoint (33)
+    - data_audit / response_audit: same cells (33 each)
     - altered overlap: no variants (overlap + implausible not scored)
     """
     disjoint = not has_overlap(v)
     if v.condition == CONDITION_NATURAL and disjoint:
-        return ("mc_prob", "data_audit", "response_audit")
+        return CANONICAL_VARIANTS
     if v.condition == CONDITION_NATURAL and not disjoint:
-        return ("mc_w_meta", "data_audit", "response_audit")
+        return CANONICAL_VARIANTS
     if v.condition == CONDITION_ALTERED and disjoint:
-        return ("mc_w_meta", "data_audit", "response_audit")
+        return CANONICAL_VARIANTS
     return ()
 
 
@@ -768,7 +767,7 @@ def _response_audit_normative_choice(v: SimpleVignette) -> str:
     return "A" if is_well_posed_vignette(v) else "B"
 
 
-def _mc_w_meta_scepticism_target(v: SimpleVignette) -> str:
+def _mc_full_scepticism_target(v: SimpleVignette) -> str:
     return "n/a" if is_well_posed_vignette(v) else "F"
 
 
@@ -1419,31 +1418,11 @@ def build_prompt(v: SimpleVignette, variant: str) -> tuple[str, dict[str, str]]:
     _clear_mc_options(item)
     item["confidence_required"] = "false"
 
-    if variant == "mc_prob":
+    if variant == "mc_full":
         lines, labels, lures, normative_letter, option_letters = _build_mc_prob_sections(
             v, example_id
         )
-        item.update(
-            {
-                "response_type": "mc",
-                "normative_choice": normative_letter,
-                "numeric_score_percent": item["normative_percent"],
-                "numeric_score_choice": normative_letter,
-                "scepticism_required": "false",
-                "scepticism_score_target": "n/a",
-            }
-        )
-        for letter in option_letters:
-            item[f"option_{letter.lower()}_label"] = labels[letter]
-            item[f"option_{letter.lower()}_lure"] = lures[letter]
-        prompt = _format_mc_prob_prompt(v, example_id)
-        return prompt, item
-
-    if variant == "mc_w_meta":
-        lines, labels, lures, normative_letter, option_letters = _build_mc_prob_sections(
-            v, example_id
-        )
-        scepticism_target = _mc_w_meta_scepticism_target(v)
+        scepticism_target = _mc_full_scepticism_target(v)
         item.update(
             {
                 "response_type": "mc_full",
@@ -1451,7 +1430,7 @@ def build_prompt(v: SimpleVignette, variant: str) -> tuple[str, dict[str, str]]:
                 "numeric_score_percent": item["normative_percent"],
                 "numeric_score_choice": normative_letter,
                 "scepticism_required": str(
-                    scepticism_required_for_variant(v, "mc_w_meta")
+                    scepticism_required_for_variant(v, "mc_full")
                 ).lower(),
                 "scepticism_score_target": scepticism_target,
             }

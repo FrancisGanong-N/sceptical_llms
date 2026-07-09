@@ -47,41 +47,41 @@ H. Provided information is obviously incorrect
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-ca_trump_voter__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+ca_republican_voter__open_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 13% are registered in California and the remainder are registered elsewhere.
 Among those registered in California, 60% are voters registered in Southern California and 38% are other California voters.
-Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
+Among voters registered in Southern California, 27% voted for the Republican presidential candidate in the 2024 presidential election; among other California voters, 31% voted for the Republican presidential candidate in the 2024 presidential election; among those registered elsewhere, 38% voted for the Republican presidential candidate in the 2024 presidential election.
 
-Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in Southern California?
+Given that someone voted for the Republican presidential candidate in the 2024 presidential election, what is the probability they were registered in Southern California?
 
 Reply on two lines.
 Line 1: a percentage (for example, 16% or 16 percent), or exactly one of: ""Insufficient information"" | ""Inconsistent information"" | ""Provided information is obviously incorrect"".
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-ca_trump_voter__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+ca_republican_voter__mc_numeric_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 13% are registered in California and the remainder are registered elsewhere.
 Among those registered in California, 60% are voters registered in Southern California and 38% are other California voters.
-Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
+Among voters registered in Southern California, 27% voted for the Republican presidential candidate in the 2024 presidential election; among other California voters, 31% voted for the Republican presidential candidate in the 2024 presidential election; among those registered elsewhere, 38% voted for the Republican presidential candidate in the 2024 presidential election.
 
-Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in Southern California?
+Given that someone voted for the Republican presidential candidate in the 2024 presidential election, what is the probability they were registered in Southern California?
 
 A. About 6%
 B. About 10%
-C. About 1%
-D. About 4%
+C. About 4%
+D. About 1%
 E. About 13%
 
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A, B, C, D, or E).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-ca_trump_voter__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+ca_republican_voter__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 13% are registered in California and the remainder are registered elsewhere.
 Among those registered in California, 60% are voters registered in Southern California and 38% are other California voters.
-Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
+Among voters registered in Southern California, 27% voted for the Republican presidential candidate in the 2024 presidential election; among other California voters, 31% voted for the Republican presidential candidate in the 2024 presidential election; among those registered elsewhere, 38% voted for the Republican presidential candidate in the 2024 presidential election.
 
-Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in Southern California?
+Given that someone voted for the Republican presidential candidate in the 2024 presidential election, what is the probability they were registered in Southern California?
 
 A. About 6%
 B. About 10%
@@ -1288,19 +1288,19 @@ H. Provided information is obviously incorrect
 Which answer is closest? Reply on two lines.
 Line 1: only the letter (A or B, F, G, or H).
 Line 2: your confidence from 1 (not confident) to 5 (very confident)."
-ca_trump_voter__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
+ca_republican_voter__implausible__mc_full_probs,"You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
 
 Among US registered voters, 80% are registered in California and the remainder are registered elsewhere.
 Among those registered in California, 60% are voters registered in Southern California and 38% are other California voters.
-Among voters registered in Southern California, 27% voted for Donald Trump in the 2024 presidential election; among other California voters, 31% voted for Donald Trump in the 2024 presidential election; among those registered elsewhere, 38% voted for Donald Trump in the 2024 presidential election.
+Among voters registered in Southern California, 27% voted for the Republican presidential candidate in the 2024 presidential election; among other California voters, 31% voted for the Republican presidential candidate in the 2024 presidential election; among those registered elsewhere, 38% voted for the Republican presidential candidate in the 2024 presidential election.
 
-Given that someone voted for Donald Trump in the 2024 presidential election, what is the probability they were registered in Southern California?
+Given that someone voted for the Republican presidential candidate in the 2024 presidential election, what is the probability they were registered in Southern California?
 
 A. About 43%
 B. About 75%
-C. About 17%
+C. About 55%
 D. About 63%
-E. About 55%
+E. About 17%
 F. Insufficient information
 G. Inconsistent information
 H. Provided information is obviously incorrect

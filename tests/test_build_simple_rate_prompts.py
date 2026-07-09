@@ -83,7 +83,7 @@ class TestSimpleParameters:
         grad = next(
             r
             for r in rows
-            if r["example_id"] == "hs_graduation_acgr_wv_vs_az__natural__mc_prob"
+            if r["example_id"] == "hs_graduation_acgr_wv_vs_az__natural__mc_full"
         )
         assert "17,489 enrolled in West Virginia and 95,122 in Arizona" in grad["prompt"]
         assert (
@@ -107,7 +107,7 @@ class TestSimpleParameters:
         naep = next(
             r
             for r in rows
-            if r["example_id"] == "naep_grade_4_reading_ma_vs_nm__natural__mc_prob"
+            if r["example_id"] == "naep_grade_4_reading_ma_vs_nm__natural__mc_full"
         )
         assert "66,751 enrolled in Massachusetts and 22,503 in New Mexico" in naep["prompt"]
         assert (
@@ -135,8 +135,7 @@ class TestBuildAll:
         for row in benchmark:
             variant_counts[row["variant"]] += 1
         assert variant_counts == {
-            "mc_prob": 11,
-            "mc_w_meta": 22,
+            "mc_full": 33,
             "data_audit": 33,
             "response_audit": 33,
         }
@@ -147,14 +146,12 @@ class TestBuildAll:
             and row["intersection_size"] not in ("", "0")
         ]
         assert len(overlap_natural) == 33
-        overlap_mc_prob = [r for r in overlap_natural if r["variant"] == "mc_prob"]
-        assert len(overlap_mc_prob) == 0
-        overlap_mc_w_meta = [r for r in overlap_natural if r["variant"] == "mc_w_meta"]
-        assert len(overlap_mc_w_meta) == 11
-        assert all(row["scepticism_required"] == "true" for row in overlap_mc_w_meta)
-        assert all(row["scepticism_score_target"] == "F" for row in overlap_mc_w_meta)
+        overlap_mc_full = [r for r in overlap_natural if r["variant"] == "mc_full"]
+        assert len(overlap_mc_full) == 11
+        assert all(row["scepticism_required"] == "true" for row in overlap_mc_full)
+        assert all(row["scepticism_score_target"] == "F" for row in overlap_mc_full)
         assert {row["variant"] for row in overlap_natural} == {
-            "mc_w_meta",
+            "mc_full",
             "data_audit",
             "response_audit",
         }
@@ -180,7 +177,7 @@ class TestBuildAll:
         fantasy = next(
             r
             for r in rows
-            if r["example_id"] == "fantasy_sports_male_vs_female__natural__mc_prob"
+            if r["example_id"] == "fantasy_sports_male_vs_female__natural__mc_full"
         )
         assert "49% are men and 51% are women" in fantasy["prompt"]
         assert "Among men, 34% played fantasy sports for money" in fantasy["prompt"]
@@ -210,7 +207,7 @@ class TestBuildAll:
         fantasy = next(
             r
             for r in rows
-            if r["example_id"] == "fantasy_sports_under_45_vs_male__natural__mc_w_meta"
+            if r["example_id"] == "fantasy_sports_under_45_vs_male__natural__mc_full"
         )
         assert "45% are under age 45 and 49% are men" in fantasy["prompt"]
         assert "An estimated 22% fall into both categories." in fantasy["prompt"]
@@ -237,7 +234,7 @@ class TestBuildAll:
         with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
         sports = next(
-            r for r in rows if r["example_id"] == "nfl_mlb_watch_attend__natural__mc_w_meta"
+            r for r in rows if r["example_id"] == "nfl_mlb_watch_attend__natural__mc_full"
         )
         assert "56% watch NFL and 33% watch MLB" in sports["prompt"]
         assert "An estimated 25% fall into both categories." in sports["prompt"]
@@ -265,7 +262,7 @@ class TestBuildAll:
         with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
         drama = next(
-            r for r in rows if r["example_id"] == "book_drama_streaming__natural__mc_w_meta"
+            r for r in rows if r["example_id"] == "book_drama_streaming__natural__mc_full"
         )
         assert (
             "75% read at least one book in the past 12 months and 83% watch streaming services"
@@ -297,7 +294,7 @@ class TestBuildAll:
         with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
         physician = next(
-            r for r in rows if r["example_id"] == "physician_vs_phd_research__natural__mc_prob"
+            r for r in rows if r["example_id"] == "physician_vs_phd_research__natural__mc_full"
         )
         assert (
             "54% are physicians (MD/DO) and 46% hold a research doctorate without an MD"
@@ -329,7 +326,7 @@ class TestBuildAll:
         with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
         tax = next(
-            r for r in rows if r["example_id"] == "tax_mfj_single_ctc__natural__mc_prob"
+            r for r in rows if r["example_id"] == "tax_mfj_single_ctc__natural__mc_full"
         )
         assert (
             "40% are married filing jointly and 60% are single" in tax["prompt"]
@@ -356,7 +353,7 @@ class TestBuildAll:
         with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
         covid = next(
-            r for r in rows if r["example_id"] == "covid_vaccine_blue_red__natural__mc_prob"
+            r for r in rows if r["example_id"] == "covid_vaccine_blue_red__natural__mc_full"
         )
         assert "27% received the 2024-25 COVID vaccine" in covid["prompt"]
         assert "Among the vaccinated, 71% live in blue states" in covid["prompt"]
@@ -386,7 +383,7 @@ class TestBuildAll:
         military = next(
             r
             for r in rows
-            if r["example_id"] == "military_overseas_federal_pool__natural__mc_prob"
+            if r["example_id"] == "military_overseas_federal_pool__natural__mc_full"
         )
         assert (
             "Among active-duty US military service members, 35% serve in the Army "
@@ -420,7 +417,7 @@ class TestBuildAll:
         home = next(
             r
             for r in rows
-            if r["example_id"] == "homeownership_under_35_vs_65__natural__mc_prob"
+            if r["example_id"] == "homeownership_under_35_vs_65__natural__mc_full"
         )
         assert (
             "40% are younger households (head under 35) and 60% are senior households"
@@ -444,7 +441,7 @@ class TestBuildAll:
         with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
         english = next(
-            r for r in rows if r["example_id"] == "english_teacher_humanities__natural__mc_w_meta"
+            r for r in rows if r["example_id"] == "english_teacher_humanities__natural__mc_full"
         )
         assert (
             "0.11% teach English as their primary assignment and "
@@ -466,7 +463,7 @@ class TestBuildAll:
         )
         assert "public grades 9-12" not in english["prompt"]
 
-    def test_ca_trump_voter_entity_labels(self, tmp_path: Path, monkeypatch):
+    def test_ca_republican_voter_entity_labels(self, tmp_path: Path, monkeypatch):
         monkeypatch.setattr(
             "scripts.build_simple_rate_prompts.OUT_DIR",
             tmp_path / "simple",
@@ -474,18 +471,21 @@ class TestBuildAll:
         write_csvs()
         with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
-        ca = next(r for r in rows if r["example_id"] == "ca_trump_voter__natural__mc_prob")
+        ca = next(r for r in rows if r["example_id"] == "ca_republican_voter__natural__mc_full")
         assert (
             "7.8% are voters registered in Southern California and 4.9% are other California voters."
             in ca["prompt"]
         )
         assert (
-            "Among voters registered in Southern California, 27% voted for Donald Trump"
+            "Among voters registered in Southern California, 27% voted for the Republican presidential candidate"
             in ca["prompt"]
         )
-        assert "among other California voters, 31% voted for Donald Trump" in ca["prompt"]
         assert (
-            "What is the probability that a registered voter in California who voted for Donald Trump in the 2024 presidential election lives in Southern California?"
+            "among other California voters, 31% voted for the Republican presidential candidate"
+            in ca["prompt"]
+        )
+        assert (
+            "What is the probability that a registered voter in California who voted for the Republican presidential candidate in the 2024 presidential election lives in Southern California?"
             in ca["prompt"]
         )
 
@@ -498,7 +498,7 @@ class TestBuildAll:
         with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
         diabetes = next(
-            r for r in rows if r["example_id"] == "diabetes_insulin_obese__natural__mc_w_meta"
+            r for r in rows if r["example_id"] == "diabetes_insulin_obese__natural__mc_full"
         )
         assert (
             "3.2% use insulin and 5.3% are obese."
@@ -521,7 +521,7 @@ class TestBuildAll:
         with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
         health = next(
-            r for r in rows if r["example_id"] == "healthcare_employment__natural__mc_prob"
+            r for r in rows if r["example_id"] == "healthcare_employment__natural__mc_full"
         )
         assert "physician (MD/DO)" not in health["prompt"]
         assert "non-physician health care professional among A" not in health["prompt"]
@@ -540,7 +540,7 @@ class TestBuildAll:
         with (tmp_path / "simple" / "prompts.csv").open(newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
         discharged = next(
-            r for r in rows if r["example_id"] == "discharged_weapon_last_year__natural__mc_prob"
+            r for r in rows if r["example_id"] == "discharged_weapon_last_year__natural__mc_full"
         )
         assert "urban police officers" in discharged["prompt"].lower()
         assert "rural/small-jurisdiction police officers" in discharged["prompt"].lower()
@@ -548,7 +548,7 @@ class TestBuildAll:
 
     def test_items_include_source_probabilities(self):
         _, items, _ = build_all()
-        row = next(r for r in items if r["example_id"] == "ca_trump_voter__natural__mc_prob")
+        row = next(r for r in items if r["example_id"] == "ca_republican_voter__natural__mc_full")
         assert float(row["p_c"]) == 0.13 * 0.38
         assert float(row["p_d"]) == 0.13 * 0.60
         assert float(row["p_t_given_c"]) == 0.31
@@ -577,18 +577,10 @@ class TestBuildAll:
         assert "professional drivers speeding" not in by_name
         assert "actor waiter overlap" not in by_name
 
-    def test_overlap_has_mc_w_meta_not_mc_prob(self):
+    def test_overlap_mc_full_requires_f(self):
         _, items, _ = build_all()
-        overlap_mc_prob = [
-            r
-            for r in items
-            if r["condition"] == "natural"
-            and r["intersection_size"] not in ("", "0")
-            and r["variant"] == "mc_prob"
-        ]
-        assert overlap_mc_prob == []
         row = next(
-            r for r in items if r["example_id"] == "diabetes_insulin_obese__natural__mc_w_meta"
+            r for r in items if r["example_id"] == "diabetes_insulin_obese__natural__mc_full"
         )
         assert row["scepticism_required"] == "true"
         assert row["scepticism_score_target"] == "F"
@@ -596,20 +588,20 @@ class TestBuildAll:
         assert row["well_posed"] == "false"
         assert float(row["p_c_and_d_given_a"]) > 0
 
-    def test_overlap_mc_w_meta_requires_f(self):
+    def test_partition_mc_full_scepticism_not_required(self):
         _, items, _ = build_all()
         row = next(
-            r for r in items if r["example_id"] == "diabetes_insulin_obese__natural__mc_w_meta"
+            r for r in items if r["example_id"] == "ca_republican_voter__natural__mc_full"
         )
-        assert row["scepticism_required"] == "true"
-        assert row["scepticism_score_target"] == "F"
-        assert row["well_posed"] == "false"
+        assert row["scepticism_required"] == "false"
+        assert row["scepticism_score_target"] == "n/a"
+        assert row["well_posed"] == "true"
 
-    def test_mc_w_meta(self):
+    def test_mc_full(self):
         prompts, items, _ = build_all()
-        row = next(r for r in items if r["example_id"] == "diabetes_insulin_obese__natural__mc_w_meta")
+        row = next(r for r in items if r["example_id"] == "diabetes_insulin_obese__natural__mc_full")
         prompt = next(r["prompt"] for r in prompts if r["example_id"] == row["example_id"])
-        assert row["variant"] == "mc_w_meta"
+        assert row["variant"] == "mc_full"
         assert row["response_type"] == "mc_full"
         assert row["scepticism_required"] == "true"
         assert row["option_f_label"] == META_SCEPTICISM
@@ -624,13 +616,13 @@ class TestBuildAll:
             _load_implausible_p_t_given,
         )
 
-        p_c_d = _load_implausible_p_c_d()["CA Trump voter"]
-        p_t = _load_implausible_p_t_given()["CA Trump voter"]
+        p_c_d = _load_implausible_p_c_d()["CA Republican voter"]
+        p_t = _load_implausible_p_t_given()["CA Republican voter"]
         _, items, benchmark = build_all()
         row = next(
             r
             for r in items
-            if r["example_id"] == "ca_trump_voter__altered__mc_w_meta"
+            if r["example_id"] == "ca_republican_voter__altered__mc_full"
         )
         assert row["condition"] == "altered"
         assert row["problem_type"] == "altered"

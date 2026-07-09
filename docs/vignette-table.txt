@@ -5,7 +5,7 @@ Thresholds: 0 = exclusive partition; small <10%; medium 10%–25%; large >25%.
 
   size     vignette
   ----     --------
-  0        CA Trump voter
+  0        CA Republican voter
            covid vaccine (blue/red)
            discharged weapon (last year)
            healthcare employment
@@ -18,7 +18,7 @@ Thresholds: 0 = exclusive partition; small <10%; medium 10%–25%; large >25%.
 
   vignette                              size
   --------------------------------------------
-  CA Trump voter                         0
+  CA Republican voter                         0
   covid vaccine (blue/red)               0
   discharged weapon (last year)          0
   healthcare employment                  0
@@ -54,7 +54,7 @@ WELL-POSED TWO-CAUSE VIGNETTES
   N: Security guard (paid private security, all armed and unarmed)
 
 ================================================================================
-2. CA Trump voter
+2. CA Republican voter
   intersection size: 0 (C and D exclusive under A)
   partition (P(C|A)+P(D|A)=0.980; C and D exclusive under A)
 --------------------------------------------------------------------------------
@@ -63,8 +63,8 @@ WELL-POSED TWO-CAUSE VIGNETTES
   A: Registered voter wh…  C: Other California re…  D: Southern California…
 
   universe: US registered voters
-  T: Voted for Donald Trump in the 2024 presidential election (non-voters and
-     other candidates count as T negative)
+  T: Voted for the Republican presidential candidate in the 2024 presidential
+     election (non-voters and other candidates count as T negative)
 
   A: Registered voter whose home state is California
   C: Other California registrant: lives in NorCal, Central Valley, or any CA
