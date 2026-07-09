@@ -71,7 +71,7 @@ LLMs were asked (in data audits) whether the problem as stated contained enough 
 
 ## An example
 
-The **healthcare employment** vignette is a Conventional Bayes case: physicians and non-physician health care professionals partition the population of interest, and the keyed answer is **A** (about 9%). Below is the full `mc_prob` prompt as sent to the model (`healthcare_employment__natural__mc_prob` in `data/simple/benchmark.csv`).
+The **healthcare employment** vignette is a Conventional Bayes case: physicians and non-physician health care professionals partition the population of interest, and the keyed answer is **A** (about 9%). Below is the full `mc_full` prompt as sent to the model (`healthcare_employment__natural__mc_full` in `data/simple/benchmark.csv`).
 
 ```text
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
@@ -82,12 +82,13 @@ Among physicians, 54% work in a hospital; among health care professionals who ar
 What is the probability that a health care professional who works in a hospital is a physician?
 
 A. About 9%
-B. About 10%
-C. About 32%
+B. About 32%
+C. About 54%
 D. About 60%
-E. About 54%
+E. About 10%
+F. The problem as stated is not sufficiently described, or is inconsistent, or is obviously incorrect
 
-Which answer is closest? Reply with only the letter (A, B, C, D, or E).
+Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).
 ```
 
 In the notation above, **A** = physician, **B** = non-physician health care professional, and **T** = works in a hospital. Blind Bayes gives \(P(A \mid T) \approx 9.1\%\).
@@ -142,7 +143,7 @@ Then open `benchmark/simple-results.ipynb` with `LOAD_FROM_KAGGLE = True`.
 
 ## Status
 
-Active development on the **simple** benchmark (99 prompts, four variants, three problem classes). Older multi-cause base-rate notebooks and data under `data/base_rate/` remain in the repo for reference but are not the focus of current runs.
+Active development on the **simple** benchmark (99 prompts, three variants — `mc_full` plus two audits — and three problem classes). Older multi-cause base-rate notebooks and data under `data/base_rate/` remain in the repo for reference but are not the focus of current runs.
 
 ---
 
