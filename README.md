@@ -4,7 +4,27 @@
 
 Frontier models are fluent at applying Bayes’ rule. Are they appropriately *sceptical*? Do they notice implausible probabilities or mistaken implicit assumptions—or do they compute anyway and report a number?
 
-This project extends the Kaggle benchmark [Measuring Progress Toward AGI — Cognitive Abilities](https://www.kaggle.com/competitions/kaggle-measuring-agi) with a **Sceptical Bayes** task. To do this, we create a set of prompts for the different models.  Each prompt is a two-population problem: given statistics on **A** and **B** and a test **T**, the model must estimate **P(A | T)**—or decline when the premises do not support a posterior probability calculation.  We consider 3 types of Bayes problems:  'Conventional Bayes' where the two populations are distinct,  'Flawed Bayes--Overlap', where the two populations intersect, and 'Flawed Bayes -implausible', where the 'Conventional Bayes' are modified, by keeping the problem structure, but changing the probabilities to  implausible values.
+**99 prompts** · **22 vignettes** · **3 problem classes** · **3 prompt variants** (`multiple-choice`, `data_audit`, `response_audit`)
+
+Each prompt is a two-population problem: estimate **P(A | T)** from stated statistics, or decline when the premises do not support a posterior.
+
+---
+
+## What we test
+
+This repo extends the Kaggle benchmark [Measuring Progress Toward AGI — Cognitive Abilities](https://www.kaggle.com/competitions/kaggle-measuring-agi) with a **Sceptical Bayes** task.
+
+Each prompt gives **P(A)**, **P(B)**, **P(T | A)**, and **P(T | B)**. The model must estimate **P(A | T)** or decline when a posterior is not justified.
+
+We test three problem classes:
+
+- **Conventional Bayes** — **A** and **B** are disjoint.
+- **Flawed Bayes — overlap** — **A** and **B** intersect, but the intersection size is not stated.
+- **Flawed Bayes — implausible** — same structure as Conventional Bayes, with altered statistics.
+
+---
+
+## Three problem classes
 
 ### Conventional Bayes
 
@@ -27,12 +47,11 @@ $$
 P(A \mid T)=\frac{P(T \mid A)P(A)}{P(T \mid A)P(A)+P(T \mid B)P(B)}
 $$
 
-The values of these quantities are estimated from knowledge available on the internet, and seem reasonable.
-In this case the correct thing to do is to 'just turn the crank', i.e. apply this formulation of Bayes rule.  
+The values are drawn from published statistics and seem reasonable. The correct response is to apply Bayes’ rule directly.
 
-### Flawed Bayes -- Overlap and missing information
+### Flawed Bayes — overlap
 
-But in other cases **A** and **B** intersect:
+In other cases, **A** and **B** intersect:
 
 ```mermaid
 %%{init: {"flowchart": {"htmlLabels": true, "nodeSpacing": 0, "padding": 8}} }%%
@@ -46,32 +65,44 @@ $$
 P(A \mid T)=\frac{P(T \mid A)P(A)}{P(T)\ =\ \text{??}}
 $$
 
-In this case, to get an accurate estimate of P(A | T), the LLM would need more information about the intersection.  In our prompts we will not provide that information, so the correct sceptical response is not to turn the crank, but to warn the user.
+To estimate **P(A | T)** accurately, the model would need the intersection size. Our prompts do not provide it, so the correct sceptical response is to decline—not to apply Bayes’ rule blindly.
 
-#### Flawed Bayes--implausible statistics
+### Flawed Bayes — implausible
 
-These prompts are created by modifying the statistics in the disjoint prompts, so to provide values which a sceptical agent would find suspicous.
-For instance if P(A|T) = 0.90 is the probability that a Southern Californian voter voted for the Repulican party in the 2024 election, any moderatly well informed agent should raise a warning flag.  Also included are cases where P(A) + P(B) > 1
+These prompts modify the statistics in the disjoint vignettes to values a sceptical agent should find suspicious. For example, if **P(A | T) = 0.90** for a Southern California voter having voted Republican in the 2024 election, a moderately well-informed agent should raise a warning. Some cases also have **P(A) + P(B) > 1**.
 
+---
 
-### Vignettes, prompts, and audits.
+## Vignettes and prompts
 
-In order to create a kaggle benchmark, it was necessary to construct a series of prompts.  They were constructed from a set of vignettes, which were then posted as mulitple choice problems, or as auditing problems, where the agent is asked whether a problem statement is logically sound, or an answer can be trusted.
+To build the Kaggle benchmark, we constructed a series of prompts from vignettes—short scenarios with stated probabilities—rendered as multiple-choice or audit questions.
 
-First 22 vignettes were constructed,  (11 conventional Bayes + 11 Flawed Bayes (with overlaps)), drawn from medicine, elections, education, sports, and similar domains.   Then 11 more vignettes were constructed by altering statistics for the 11 conventional Bayes cases.
+- **22 natural vignettes** (11 Conventional Bayes + 11 Flawed Bayes — overlap), drawn from medicine, elections, education, sports, and similar domains.
+- **11 altered vignettes** — the 11 Conventional Bayes cases with perturbed statistics (Flawed Bayes — implausible).
 
-These vignettes were then combined with multiple choice answers, or audit questions.
+Each vignette × condition yields **three prompt variants**:
 
-#### Multiple choice prompts 
-The multiple choice prompts were constructed by adding multiple choice resonses to the vignettes.  The multile choices offered included a number of 'lure' values (values that could be obtained if the LLM identified the wrong pattern), and also a generic 'bad data' option.
+| Variant | What the model is asked |
+|---------|-------------------------|
+| `multiple-choice` | Estimate **P(A \| T)**; options include numeric lures and a bad-data choice (**F**) |
+| `data_audit` | Is the problem description well-founded? |
+| `response_audit` | Is a stub numeric answer sound? |
 
-#### Audit prompts:
+**`multiple-choice`:** each vignette gets lure values (wrong patterns such as **P(T | A)** instead of **P(A | T)**) plus option **F** for insufficient, inconsistent, or obviously incorrect data.
 
-LLMs were asked (in data audits) whether the problem as stated contained enough reliable information, and in 'response audits', whether a particular answer was likely to be reliable.
+**Audits:** in `data_audit`, the model judges whether the problem statement is logically sound; in `response_audit`, whether a particular answer can be trusted.
+
+---
 
 ## An example
 
-The **healthcare employment** vignette is a Conventional Bayes case: physicians and non-physician health care professionals partition the population of interest, and the keyed answer is **A** (about 9%). Below is the full `mc_full` prompt as sent to the model (`healthcare_employment__natural__mc_full` in `data/simple/benchmark.csv`).
+The **healthcare employment** vignette is a Conventional Bayes case: physicians and non-physician health care professionals partition the population of interest. The correct response is **A** (about 9%). Below is the full multiple-choice prompt (`healthcare_employment__natural__mc_full` in `data/simple/benchmark.csv`).
+
+| Symbol | Meaning |
+|--------|---------|
+| **A** | Physician |
+| **B** | Non-physician health care professional |
+| **T** | Works in a hospital |
 
 ```text
 You are a statistical consultant. Your task is to estimate a conditional probability from the information below.
@@ -91,10 +122,11 @@ F. The problem as stated is not sufficiently described, or is inconsistent, or i
 Which answer is closest? Reply with only the letter (A, B, C, D, or E, or F).
 ```
 
-In the notation above, **A** = physician, **B** = non-physician health care professional, and **T** = works in a hospital. Blind Bayes gives \(P(A \mid T) \approx 9.1\%\).
+Blind Bayes gives \(P(A \mid T) \approx 9.1\%\), so **A** is correct here. Option **F** is always offered; on overlap or implausible versions of the same vignette, **F** (or **No** on the audits) is the correct response instead.
+
+Option letters are shuffled per `example_id`; the labels above apply to this item only.
 
 ---
-
 
 ## Repository layout
 
@@ -130,6 +162,8 @@ Set `INCLUDE_ALTERED = True` in `build_simple_rate_prompts.py` (default) to incl
 5. **Build task:** `SKIP_DRY_RUN_FOR_BUILD = True` → **Build task** (creates `.run.json` files).
 6. **AI quota:** right sidebar → **Benchmark Task** → Daily / Monthly AI Quota.
 
+Re-**Build task** after changing `benchmark.csv` or `example_id`s. Older runs with stale IDs are dropped when results are merged. Expect **99 prompts × N models** in a complete run.
+
 Download results:
 
 ```powershell
@@ -143,7 +177,7 @@ Then open `benchmark/simple-results.ipynb` with `LOAD_FROM_KAGGLE = True`.
 
 ## Status
 
-Active development on the **simple** benchmark (99 prompts, three variants — `mc_full` plus two audits — and three problem classes). Older multi-cause base-rate notebooks and data under `data/base_rate/` remain in the repo for reference but are not the focus of current runs.
+Active development on the **simple** benchmark (99 prompts, three variants — `multiple-choice` plus two audits — and three problem classes). Older multi-cause base-rate notebooks and data under `data/base_rate/` remain in the repo for reference but are not the focus of current runs.
 
 ---
 
