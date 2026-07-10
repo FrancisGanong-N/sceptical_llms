@@ -126,6 +126,21 @@ Blind Bayes gives \(P(A \mid T) \approx 9.1\%\), so **A** is correct here. Optio
 
 Option letters are shuffled per `example_id`; the labels above apply to this item only.
 
+
+## Early results
+
+(more results when my Kaggle quota refreshes...)
+
+| score_type | anthropic/claude-opus-4-1@20250805 | anthropic/claude-opus-4-8@default | anthropic/claude-sonnet-4@20250514 | google/gemini-3-flash-preview | google/gemini-3.5-flash |
+|---|---|---|---|---|---|
+| Conventional Bayes | 100.0 | 100.0 | 100.0 | 90.9 | 90.9 |
+| Flawed Bayes — missing information | 36.4 | 100.0 | 36.4 | 72.7 | 90.9 |
+| Flawed Bayes — implausible | 63.6 | 63.6 | 81.8 | 81.8 | 90.9 |
+| data_audit | 93.9 | 93.9 | 93.9 | 93.9 | 87.9 |
+| response_audit | 75.8 | 69.7 | 60.6 | 66.7 | 42.4 |
+
+We can see that some models can do the Conventional Bayes tasks perfectly, even those models are not appropriately sceptical.  And this is true, even though (when asked in the data_audit condition), they can generally detect the problem.
+
 ---
 
 ## Repository layout
