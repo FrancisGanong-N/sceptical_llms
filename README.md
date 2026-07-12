@@ -12,7 +12,7 @@ Each prompt is a two-population problem: estimate **P(A | T)** from stated stati
 
 ## What we test
 
-This repo extends the Kaggle benchmark [Measuring Progress Toward AGI — Cognitive Abilities](https://www.kaggle.com/competitions/kaggle-measuring-agi) with a **Sceptical Bayes** task.
+This repo extends the Kaggle benchmark [Measuring Progress Toward AGI — Cognitive Abilities](https://www.kaggle.com/competitions/kaggle-measuring-agi) with a **Sceptical Bayes** task, at https://www.kaggle.com/benchmarks/francisganong/measuring-llm-cognitive-biases
 
 Each prompt gives **P(A)**, **P(B)**, **P(T | A)**, and **P(T | B)**. The model must estimate **P(A | T)** or decline when a posterior is not justified.
 
