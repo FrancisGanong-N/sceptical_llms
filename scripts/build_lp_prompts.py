@@ -1,0 +1,346 @@
+#!/usr/bin/env python3
+"""Build LP prompts: linear programs with implicit (unstated) constraints.
+
+Each vignette is a small optimization word problem. Some constraints are
+"obvious" from the domain (solutions must be whole units, quantities cannot
+be negative) but are never stated. A solver that optimizes only the stated
+constraints reaches a different — wrong — optimum (the "naive LP" answer).
+
+The response format is a JSON object with the optimal ``solution`` and the
+final ``cost`` (objective value). Scoring accepts a parseable ``cost`` within
+1% of ``true_objective``.
+
+failure_mode column values:
+  - none           well-posed control; the naive LP optimum is the true answer
+  - integrality    naive optimum is fractional (e.g. 2.6 buses)
+  - nonnegativity  naive optimum drives a quantity negative (or is unbounded)
+  - both           naive optimum is fractional and negative
+"""
+
+from __future__ import annotations
+
+import csv
+import json
+import re
+import sys
+from dataclasses import dataclass
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+OUT_DIR = ROOT / "data" / "lp"
+
+INTRO = (
+    "You are an operations consultant. Your task is to recommend the best "
+    "plan from the information below."
+)
+
+FAILURE_MODE_NONE = "none"
+FAILURE_MODE_INTEGRALITY = "integrality"
+FAILURE_MODE_NONNEGATIVITY = "nonnegativity"
+FAILURE_MODE_BOTH = "both"
+
+VARIANT = "json"
+CANONICAL_VARIANTS = (VARIANT,)
+
+BENCHMARK_FIELDS = (
+    "example_id",
+    "vignette_name",
+    "failure_mode",
+    "condition",
+    "problem_type",
+    "intersection_size",
+    "response_type",
+    "has_statistics",
+    "variant",
+    "prompt",
+    "well_posed",
+    "normative",
+    "true_objective",
+    "naive_objective",
+    "true_solution",
+    "solution_keys",
+    "objective_name",
+    "normative_percent",
+    "normative_choice",
+    "confidence_required",
+    "scepticism_required",
+    "scepticism_score_target",
+)
+
+ITEM_FIELDS = tuple(field for field in BENCHMARK_FIELDS if field != "prompt")
+
+
+def slug(name: str) -> str:
+    text = re.sub(r"[^a-z0-9]+", "_", name.lower())
+    return text.strip("_")
+
+
+@dataclass(frozen=True)
+class LpVignette:
+    """One optimization word problem with an implicit-constraint trap."""
+
+    name: str
+    failure_mode: str
+    narrative: str
+    objective_name: str
+    question: str
+    solution_keys: tuple[str, ...]
+    true_solution: dict[str, float]
+    true_objective: str
+    naive_objective: str
+
+    @property
+    def well_posed(self) -> bool:
+        return self.failure_mode == FAILURE_MODE_NONE
+
+    def example_prefix(self) -> str:
+        return f"{slug(self.name)}__{self.failure_mode}"
+
+    def true_solution_json(self) -> str:
+        return json.dumps(self.true_solution, sort_keys=True)
+
+
+# Optima verified by enumeration in tests/test_build_lp_prompts.py.
+LP_VIGNETTES: tuple[LpVignette, ...] = (
+    LpVignette(
+        name="carpenter furniture",
+        failure_mode=FAILURE_MODE_INTEGRALITY,
+        narrative=(
+            "A carpenter builds bookcases and desks for sale. Each bookcase "
+            "takes 1.5 hours of cutting and 2.25 hours of assembly, and each desk "
+            "takes 2.25 hours of cutting and 1.5 hours of assembly. This week the "
+            "carpenter has at most 9 hours of cutting time and at most 9 "
+            "hours of assembly time. The profit is $37.50 per bookcase and $50 "
+            "per desk."
+        ),
+        objective_name="total profit",
+        question="What production plan gives the highest total profit for the week?",
+        solution_keys=("bookcases", "desks"),
+        true_solution={"bookcases": 0, "desks": 4},
+        true_objective="200",
+        naive_objective="210",
+    ),
+    LpVignette(
+        name="charter buses",
+        failure_mode=FAILURE_MODE_INTEGRALITY,
+        narrative=(
+            "A school must transport at least 130 students to a regional "
+            "competition. A large bus seats 50 students and costs $820.50 to "
+            "charter, and a small bus seats 30 students and costs $700.25 to "
+            "charter."
+        ),
+        objective_name="total cost",
+        question="What charter plan meets the requirement at the lowest total cost?",
+        solution_keys=("large_buses", "small_buses"),
+        true_solution={"large_buses": 2, "small_buses": 1},
+        true_objective="2341.25",
+        naive_objective="2133.3",
+    ),
+    LpVignette(
+        name="fund allocation",
+        failure_mode=FAILURE_MODE_NONNEGATIVITY,
+        narrative=(
+            "An investor must invest exactly $10,000, split between two funds. "
+            "Fund A returns 8.4% per year and accepts at most $12,000 per "
+            "client. Fund B returns 3.2% per year."
+        ),
+        objective_name="total return",
+        question="What allocation gives the highest total return in the first year?",
+        solution_keys=("fund_a", "fund_b"),
+        true_solution={"fund_a": 10000, "fund_b": 0},
+        true_objective="840",
+        naive_objective="944",
+    ),
+    LpVignette(
+        name="warehouse shipping",
+        failure_mode=FAILURE_MODE_NONNEGATIVITY,
+        narrative=(
+            "A retailer needs at least 8 pallets of stock delivered to one of "
+            "its stores. Warehouse 1 can ship pallets to the store for $3.25 per "
+            "pallet, and Warehouse 2 for $2.10 per pallet."
+        ),
+        objective_name="total cost",
+        question=(
+            "What shipping plan meets the store's requirement at the lowest "
+            "total cost?"
+        ),
+        solution_keys=("warehouse_1", "warehouse_2"),
+        true_solution={"warehouse_1": 0, "warehouse_2": 8},
+        true_objective="16.8",
+        naive_objective="unbounded",
+    ),
+    LpVignette(
+        name="gift baskets",
+        failure_mode=FAILURE_MODE_BOTH,
+        narrative=(
+            "A bakery has a standing order for exactly 20 gift baskets. A "
+            "deluxe basket uses 2.5 jars of jam and earns a $7.25 profit, and a "
+            "standard basket uses 0.75 jars of jam and earns a $4.10 profit. The "
+            "bakery has 52.625 jars of jam in stock."
+        ),
+        objective_name="total profit",
+        question="What mix of baskets fills the order with the highest total profit?",
+        solution_keys=("deluxe", "standard"),
+        true_solution={"deluxe": 20, "standard": 0},
+        true_objective="145",
+        naive_objective="149.725",
+    ),
+    LpVignette(
+        name="workshop vehicles",
+        failure_mode=FAILURE_MODE_NONE,
+        narrative=(
+            "A workshop builds go-karts and mini-bikes. Each go-kart needs 2.4 "
+            "hours of welding and 0.75 hour of painting, and each mini-bike "
+            "needs 0.8 hour of welding and 1.5 hours of painting. The workshop "
+            "has at most 12 hours of welding and at most 7.5 hours of painting "
+            "available. The profit is $42.50 per go-kart and $53.75 per mini-bike."
+        ),
+        objective_name="total profit",
+        question="What production plan gives the highest total profit?",
+        solution_keys=("go_karts", "mini_bikes"),
+        true_solution={"go_karts": 4, "mini_bikes": 3},
+        true_objective="331.25",
+        naive_objective="331.25",
+    ),
+)
+
+
+def load_lp_vignettes() -> tuple[LpVignette, ...]:
+    return LP_VIGNETTES
+
+
+def _json_reply_instruction(v: LpVignette) -> str:
+    solution_fields = ", ".join(f'"{key}": <number>' for key in v.solution_keys)
+    schematic = {
+        "solution": {key: 0 for key in v.solution_keys},
+        "cost": 0,
+    }
+    return (
+        "Reply with only a JSON object of this form:\n"
+        f'{{"solution": {{{solution_fields}}}, "cost": <number>}}\n'
+        "The `solution` object is the optimal plan. The `cost` field is the "
+        f"final {v.objective_name} under that plan.\n"
+        f"Example shape (values are placeholders): {json.dumps(schematic)}\n"
+        "Do not include a dollar sign, markdown, or any other text."
+    )
+
+
+def _format_json_prompt(v: LpVignette) -> str:
+    return "\n".join(
+        [
+            INTRO,
+            "",
+            v.narrative,
+            "",
+            v.question,
+            "",
+            _json_reply_instruction(v),
+        ]
+    )
+
+
+def _shared_item_fields(v: LpVignette) -> dict[str, str]:
+    return {
+        "vignette_name": v.name,
+        "failure_mode": v.failure_mode,
+        "condition": "control" if v.well_posed else "implicit",
+        "problem_type": (
+            "well_posed" if v.well_posed else "implicit_constraints"
+        ),
+        "intersection_size": "",
+        "has_statistics": "true",
+        "well_posed": str(v.well_posed).lower(),
+        "normative": "well_posed" if v.well_posed else "implicit_constraints",
+        "true_objective": v.true_objective,
+        "naive_objective": v.naive_objective,
+        "true_solution": v.true_solution_json(),
+        "solution_keys": ",".join(v.solution_keys),
+        "objective_name": v.objective_name,
+        "normative_percent": v.true_objective,
+        "normative_choice": "",
+        "confidence_required": "false",
+        "scepticism_required": "false",
+        "scepticism_score_target": "n/a",
+    }
+
+
+def build_prompt(v: LpVignette, variant: str = VARIANT) -> tuple[str, dict[str, str]]:
+    if variant != VARIANT:
+        raise ValueError(f"unknown variant: {variant}")
+    example_id = f"{v.example_prefix()}__{variant}"
+    item: dict[str, str] = {
+        "example_id": example_id,
+        "variant": variant,
+        "response_type": "json",
+        **_shared_item_fields(v),
+    }
+    return _format_json_prompt(v), item
+
+
+def build_all() -> tuple[
+    list[dict[str, str]], list[dict[str, str]], list[dict[str, str]]
+]:
+    prompts: list[dict[str, str]] = []
+    items: list[dict[str, str]] = []
+    for vignette in load_lp_vignettes():
+        for variant in CANONICAL_VARIANTS:
+            prompt, item = build_prompt(vignette, variant)
+            prompts.append({"example_id": item["example_id"], "prompt": prompt})
+            items.append(item)
+
+    pmap = {row["example_id"]: row["prompt"] for row in prompts}
+    benchmark: list[dict[str, str]] = []
+    for item in items:
+        row = {key: item.get(key, "") for key in BENCHMARK_FIELDS}
+        row["prompt"] = pmap[item["example_id"]]
+        benchmark.append(row)
+    return prompts, items, benchmark
+
+
+def write_csvs() -> int:
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    prompts, items, benchmark = build_all()
+
+    with (OUT_DIR / "prompts.csv").open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=["example_id", "prompt"])
+        writer.writeheader()
+        writer.writerows(prompts)
+
+    with (OUT_DIR / "items.csv").open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(
+            handle, fieldnames=list(ITEM_FIELDS), extrasaction="ignore"
+        )
+        writer.writeheader()
+        for row in items:
+            writer.writerow({key: row.get(key, "") for key in ITEM_FIELDS})
+
+    with (OUT_DIR / "benchmark.csv").open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(
+            handle, fieldnames=list(BENCHMARK_FIELDS), extrasaction="ignore"
+        )
+        writer.writeheader()
+        writer.writerows(benchmark)
+
+    return len(prompts)
+
+
+def main() -> int:
+    count = write_csvs()
+    by_mode: dict[str, int] = {}
+    for vignette in load_lp_vignettes():
+        by_mode[vignette.failure_mode] = by_mode.get(vignette.failure_mode, 0) + 1
+    modes = ", ".join(f"{mode}={n}" for mode, n in sorted(by_mode.items()))
+    print(
+        f"Wrote {count} prompts "
+        f"({len(load_lp_vignettes())} vignettes x {len(CANONICAL_VARIANTS)} variants; "
+        f"failure modes: {modes})"
+    )
+    print(f"Output: {OUT_DIR} (prompts.csv, items.csv, benchmark.csv)")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
