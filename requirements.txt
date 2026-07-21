@@ -1,3 +1,4 @@
+kaggle>=1.7
 kaggle-benchmarks>=0.6.0
 pandas>=2.0
 pytest>=8.0
