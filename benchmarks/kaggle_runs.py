@@ -14,6 +14,7 @@ BASE_RATE_PROMPT_DICT_KEYS = frozenset({"example_id", "response"})
 
 DEFAULT_BASE_RATE_TASK_SLUG = "base-rate-normative-accuracy"
 DEFAULT_SIMPLE_RATE_TASK_SLUG = "simple-rate-normative-accuracy"
+DEFAULT_LO_TASK_SLUG = "lo-normative-accuracy"
 
 
 @dataclass(frozen=True)
@@ -250,6 +251,32 @@ def merged_simple_results_from_kaggle_runs(
     )
 
 
+def merged_lo_results_from_kaggle_runs(
+    root: Path | str,
+    *,
+    benchmark_path: Path | str | None = None,
+    fill_missing: bool = False,
+):
+    """Build merged LO-benchmark rows from downloaded Kaggle run JSON files."""
+    from benchmarks.lp_rate import BENCHMARK_CSV, merge_run_results
+
+    benchmark_path = Path(benchmark_path or BENCHMARK_CSV)
+    run_rows = _run_rows_for_benchmark_merge(
+        root,
+        benchmark_path=benchmark_path,
+        task_slug=DEFAULT_LO_TASK_SLUG,
+        download_hint=(
+            "python -m kaggle benchmarks tasks download {slug} "
+            f"-o data/kaggle_runs/{DEFAULT_LO_TASK_SLUG}"
+        ),
+    )
+    return merge_run_results(
+        run_rows,
+        benchmark_path=benchmark_path,
+        fill_missing=fill_missing,
+    )
+
+
 def kaggle_cmd(*args: str) -> list[str]:
     """Build a Kaggle CLI argv list (standalone ``kaggle`` or ``python -m kaggle``)."""
     exe = shutil.which("kaggle")
@@ -296,4 +323,16 @@ def download_task_runs(
         cmd.append("-f")
     if include_source:
         cmd.append("-s")
-    subprocess.run(cmd, check=True)
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    if result.returncode != 0:
+        detail = (result.stderr or result.stdout or "").strip()
+        hint = ""
+        if "Authentication required" in detail or "auth login" in detail.lower():
+            hint = (
+                "\nAuthenticate once in this environment, then re-run the cell:\n"
+                f"  {sys.executable} -m kaggle auth login"
+            )
+        raise RuntimeError(
+            f"Kaggle download failed (exit {result.returncode}): {' '.join(cmd)}\n"
+            f"{detail}{hint}"
+        )

@@ -1,0 +1,8 @@
+vignette_name,anthropic/claude-haiku-4-5@20251001,anthropic/claude-opus-4-8@default,anthropic/claude-sonnet-4-6@default,google/gemini-2.5-flash,google/gemini-3-flash-preview,google/gemini-3.5-flash,openai/gpt-5.6-terra,mean
+carpenter furniture,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+charter buses,1.0,1.0,1.0,0.0,1.0,1.0,0.0,0.7142857142857143
+fund allocation,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+gift baskets,0.0,1.0,1.0,0.0,1.0,0.0,0.0,0.42857142857142855
+warehouse shipping,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+workshop vehicles,0.0,0.0,0.0,0.0,1.0,1.0,1.0,0.42857142857142855
+mean,0.5,0.6666666666666666,0.6666666666666666,0.3333333333333333,0.8333333333333334,0.6666666666666666,0.5,0.5952380952380952
