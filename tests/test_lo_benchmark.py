@@ -32,14 +32,14 @@ def test_lo_benchmark_notebook_exists():
     notebook = ROOT / "benchmark" / "lo-benchmark.ipynb"
     assert notebook.is_file()
     text = notebook.read_text(encoding="utf-8")
-    assert "lo_normative_accuracy" in text
+    assert "lo_normative_accuracy_2" in text
     assert "evaluate_lp_rate_benchmark" in text
 
 
 def test_lo_task_json_exists():
-    path = ROOT / "lo_normative_accuracy.task.json"
+    path = ROOT / "lo_normative_accuracy_2.task.json"
     assert path.is_file()
-    assert "lo_normative_accuracy" in path.read_text(encoding="utf-8")
+    assert "lo_normative_accuracy_2" in path.read_text(encoding="utf-8")
 
 
 def test_lo_results_notebook_exists():
@@ -54,5 +54,5 @@ def test_lo_results_notebook_exists():
 def test_merged_lo_helper_exported():
     from benchmarks.kaggle_runs import DEFAULT_LO_TASK_SLUG, merged_lo_results_from_kaggle_runs
 
-    assert DEFAULT_LO_TASK_SLUG == "lo-normative-accuracy"
+    assert DEFAULT_LO_TASK_SLUG == "lo-normative-accuracy-2"
     assert callable(merged_lo_results_from_kaggle_runs)

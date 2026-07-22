@@ -1,6 +1,0 @@
-{
-  "versionNumber": 1,
-  "name": "lo_normative_accuracy",
-  "description": "LO (linear optimization) benchmark: fraction of parseable JSON answers whose cost is within 1% of the keyed objective after applying obvious unstated constraints. Higher is better.",
-  "definition": "@kbench.task(\n    name=\"lo_normative_accuracy\",\n    description=(\n        \"LO (linear optimization) benchmark: fraction of parseable JSON answers \"\n        \"whose cost is within 1% of the keyed objective after applying obvious \"\n        \"unstated constraints. Higher is better.\"\n    ),\n)\ndef lo_normative_accuracy(llm) -> float:\n    _, score, _, _, _, _ = evaluate_lp_rate_benchmark(llm)\n    return float(score.accuracy)\n"
-}

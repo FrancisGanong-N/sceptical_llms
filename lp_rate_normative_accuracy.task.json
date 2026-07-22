@@ -1,6 +1,6 @@
 {
   "versionNumber": 1,
   "name": "lp_rate_normative_accuracy",
-  "description": "Alias of lo_normative_accuracy (LP / LO implicit-constraint benchmark).",
-  "definition": "@kbench.task(\n    name=\"lp_rate_normative_accuracy\",\n    description=(\n        \"Alias of lo_normative_accuracy (LP / LO implicit-constraint benchmark).\"\n    ),\n)\ndef lp_rate_normative_accuracy(llm) -> float:\n    _, score, _, _, _, _ = evaluate_lp_rate_benchmark(llm)\n    return float(score.accuracy)\n"
+  "description": "Alias of lo_normative_accuracy_2 (LP / LO implicit-constraint benchmark).",
+  "definition": "@kbench.task(\n    name=\"lp_rate_normative_accuracy\",\n    description=(\n        \"Alias of lo_normative_accuracy_2 (LP / LO implicit-constraint benchmark).\"\n    ),\n)\ndef lp_rate_normative_accuracy(llm) -> float:\n    _, score, _, _, _, _ = evaluate_lp_rate_benchmark(llm)\n    return float(score.accuracy)\n"
 }
