@@ -23,7 +23,7 @@ from benchmarks.simple_rate_tasks import (
     model_slug_from_run,
 )
 
-LP_MAX_OUTPUT_TOKENS = 512
+LP_MAX_OUTPUT_TOKENS = 1024
 LP_N_JOBS = 1
 
 

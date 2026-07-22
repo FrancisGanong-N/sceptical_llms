@@ -109,6 +109,8 @@ class TestBuildAll:
         assert '"cost"' in prompt
         assert "bookcases" in prompt
         assert "desks" in prompt
+        assert "Output the JSON object first on its own line." in prompt
+        assert "any comments, qualifications, etc." in prompt
         assert row["true_solution"] == '{"bookcases": 0, "desks": 4}'
         assert "data_audit" not in prompt
         assert "Reply with only the letter" not in prompt
@@ -139,6 +141,14 @@ class TestScoring:
             'Here you go:\n```json\n{"solution": {"a": 1}, "cost": 16.8}\n```\n'
         )
         assert fenced.cost == 16.8
+
+        with_comments = lp_rate.parse_lp_json(
+            '{"solution": {"bookcases": 0, "desks": 4}, "cost": 200}\n'
+            "Integer optimum; continuous would be 210."
+        )
+        assert with_comments.parseable
+        assert with_comments.cost == 200.0
+        assert with_comments.solution == {"bookcases": 0, "desks": 4}
 
         assert lp_rate.parse_lp_json("200").parseable is False
 

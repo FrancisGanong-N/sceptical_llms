@@ -131,14 +131,48 @@ def _as_bool(value: str) -> bool:
     return value.strip().lower() == "true"
 
 
+def _first_balanced_json_object(text: str) -> str | None:
+    """Return the first top-level ``{...}`` span, ignoring trailing prose."""
+    start = text.find("{")
+    if start < 0:
+        return None
+    depth = 0
+    in_string = False
+    escape = False
+    for index in range(start, len(text)):
+        ch = text[index]
+        if in_string:
+            if escape:
+                escape = False
+            elif ch == "\\":
+                escape = True
+            elif ch == '"':
+                in_string = False
+            continue
+        if ch == '"':
+            in_string = True
+        elif ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0:
+                return text[start : index + 1]
+    return None
+
+
 def _extract_json_object(text: str) -> dict[str, Any] | None:
     if not text or not text.strip():
         return None
     candidates: list[str] = []
     fenced = JSON_BLOCK_PATTERN.findall(text)
     candidates.extend(fenced)
+    balanced = _first_balanced_json_object(text)
+    if balanced is not None:
+        candidates.append(balanced)
     stripped = text.strip()
     if stripped.startswith("{"):
+        first_line = stripped.splitlines()[0].strip()
+        candidates.append(first_line)
         candidates.append(stripped)
     match = JSON_OBJECT_PATTERN.search(text)
     if match:

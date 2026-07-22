@@ -219,12 +219,16 @@ def _json_reply_instruction(v: LpVignette) -> str:
         "cost": 0,
     }
     return (
-        "Reply with only a JSON object of this form:\n"
+        "Reply in this format:\n"
+        "1. Output the JSON object first on its own line.\n"
+        "2. Then on the next line any comments, qualifications, etc.\n"
+        "\n"
+        "JSON object of this form:\n"
         f'{{"solution": {{{solution_fields}}}, "cost": <number>}}\n'
         "The `solution` object is the optimal plan. The `cost` field is the "
         f"final {v.objective_name} under that plan.\n"
         f"Example shape (values are placeholders): {json.dumps(schematic)}\n"
-        "Do not include a dollar sign, markdown, or any other text."
+        "Do not include a dollar sign or markdown fences around the JSON."
     )
 
 
