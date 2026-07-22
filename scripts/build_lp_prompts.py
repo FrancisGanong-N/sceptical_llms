@@ -6,6 +6,13 @@ Each vignette is a small optimization word problem. Some constraints are
 be negative) but are never stated. A solver that optimizes only the stated
 constraints reaches a different — wrong — optimum (the "naive LP" answer).
 
+For every vignette with an implicit-constraint trap, the builder emits two
+prompts that share the same keyed optimum:
+  - ``condition=implicit``: constraints left unstated (the trap)
+  - ``condition=explicit``: the same constraints spelled out in the prompt
+
+The well-posed control vignette (``failure_mode=none``) is emitted once.
+
 The response format is a JSON object with the optimal ``solution`` and the
 final ``cost`` (objective value). Scoring accepts a parseable ``cost`` within
 1% of ``true_objective``.
@@ -15,6 +22,10 @@ failure_mode column values:
   - integrality    naive optimum is fractional (e.g. 2.6 buses)
   - nonnegativity  naive optimum drives a quantity negative (or is unbounded)
   - both           naive optimum is fractional and negative
+
+Constraint-type flags (true/false strings):
+  - implicit_integer      integrality is part of the trap (integrality / both)
+  - implicit_nonnegative  non-negativity is part of the trap (nonnegativity / both)
 """
 
 from __future__ import annotations
@@ -42,6 +53,10 @@ FAILURE_MODE_INTEGRALITY = "integrality"
 FAILURE_MODE_NONNEGATIVITY = "nonnegativity"
 FAILURE_MODE_BOTH = "both"
 
+CONDITION_IMPLICIT = "implicit"
+CONDITION_EXPLICIT = "explicit"
+CONDITION_CONTROL = "control"
+
 VARIANT = "json"
 CANONICAL_VARIANTS = (VARIANT,)
 
@@ -63,6 +78,8 @@ BENCHMARK_FIELDS = (
     "true_solution",
     "solution_keys",
     "objective_name",
+    "implicit_integer",
+    "implicit_nonnegative",
     "normative_percent",
     "normative_choice",
     "confidence_required",
@@ -80,7 +97,7 @@ def slug(name: str) -> str:
 
 @dataclass(frozen=True)
 class LpVignette:
-    """One optimization word problem with an implicit-constraint trap."""
+    """One optimization word problem with an optional implicit-constraint trap."""
 
     name: str
     failure_mode: str
@@ -91,10 +108,27 @@ class LpVignette:
     true_solution: dict[str, float]
     true_objective: str
     naive_objective: str
+    # Spelled-out constraint sentence(s) for the explicit parallel prompt.
+    # Empty for the well-posed control.
+    explicit_addendum: str = ""
 
     @property
     def well_posed(self) -> bool:
         return self.failure_mode == FAILURE_MODE_NONE
+
+    @property
+    def implicit_integer(self) -> bool:
+        return self.failure_mode in {
+            FAILURE_MODE_INTEGRALITY,
+            FAILURE_MODE_BOTH,
+        }
+
+    @property
+    def implicit_nonnegative(self) -> bool:
+        return self.failure_mode in {
+            FAILURE_MODE_NONNEGATIVITY,
+            FAILURE_MODE_BOTH,
+        }
 
     def example_prefix(self) -> str:
         return f"{slug(self.name)}__{self.failure_mode}"
@@ -116,6 +150,9 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
             "hours of assembly time. The profit is $37.50 per bookcase and $50 "
             "per desk."
         ),
+        explicit_addendum=(
+            "Bookcases and desks must be whole numbers (no fractional furniture)."
+        ),
         objective_name="total profit",
         question="What production plan gives the highest total profit for the week?",
         solution_keys=("bookcases", "desks"),
@@ -132,6 +169,10 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
             "charter, and a small bus seats 30 students and costs $700.25 to "
             "charter."
         ),
+        explicit_addendum=(
+            "The numbers of large and small buses must be whole numbers "
+            "(no fractional buses)."
+        ),
         objective_name="total cost",
         question="What charter plan meets the requirement at the lowest total cost?",
         solution_keys=("large_buses", "small_buses"),
@@ -147,6 +188,10 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
             "Fund A returns 8.4% per year and accepts at most $12,000 per "
             "client. Fund B returns 3.2% per year."
         ),
+        explicit_addendum=(
+            "The amount invested in each fund must be non-negative "
+            "(no shorting / borrowing against a fund)."
+        ),
         objective_name="total return",
         question="What allocation gives the highest total return in the first year?",
         solution_keys=("fund_a", "fund_b"),
@@ -161,6 +206,10 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
             "A retailer needs at least 8 pallets of stock delivered to one of "
             "its stores. Warehouse 1 can ship pallets to the store for $3.25 per "
             "pallet, and Warehouse 2 for $2.10 per pallet."
+        ),
+        explicit_addendum=(
+            "Shipments from each warehouse must be non-negative "
+            "(a warehouse cannot ship a negative number of pallets)."
         ),
         objective_name="total cost",
         question=(
@@ -181,6 +230,10 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
             "standard basket uses 0.75 jars of jam and earns a $4.10 profit. The "
             "bakery has 52.625 jars of jam in stock."
         ),
+        explicit_addendum=(
+            "The numbers of deluxe and standard baskets must be whole numbers "
+            "and non-negative (no fractional baskets, and no negative counts)."
+        ),
         objective_name="total profit",
         question="What mix of baskets fills the order with the highest total profit?",
         solution_keys=("deluxe", "standard"),
@@ -198,6 +251,7 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
             "has at most 12 hours of welding and at most 7.5 hours of painting "
             "available. The profit is $42.50 per go-kart and $53.75 per mini-bike."
         ),
+        explicit_addendum="",
         objective_name="total profit",
         question="What production plan gives the highest total profit?",
         solution_keys=("go_karts", "mini_bikes"),
@@ -232,12 +286,23 @@ def _json_reply_instruction(v: LpVignette) -> str:
     )
 
 
-def _format_json_prompt(v: LpVignette) -> str:
+def _narrative_for_condition(v: LpVignette, condition: str) -> str:
+    if condition != CONDITION_EXPLICIT:
+        return v.narrative
+    addendum = (v.explicit_addendum or "").strip()
+    if not addendum:
+        raise ValueError(
+            f"vignette {v.name!r} has no explicit_addendum for explicit condition"
+        )
+    return f"{v.narrative} {addendum}"
+
+
+def _format_json_prompt(v: LpVignette, *, condition: str) -> str:
     return "\n".join(
         [
             INTRO,
             "",
-            v.narrative,
+            _narrative_for_condition(v, condition),
             "",
             v.question,
             "",
@@ -246,23 +311,41 @@ def _format_json_prompt(v: LpVignette) -> str:
     )
 
 
-def _shared_item_fields(v: LpVignette) -> dict[str, str]:
+def _conditions_for_vignette(v: LpVignette) -> tuple[str, ...]:
+    if v.well_posed:
+        return (CONDITION_CONTROL,)
+    return (CONDITION_IMPLICIT, CONDITION_EXPLICIT)
+
+
+def _shared_item_fields(v: LpVignette, *, condition: str) -> dict[str, str]:
+    if condition == CONDITION_CONTROL:
+        problem_type = "well_posed"
+        normative = "well_posed"
+        well_posed = "true"
+    elif condition == CONDITION_EXPLICIT:
+        problem_type = "explicit_constraints"
+        normative = "explicit_constraints"
+        well_posed = "true"
+    else:
+        problem_type = "implicit_constraints"
+        normative = "implicit_constraints"
+        well_posed = "false"
     return {
         "vignette_name": v.name,
         "failure_mode": v.failure_mode,
-        "condition": "control" if v.well_posed else "implicit",
-        "problem_type": (
-            "well_posed" if v.well_posed else "implicit_constraints"
-        ),
+        "condition": condition,
+        "problem_type": problem_type,
         "intersection_size": "",
         "has_statistics": "true",
-        "well_posed": str(v.well_posed).lower(),
-        "normative": "well_posed" if v.well_posed else "implicit_constraints",
+        "well_posed": well_posed,
+        "normative": normative,
         "true_objective": v.true_objective,
         "naive_objective": v.naive_objective,
         "true_solution": v.true_solution_json(),
         "solution_keys": ",".join(v.solution_keys),
         "objective_name": v.objective_name,
+        "implicit_integer": str(v.implicit_integer).lower(),
+        "implicit_nonnegative": str(v.implicit_nonnegative).lower(),
         "normative_percent": v.true_objective,
         "normative_choice": "",
         "confidence_required": "false",
@@ -271,17 +354,28 @@ def _shared_item_fields(v: LpVignette) -> dict[str, str]:
     }
 
 
-def build_prompt(v: LpVignette, variant: str = VARIANT) -> tuple[str, dict[str, str]]:
+def build_prompt(
+    v: LpVignette,
+    variant: str = VARIANT,
+    *,
+    condition: str | None = None,
+) -> tuple[str, dict[str, str]]:
     if variant != VARIANT:
         raise ValueError(f"unknown variant: {variant}")
-    example_id = f"{v.example_prefix()}__{variant}"
+    resolved = condition or (
+        CONDITION_CONTROL if v.well_posed else CONDITION_IMPLICIT
+    )
+    if resolved == CONDITION_EXPLICIT:
+        example_id = f"{v.example_prefix()}__explicit__{variant}"
+    else:
+        example_id = f"{v.example_prefix()}__{variant}"
     item: dict[str, str] = {
         "example_id": example_id,
         "variant": variant,
         "response_type": "json",
-        **_shared_item_fields(v),
+        **_shared_item_fields(v, condition=resolved),
     }
-    return _format_json_prompt(v), item
+    return _format_json_prompt(v, condition=resolved), item
 
 
 def build_all() -> tuple[
@@ -290,10 +384,15 @@ def build_all() -> tuple[
     prompts: list[dict[str, str]] = []
     items: list[dict[str, str]] = []
     for vignette in load_lp_vignettes():
-        for variant in CANONICAL_VARIANTS:
-            prompt, item = build_prompt(vignette, variant)
-            prompts.append({"example_id": item["example_id"], "prompt": prompt})
-            items.append(item)
+        for condition in _conditions_for_vignette(vignette):
+            for variant in CANONICAL_VARIANTS:
+                prompt, item = build_prompt(
+                    vignette, variant, condition=condition
+                )
+                prompts.append(
+                    {"example_id": item["example_id"], "prompt": prompt}
+                )
+                items.append(item)
 
     pmap = {row["example_id"]: row["prompt"] for row in prompts}
     benchmark: list[dict[str, str]] = []
@@ -337,9 +436,12 @@ def main() -> int:
     for vignette in load_lp_vignettes():
         by_mode[vignette.failure_mode] = by_mode.get(vignette.failure_mode, 0) + 1
     modes = ", ".join(f"{mode}={n}" for mode, n in sorted(by_mode.items()))
+    n_implicit = sum(1 for v in load_lp_vignettes() if not v.well_posed)
     print(
         f"Wrote {count} prompts "
-        f"({len(load_lp_vignettes())} vignettes x {len(CANONICAL_VARIANTS)} variants; "
+        f"({len(load_lp_vignettes())} vignettes; "
+        f"{n_implicit} implicit+explicit pairs + "
+        f"{len(load_lp_vignettes()) - n_implicit} control; "
         f"failure modes: {modes})"
     )
     print(f"Output: {OUT_DIR} (prompts.csv, items.csv, benchmark.csv)")

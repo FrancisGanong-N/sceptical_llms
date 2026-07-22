@@ -91,13 +91,19 @@ class TestVignetteSet:
 
 
 class TestBuildAll:
-    def test_prompt_count_no_audits(self):
+    def test_prompt_count_with_explicit_parallels(self):
         prompts, items, benchmark = build_all()
-        assert len(prompts) == 6
-        assert len(items) == 6
-        assert len(benchmark) == 6
+        # 5 trap vignettes x 2 conditions + 1 control = 11
+        assert len(prompts) == 11
+        assert len(items) == 11
+        assert len(benchmark) == 11
         assert {row["variant"] for row in benchmark} == {"json"}
         assert all(row["response_type"] == "json" for row in benchmark)
+        conditions = {row["condition"] for row in items}
+        assert conditions == {"implicit", "explicit", "control"}
+        assert sum(1 for row in items if row["condition"] == "implicit") == 5
+        assert sum(1 for row in items if row["condition"] == "explicit") == 5
+        assert sum(1 for row in items if row["condition"] == "control") == 1
 
     def test_json_prompt_shape(self):
         prompts, items, _ = build_all()
@@ -111,21 +117,64 @@ class TestBuildAll:
         assert "desks" in prompt
         assert "Output the JSON object first on its own line." in prompt
         assert "any comments, qualifications, etc." in prompt
+        assert "whole numbers" not in prompt
         assert row["true_solution"] == '{"bookcases": 0, "desks": 4}'
+        assert row["implicit_integer"] == "true"
+        assert row["implicit_nonnegative"] == "false"
+        assert row["condition"] == "implicit"
         assert "data_audit" not in prompt
         assert "Reply with only the letter" not in prompt
+
+    def test_explicit_parallel_spells_out_constraints(self):
+        prompts, items, _ = build_all()
+        implicit = _item(items, "carpenter_furniture__integrality__json")
+        explicit = _item(items, "carpenter_furniture__integrality__explicit__json")
+        assert implicit["condition"] == "implicit"
+        assert explicit["condition"] == "explicit"
+        assert implicit["implicit_integer"] == explicit["implicit_integer"] == "true"
+        assert (
+            implicit["implicit_nonnegative"]
+            == explicit["implicit_nonnegative"]
+            == "false"
+        )
+        assert implicit["true_objective"] == explicit["true_objective"]
+        imp_prompt = next(
+            r["prompt"] for r in prompts if r["example_id"] == implicit["example_id"]
+        )
+        exp_prompt = next(
+            r["prompt"] for r in prompts if r["example_id"] == explicit["example_id"]
+        )
+        assert "whole numbers" not in imp_prompt
+        assert "whole numbers" in exp_prompt
+        assert "no fractional furniture" in exp_prompt
+
+    def test_constraint_type_flags(self):
+        _, items, _ = build_all()
+        by_id = {row["example_id"]: row for row in items}
+        assert by_id["fund_allocation__nonnegativity__json"]["implicit_integer"] == "false"
+        assert (
+            by_id["fund_allocation__nonnegativity__json"]["implicit_nonnegative"]
+            == "true"
+        )
+        assert by_id["gift_baskets__both__json"]["implicit_integer"] == "true"
+        assert by_id["gift_baskets__both__json"]["implicit_nonnegative"] == "true"
+        assert by_id["workshop_vehicles__none__json"]["implicit_integer"] == "false"
+        assert by_id["workshop_vehicles__none__json"]["implicit_nonnegative"] == "false"
+        assert "workshop_vehicles__none__explicit__json" not in by_id
 
     def test_write_csvs(self, tmp_path: Path, monkeypatch):
         monkeypatch.setattr("scripts.build_lp_prompts.OUT_DIR", tmp_path / "lp")
         count = write_csvs()
-        assert count == 6
+        assert count == 11
         with (tmp_path / "lp" / "benchmark.csv").open(
             newline="", encoding="utf-8"
         ) as handle:
             rows = list(csv.DictReader(handle))
-        assert len(rows) == 6
+        assert len(rows) == 11
         assert "true_solution" in rows[0]
         assert "solution_keys" in rows[0]
+        assert "implicit_integer" in rows[0]
+        assert "implicit_nonnegative" in rows[0]
 
 
 class TestScoring:
@@ -162,7 +211,7 @@ class TestScoring:
         monkeypatch.setattr("scripts.build_lp_prompts.OUT_DIR", tmp_path / "lp")
         write_csvs()
         items = lp_rate.load_benchmark(tmp_path / "lp" / "benchmark.csv")
-        assert len(items) == 6
+        assert len(items) == 11
 
         correct_rows = []
         for example_id, item in items.items():
@@ -193,7 +242,9 @@ class TestScoring:
                     ),
                 }
             )
-        assert len(naive_rows) == 4
+        # Trap vignettes with a numeric naive optimum: 4 x 2 conditions.
+        # warehouse naive is "unbounded" (None), so it is excluded.
+        assert len(naive_rows) == 8
         assert lp_rate.score_run_rows(naive_rows, items=items).accuracy == 0.0
         assert lp_rate.naive_confusion_rate(naive_rows, items=items) == 1.0
 

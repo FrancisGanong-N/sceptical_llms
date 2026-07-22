@@ -51,7 +51,7 @@ DEFAULT_MERGED_RESULTS_CSV = (
 )
 
 OBJECTIVE_TOLERANCE_RELATIVE = 0.01
-CONDITION_COLUMN_ORDER = ("json",)
+CONDITION_COLUMN_ORDER = ("implicit", "explicit", "control")
 LP_MERGE_EXTRA_COLUMNS = (
     "naive_lp_confusion",
     "parsed_objective",
@@ -76,11 +76,14 @@ class LpBenchmarkItem:
     has_statistics: bool
     variant: str
     failure_mode: str
+    condition: str
     true_objective: float | None
     naive_objective: float | None
     true_solution: dict[str, float]
     solution_keys: tuple[str, ...]
     objective_name: str
+    implicit_integer: bool
+    implicit_nonnegative: bool
     normative_percent: float
     normative_choice: str
     scepticism_required: bool
@@ -265,11 +268,14 @@ def _item_from_row(row: dict[str, str]) -> LpBenchmarkItem:
         has_statistics=_as_bool(row["has_statistics"]),
         variant=row["variant"].strip(),
         failure_mode=(row.get("failure_mode") or "").strip(),
+        condition=(row.get("condition") or "").strip(),
         true_objective=true_objective,
         naive_objective=_parse_optional_float(row.get("naive_objective", "")),
         true_solution=true_solution,
         solution_keys=solution_keys,
         objective_name=(row.get("objective_name") or "").strip(),
+        implicit_integer=_as_bool(row.get("implicit_integer", "")),
+        implicit_nonnegative=_as_bool(row.get("implicit_nonnegative", "")),
         normative_percent=normative_percent,
         normative_choice=(row.get("normative_choice") or "").strip().upper(),
         scepticism_required=_as_bool(row.get("scepticism_required", "")),
@@ -548,11 +554,13 @@ def condition_column(
     has_statistics: str | None = None,
     *,
     variant: str | None = None,
+    condition: str | None = None,
 ) -> str:
-    del has_statistics
-    if variant:
-        return variant
-    return response_type
+    del response_type, has_statistics, variant
+    text = (condition or "").strip()
+    if text:
+        return text
+    return "json"
 
 
 def score_pivot_dataframe(merged_rows: list[dict[str, str]]) -> "pd.DataFrame":
@@ -567,6 +575,7 @@ def score_pivot_dataframe(merged_rows: list[dict[str, str]]) -> "pd.DataFrame":
             row["response_type"],
             row.get("has_statistics"),
             variant=(row.get("variant") or "").strip() or None,
+            condition=(row.get("condition") or "").strip() or None,
         ),
         axis=1,
     )
@@ -597,7 +606,7 @@ def print_score_pivots(merged_rows: list[dict[str, str]]) -> None:
         str(row.get("naive_lp_confusion", "")).lower() for row in merged_rows
     )
     print(
-        "\nScore pivot (rows=model, columns=variant; "
+        "\nScore pivot (rows=model, columns=condition; "
         "cell = mean of 0/1 keyed scores):",
         flush=True,
     )

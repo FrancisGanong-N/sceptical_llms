@@ -11,13 +11,21 @@ from scripts.build_lp_prompts import build_all
 ROOT = Path(__file__).resolve().parent.parent
 
 
-def test_lo_benchmark_has_six_json_prompts():
+def test_lo_benchmark_has_eleven_json_prompts():
     prompts, items, benchmark = build_all()
-    assert len(prompts) == 6
-    assert len(benchmark) == 6
+    assert len(prompts) == 11
+    assert len(benchmark) == 11
     assert all(row["variant"] == "json" for row in items)
     assert BENCHMARK_CSV.is_file()
-    assert len(load_benchmark(BENCHMARK_CSV)) == 6
+    loaded = load_benchmark(BENCHMARK_CSV)
+    assert len(loaded) == 11
+    carpenter = loaded["carpenter_furniture__integrality__json"]
+    assert carpenter.implicit_integer is True
+    assert carpenter.implicit_nonnegative is False
+    explicit = loaded["carpenter_furniture__integrality__explicit__json"]
+    assert explicit.condition == "explicit"
+    assert "whole numbers" in explicit.prompt
+    assert "whole numbers" not in carpenter.prompt
 
 
 def test_lo_benchmark_notebook_exists():
