@@ -1,4 +1,34 @@
 example_id,vignette_name,failure_mode,condition,problem_type,intersection_size,response_type,has_statistics,variant,prompt,well_posed,normative,true_objective,naive_objective,true_solution,solution_keys,objective_name,implicit_integer,implicit_nonnegative,normative_percent,normative_choice,confidence_required,scepticism_required,scepticism_score_target
+carpenter_furniture__integrality__json,carpenter furniture,integrality,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A carpenter builds bookcases and desks for sale. Each bookcase takes 1.5 hours of cutting and 2.25 hours of assembly, and each desk takes 2.25 hours of cutting and 1.5 hours of assembly. This week the carpenter has at most 9 hours of cutting time and at most 9 hours of assembly time. The profit is $37.50 per bookcase and $50 per desk.
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""bookcases"": <number>, ""desks"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""bookcases"": 0, ""desks"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,200,210,"{""bookcases"": 0, ""desks"": 4}","bookcases,desks",total profit,true,false,200,,false,false,n/a
+carpenter_furniture__integrality__explicit__json,carpenter furniture,integrality,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A carpenter builds bookcases and desks for sale. Each bookcase takes 1.5 hours of cutting and 2.25 hours of assembly, and each desk takes 2.25 hours of cutting and 1.5 hours of assembly. This week the carpenter has at most 9 hours of cutting time and at most 9 hours of assembly time. The profit is $37.50 per bookcase and $50 per desk. Bookcases and desks must be whole numbers (no fractional furniture).
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""bookcases"": <number>, ""desks"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""bookcases"": 0, ""desks"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,200,210,"{""bookcases"": 0, ""desks"": 4}","bookcases,desks",total profit,true,false,200,,false,false,n/a
 print_shop__integrality__json,print shop,integrality,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A print shop produces posters and booklets for sale. Each poster takes 1.5 hours of printing and 2.25 hours of binding, and each booklet takes 2.25 hours of printing and 1.5 hours of binding. This week the shop has at most 9 hours of printing time and at most 9 hours of binding time. The profit is $37.50 per poster and $50 per booklet.
@@ -29,6 +59,36 @@ JSON object of this form:
 The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
 Example shape (values are placeholders): {""solution"": {""posters"": 0, ""booklets"": 0}, ""cost"": 0}
 Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,200,210,"{""booklets"": 4, ""posters"": 0}","posters,booklets",total profit,true,false,200,,false,false,n/a
+pottery_studio__integrality__json,pottery studio,integrality,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A pottery studio makes bowls and vases for sale. Each bowl takes 1.65 hours of throwing and 2.025 hours of glazing, and each vase takes 2.025 hours of throwing and 1.65 hours of glazing. This week the studio has at most 9 hours of throwing time and at most 9 hours of glazing time. The profit is $41.25 per bowl and $45 per vase.
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""bowls"": <number>, ""vases"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""bowls"": 0, ""vases"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,180,211.22,"{""bowls"": 0, ""vases"": 4}","bowls,vases",total profit,true,false,180,,false,false,n/a
+pottery_studio__integrality__explicit__json,pottery studio,integrality,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A pottery studio makes bowls and vases for sale. Each bowl takes 1.65 hours of throwing and 2.025 hours of glazing, and each vase takes 2.025 hours of throwing and 1.65 hours of glazing. This week the studio has at most 9 hours of throwing time and at most 9 hours of glazing time. The profit is $41.25 per bowl and $45 per vase. Bowls and vases must be whole numbers (no fractional pieces).
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""bowls"": <number>, ""vases"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""bowls"": 0, ""vases"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,180,211.22,"{""bowls"": 0, ""vases"": 4}","bowls,vases",total profit,true,false,180,,false,false,n/a
 charter_buses__integrality__json,charter buses,integrality,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A school must transport at least 130 students to a regional competition. A large bus seats 50 students and costs $820.50 to charter, and a small bus seats 30 students and costs $700.25 to charter.
@@ -121,7 +181,7 @@ Example shape (values are placeholders): {""solution"": {""warehouse_1"": 0, ""w
 Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,52,52,"{""warehouse_1"": 8, ""warehouse_2"": 8}","warehouse_1,warehouse_2",total cost,false,true,52,,false,false,n/a
 gift_baskets__both__json,gift baskets,both,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
-A bakery has a standing order for exactly 20 gift baskets. A deluxe basket uses 2.5 jars of jam and earns a $7.25 profit, and a standard basket uses 0.75 jars of jam and earns a $4.10 profit. The bakery has 52.625 jars of jam in stock.
+A bakery has a standing order for exactly 20 gift baskets. A deluxe basket uses 3 jars of jam and earns a $7.25 profit, and a standard basket uses 1 jar of jam and earns a $4.10 profit. The bakery has 61 jars of jam in stock.
 
 What mix of baskets fills the order with the highest total profit?
 
@@ -133,10 +193,10 @@ JSON object of this form:
 {""solution"": {""deluxe"": <number>, ""standard"": <number>}, ""cost"": <number>}
 The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
 Example shape (values are placeholders): {""solution"": {""deluxe"": 0, ""standard"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,145,149.725,"{""deluxe"": 20, ""standard"": 0}","deluxe,standard",total profit,true,true,145,,false,false,n/a
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,145,146.575,"{""deluxe"": 20, ""standard"": 0}","deluxe,standard",total profit,true,true,145,,false,false,n/a
 gift_baskets__both__explicit__json,gift baskets,both,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
-A bakery has a standing order for exactly 20 gift baskets. A deluxe basket uses 2.5 jars of jam and earns a $7.25 profit, and a standard basket uses 0.75 jars of jam and earns a $4.10 profit. The bakery has 52.625 jars of jam in stock. The numbers of deluxe and standard baskets must be whole numbers and non-negative (no fractional baskets, and no negative counts).
+A bakery has a standing order for exactly 20 gift baskets. A deluxe basket uses 3 jars of jam and earns a $7.25 profit, and a standard basket uses 1 jar of jam and earns a $4.10 profit. The bakery has 61 jars of jam in stock. The numbers of deluxe and standard baskets must be whole numbers and non-negative (no fractional baskets, and no negative counts).
 
 What mix of baskets fills the order with the highest total profit?
 
@@ -148,7 +208,7 @@ JSON object of this form:
 {""solution"": {""deluxe"": <number>, ""standard"": <number>}, ""cost"": <number>}
 The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
 Example shape (values are placeholders): {""solution"": {""deluxe"": 0, ""standard"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,145,149.725,"{""deluxe"": 20, ""standard"": 0}","deluxe,standard",total profit,true,true,145,,false,false,n/a
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,145,146.575,"{""deluxe"": 20, ""standard"": 0}","deluxe,standard",total profit,true,true,145,,false,false,n/a
 workshop_vehicles__none__json,workshop vehicles,none,control,well_posed,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A workshop builds go-karts and mini-bikes. Each go-kart needs 2.4 hours of welding and 0.75 hour of painting, and each mini-bike needs 0.8 hour of welding and 1.5 hours of painting. The workshop has at most 12 hours of welding and at most 7.5 hours of painting available. The profit is $42.50 per go-kart and $53.75 per mini-bike.

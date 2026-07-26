@@ -125,14 +125,14 @@ def evaluate_lp_rate_benchmark(
 
 
 @kbench.task(
-    name="lo_normative_accuracy_2",
+    name="lo_normative_accuracy_3",
     description=(
         "LO (linear optimization) benchmark: fraction of parseable JSON answers "
         "whose cost is within 1% of the keyed objective after applying obvious "
         "unstated constraints. Higher is better."
     ),
 )
-def lo_normative_accuracy_2(llm) -> float:
+def lo_normative_accuracy_3(llm) -> float:
     _, score, _, _, _, _ = evaluate_lp_rate_benchmark(llm)
     return float(score.accuracy)
 
@@ -153,7 +153,7 @@ def lo_naive_confusion(llm) -> float:
 @kbench.task(
     name="lp_rate_normative_accuracy",
     description=(
-        "Alias of lo_normative_accuracy_2 (LP / LO implicit-constraint benchmark)."
+        "Alias of lo_normative_accuracy_3 (LP / LO implicit-constraint benchmark)."
     ),
 )
 def lp_rate_normative_accuracy(llm) -> float:

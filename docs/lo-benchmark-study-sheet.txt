@@ -1,5 +1,5 @@
 LO benchmark study sheet - implicit conditions only
-Source runs: data/kaggle_runs/lo-normative-accuracy-2/
+Source runs: data/kaggle_runs/lo-normative-accuracy-3/
 For each vignette: prompt, keyed solution, then model responses.
 
 ================================================================================

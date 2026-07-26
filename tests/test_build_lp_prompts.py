@@ -19,6 +19,19 @@ def _item(items, example_id: str):
 
 
 class TestVignetteOptima:
+    def test_carpenter_furniture(self):
+        best = max(
+            37.5 * x + 50 * y
+            for x in range(0, 7)
+            for y in range(0, 7)
+            if 1.5 * x + 2.25 * y <= 9 and 2.25 * x + 1.5 * y <= 9
+        )
+        assert best == 200
+        assert abs(37.5 * 2.4 + 50 * 2.4 - 210) < 1e-9
+        v = _vignette("carpenter furniture")
+        assert v.true_objective == "200"
+        assert v.true_solution == {"bookcases": 0, "desks": 4}
+
     def test_print_shop(self):
         best = max(
             37.5 * x + 50 * y
@@ -31,6 +44,24 @@ class TestVignetteOptima:
         v = _vignette("print shop")
         assert v.true_objective == "200"
         assert v.true_solution == {"posters": 0, "booklets": 4}
+
+    def test_pottery_studio(self):
+        # Mixed ±10% relative to carpenter / print-shop times and profits;
+        # capacity restored to integer 9.
+        best = max(
+            41.25 * x + 45 * y
+            for x in range(0, 8)
+            for y in range(0, 8)
+            if 1.65 * x + 2.025 * y <= 9 and 2.025 * x + 1.65 * y <= 9
+        )
+        assert best == 180
+        cont = 9 / (1.65 + 2.025)
+        assert abs(cont - 2.448979) < 1e-5
+        assert abs(41.25 * cont + 45 * cont - 211.2245) < 1e-3
+        v = _vignette("pottery studio")
+        assert v.true_objective == "180"
+        assert v.true_solution == {"bowls": 0, "vases": 4}
+        assert abs(float(v.naive_objective) - 211.22) < 0.01
 
     def test_charter_buses(self):
         best = min(
@@ -86,10 +117,17 @@ class TestVignetteOptima:
             7.25 * x + 4.1 * y
             for x in range(0, 21)
             for y in [20 - x]
-            if y >= 0 and 2.5 * x + 0.75 * y <= 52.625
+            if y >= 0 and 3 * x + 1 * y <= 61
         )
         assert best == 145
-        assert _vignette("gift baskets").failure_mode == "both"
+        # Without non-negativity / integrality: jam binds at 3d + s = 61 with
+        # d + s = 20 → (d, s) = (20.5, -0.5), profit 146.575.
+        assert abs(7.25 * 20.5 + 4.1 * (-0.5) - 146.575) < 1e-9
+        v = _vignette("gift baskets")
+        assert v.failure_mode == "both"
+        assert v.true_solution == {"deluxe": 20, "standard": 0}
+        assert v.true_objective == "145"
+        assert v.naive_objective == "146.575"
 
     def test_workshop_vehicles_control(self):
         best = max(
@@ -108,7 +146,7 @@ class TestVignetteOptima:
 class TestVignetteSet:
     def test_failure_mode_coverage(self):
         modes = [v.failure_mode for v in load_lp_vignettes()]
-        assert modes.count("integrality") == 2
+        assert modes.count("integrality") == 4
         assert modes.count("nonnegativity") == 2
         assert modes.count("both") == 1
         assert modes.count("none") == 1
@@ -117,16 +155,16 @@ class TestVignetteSet:
 class TestBuildAll:
     def test_prompt_count_with_explicit_parallels(self):
         prompts, items, benchmark = build_all()
-        # 5 trap vignettes x 2 conditions + 1 control = 11
-        assert len(prompts) == 11
-        assert len(items) == 11
-        assert len(benchmark) == 11
+        # 7 trap vignettes x 2 conditions + 1 control = 15
+        assert len(prompts) == 15
+        assert len(items) == 15
+        assert len(benchmark) == 15
         assert {row["variant"] for row in benchmark} == {"json"}
         assert all(row["response_type"] == "json" for row in benchmark)
         conditions = {row["condition"] for row in items}
         assert conditions == {"implicit", "explicit", "control"}
-        assert sum(1 for row in items if row["condition"] == "implicit") == 5
-        assert sum(1 for row in items if row["condition"] == "explicit") == 5
+        assert sum(1 for row in items if row["condition"] == "implicit") == 7
+        assert sum(1 for row in items if row["condition"] == "explicit") == 7
         assert sum(1 for row in items if row["condition"] == "control") == 1
 
     def test_json_prompt_shape(self):
@@ -189,12 +227,12 @@ class TestBuildAll:
     def test_write_csvs(self, tmp_path: Path, monkeypatch):
         monkeypatch.setattr("scripts.build_lp_prompts.OUT_DIR", tmp_path / "lp")
         count = write_csvs()
-        assert count == 11
+        assert count == 15
         with (tmp_path / "lp" / "benchmark.csv").open(
             newline="", encoding="utf-8"
         ) as handle:
             rows = list(csv.DictReader(handle))
-        assert len(rows) == 11
+        assert len(rows) == 15
         assert "true_solution" in rows[0]
         assert "solution_keys" in rows[0]
         assert "implicit_integer" in rows[0]
@@ -235,7 +273,7 @@ class TestScoring:
         monkeypatch.setattr("scripts.build_lp_prompts.OUT_DIR", tmp_path / "lp")
         write_csvs()
         items = lp_rate.load_benchmark(tmp_path / "lp" / "benchmark.csv")
-        assert len(items) == 11
+        assert len(items) == 15
 
         correct_rows = []
         for example_id, item in items.items():
@@ -267,9 +305,9 @@ class TestScoring:
                 }
             )
         # Trap vignettes with a numeric naive optimum distinct from true:
-        # print shop, charter, gift (x2 conditions). Fund/warehouse now have
-        # matching naive/true under the redesigned constraints.
-        assert len(naive_rows) == 6
+        # carpenter, print shop, pottery, charter, gift (x2 conditions).
+        # Fund/warehouse have matching naive/true under redesigned constraints.
+        assert len(naive_rows) == 10
         assert lp_rate.score_run_rows(naive_rows, items=items).accuracy == 0.0
         assert lp_rate.naive_confusion_rate(naive_rows, items=items) == 1.0
 

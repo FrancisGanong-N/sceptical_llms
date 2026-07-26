@@ -14,7 +14,7 @@ BASE_RATE_PROMPT_DICT_KEYS = frozenset({"example_id", "response"})
 
 DEFAULT_BASE_RATE_TASK_SLUG = "base-rate-normative-accuracy"
 DEFAULT_SIMPLE_RATE_TASK_SLUG = "simple-rate-normative-accuracy"
-DEFAULT_LO_TASK_SLUG = "lo-normative-accuracy-2"
+DEFAULT_LO_TASK_SLUG = "lo-normative-accuracy-3"
 
 
 @dataclass(frozen=True)

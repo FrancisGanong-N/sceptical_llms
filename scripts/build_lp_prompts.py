@@ -140,6 +140,27 @@ class LpVignette:
 # Optima verified by enumeration in tests/test_build_lp_prompts.py.
 LP_VIGNETTES: tuple[LpVignette, ...] = (
     LpVignette(
+        name="carpenter furniture",
+        failure_mode=FAILURE_MODE_INTEGRALITY,
+        narrative=(
+            "A carpenter builds bookcases and desks for sale. Each bookcase "
+            "takes 1.5 hours of cutting and 2.25 hours of assembly, and each desk "
+            "takes 2.25 hours of cutting and 1.5 hours of assembly. This week the "
+            "carpenter has at most 9 hours of cutting time and at most 9 "
+            "hours of assembly time. The profit is $37.50 per bookcase and $50 "
+            "per desk."
+        ),
+        explicit_addendum=(
+            "Bookcases and desks must be whole numbers (no fractional furniture)."
+        ),
+        objective_name="total profit",
+        question="What production plan gives the highest total profit for the week?",
+        solution_keys=("bookcases", "desks"),
+        true_solution={"bookcases": 0, "desks": 4},
+        true_objective="200",
+        naive_objective="210",
+    ),
+    LpVignette(
         name="print shop",
         failure_mode=FAILURE_MODE_INTEGRALITY,
         narrative=(
@@ -159,6 +180,27 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         true_solution={"posters": 0, "booklets": 4},
         true_objective="200",
         naive_objective="210",
+    ),
+    LpVignette(
+        name="pottery studio",
+        failure_mode=FAILURE_MODE_INTEGRALITY,
+        narrative=(
+            "A pottery studio makes bowls and vases for sale. Each bowl takes "
+            "1.65 hours of throwing and 2.025 hours of glazing, and each vase "
+            "takes 2.025 hours of throwing and 1.65 hours of glazing. This week "
+            "the studio has at most 9 hours of throwing time and at most 9 "
+            "hours of glazing time. The profit is $41.25 per bowl and $45 per "
+            "vase."
+        ),
+        explicit_addendum=(
+            "Bowls and vases must be whole numbers (no fractional pieces)."
+        ),
+        objective_name="total profit",
+        question="What production plan gives the highest total profit for the week?",
+        solution_keys=("bowls", "vases"),
+        true_solution={"bowls": 0, "vases": 4},
+        true_objective="180",
+        naive_objective="211.22",
     ),
     LpVignette(
         name="charter buses",
@@ -232,9 +274,9 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         failure_mode=FAILURE_MODE_BOTH,
         narrative=(
             "A bakery has a standing order for exactly 20 gift baskets. A "
-            "deluxe basket uses 2.5 jars of jam and earns a $7.25 profit, and a "
-            "standard basket uses 0.75 jars of jam and earns a $4.10 profit. The "
-            "bakery has 52.625 jars of jam in stock."
+            "deluxe basket uses 3 jars of jam and earns a $7.25 profit, and a "
+            "standard basket uses 1 jar of jam and earns a $4.10 profit. The "
+            "bakery has 61 jars of jam in stock."
         ),
         explicit_addendum=(
             "The numbers of deluxe and standard baskets must be whole numbers "
@@ -245,7 +287,7 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         solution_keys=("deluxe", "standard"),
         true_solution={"deluxe": 20, "standard": 0},
         true_objective="145",
-        naive_objective="149.725",
+        naive_objective="146.575",
     ),
     LpVignette(
         name="workshop vehicles",
