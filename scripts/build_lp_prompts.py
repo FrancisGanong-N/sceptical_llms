@@ -140,23 +140,23 @@ class LpVignette:
 # Optima verified by enumeration in tests/test_build_lp_prompts.py.
 LP_VIGNETTES: tuple[LpVignette, ...] = (
     LpVignette(
-        name="carpenter furniture",
+        name="print shop",
         failure_mode=FAILURE_MODE_INTEGRALITY,
         narrative=(
-            "A carpenter builds bookcases and desks for sale. Each bookcase "
-            "takes 1.5 hours of cutting and 2.25 hours of assembly, and each desk "
-            "takes 2.25 hours of cutting and 1.5 hours of assembly. This week the "
-            "carpenter has at most 9 hours of cutting time and at most 9 "
-            "hours of assembly time. The profit is $37.50 per bookcase and $50 "
-            "per desk."
+            "A print shop produces posters and booklets for sale. Each poster "
+            "takes 1.5 hours of printing and 2.25 hours of binding, and each "
+            "booklet takes 2.25 hours of printing and 1.5 hours of binding. This "
+            "week the shop has at most 9 hours of printing time and at most 9 "
+            "hours of binding time. The profit is $37.50 per poster and $50 per "
+            "booklet."
         ),
         explicit_addendum=(
-            "Bookcases and desks must be whole numbers (no fractional furniture)."
+            "Posters and booklets must be whole numbers (no fractional print jobs)."
         ),
         objective_name="total profit",
         question="What production plan gives the highest total profit for the week?",
-        solution_keys=("bookcases", "desks"),
-        true_solution={"bookcases": 0, "desks": 4},
+        solution_keys=("posters", "booklets"),
+        true_solution={"posters": 0, "booklets": 4},
         true_objective="200",
         naive_objective="210",
     ),
@@ -184,9 +184,11 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         name="fund allocation",
         failure_mode=FAILURE_MODE_NONNEGATIVITY,
         narrative=(
-            "An investor must invest exactly $10,000, split between two funds. "
-            "Fund A returns 8.4% per year and accepts at most $12,000 per "
-            "client. Fund B returns 3.2% per year."
+            "An investor may invest up to $10,000 split between Fund A and "
+            "Fund B. Fund A returns 9.0% per year and Fund B returns 4.5% per "
+            "year. Each dollar in Fund A uses 1.5 risk units and each dollar in "
+            "Fund B uses 0.5 risk units; the investor's risk budget is 9,000 "
+            "units. Fund A accepts at most $8,500 from any one client."
         ),
         explicit_addendum=(
             "The amount invested in each fund must be non-negative "
@@ -195,17 +197,21 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         objective_name="total return",
         question="What allocation gives the highest total return in the first year?",
         solution_keys=("fund_a", "fund_b"),
-        true_solution={"fund_a": 10000, "fund_b": 0},
-        true_objective="840",
-        naive_objective="944",
+        true_solution={"fund_a": 4000, "fund_b": 6000},
+        true_objective="630",
+        # Without non-negativity the same corner remains optimal for this LP;
+        # the trap is still unstated non-negativity under a non-trivial mix.
+        naive_objective="630",
     ),
     LpVignette(
         name="warehouse shipping",
         failure_mode=FAILURE_MODE_NONNEGATIVITY,
         narrative=(
-            "A retailer needs at least 8 pallets of stock delivered to one of "
-            "its stores. Warehouse 1 can ship pallets to the store for $3.25 per "
-            "pallet, and Warehouse 2 for $2.10 per pallet."
+            "A retailer needs at least 16 pallets delivered to a store. "
+            "Warehouse 1 ships for $2.50 per pallet and uses 1.0 hour of dock "
+            "time per pallet; Warehouse 2 ships for $4.00 per pallet and uses "
+            "0.5 hour of dock time per pallet. The store has at most 12 hours "
+            "of dock time available."
         ),
         explicit_addendum=(
             "Shipments from each warehouse must be non-negative "
@@ -217,9 +223,9 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
             "total cost?"
         ),
         solution_keys=("warehouse_1", "warehouse_2"),
-        true_solution={"warehouse_1": 0, "warehouse_2": 8},
-        true_objective="16.8",
-        naive_objective="unbounded",
+        true_solution={"warehouse_1": 8, "warehouse_2": 8},
+        true_objective="52",
+        naive_objective="52",
     ),
     LpVignette(
         name="gift baskets",

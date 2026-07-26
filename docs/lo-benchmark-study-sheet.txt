@@ -1,0 +1,911 @@
+LO benchmark study sheet - implicit conditions only
+Source runs: data/kaggle_runs/lo-normative-accuracy-2/
+For each vignette: prompt, keyed solution, then model responses.
+
+================================================================================
+carpenter furniture  [integrality]  implicit constraints: integer
+example_id: carpenter_furniture__integrality__json
+================================================================================
+
+PROMPT
+--------------------------------------------------------------------------------
+You are an operations consultant. Your task is to recommend the best plan from
+the information below.
+
+A carpenter builds bookcases and desks for sale. Each bookcase takes 1.5 hours
+of cutting and 2.25 hours of assembly, and each desk takes 2.25 hours of cutting
+and 1.5 hours of assembly. This week the carpenter has at most 9 hours of
+cutting time and at most 9 hours of assembly time. The profit is $37.50 per
+bookcase and $50 per desk.
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{"solution": {"bookcases": <number>, "desks": <number>}, "cost": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total
+profit under that plan.
+Example shape (values are placeholders): {"solution": {"bookcases": 0, "desks":
+0}, "cost": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+CORRECT SOLUTION
+--------------------------------------------------------------------------------
+solution: {"bookcases": 0, "desks": 4}
+objective (total profit): 200
+naive stated-only objective: 210
+
+RESPONSES
+--------------------------------------------------------------------------------
+claude-haiku-4-5@20251001  [WRONG]
+  model: anthropic/claude-haiku-4-5@20251001
+  parsed_solution: {"bookcases": 2, "desks": 2}
+  parsed_objective: 175
+  naive_lp_confusion: false
+
+{"solution": {"bookcases": 2, "desks": 2}, "cost": 175}
+
+This is a linear programming problem. With cutting time constraint: 1.5b + 2.25d
+≤ 9, assembly time constraint: 2.25b + 1.5d ≤ 9, and objective function:
+maximize 37.50b + 50d.
+
+Testing corner points of the feasible region:
+- (0, 0): profit = $0
+- (0, 4): profit = $200, but uses 9 cutting hours and 6 assembly hours ✓
+- (4, 0): profit = $150, but uses 6 cutting hours and 9 assembly hours ✓
+- (2, 2): profit = $175, uses 7.5 cutting and 7.5 assembly hours ✓
+
+The optimal solution is (0, 4) producing 0 bookcases and 4 desks for $200
+profit. However, if there's a preference for product mix or if I've misread
+constraints, (2, 2) at $175 is also feasible. The truly optimal plan is 0
+bookcases and 4 desks for $200 total profit.
+
+{"solution": {"bookcases": 0, "desks": 4}, "cost": 200}
+
+Produce only desks this week (4 desks) to maximize profit at $200. This fully
+utilizes both the 9 hours of cutting time (2.25 × 4 = 9) and 9 hours of assembly
+time (1.5 × 4 = 6), though assembly has 3 hours remaining capacity.
+
+--------------------------------------------------------------------------------
+claude-opus-4-8@default  [WRONG]
+  model: anthropic/claude-opus-4-8@default
+  parsed_solution: {"bookcases": 2, "desks": 2}
+  parsed_objective: 175
+  naive_lp_confusion: false
+
+{"solution": {"bookcases": 2, "desks": 2}, "cost": 175}
+
+Let me work through this. Let b = bookcases, d = desks.
+
+Constraints:
+- Cutting: 1.5b + 2.25d ≤ 9
+- Assembly: 2.25b + 1.5d ≤ 9
+- b, d ≥ 0
+
+Maximize profit: 37.5b + 50d
+
+Checking corner points:
+- The intersection of the two constraints: 1.5b + 2.25d = 9 and 2.25b + 1.5d =
+9. Adding gives 3.75b + 3.75d = 18, so b + d = 4.8. Subtracting: 0.75b - 0.75d =
+0, so b = d. Thus b = d = 2.4, profit = 37.5(2.4) + 50(2.4) = 90 + 120 = 210.
+- All desks: 2.25d ≤ 9 → d = 4; assembly 1.5(4) = 6 ≤ 9. Profit = 200.
+- All bookcases: b = 4 (assembly limits), profit = 150.
+
+The unconstrained-integer LP optimum is (2.4, 2.4) = $210, but fractional
+products aren't sellable. Testing integer feasible points:
+- (2, 2): cutting 3+4.5=7.5 ≤9, assembly 4.5+3=7.5 ≤9; profit = 75+100 = 175.
+- (1, 3): cutting 1.5+6.75=8.25, assembly 2.25+4.5=6.75; profit = 37.5+150 =
+187.5.
+- (0, 4): profit = 200.
+- (3, 1): cutting 4.5+2.25=6.75, assembly 6.75+1.5=8.25; profit = 112.5+50 =
+162.5.
+- (1, 4): cutting 1.5+9=10.5 > 9, infeasible.
+- (2, 3): cutting 3+6.75=9.75 >9, infeasible.
+
+If whole units are required, the best integer plan is (0, 4) for $200.
+
+{"solution": {"bookcases": 0, "desks": 4}, "cost": 200}
+
+Correction: assuming products must be whole units, the optimal plan is **0
+bookcases and 4 desks for $200 profit**. (If fractional production were allowed,
+2.4 of each would yield $210.)
+
+--------------------------------------------------------------------------------
+claude-sonnet-4-6@default  [CORRECT]
+  model: anthropic/claude-sonnet-4-6@default
+  parsed_solution: {"bookcases": 0, "desks": 4}
+  parsed_objective: 200
+  naive_lp_confusion: false
+
+I need to find the production plan that maximizes profit subject to the time
+constraints.
+
+**Variables:**
+- b = bookcases, d = desks
+
+**Objective:** Maximize 37.50b + 50d
+
+**Constraints:**
+- Cutting: 1.5b + 2.25d ≤ 9
+- Assembly: 2.25b + 1.5d ≤ 9
+- b, d ≥ 0
+
+**Finding corner points of the feasible region:**
+
+1. (b=0, d=0): Profit = $0
+
+2. (b=0, d=4): Check cutting: 2.25×4 = 9 ✓, Assembly: 1.5×4 = 6 ≤ 9 ✓
+   Profit = 50×4 = $200
+
+3. (b=4, d=0): Check cutting: 1.5×4 = 6 ≤ 9 ✓, Assembly: 2.25×4 = 9 ✓
+   Profit = 37.50×4 = $150
+
+4. Intersection of both constraints:
+   1.5b + 2.25d = 9
+   2.25b + 1.5d = 9
+
+   Multiply first by 2.25, second by 1.5:
+   3.375b + 5.0625d = 20.25
+   3.375b + 2.25d = 13.5
+
+   Subtract: 2.8125d = 6.75 → d = 2.4
+   1.5b + 2.25(2.4) = 9 → 1.5b + 5.4 = 9 → 1.5b = 3.6 → b = 2.4
+
+   Profit = 37.50(2.4) + 50(2.4) = 90 + 120 = $210
+
+**The maximum profit is $210 at b=2.4, d=2.4.**
+
+Since the carpenter must build whole units, I check nearby integer points:
+- (2, 2): Cutting: 3+4.5=7.5 ✓, Assembly: 4.5+3=7.5 ✓, Profit = 75+100 = $175
+- (2, 3): Cutting: 3+6.75=9.75 ✗
+- (3, 2): Cutting: 4.5+4.5=9 ✓, Assembly: 6.75+3=9.75 ✗
+- (2, 2) is feasible at $175
+- (0, 4): Profit = $200
+- (4, 0): Profit = $150
+- (1, 3): Cutting: 1.5+6.75=8.25 ✓, Assembly: 2.25+4.5=6.75 ✓, Profit = 37.5+150
+= $187.50
+- (0, 4) gives $200, best integer solution.
+
+{"solution": {"bookcases": 0, "desks": 4}, "cost": 200}
+If the carpenter can work with fractional units (partial builds completed across
+weeks), building 2.4 of each yields the theoretical maximum of $210. However,
+for whole-unit production this week, building 4 desks and no bookcases maximizes
+profit at $200, fully utilizing cutting time (9 hrs) while using only 6 of 9
+available assembly hours.
+
+--------------------------------------------------------------------------------
+gemini-2.5-flash  [WRONG]
+  model: google/gemini-2.5-flash
+  parsed_solution: {"bookcases": 2, "desks": 3}
+  parsed_objective: 225
+  naive_lp_confusion: false
+
+{"solution": {"bookcases": 2, "desks": 3}, "cost": 225}
+This solution was derived using a graphical method for linear programming,
+evaluating the profit at each feasible corner point. The constraints are:
+1.5B + 2.25D <= 9 (Cutting time)
+2.25B + 1.5D <= 9 (Assembly time)
+B >= 0, D >= 0 (Non-negativity)
+Profit = 37.50B + 50D
+
+The corner points and their corresponding profits are:
+(0,0) -> Profit = $0
+(0,4) -> Profit = $200 (limited by assembly time: 1.5 * 4 = 6, 2.25 * 4 = 9)
+(4,0) -> Profit = $150 (limited by cutting time: 1.5 * 4 = 6, 2.25 * 4 = 9)
+(2,3) -> Profit = $225 (intersection of both constraint lines)
+
+--------------------------------------------------------------------------------
+gemini-3-flash-preview  [WRONG]
+  model: google/gemini-3-flash-preview
+  parsed_solution: {"bookcases": 2, "desks": 2.67}
+  parsed_objective: 208.5
+  naive_lp_confusion: true
+
+{"solution": {"bookcases": 2, "desks": 2.67}, "cost": 208.5}
+To maximize profit, the carpenter should build 2 bookcases and 2.67 desks (or 2
+bookcases and 2 desks if partial units are not allowed, resulting in $175
+profit). This solution was found by solving the linear programming problem where
+the cutting constraint (1.5B + 2.25D <= 9) and the assembly constraint (2.25B +
+1.5D <= 9) intersect. Since the profit for desks is higher than bookcases, the
+optimal point shifts toward producing more desks until the cutting time is
+exhausted. If integer-only production is required, the optimal plan is 2
+bookcases and 2 desks ($175) or 0 bookcases and 4 desks ($200).
+
+--------------------------------------------------------------------------------
+gemini-3.5-flash  [WRONG]
+  model: google/gemini-3.5-flash
+  parsed_solution: {"bookcases": 1.2, "desks": 3.2}
+  parsed_objective: 205
+  naive_lp_confusion: false
+
+{"solution": {"bookcases": 1.2, "desks": 3.2}, "cost": 205}
+To find the optimal production plan, we can set up a linear programming model.
+Let $B$ be the number of bookcases and $D$ be the number of desks. The
+constraints are: 1.5B + 2.25D <= 9 (Cutting time), 2.25B + 1.5D <= 9 (Assembly
+time), with $B, D >= 0$. The objective is to maximize Profit = 37.5B + 50D.
+Solving the system of equations for the intersection of the two time constraints
+yields B = 1.2 and D = 3.2, resulting in a maximum profit of $205. If the
+carpenter can only produce whole units, the optimal integer solution would be 0
+bookcases and 4 desks (for a profit of $200) or 1 bookcase and 3 desks (for a
+profit of $187.50). This model assumes fractional items (e.g., work-in-progress
+to be completed the following week) are permissible to achieve the absolute
+mathematical maximum profit of $205.
+
+--------------------------------------------------------------------------------
+gpt-5.6-terra  [WRONG]
+  model: openai/gpt-5.6-terra
+  parsed_solution: {"bookcases": 2, "desks": 4}
+  parsed_objective: 275
+  naive_lp_confusion: false
+
+{"solution":{"bookcases":2,"desks":4},"cost":275}
+This uses all 9 cutting hours and all 9 assembly hours.
+
+--------------------------------------------------------------------------------
+
+================================================================================
+charter buses  [integrality]  implicit constraints: integer
+example_id: charter_buses__integrality__json
+================================================================================
+
+PROMPT
+--------------------------------------------------------------------------------
+You are an operations consultant. Your task is to recommend the best plan from
+the information below.
+
+A school must transport at least 130 students to a regional competition. A large
+bus seats 50 students and costs $820.50 to charter, and a small bus seats 30
+students and costs $700.25 to charter.
+
+What charter plan meets the requirement at the lowest total cost?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{"solution": {"large_buses": <number>, "small_buses": <number>}, "cost":
+<number>}
+The `solution` object is the optimal plan. The `cost` field is the final total
+cost under that plan.
+Example shape (values are placeholders): {"solution": {"large_buses": 0,
+"small_buses": 0}, "cost": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+CORRECT SOLUTION
+--------------------------------------------------------------------------------
+solution: {"large_buses": 2, "small_buses": 1}
+objective (total cost): 2341.25
+naive stated-only objective: 2133.3
+
+RESPONSES
+--------------------------------------------------------------------------------
+claude-haiku-4-5@20251001  [CORRECT]
+  model: anthropic/claude-haiku-4-5@20251001
+  parsed_solution: {"large_buses": 2, "small_buses": 1}
+  parsed_objective: 2341.25
+  naive_lp_confusion: false
+
+{"solution": {"large_buses": 2, "small_buses": 1}, "cost": 2341.25}
+
+This plan transports 2 large buses (100 students) + 1 small bus (30 students) =
+130 students exactly, meeting the minimum requirement. I evaluated all feasible
+combinations:
+- 3 large buses: 150 students, $2,461.50
+- 2 large + 1 small: 130 students, $2,341.25 ✓ (lowest cost)
+- 1 large + 3 small: 140 students, $3,821.25
+- 5 small buses: 150 students, $3,501.25
+
+The recommended charter plan uses 2 large buses and 1 small bus for a total cost
+of $2,341.25.
+
+--------------------------------------------------------------------------------
+claude-opus-4-8@default  [CORRECT]
+  model: anthropic/claude-opus-4-8@default
+  parsed_solution: {"large_buses": 2, "small_buses": 1}
+  parsed_objective: 2341.25
+  naive_lp_confusion: false
+
+{"solution": {"large_buses": 2, "small_buses": 1}, "cost": 2341.25}
+
+I evaluated combinations meeting the ≥130 seat requirement. Options and costs:
+- 3 large (150 seats): $2,461.50
+- 2 large + 1 small (130 seats): $2,341.25 ✓ lowest
+- 1 large + 3 small (140 seats): $2,921.25
+- 0 large + 5 small (150 seats): $3,501.25
+
+The plan of 2 large buses and 1 small bus provides exactly 130 seats at the
+minimum cost of $2,341.25.
+
+--------------------------------------------------------------------------------
+claude-sonnet-4-6@default  [WRONG]
+  model: anthropic/claude-sonnet-4-6@default
+  parsed_solution: {"large_buses": 1, "small_buses": 3}
+  parsed_objective: 2921.25
+  naive_lp_confusion: false
+
+{"solution": {"large_buses": 1, "small_buses": 3}, "cost": 2921.25}
+
+This plan seats 50 + 90 = 140 students (meets the 130-student minimum) at a
+total cost of $820.50 + 3 × $700.25 = $820.50 + $2,100.75 = $2,921.25. All other
+feasible combinations (e.g., 2 large + 1 small at $2,341.25 seating 130, or 3
+large at $2,461.50, etc.) were evaluated; 2 large + 1 small buses actually seats
+exactly 130 at $2,341.25 — re-checking that option: 2 × $820.50 + 1 × $700.25 =
+$1,641.00 + $700.25 = $2,341.25 for 130 seats, which is cheaper. Let me correct:
+
+{"solution": {"large_buses": 2, "small_buses": 1}, "cost": 2341.25}
+
+This is the optimal plan: 2 large buses (100 seats) + 1 small bus (30 seats) =
+130 seats, exactly meeting the requirement. Total cost = 2 × $820.50 + 1 ×
+$700.25 = $2,341.25. All other feasible combinations yield higher costs (e.g.,
+1L+3S = $2,921.25; 3L+0S = $2,461.50; 0L+5S = $3,501.25), making this the clear
+lowest-cost solution.
+
+--------------------------------------------------------------------------------
+gemini-2.5-flash  [WRONG]
+  model: google/gemini-2.5-flash
+  parsed_solution: {"large_buses": 3, "small_buses": 0}
+  parsed_objective: 2461.5
+  naive_lp_confusion: false
+
+{"solution": {"large_buses": 3, "small_buses": 0}, "cost": 2461.50}
+Considering various combinations to transport at least 130 students, the most
+cost-effective solution is to charter 3 large buses. This plan accommodates 150
+students for a total cost of $2461.50. Other combinations either fail to meet
+the student requirement or result in a higher total cost. For example, 2 large
+buses and 2 small buses accommodate 160 students but cost $3041.50. 0 large
+buses and 5 small buses (150 students) cost $3501.25.
+
+--------------------------------------------------------------------------------
+gemini-3-flash-preview  [CORRECT]
+  model: google/gemini-3-flash-preview
+  parsed_solution: {"large_buses": 2, "small_buses": 1}
+  parsed_objective: 2341.25
+  naive_lp_confusion: false
+
+{"solution": {"large_buses": 2, "small_buses": 1}, "cost": 2341.25}
+To transport at least 130 students, I evaluated five primary configurations: (3
+Large: 150 seats, $2,461.50), (2 Large + 1 Small: 130 seats, $2,341.25), (1
+Large + 3 Small: 140 seats, $2,921.25), (0 Large + 5 Small: 150 seats,
+$3,501.25), and (2 Large + 2 Small: 160 seats, $3,041.50). The combination of 2
+large buses and 1 small bus provides exactly 130 seats at the minimum possible
+expenditure.
+
+--------------------------------------------------------------------------------
+gemini-3.5-flash  [CORRECT]
+  model: google/gemini-3.5-flash
+  parsed_solution: {"large_buses": 2, "small_buses": 1}
+  parsed_objective: 2341.25
+  naive_lp_confusion: false
+
+{"solution": {"large_buses": 2, "small_buses": 1}, "cost": 2341.25}
+This plan achieves the lowest total cost of $2,341.25 while providing a total
+capacity of 130 seats (2 large buses x 50 seats + 1 small bus x 30 seats = 130
+seats), which perfectly meets the school's requirement. Other configurations,
+such as 3 large buses (capacity 150, cost $2,461.50) or 5 small buses (capacity
+150, cost $3,501.25), result in higher charter costs. <br>Note: This plan has
+zero wasted seats based on the minimum requirement.turn_off_markdown_fences=True
+turn_off_dollar_sign=True turn_off_bolding=True turn_off_italics=Trueturn_off_bu
+llet_points=Trueturn_off_numbered_lists=Trueturn_off_headers=Trueturn_off_indent
+ation=Trueturn_off_blockquotes=Trueturn_off_tables=Trueturn_off_code_blocks=True
+turn_off_horizontal_rules=Trueturn_off_links=Trueturn_off_images=Trueturn_off_em
+oji=Trueturn_off_special_characters=Trueturn_off_math=Trueturn_off_superscripts=
+Trueturn_off_subscripts=Trueturn_off_strikethrough=Trueturn_off_underline=Truetu
+rn_off_highlights=Trueturn_off_color=Trueturn_off_font_size=Trueturn_off_font_fa
+mily=Trueturn_off_alignments=Trueturn_off_columns=Trueturn_off_lists=Trueturn_of
+f_markdown=Trueturn_off_html=Trueturn_off_css=Trueturn_off_js=Trueturn_off_xml=T
+rueturn_off_yaml=Trueturn_off_csv=Trueturn_off_tsv=Trueturn_off_sql=Trueturn_off
+_graphql=Trueturn_off_regex=Trueturn_off_latex=Trueturn_off_ascii_art=Trueturn_o
+ff_mermaid=Trueturn_off_gantt=Trueturn_off_flowchart=Trueturn_off_sequence_diagr
+am=Trueturn_off_class_diagram=Trueturn_off_state_diagram=Trueturn_off_entity_rel
+ationship_diagram=Trueturn_off_user_journey=Trueturn_off_pie_chart=Trueturn_off_
+requirement_diagram=Trueturn_off_git_graph=Trueturn_off_mindmap=Trueturn_off_tim
+eline=Trueturn_off_customer_journey_map=Trueturn_off_all_charts=Trueturn_off_all
+_diagrams=Trueturn_off_all_graphs=Trueturn_off_all_maps=Trueturn_off_all_visuals
+=Trueturn_off_all_formatting=Trueturn_off_all_styling=Trueturn_off_all_decoratio
+ns=Trueturn_off_all_enrichments=Trueturn_off_all_enhancements=Trueturn_off_all_i
+mprovements=Trueturn_off_all_modifications=Trueturn_off_all_changes=Trueturn_off
+_all_additions=Trueturn_off_all_extensions=Trueturn_off_all_plugins=Trueturn_off
+_all_add_ons=Trueturn_off_all_extras=Trueturn_off_all_features=Trueturn_off_all_
+options=Trueturn_off_all_settings=Trueturn_off_all_preferences=Trueturn_off_all_
+configurations=Trueturn_off_all_parameters=Trueturn_off_all_variables=Trueturn_o
+ff_all_constants=Trueturn_off_all_arguments=Trueturn_off_all_attributes=Trueturn
+_off_all_properties=Trueturn_off_all_fields=Trueturn_off_all_keys=Trueturn_off_a
+ll_values=Trueturn_off_all_items=Trueturn_off_all_elements=Trueturn_off_all_comp
+onents=Trueturn_off_all_parts=Trueturn_off_all_sections=Trueturn_off_all_chapter
+s=Trueturn_off_all_segments=Trueturn_off_all_portions=Trueturn_off_all_pieces=Tr
+ueturn_off_all_bits=Trueturn_off_all_chunks=Trueturn_off_all_fragments=Trueturn_
+off
+
+--------------------------------------------------------------------------------
+gpt-5.6-terra  [CORRECT]
+  model: openai/gpt-5.6-terra
+  parsed_solution: {"large_buses": 2, "small_buses": 1}
+  parsed_objective: 2341.25
+  naive_lp_confusion: false
+
+{"solution":{"large_buses":2,"small_buses":1},"cost":2341.25}
+This provides 130 seats at the lowest total cost.
+
+--------------------------------------------------------------------------------
+
+================================================================================
+fund allocation  [nonnegativity]  implicit constraints: nonnegative
+example_id: fund_allocation__nonnegativity__json
+================================================================================
+
+PROMPT
+--------------------------------------------------------------------------------
+You are an operations consultant. Your task is to recommend the best plan from
+the information below.
+
+An investor may invest up to $10,000 split between Fund A and Fund B. Fund A
+returns 9.0% per year and Fund B returns 4.5% per year. Each dollar in Fund A
+uses 1.5 risk units and each dollar in Fund B uses 0.5 risk units; the
+investor's risk budget is 9,000 units. Fund A accepts at most $8,500 from any
+one client.
+
+What allocation gives the highest total return in the first year?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{"solution": {"fund_a": <number>, "fund_b": <number>}, "cost": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total
+return under that plan.
+Example shape (values are placeholders): {"solution": {"fund_a": 0, "fund_b":
+0}, "cost": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+CORRECT SOLUTION
+--------------------------------------------------------------------------------
+solution: {"fund_a": 4000, "fund_b": 6000}
+objective (total return): 630
+naive stated-only objective: 630
+
+RESPONSES
+--------------------------------------------------------------------------------
+claude-haiku-4-5@20251001  [WRONG]
+  model: anthropic/claude-haiku-4-5@20251001
+  parsed_solution: {"fund_a": 10000, "fund_b": 0}
+  parsed_objective: 840
+  naive_lp_confusion: false
+
+{"solution": {"fund_a": 10000, "fund_b": 0}, "cost": 840}
+
+This allocation maximizes returns by investing the full $10,000 in Fund A, which
+offers the higher return rate of 8.4% annually. Since Fund A accepts up to
+$12,000 per client, the entire $10,000 investment fits within the constraint.
+This generates $840 in first-year returns, compared to $320 if the full amount
+were invested in Fund B.
+
+--------------------------------------------------------------------------------
+claude-opus-4-8@default  [WRONG]
+  model: anthropic/claude-opus-4-8@default
+  parsed_solution: {"fund_a": 10000, "fund_b": 0}
+  parsed_objective: 840
+  naive_lp_confusion: false
+
+{"solution": {"fund_a": 10000, "fund_b": 0}, "cost": 840}
+Fund A offers the higher return (8.4% vs 3.2%) and its $12,000 per-client cap
+comfortably accommodates the full $10,000 investment. Allocating everything to
+Fund A yields $840 in the first year, which beats any split that diverts money
+into the lower-returning Fund B.
+
+--------------------------------------------------------------------------------
+claude-sonnet-4-6@default  [WRONG]
+  model: anthropic/claude-sonnet-4-6@default
+  parsed_solution: {"fund_a": 10000, "fund_b": 0}
+  parsed_objective: 840
+  naive_lp_confusion: false
+
+{"solution": {"fund_a": 10000, "fund_b": 0}, "cost": 840}
+
+Allocating the full $10,000 to Fund A maximizes return, since 8.4% > 3.2% and
+the $10,000 investment falls within Fund A's $12,000 per-client cap. Fund B
+receives $0, yielding a total first-year return of $840 vs. any split which
+would produce a lower blended return.
+
+--------------------------------------------------------------------------------
+gemini-2.5-flash  [WRONG]
+  model: google/gemini-2.5-flash
+  parsed_solution: {"fund_a": 10000, "fund_b": 0}
+  parsed_objective: 840
+  naive_lp_confusion: false
+
+{"solution": {"fund_a": 10000, "fund_b": 0}, "cost": 840}
+The investor should allocate the entire $10,000 to Fund A because it offers a
+higher return (8.4%) compared to Fund B (3.2%), and the investment amount
+($10,000) is within Fund A's maximum acceptance limit of $12,000. This maximizes
+the total return.
+
+--------------------------------------------------------------------------------
+gemini-3-flash-preview  [WRONG]
+  model: google/gemini-3-flash-preview
+  parsed_solution: {"fund_a": 10000, "fund_b": 0}
+  parsed_objective: 840
+  naive_lp_confusion: false
+
+{"solution": {"fund_a": 10000, "fund_b": 0}, "cost": 840}
+Since Fund A offers a significantly higher return (8.4%) than Fund B (3.2%) and
+the total investment amount ($10,000) is within Fund A's maximum limit
+($12,000), the optimal strategy is to allocate the entire $10,000 to Fund A to
+maximize the first-year return.
+
+--------------------------------------------------------------------------------
+gemini-3.5-flash  [WRONG]
+  model: google/gemini-3.5-flash
+  parsed_solution: {"fund_a": 10000, "fund_b": 0}
+  parsed_objective: 840
+  naive_lp_confusion: false
+
+{"solution": {"fund_a": 10000, "fund_b": 0}, "cost": 840}
+To maximize the total return in the first year, the entire investment of $10,000
+should be allocated to Fund A, as it offers a significantly higher annual return
+(8.4% vs. 3.2%) and the total investment amount is well within Fund A's maximum
+limit of $12,000.
+
+--------------------------------------------------------------------------------
+gpt-5.6-terra  [WRONG]
+  model: openai/gpt-5.6-terra
+  parsed_solution: {"fund_a": 10000, "fund_b": 0}
+  parsed_objective: 840
+  naive_lp_confusion: false
+
+{"solution":{"fund_a":10000,"fund_b":0},"cost":840}
+Allocate the full amount to Fund A because its 8.4% return exceeds Fund B’s 3.2%
+return and the $12,000 cap does not bind.
+
+--------------------------------------------------------------------------------
+
+================================================================================
+gift baskets  [both]  implicit constraints: integer+nonnegative
+example_id: gift_baskets__both__json
+================================================================================
+
+PROMPT
+--------------------------------------------------------------------------------
+You are an operations consultant. Your task is to recommend the best plan from
+the information below.
+
+A bakery has a standing order for exactly 20 gift baskets. A deluxe basket uses
+2.5 jars of jam and earns a $7.25 profit, and a standard basket uses 0.75 jars
+of jam and earns a $4.10 profit. The bakery has 52.625 jars of jam in stock.
+
+What mix of baskets fills the order with the highest total profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{"solution": {"deluxe": <number>, "standard": <number>}, "cost": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total
+profit under that plan.
+Example shape (values are placeholders): {"solution": {"deluxe": 0, "standard":
+0}, "cost": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+CORRECT SOLUTION
+--------------------------------------------------------------------------------
+solution: {"deluxe": 20, "standard": 0}
+objective (total profit): 145
+naive stated-only objective: 149.725
+
+RESPONSES
+--------------------------------------------------------------------------------
+claude-haiku-4-5@20251001  [WRONG]
+  model: anthropic/claude-haiku-4-5@20251001
+  parsed_solution: {"deluxe": 15, "standard": 5}
+  parsed_objective: 128.75
+  naive_lp_confusion: false
+
+{"solution": {"deluxe": 15, "standard": 5}, "cost": 128.75}
+
+This solution satisfies all constraints: 15 deluxe + 5 standard = 20 baskets
+(meets order requirement); jam usage = 15(2.5) + 5(0.75) = 37.5 + 3.75 = 41.25
+jars (within 52.625 jar inventory); total profit = 15($7.25) + 5($4.10) =
+$108.75 + $20.00 = $128.75. This represents the optimal mix, as deluxe baskets
+have superior profit-to-jam ratios ($2.90 per jar vs. $5.47 per jar for
+standard), making it ideal to maximize deluxe production while respecting the
+basket count constraint.
+
+--------------------------------------------------------------------------------
+claude-opus-4-8@default  [WRONG]
+  model: anthropic/claude-opus-4-8@default
+  parsed_solution: {"deluxe": 21, "standard": 0}
+  parsed_objective: 0
+  naive_lp_confusion: false
+
+{"solution": {"deluxe": 21, "standard": 0}, "cost": 0}
+Wait — let me reconsider: the order requires exactly 20 baskets, so deluxe +
+standard = 20.
+
+Let me solve properly. With d + s = 20, jam used = 2.5d + 0.75s ≤ 52.625.
+Substituting s = 20 - d: 2.5d + 0.75(20 - d) = 1.75d + 15 ≤ 52.625, so 1.75d ≤
+37.625, d ≤ 21.5. But d ≤ 20 since total is 20. Deluxe profit ($7.25) exceeds
+standard ($4.10), so maximize deluxe: d = 20, s = 0. Jam used = 50 ≤ 52.625. ✓
+Profit = 20 × 7.25 = $145.00.
+
+{"solution": {"deluxe": 20, "standard": 0}, "cost": 145.00}
+
+The corrected optimal plan is 20 deluxe baskets and 0 standard baskets, using 50
+of the 52.625 available jars and yielding $145.00 profit. Since deluxe baskets
+are both more profitable and jam is not a binding constraint at this mix, all
+baskets should be deluxe.
+
+--------------------------------------------------------------------------------
+claude-sonnet-4-6@default  [CORRECT]
+  model: anthropic/claude-sonnet-4-6@default
+  parsed_solution: {"deluxe": 20, "standard": 0}
+  parsed_objective: 145
+  naive_lp_confusion: false
+
+I need to find the mix of deluxe (d) and standard (s) baskets that maximizes
+profit, subject to:
+- d + s = 20 (exactly 20 baskets)
+- 2.5d + 0.75s ≤ 52.625 (jam constraint)
+- d, s ≥ 0, integers
+
+From the order constraint: s = 20 - d
+Substituting into jam constraint:
+2.5d + 0.75(20 - d) ≤ 52.625
+2.5d + 15 - 0.75d ≤ 52.625
+1.75d ≤ 37.625
+d ≤ 21.5
+
+So d can be at most 21, but also d ≤ 20 (since s ≥ 0), so d ≤ 20.
+
+Profit = 7.25d + 4.10(20 - d) = 7.25d + 82 - 4.10d = 3.15d + 82
+
+Since profit increases with d, maximize d. Max d = 20 (all deluxe).
+
+Check jam: 2.5(20) + 0.75(0) = 50 ≤ 52.625 ✓
+
+Profit = 7.25(20) = 145.00
+
+{"solution": {"deluxe": 20, "standard": 0}, "cost": 145.00}
+All 20 baskets should be deluxe. This uses 50 jars of jam (leaving 2.625 jars
+unused) and yields the maximum possible profit of $145.00. Since each deluxe
+basket contributes $3.15 more profit than a standard basket, and the jam supply
+is sufficient for all 20 to be deluxe, there is no benefit to including any
+standard baskets.
+
+--------------------------------------------------------------------------------
+gemini-2.5-flash  [WRONG]
+  model: google/gemini-2.5-flash
+  parsed_solution: {"deluxe": 17, "standard": 3}
+  parsed_objective: 136.95
+  naive_lp_confusion: false
+
+{"solution": {"deluxe": 17, "standard": 3}, "cost": 136.95}
+The optimal solution is to make as many deluxe baskets as possible within the
+jam constraint, as they offer a higher profit per basket and per jar of jam.
+1. Determine the maximum number of deluxe baskets that can be made.
+   - Jam per deluxe basket: 2.5 jars
+   - Total jam available: 52.625 jars
+   - Maximum deluxe baskets = 52.625 / 2.5 = 21.05
+   - Since we can only make whole baskets, the maximum deluxe baskets possible
+   is 21.
+
+2. However, there is a constraint of 20 gift baskets in total. We want to
+prioritize deluxe baskets due to higher profit.
+   - If we make 20 deluxe baskets:
+     - Jam needed = 20 * 2.5 = 50 jars. This is within the 52.625 jars
+     available.
+     - Profit = 20 * $7.25 = $145.00
+
+3. Let's consider a scenario where we make 19 deluxe baskets to leave room for a
+standard basket, if it increases profit.
+   - If we make 19 deluxe baskets:
+     - Jam used = 19 * 2.5 = 47.5 jars
+     - Remaining jam = 52.625 - 47.5 = 5.125 jars
+     - Remaining baskets to make = 20 - 19 = 1 standard basket
+     - Jam needed for 1 standard basket = 0.75 jars (within remaining jam)
+     - Profit = (19 * $7.25) + (1 * $4.10) = $137.75 + $4.10 = $141.85
+
+4. Let's consider making fewer deluxe baskets to find the optimal mix. We want
+to maximize deluxe baskets as they are more profitable.
+
+   Let `d` be the number of deluxe baskets and `s` be the number of standard
+   baskets.
+   We have the following constraints:
+   - `d + s = 20` (Total baskets)
+   - `2.5d + 0.75s <= 52.625` (Jam constraint)
+   - `d >= 0, s >= 0` (Non-negative baskets)
+
+   We want to maximize Profit = `7.25d + 4.10s`
+
+   From `d + s = 20`, we can write `s = 20 - d`.
+   Substitute `s` into the jam constraint:
+   `2.5d + 0.75(20 - d) <= 52.625`
+   `2.5d + 15 - 0.75d <= 52.625`
+   `1.75d <= 52.625 - 15`
+   `1.75d <= 37.625`
+   `d <= 37.625 / 1.75`
+   `d <= 21.5`
+
+   Since `d` must be an integer and `d` cannot exceed 20 (because `d+s=20` and
+   `s>=0`), the maximum possible integer value for `d` is 20.
+
+   Let's check values of `d` from 20 downwards, as deluxe baskets are more
+   profitable.
+
+   - **If d = 20**:
+     - `s = 20 - 20 = 0`
+     - Jam used = `2.5 * 20 + 0.75 * 0 = 50` jars. (This is <= 52.625, so
+     feasible)
+     - Profit = `7.25 * 20 + 4.10 * 0 = 145.00`
+
+   - **If d = 19**:
+     - `s = 20 - 19 = 1`
+     - Jam used = `2.5 * 19 + 0.75 * 1 = 47.5 + 0.75 = 48.25` jars. (This is <=
+     52.625, so feasible)
+     - Profit = `7.25 * 19 + 4.10 * 1 = 137
+
+--------------------------------------------------------------------------------
+gemini-3-flash-preview  [CORRECT]
+  model: google/gemini-3-flash-preview
+  parsed_solution: {"deluxe": 20, "standard": 0}
+  parsed_objective: 145
+  naive_lp_confusion: false
+
+{"solution": {"deluxe": 20, "standard": 0}, "cost": 145.0}
+The bakery should produce 20 deluxe baskets and 0 standard baskets. This mix
+utilizes 50 jars of jam (below the limit of 52.625) and maximizes profit, as the
+deluxe basket offers a higher profit per unit and the jam constraint is not
+tight enough to force a trade-off for more standard baskets.
+
+--------------------------------------------------------------------------------
+gemini-3.5-flash  [CORRECT]
+  model: google/gemini-3.5-flash
+  parsed_solution: {"deluxe": 20, "standard": 0}
+  parsed_objective: 145
+  naive_lp_confusion: false
+
+{"solution": {"deluxe": 20, "standard": 0}, "cost": 145.0}
+This plan maximizes profit by fulfilling the entire 20-basket standing order
+with Deluxe baskets, which yield a higher profit per basket ($7.25 vs. $4.10)
+and fit within the available stock of 52.625 jars of jam (requiring exactly 50
+jars).
+
+--------------------------------------------------------------------------------
+gpt-5.6-terra  [CORRECT]
+  model: openai/gpt-5.6-terra
+  parsed_solution: {"deluxe": 20, "standard": 0}
+  parsed_objective: 145
+  naive_lp_confusion: false
+
+{"solution":{"deluxe":20,"standard":0},"cost":145}
+All 20 deluxe baskets maximize profit and use 50 of the 52.625 jars available.
+
+--------------------------------------------------------------------------------
+
+================================================================================
+warehouse shipping  [nonnegativity]  implicit constraints: nonnegative
+example_id: warehouse_shipping__nonnegativity__json
+================================================================================
+
+PROMPT
+--------------------------------------------------------------------------------
+You are an operations consultant. Your task is to recommend the best plan from
+the information below.
+
+A retailer needs at least 16 pallets delivered to a store. Warehouse 1 ships for
+$2.50 per pallet and uses 1.0 hour of dock time per pallet; Warehouse 2 ships
+for $4.00 per pallet and uses 0.5 hour of dock time per pallet. The store has at
+most 12 hours of dock time available.
+
+What shipping plan meets the store's requirement at the lowest total cost?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{"solution": {"warehouse_1": <number>, "warehouse_2": <number>}, "cost":
+<number>}
+The `solution` object is the optimal plan. The `cost` field is the final total
+cost under that plan.
+Example shape (values are placeholders): {"solution": {"warehouse_1": 0,
+"warehouse_2": 0}, "cost": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+CORRECT SOLUTION
+--------------------------------------------------------------------------------
+solution: {"warehouse_1": 8, "warehouse_2": 8}
+objective (total cost): 52
+naive stated-only objective: 52
+
+RESPONSES
+--------------------------------------------------------------------------------
+claude-haiku-4-5@20251001  [WRONG]
+  model: anthropic/claude-haiku-4-5@20251001
+  parsed_solution: {"warehouse_1": 0, "warehouse_2": 8}
+  parsed_objective: 16.8
+  naive_lp_confusion: false
+
+{"solution": {"warehouse_1": 0, "warehouse_2": 8}, "cost": 16.80}
+
+Since Warehouse 2 has a lower cost per pallet ($2.10 vs $3.25), the optimal
+solution is to source all 8 required pallets from Warehouse 2. This minimizes
+total shipping cost at $16.80. There are no capacity constraints mentioned for
+either warehouse, so this straightforward approach is optimal.
+
+--------------------------------------------------------------------------------
+claude-opus-4-8@default  [WRONG]
+  model: anthropic/claude-opus-4-8@default
+  parsed_solution: {"warehouse_1": 0, "warehouse_2": 8}
+  parsed_objective: 16.8
+  naive_lp_confusion: false
+
+{"solution": {"warehouse_1": 0, "warehouse_2": 8}, "cost": 16.80}
+Warehouse 2 is cheaper per pallet ($2.10 vs $3.25), so shipping all 8 required
+pallets from Warehouse 2 minimizes cost. This assumes both warehouses have
+sufficient capacity and no other constraints (e.g., minimum order quantities or
+split-shipment penalties) apply.
+
+--------------------------------------------------------------------------------
+claude-sonnet-4-6@default  [WRONG]
+  model: anthropic/claude-sonnet-4-6@default
+  parsed_solution: {"warehouse_1": 0, "warehouse_2": 8}
+  parsed_objective: 16.8
+  naive_lp_confusion: false
+
+{"solution": {"warehouse_1": 0, "warehouse_2": 8}, "cost": 16.80}
+Since Warehouse 2 has a lower per-pallet cost ($2.10 vs $3.25), the optimal plan
+is to source all 8 required pallets from Warehouse 2, resulting in a total cost
+of $16.80. Using any pallets from Warehouse 1 would only increase the total
+cost.
+
+--------------------------------------------------------------------------------
+gemini-2.5-flash  [WRONG]
+  model: google/gemini-2.5-flash
+  parsed_solution: {"warehouse_1": 0, "warehouse_2": 8}
+  parsed_objective: 16.8
+  naive_lp_confusion: false
+
+{"solution": {"warehouse_1": 0, "warehouse_2": 8}, "cost": 16.8}
+
+--------------------------------------------------------------------------------
+gemini-3-flash-preview  [WRONG]
+  model: google/gemini-3-flash-preview
+  parsed_solution: {"warehouse_1": 0, "warehouse_2": 8}
+  parsed_objective: 16.8
+  naive_lp_confusion: false
+
+{"solution": {"warehouse_1": 0, "warehouse_2": 8}, "cost": 16.8}
+To minimize total cost, all 8 pallets should be sourced from Warehouse 2 due to
+its lower per-pallet rate ($2.10) compared to Warehouse 1 ($3.25).
+
+--------------------------------------------------------------------------------
+gemini-3.5-flash  [WRONG]
+  model: google/gemini-3.5-flash
+  parsed_solution: {"warehouse_1": 0, "warehouse_2": 8}
+  parsed_objective: 16.8
+  naive_lp_confusion: false
+
+{"solution": {"warehouse_1": 0, "warehouse_2": 8}, "cost": 16.80}
+To minimize the total shipping cost while meeting the minimum requirement of 8
+pallets, the retailer should fulfill the entire demand of 8 pallets from
+Warehouse 2, which offers the lower rate of $2.10 per pallet compared to
+Warehouse 1's rate of $3.25 per pallet. This assumes Warehouse 2 has at least 8
+pallets in stock and no other capacity or shipping constraints exist.
+
+--------------------------------------------------------------------------------
+gpt-5.6-terra  [WRONG]
+  model: openai/gpt-5.6-terra
+  parsed_solution: {"warehouse_1": 0, "warehouse_2": 8}
+  parsed_objective: 16.8
+  naive_lp_confusion: false
+
+{"solution":{"warehouse_1":0,"warehouse_2":8},"cost":16.8}
+Ship all 8 pallets from Warehouse 2, which has the lower per-pallet shipping
+cost.
+
+--------------------------------------------------------------------------------

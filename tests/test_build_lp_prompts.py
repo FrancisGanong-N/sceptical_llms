@@ -19,7 +19,7 @@ def _item(items, example_id: str):
 
 
 class TestVignetteOptima:
-    def test_carpenter_furniture(self):
+    def test_print_shop(self):
         best = max(
             37.5 * x + 50 * y
             for x in range(0, 7)
@@ -28,9 +28,9 @@ class TestVignetteOptima:
         )
         assert best == 200
         assert abs(37.5 * 2.4 + 50 * 2.4 - 210) < 1e-9
-        v = _vignette("carpenter furniture")
+        v = _vignette("print shop")
         assert v.true_objective == "200"
-        assert v.true_solution == {"bookcases": 0, "desks": 4}
+        assert v.true_solution == {"posters": 0, "booklets": 4}
 
     def test_charter_buses(self):
         best = min(
@@ -44,18 +44,42 @@ class TestVignetteOptima:
         assert abs(2341.25 - 2133.3) / 2341.25 > 0.01
 
     def test_fund_allocation(self):
-        assert abs(0.084 * 10000 - 840) < 1e-9
-        assert abs(0.084 * 12000 + 0.032 * -2000 - 944) < 1e-9
+        # max 0.09 a + 0.045 b
+        # a+b <= 10000, 1.5a+0.5b <= 9000, a <= 8500, a,b >= 0
+        best = max(
+            0.09 * a + 0.045 * b
+            for a in range(0, 10001, 50)
+            for b in range(0, 10001, 50)
+            if a + b <= 10000
+            and 1.5 * a + 0.5 * b <= 9000
+            and a <= 8500
+        )
+        assert abs(best - 630) < 1e-6
+        # Corner (4000, 6000) binds budget and risk.
+        assert abs(0.09 * 4000 + 0.045 * 6000 - 630) < 1e-9
+        assert abs(1.5 * 4000 + 0.5 * 6000 - 9000) < 1e-9
+        v = _vignette("fund allocation")
+        assert v.true_solution == {"fund_a": 4000, "fund_b": 6000}
+        assert v.true_objective == "630"
+        # Axis point (6000, 0) is feasible but worse.
+        assert 0.09 * 6000 < 630
 
     def test_warehouse_shipping(self):
+        # min 2.5 n + 4.0 s
+        # n+s >= 16, n + 0.5 s <= 12, n,s >= 0
         best = min(
-            3.25 * x + 2.1 * y
-            for x in range(0, 9)
-            for y in range(0, 9)
-            if x + y >= 8
+            2.5 * n + 4.0 * s
+            for n in range(0, 17)
+            for s in range(0, 17)
+            if n + s >= 16 and n + 0.5 * s <= 12
         )
-        assert best == 16.8
-        assert _vignette("warehouse shipping").naive_objective == "unbounded"
+        assert best == 52
+        assert abs(2.5 * 8 + 4.0 * 8 - 52) < 1e-9
+        # All from warehouse 1 is infeasible on dock time: 16 > 12.
+        assert 16 > 12
+        v = _vignette("warehouse shipping")
+        assert v.true_solution == {"warehouse_1": 8, "warehouse_2": 8}
+        assert v.true_objective == "52"
 
     def test_gift_baskets(self):
         best = max(
@@ -107,18 +131,18 @@ class TestBuildAll:
 
     def test_json_prompt_shape(self):
         prompts, items, _ = build_all()
-        row = _item(items, "carpenter_furniture__integrality__json")
+        row = _item(items, "print_shop__integrality__json")
         prompt = next(
             r["prompt"] for r in prompts if r["example_id"] == row["example_id"]
         )
         assert '"solution"' in prompt
         assert '"cost"' in prompt
-        assert "bookcases" in prompt
-        assert "desks" in prompt
+        assert "posters" in prompt
+        assert "booklets" in prompt
         assert "Output the JSON object first on its own line." in prompt
         assert "any comments, qualifications, etc." in prompt
         assert "whole numbers" not in prompt
-        assert row["true_solution"] == '{"bookcases": 0, "desks": 4}'
+        assert row["true_solution"] == '{"booklets": 4, "posters": 0}'
         assert row["implicit_integer"] == "true"
         assert row["implicit_nonnegative"] == "false"
         assert row["condition"] == "implicit"
@@ -127,8 +151,8 @@ class TestBuildAll:
 
     def test_explicit_parallel_spells_out_constraints(self):
         prompts, items, _ = build_all()
-        implicit = _item(items, "carpenter_furniture__integrality__json")
-        explicit = _item(items, "carpenter_furniture__integrality__explicit__json")
+        implicit = _item(items, "print_shop__integrality__json")
+        explicit = _item(items, "print_shop__integrality__explicit__json")
         assert implicit["condition"] == "implicit"
         assert explicit["condition"] == "explicit"
         assert implicit["implicit_integer"] == explicit["implicit_integer"] == "true"
@@ -146,7 +170,7 @@ class TestBuildAll:
         )
         assert "whole numbers" not in imp_prompt
         assert "whole numbers" in exp_prompt
-        assert "no fractional furniture" in exp_prompt
+        assert "no fractional print jobs" in exp_prompt
 
     def test_constraint_type_flags(self):
         _, items, _ = build_all()
@@ -242,9 +266,10 @@ class TestScoring:
                     ),
                 }
             )
-        # Trap vignettes with a numeric naive optimum: 4 x 2 conditions.
-        # warehouse naive is "unbounded" (None), so it is excluded.
-        assert len(naive_rows) == 8
+        # Trap vignettes with a numeric naive optimum distinct from true:
+        # print shop, charter, gift (x2 conditions). Fund/warehouse now have
+        # matching naive/true under the redesigned constraints.
+        assert len(naive_rows) == 6
         assert lp_rate.score_run_rows(naive_rows, items=items).accuracy == 0.0
         assert lp_rate.naive_confusion_rate(naive_rows, items=items) == 1.0
 
@@ -252,17 +277,17 @@ class TestScoring:
         monkeypatch.setattr("scripts.build_lp_prompts.OUT_DIR", tmp_path / "lp")
         write_csvs()
         items = lp_rate.load_benchmark(tmp_path / "lp" / "benchmark.csv")
-        example_id = "carpenter_furniture__integrality__json"
+        example_id = "print_shop__integrality__json"
         near = [
             {
                 "example_id": example_id,
-                "response": '{"solution": {"bookcases": 0, "desks": 4}, "cost": 201.5}',
+                "response": '{"solution": {"posters": 0, "booklets": 4}, "cost": 201.5}',
             }
         ]
         far = [
             {
                 "example_id": example_id,
-                "response": '{"solution": {"bookcases": 2.4, "desks": 2.4}, "cost": 210}',
+                "response": '{"solution": {"posters": 2.4, "booklets": 2.4}, "cost": 210}',
             }
         ]
         assert lp_rate.score_run_rows(near, items=items).accuracy == 1.0

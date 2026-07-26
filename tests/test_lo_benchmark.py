@@ -19,13 +19,13 @@ def test_lo_benchmark_has_eleven_json_prompts():
     assert BENCHMARK_CSV.is_file()
     loaded = load_benchmark(BENCHMARK_CSV)
     assert len(loaded) == 11
-    carpenter = loaded["carpenter_furniture__integrality__json"]
-    assert carpenter.implicit_integer is True
-    assert carpenter.implicit_nonnegative is False
-    explicit = loaded["carpenter_furniture__integrality__explicit__json"]
+    print_shop = loaded["print_shop__integrality__json"]
+    assert print_shop.implicit_integer is True
+    assert print_shop.implicit_nonnegative is False
+    explicit = loaded["print_shop__integrality__explicit__json"]
     assert explicit.condition == "explicit"
     assert "whole numbers" in explicit.prompt
-    assert "whole numbers" not in carpenter.prompt
+    assert "whole numbers" not in print_shop.prompt
 
 
 def test_lo_benchmark_notebook_exists():
@@ -49,6 +49,14 @@ def test_lo_results_notebook_exists():
     assert "score_table" in text
     assert "vignette_name" in text
     assert "merged_lo_results_from_kaggle_runs" in text
+
+
+def test_lo_study_sheet_notebook_exists():
+    notebook = ROOT / "benchmark" / "lo-study-sheet.ipynb"
+    assert notebook.is_file()
+    text = notebook.read_text(encoding="utf-8")
+    assert "build_lo_study_sheet" in text
+    assert "lo-benchmark-study-sheet.txt" in text
 
 
 def test_merged_lo_helper_exported():
