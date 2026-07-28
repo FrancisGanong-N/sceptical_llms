@@ -19,7 +19,7 @@ from benchmarks.lp_rate import (  # noqa: E402
     write_merged_results_csv,
 )
 
-DEFAULT_LO_TASK_SLUG = "lo-normative-accuracy-3"
+DEFAULT_LO_TASK_SLUG = "lo-normative-accuracy-4"
 DEFAULT_DOWNLOAD_DIR = ROOT / "data" / "kaggle_runs" / DEFAULT_LO_TASK_SLUG
 DEFAULT_MERGED_CSV = ROOT / "data" / "lp" / "lo_merged_results.csv"
 

@@ -1,31 +1,34 @@
 #!/usr/bin/env python3
-"""Build LP prompts: linear programs with implicit (unstated) constraints.
+"""Build LP prompts: linear programs with unstated (tacit) constraints.
 
 Each vignette is a small optimization word problem. Some constraints are
-"obvious" from the domain (solutions must be whole units, quantities cannot
-be negative) but are never stated. A solver that optimizes only the stated
-constraints reaches a different — wrong — optimum (the "naive LP" answer).
+obvious from the domain (solutions must be whole units, quantities cannot
+be negative) but are left unstated in the implicit condition. A solver that
+optimizes only the stated constraints may reach a different — wrong —
+optimum (the "naive LP" answer).
 
-For every vignette with an implicit-constraint trap, the builder emits two
-prompts that share the same keyed optimum:
-  - ``condition=implicit``: constraints left unstated (the trap)
-  - ``condition=explicit``: the same constraints spelled out in the prompt
+For every trap vignette the builder emits:
 
-The well-posed control vignette (``failure_mode=none``) is emitted once.
+  - ``variant=json``, ``condition=implicit``: solve; constraints unstated
+  - ``variant=json``, ``condition=explicit``: solve; constraints spelled out
+  - ``variant=needs_tacit_constraint``: A/B — does solving require unstated
+    constraints? (keyed **A** = yes)
+  - ``variant=detects_tacit_violation``: A/B — is a tacit-violating stub plan
+    sensible? (keyed **B** = no)
 
-The response format is a JSON object with the optimal ``solution`` and the
-final ``cost`` (objective value). Scoring accepts a parseable ``cost`` within
-1% of ``true_objective``.
+The response format for ``json`` is a JSON object with the optimal
+``solution`` and the final ``cost`` (objective value). Scoring accepts a
+parsable ``cost`` within 1% of ``true_objective``. Audit variants ask for
+a letter (A or B).
 
 failure_mode column values:
-  - none           well-posed control; the naive LP optimum is the true answer
   - integrality    naive optimum is fractional (e.g. 2.6 buses)
-  - nonnegativity  naive optimum drives a quantity negative (or is unbounded)
-  - both           naive optimum is fractional and negative
+  - nonnegativity  non-negativity is an unstated domain constraint
+  - both           (reserved; not used in v4 vignette set)
 
 Constraint-type flags (true/false strings):
-  - implicit_integer      integrality is part of the trap (integrality / both)
-  - implicit_nonnegative  non-negativity is part of the trap (nonnegativity / both)
+  - implicit_integer      integrality is part of the trap
+  - implicit_nonnegative  non-negativity is part of the trap
 """
 
 from __future__ import annotations
@@ -48,17 +51,50 @@ INTRO = (
     "plan from the information below."
 )
 
-FAILURE_MODE_NONE = "none"
+NEEDS_TACIT_INTRO = (
+    "You are reviewing an operations-planning problem. Decide whether a "
+    "sensible optimal plan requires applying constraints that are not "
+    "stated in the problem text."
+)
+NEEDS_TACIT_QUESTION = (
+    "Does finding a sensible optimal plan for this problem require applying "
+    "any constraints that are not stated above (for example, that counts "
+    "must be whole numbers, or that quantities cannot be negative)?"
+)
+NEEDS_TACIT_YES = (
+    "Yes — unstated constraints (such as whole numbers or non-negativity) "
+    "are needed"
+)
+NEEDS_TACIT_NO = (
+    "No — the stated information is enough as written; no unstated "
+    "constraints are required"
+)
+
+DETECTS_VIOLATION_INTRO = (
+    "You are an operations auditor, checking a proposed plan for another "
+    "consultant."
+)
+DETECTS_VIOLATION_QUESTION = (
+    "Is this a sensible plan to recommend to the client?"
+)
+DETECTS_VIOLATION_YES = "Yes — this plan is sensible"
+DETECTS_VIOLATION_NO = "No — this plan is not appropriate"
+
 FAILURE_MODE_INTEGRALITY = "integrality"
 FAILURE_MODE_NONNEGATIVITY = "nonnegativity"
 FAILURE_MODE_BOTH = "both"
 
 CONDITION_IMPLICIT = "implicit"
 CONDITION_EXPLICIT = "explicit"
-CONDITION_CONTROL = "control"
 
-VARIANT = "json"
-CANONICAL_VARIANTS = (VARIANT,)
+VARIANT_JSON = "json"
+VARIANT_NEEDS_TACIT = "needs_tacit_constraint"
+VARIANT_DETECTS_VIOLATION = "detects_tacit_violation"
+CANONICAL_VARIANTS = (
+    VARIANT_JSON,
+    VARIANT_NEEDS_TACIT,
+    VARIANT_DETECTS_VIOLATION,
+)
 
 BENCHMARK_FIELDS = (
     "example_id",
@@ -85,6 +121,10 @@ BENCHMARK_FIELDS = (
     "confidence_required",
     "scepticism_required",
     "scepticism_score_target",
+    "option_a_label",
+    "option_b_label",
+    "violating_solution",
+    "violating_objective",
 )
 
 ITEM_FIELDS = tuple(field for field in BENCHMARK_FIELDS if field != "prompt")
@@ -97,7 +137,7 @@ def slug(name: str) -> str:
 
 @dataclass(frozen=True)
 class LpVignette:
-    """One optimization word problem with an optional implicit-constraint trap."""
+    """One optimization word problem with an unstated-constraint trap."""
 
     name: str
     failure_mode: str
@@ -109,12 +149,14 @@ class LpVignette:
     true_objective: str
     naive_objective: str
     # Spelled-out constraint sentence(s) for the explicit parallel prompt.
-    # Empty for the well-posed control.
-    explicit_addendum: str = ""
+    explicit_addendum: str
+    # Stub plan that violates a tacit constraint (for detects_tacit_violation).
+    violating_solution: dict[str, float]
+    violating_objective: str
 
     @property
     def well_posed(self) -> bool:
-        return self.failure_mode == FAILURE_MODE_NONE
+        return False
 
     @property
     def implicit_integer(self) -> bool:
@@ -135,6 +177,9 @@ class LpVignette:
 
     def true_solution_json(self) -> str:
         return json.dumps(self.true_solution, sort_keys=True)
+
+    def violating_solution_json(self) -> str:
+        return json.dumps(self.violating_solution, sort_keys=True)
 
 
 # Optima verified by enumeration in tests/test_build_lp_prompts.py.
@@ -159,6 +204,8 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         true_solution={"bookcases": 0, "desks": 4},
         true_objective="200",
         naive_objective="210",
+        violating_solution={"bookcases": 2.4, "desks": 2.4},
+        violating_objective="210",
     ),
     LpVignette(
         name="print shop",
@@ -180,6 +227,8 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         true_solution={"posters": 0, "booklets": 4},
         true_objective="200",
         naive_objective="210",
+        violating_solution={"posters": 2.4, "booklets": 2.4},
+        violating_objective="210",
     ),
     LpVignette(
         name="pottery studio",
@@ -201,6 +250,8 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         true_solution={"bowls": 0, "vases": 4},
         true_objective="180",
         naive_objective="211.22",
+        violating_solution={"bowls": 2.44898, "vases": 2.44898},
+        violating_objective="211.22",
     ),
     LpVignette(
         name="charter buses",
@@ -221,6 +272,8 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         true_solution={"large_buses": 2, "small_buses": 1},
         true_objective="2341.25",
         naive_objective="2133.3",
+        violating_solution={"large_buses": 2.6, "small_buses": 0},
+        violating_objective="2133.3",
     ),
     LpVignette(
         name="fund allocation",
@@ -244,6 +297,9 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         # Without non-negativity the same corner remains optimal for this LP;
         # the trap is still unstated non-negativity under a non-trivial mix.
         naive_objective="630",
+        # Hand-crafted violating stub (negative Fund B).
+        violating_solution={"fund_a": 8500, "fund_b": -7500},
+        violating_objective="427.5",
     ),
     LpVignette(
         name="warehouse shipping",
@@ -268,44 +324,9 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         true_solution={"warehouse_1": 8, "warehouse_2": 8},
         true_objective="52",
         naive_objective="52",
-    ),
-    LpVignette(
-        name="gift baskets",
-        failure_mode=FAILURE_MODE_BOTH,
-        narrative=(
-            "A bakery has a standing order for exactly 20 gift baskets. A "
-            "deluxe basket uses 3 jars of jam and earns a $7.25 profit, and a "
-            "standard basket uses 1 jar of jam and earns a $4.10 profit. The "
-            "bakery has 61 jars of jam in stock."
-        ),
-        explicit_addendum=(
-            "The numbers of deluxe and standard baskets must be whole numbers "
-            "and non-negative (no fractional baskets, and no negative counts)."
-        ),
-        objective_name="total profit",
-        question="What mix of baskets fills the order with the highest total profit?",
-        solution_keys=("deluxe", "standard"),
-        true_solution={"deluxe": 20, "standard": 0},
-        true_objective="145",
-        naive_objective="146.575",
-    ),
-    LpVignette(
-        name="workshop vehicles",
-        failure_mode=FAILURE_MODE_NONE,
-        narrative=(
-            "A workshop builds go-karts and mini-bikes. Each go-kart needs 2.4 "
-            "hours of welding and 0.75 hour of painting, and each mini-bike "
-            "needs 0.8 hour of welding and 1.5 hours of painting. The workshop "
-            "has at most 12 hours of welding and at most 7.5 hours of painting "
-            "available. The profit is $42.50 per go-kart and $53.75 per mini-bike."
-        ),
-        explicit_addendum="",
-        objective_name="total profit",
-        question="What production plan gives the highest total profit?",
-        solution_keys=("go_karts", "mini_bikes"),
-        true_solution={"go_karts": 4, "mini_bikes": 3},
-        true_objective="331.25",
-        naive_objective="331.25",
+        # Hand-crafted violating stub (negative Warehouse 2 shipment).
+        violating_solution={"warehouse_1": 20, "warehouse_2": -4},
+        violating_objective="34",
     ),
 )
 
@@ -359,18 +380,63 @@ def _format_json_prompt(v: LpVignette, *, condition: str) -> str:
     )
 
 
-def _conditions_for_vignette(v: LpVignette) -> tuple[str, ...]:
-    if v.well_posed:
-        return (CONDITION_CONTROL,)
-    return (CONDITION_IMPLICIT, CONDITION_EXPLICIT)
+def _format_needs_tacit_prompt(v: LpVignette) -> str:
+    return "\n".join(
+        [
+            NEEDS_TACIT_INTRO,
+            "",
+            v.narrative,
+            "",
+            NEEDS_TACIT_QUESTION,
+            "",
+            f"A. {NEEDS_TACIT_YES}",
+            f"B. {NEEDS_TACIT_NO}",
+            "",
+            "Which answer is closest? Reply with only the letter (A or B).",
+        ]
+    )
+
+
+def _format_detects_violation_prompt(v: LpVignette) -> str:
+    stub = {
+        "solution": v.violating_solution,
+        "cost": float(v.violating_objective),
+    }
+    embedded = "\n".join(
+        [
+            INTRO,
+            "",
+            v.narrative,
+            "",
+            v.question,
+            "",
+            _json_reply_instruction(v),
+        ]
+    )
+    return "\n".join(
+        [
+            DETECTS_VIOLATION_INTRO,
+            "",
+            "The consultant was given the following prompt:",
+            "",
+            embedded,
+            "",
+            "And proposed the following plan:",
+            "",
+            json.dumps(stub, sort_keys=True),
+            "",
+            DETECTS_VIOLATION_QUESTION,
+            "",
+            f"A. {DETECTS_VIOLATION_YES}",
+            f"B. {DETECTS_VIOLATION_NO}",
+            "",
+            "Which answer is closest? Reply with only the letter (A or B).",
+        ]
+    )
 
 
 def _shared_item_fields(v: LpVignette, *, condition: str) -> dict[str, str]:
-    if condition == CONDITION_CONTROL:
-        problem_type = "well_posed"
-        normative = "well_posed"
-        well_posed = "true"
-    elif condition == CONDITION_EXPLICIT:
+    if condition == CONDITION_EXPLICIT:
         problem_type = "explicit_constraints"
         normative = "explicit_constraints"
         well_posed = "true"
@@ -399,31 +465,81 @@ def _shared_item_fields(v: LpVignette, *, condition: str) -> dict[str, str]:
         "confidence_required": "false",
         "scepticism_required": "false",
         "scepticism_score_target": "n/a",
+        "option_a_label": "",
+        "option_b_label": "",
+        "violating_solution": v.violating_solution_json(),
+        "violating_objective": v.violating_objective,
     }
+
+
+def _example_id(v: LpVignette, variant: str, *, condition: str) -> str:
+    if variant == VARIANT_JSON and condition == CONDITION_EXPLICIT:
+        return f"{v.example_prefix()}__explicit__{variant}"
+    if variant == VARIANT_JSON:
+        return f"{v.example_prefix()}__{variant}"
+    return f"{v.example_prefix()}__{variant}"
 
 
 def build_prompt(
     v: LpVignette,
-    variant: str = VARIANT,
+    variant: str = VARIANT_JSON,
     *,
     condition: str | None = None,
 ) -> tuple[str, dict[str, str]]:
-    if variant != VARIANT:
+    if variant not in CANONICAL_VARIANTS:
         raise ValueError(f"unknown variant: {variant}")
-    resolved = condition or (
-        CONDITION_CONTROL if v.well_posed else CONDITION_IMPLICIT
-    )
-    if resolved == CONDITION_EXPLICIT:
-        example_id = f"{v.example_prefix()}__explicit__{variant}"
+
+    if variant == VARIANT_JSON:
+        resolved = condition or CONDITION_IMPLICIT
+        if resolved not in {CONDITION_IMPLICIT, CONDITION_EXPLICIT}:
+            raise ValueError(f"unknown condition for json variant: {resolved}")
+        item: dict[str, str] = {
+            "example_id": _example_id(v, variant, condition=resolved),
+            "variant": variant,
+            "response_type": "json",
+            **_shared_item_fields(v, condition=resolved),
+        }
+        return _format_json_prompt(v, condition=resolved), item
+
+    # Audit variants always use the implicit (unstated) narrative.
+    resolved = CONDITION_IMPLICIT
+    shared = _shared_item_fields(v, condition=resolved)
+    if variant == VARIANT_NEEDS_TACIT:
+        shared.update(
+            {
+                "problem_type": "needs_tacit_constraint",
+                "normative": "needs_tacit_constraint",
+                "normative_choice": "A",
+                "scepticism_required": "true",
+                "scepticism_score_target": "A",
+                "option_a_label": NEEDS_TACIT_YES,
+                "option_b_label": NEEDS_TACIT_NO,
+            }
+        )
+        prompt = _format_needs_tacit_prompt(v)
+        response_type = VARIANT_NEEDS_TACIT
     else:
-        example_id = f"{v.example_prefix()}__{variant}"
-    item: dict[str, str] = {
-        "example_id": example_id,
+        shared.update(
+            {
+                "problem_type": "detects_tacit_violation",
+                "normative": "detects_tacit_violation",
+                "normative_choice": "B",
+                "scepticism_required": "true",
+                "scepticism_score_target": "B",
+                "option_a_label": DETECTS_VIOLATION_YES,
+                "option_b_label": DETECTS_VIOLATION_NO,
+            }
+        )
+        prompt = _format_detects_violation_prompt(v)
+        response_type = VARIANT_DETECTS_VIOLATION
+
+    item = {
+        "example_id": _example_id(v, variant, condition=resolved),
         "variant": variant,
-        "response_type": "json",
-        **_shared_item_fields(v, condition=resolved),
+        "response_type": response_type,
+        **shared,
     }
-    return _format_json_prompt(v, condition=resolved), item
+    return prompt, item
 
 
 def build_all() -> tuple[
@@ -432,15 +548,18 @@ def build_all() -> tuple[
     prompts: list[dict[str, str]] = []
     items: list[dict[str, str]] = []
     for vignette in load_lp_vignettes():
-        for condition in _conditions_for_vignette(vignette):
-            for variant in CANONICAL_VARIANTS:
-                prompt, item = build_prompt(
-                    vignette, variant, condition=condition
-                )
-                prompts.append(
-                    {"example_id": item["example_id"], "prompt": prompt}
-                )
-                items.append(item)
+        # Solve prompts: implicit + explicit.
+        for condition in (CONDITION_IMPLICIT, CONDITION_EXPLICIT):
+            prompt, item = build_prompt(
+                vignette, VARIANT_JSON, condition=condition
+            )
+            prompts.append({"example_id": item["example_id"], "prompt": prompt})
+            items.append(item)
+        # Audit prompts: one each on the implicit narrative.
+        for variant in (VARIANT_NEEDS_TACIT, VARIANT_DETECTS_VIOLATION):
+            prompt, item = build_prompt(vignette, variant)
+            prompts.append({"example_id": item["example_id"], "prompt": prompt})
+            items.append(item)
 
     pmap = {row["example_id"]: row["prompt"] for row in prompts}
     benchmark: list[dict[str, str]] = []
@@ -484,12 +603,11 @@ def main() -> int:
     for vignette in load_lp_vignettes():
         by_mode[vignette.failure_mode] = by_mode.get(vignette.failure_mode, 0) + 1
     modes = ", ".join(f"{mode}={n}" for mode, n in sorted(by_mode.items()))
-    n_implicit = sum(1 for v in load_lp_vignettes() if not v.well_posed)
+    n_v = len(load_lp_vignettes())
     print(
         f"Wrote {count} prompts "
-        f"({len(load_lp_vignettes())} vignettes; "
-        f"{n_implicit} implicit+explicit pairs + "
-        f"{len(load_lp_vignettes()) - n_implicit} control; "
+        f"({n_v} vignettes × "
+        f"(json implicit+explicit + needs_tacit + detects_violation); "
         f"failure modes: {modes})"
     )
     print(f"Output: {OUT_DIR} (prompts.csv, items.csv, benchmark.csv)")

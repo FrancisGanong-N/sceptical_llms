@@ -1,5 +1,4 @@
-LO benchmark study sheet - non-explicit prompts only (implicit JSON + tacit 
-audits)
+LO benchmark study sheet - all prompts
 Source runs: data/kaggle_runs/lo-normative-accuracy-4/
 For each prompt: full text, keyed answer, then model responses (prompts are 
 included even when no runs exist yet).
@@ -20,6 +19,50 @@ of cutting and 2.25 hours of assembly, and each desk takes 2.25 hours of cutting
 and 1.5 hours of assembly. This week the carpenter has at most 9 hours of
 cutting time and at most 9 hours of assembly time. The profit is $37.50 per
 bookcase and $50 per desk.
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{"solution": {"bookcases": <number>, "desks": <number>}, "cost": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total
+profit under that plan.
+Example shape (values are placeholders): {"solution": {"bookcases": 0, "desks":
+0}, "cost": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+CORRECT SOLUTION
+--------------------------------------------------------------------------------
+solution: {"bookcases": 0, "desks": 4}
+objective (total profit): 200
+naive stated-only objective: 210
+
+RESPONSES
+--------------------------------------------------------------------------------
+(no model responses yet)
+
+--------------------------------------------------------------------------------
+
+================================================================================
+carpenter furniture  [integrality]  variant=json  condition=explicit  implicit 
+constraints: integer
+example_id: carpenter_furniture__integrality__explicit__json
+================================================================================
+
+PROMPT
+--------------------------------------------------------------------------------
+You are an operations consultant. Your task is to recommend the best plan from
+the information below.
+
+A carpenter builds bookcases and desks for sale. Each bookcase takes 1.5 hours
+of cutting and 2.25 hours of assembly, and each desk takes 2.25 hours of cutting
+and 1.5 hours of assembly. This week the carpenter has at most 9 hours of
+cutting time and at most 9 hours of assembly time. The profit is $37.50 per
+bookcase and $50 per desk. Bookcases and desks must be whole numbers (no
+fractional furniture).
 
 What production plan gives the highest total profit for the week?
 
@@ -193,6 +236,49 @@ RESPONSES
 --------------------------------------------------------------------------------
 
 ================================================================================
+charter buses  [integrality]  variant=json  condition=explicit  implicit 
+constraints: integer
+example_id: charter_buses__integrality__explicit__json
+================================================================================
+
+PROMPT
+--------------------------------------------------------------------------------
+You are an operations consultant. Your task is to recommend the best plan from
+the information below.
+
+A school must transport at least 130 students to a regional competition. A large
+bus seats 50 students and costs $820.50 to charter, and a small bus seats 30
+students and costs $700.25 to charter. The numbers of large and small buses must
+be whole numbers (no fractional buses).
+
+What charter plan meets the requirement at the lowest total cost?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{"solution": {"large_buses": <number>, "small_buses": <number>}, "cost":
+<number>}
+The `solution` object is the optimal plan. The `cost` field is the final total
+cost under that plan.
+Example shape (values are placeholders): {"solution": {"large_buses": 0,
+"small_buses": 0}, "cost": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+CORRECT SOLUTION
+--------------------------------------------------------------------------------
+solution: {"large_buses": 2, "small_buses": 1}
+objective (total cost): 2341.25
+naive stated-only objective: 2133.3
+
+RESPONSES
+--------------------------------------------------------------------------------
+(no model responses yet)
+
+--------------------------------------------------------------------------------
+
+================================================================================
 charter buses  [integrality]  variant=needs_tacit_constraint  condition=implicit
   implicit constraints: integer
 example_id: charter_buses__integrality__needs_tacit_constraint
@@ -308,6 +394,50 @@ returns 9.0% per year and Fund B returns 4.5% per year. Each dollar in Fund A
 uses 1.5 risk units and each dollar in Fund B uses 0.5 risk units; the
 investor's risk budget is 9,000 units. Fund A accepts at most $8,500 from any
 one client.
+
+What allocation gives the highest total return in the first year?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{"solution": {"fund_a": <number>, "fund_b": <number>}, "cost": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total
+return under that plan.
+Example shape (values are placeholders): {"solution": {"fund_a": 0, "fund_b":
+0}, "cost": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+CORRECT SOLUTION
+--------------------------------------------------------------------------------
+solution: {"fund_a": 4000, "fund_b": 6000}
+objective (total return): 630
+naive stated-only objective: 630
+
+RESPONSES
+--------------------------------------------------------------------------------
+(no model responses yet)
+
+--------------------------------------------------------------------------------
+
+================================================================================
+fund allocation  [nonnegativity]  variant=json  condition=explicit  implicit 
+constraints: nonnegative
+example_id: fund_allocation__nonnegativity__explicit__json
+================================================================================
+
+PROMPT
+--------------------------------------------------------------------------------
+You are an operations consultant. Your task is to recommend the best plan from
+the information below.
+
+An investor may invest up to $10,000 split between Fund A and Fund B. Fund A
+returns 9.0% per year and Fund B returns 4.5% per year. Each dollar in Fund A
+uses 1.5 risk units and each dollar in Fund B uses 0.5 risk units; the
+investor's risk budget is 9,000 units. Fund A accepts at most $8,500 from any
+one client. The amount invested in each fund must be non-negative (no shorting /
+borrowing against a fund).
 
 What allocation gives the highest total return in the first year?
 
@@ -482,6 +612,49 @@ RESPONSES
 --------------------------------------------------------------------------------
 
 ================================================================================
+pottery studio  [integrality]  variant=json  condition=explicit  implicit 
+constraints: integer
+example_id: pottery_studio__integrality__explicit__json
+================================================================================
+
+PROMPT
+--------------------------------------------------------------------------------
+You are an operations consultant. Your task is to recommend the best plan from
+the information below.
+
+A pottery studio makes bowls and vases for sale. Each bowl takes 1.65 hours of
+throwing and 2.025 hours of glazing, and each vase takes 2.025 hours of throwing
+and 1.65 hours of glazing. This week the studio has at most 9 hours of throwing
+time and at most 9 hours of glazing time. The profit is $41.25 per bowl and $45
+per vase. Bowls and vases must be whole numbers (no fractional pieces).
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{"solution": {"bowls": <number>, "vases": <number>}, "cost": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total
+profit under that plan.
+Example shape (values are placeholders): {"solution": {"bowls": 0, "vases": 0},
+"cost": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+CORRECT SOLUTION
+--------------------------------------------------------------------------------
+solution: {"bowls": 0, "vases": 4}
+objective (total profit): 180
+naive stated-only objective: 211.22
+
+RESPONSES
+--------------------------------------------------------------------------------
+(no model responses yet)
+
+--------------------------------------------------------------------------------
+
+================================================================================
 pottery studio  [integrality]  variant=needs_tacit_constraint  
 condition=implicit  implicit constraints: integer
 example_id: pottery_studio__integrality__needs_tacit_constraint
@@ -628,6 +801,50 @@ RESPONSES
 --------------------------------------------------------------------------------
 
 ================================================================================
+print shop  [integrality]  variant=json  condition=explicit  implicit 
+constraints: integer
+example_id: print_shop__integrality__explicit__json
+================================================================================
+
+PROMPT
+--------------------------------------------------------------------------------
+You are an operations consultant. Your task is to recommend the best plan from
+the information below.
+
+A print shop produces posters and booklets for sale. Each poster takes 1.5 hours
+of printing and 2.25 hours of binding, and each booklet takes 2.25 hours of
+printing and 1.5 hours of binding. This week the shop has at most 9 hours of
+printing time and at most 9 hours of binding time. The profit is $37.50 per
+poster and $50 per booklet. Posters and booklets must be whole numbers (no
+fractional print jobs).
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{"solution": {"posters": <number>, "booklets": <number>}, "cost": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total
+profit under that plan.
+Example shape (values are placeholders): {"solution": {"posters": 0, "booklets":
+0}, "cost": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+CORRECT SOLUTION
+--------------------------------------------------------------------------------
+solution: {"booklets": 4, "posters": 0}
+objective (total profit): 200
+naive stated-only objective: 210
+
+RESPONSES
+--------------------------------------------------------------------------------
+(no model responses yet)
+
+--------------------------------------------------------------------------------
+
+================================================================================
 print shop  [integrality]  variant=needs_tacit_constraint  condition=implicit  
 implicit constraints: integer
 example_id: print_shop__integrality__needs_tacit_constraint
@@ -745,6 +962,50 @@ A retailer needs at least 16 pallets delivered to a store. Warehouse 1 ships for
 $2.50 per pallet and uses 1.0 hour of dock time per pallet; Warehouse 2 ships
 for $4.00 per pallet and uses 0.5 hour of dock time per pallet. The store has at
 most 12 hours of dock time available.
+
+What shipping plan meets the store's requirement at the lowest total cost?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{"solution": {"warehouse_1": <number>, "warehouse_2": <number>}, "cost":
+<number>}
+The `solution` object is the optimal plan. The `cost` field is the final total
+cost under that plan.
+Example shape (values are placeholders): {"solution": {"warehouse_1": 0,
+"warehouse_2": 0}, "cost": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+CORRECT SOLUTION
+--------------------------------------------------------------------------------
+solution: {"warehouse_1": 8, "warehouse_2": 8}
+objective (total cost): 52
+naive stated-only objective: 52
+
+RESPONSES
+--------------------------------------------------------------------------------
+(no model responses yet)
+
+--------------------------------------------------------------------------------
+
+================================================================================
+warehouse shipping  [nonnegativity]  variant=json  condition=explicit  implicit 
+constraints: nonnegative
+example_id: warehouse_shipping__nonnegativity__explicit__json
+================================================================================
+
+PROMPT
+--------------------------------------------------------------------------------
+You are an operations consultant. Your task is to recommend the best plan from
+the information below.
+
+A retailer needs at least 16 pallets delivered to a store. Warehouse 1 ships for
+$2.50 per pallet and uses 1.0 hour of dock time per pallet; Warehouse 2 ships
+for $4.00 per pallet and uses 0.5 hour of dock time per pallet. The store has at
+most 12 hours of dock time available. Shipments from each warehouse must be
+non-negative (a warehouse cannot ship a negative number of pallets).
 
 What shipping plan meets the store's requirement at the lowest total cost?
 

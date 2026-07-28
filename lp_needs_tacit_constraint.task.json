@@ -1,0 +1,6 @@
+{
+  "versionNumber": 1,
+  "name": "lp_needs_tacit_constraint",
+  "description": "LO audit: fraction of parsable A/B answers that correctly say solving the problem requires unstated constraints (integrality / non-negativity). Higher is better.",
+  "definition": "@kbench.task(\n    name=\"lp_needs_tacit_constraint\",\n    description=(\n        \"LO audit: fraction of parsable A/B answers that correctly say solving \"\n        \"the problem requires unstated constraints (integrality / \"\n        \"non-negativity). Higher is better.\"\n    ),\n)\ndef lp_needs_tacit_constraint(llm) -> float:\n    _, _, _, _, _, _, variant_scores = evaluate_lp_rate_benchmark(llm)\n    return float(variant_scores[VARIANT_NEEDS_TACIT])\n"
+}

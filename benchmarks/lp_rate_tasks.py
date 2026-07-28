@@ -1,4 +1,4 @@
-"""Kaggle Benchmarks tasks for the LP implicit-constraint benchmark."""
+"""Kaggle Benchmarks tasks for the LP tacit-constraint benchmark."""
 
 import csv
 from pathlib import Path
@@ -9,6 +9,10 @@ from benchmarks.kbench_resume import evaluate_prompt_task_with_resume
 from benchmarks.lp_rate import (
     BENCHMARK_CSV,
     DEFAULT_MERGED_RESULTS_CSV,
+    VARIANT_DETECTS_VIOLATION,
+    VARIANT_JSON,
+    VARIANT_NEEDS_TACIT,
+    accuracy_for_variant,
     load_benchmark,
     naive_confusion_rate,
     parse_lp_response,
@@ -43,7 +47,7 @@ def _prompt_llm(llm, prompt: str, *, max_output_tokens: int) -> str:
 
 @kbench.task(
     store_task=False,
-    description="One LP implicit-constraint item: prompt, parsed JSON, and reasoning.",
+    description="One LP tacit-constraint item: prompt, parsed answer, and reasoning.",
 )
 def lp_rate_prompt_response(
     llm,
@@ -77,7 +81,7 @@ def evaluate_lp_rate_benchmark(
     max_output_tokens: int | None = None,
     n_jobs: int = LP_N_JOBS,
 ):
-    """Run LP benchmark prompts, score cost within 1%, track naive-LP confusion."""
+    """Run LP benchmark prompts and score JSON + A/B audit variants."""
     benchmark_path = Path(benchmark_path or BENCHMARK_CSV)
     llms = llm if isinstance(llm, list) else [llm]
     evaluation_data = prompts_to_dataframe(benchmark_path, max_prompts=max_prompts)
@@ -121,52 +125,86 @@ def evaluate_lp_rate_benchmark(
         merged_rows = list(csv.DictReader(handle))
     pivot = score_pivot_dataframe(merged_rows)
     naive_rate = naive_confusion_rate(run_rows, items=items)
-    return runs, score, merged_path, pivot_path, pivot, naive_rate
+    variant_scores = {
+        VARIANT_JSON: accuracy_for_variant(run_rows, VARIANT_JSON, items=items),
+        VARIANT_NEEDS_TACIT: accuracy_for_variant(
+            run_rows, VARIANT_NEEDS_TACIT, items=items
+        ),
+        VARIANT_DETECTS_VIOLATION: accuracy_for_variant(
+            run_rows, VARIANT_DETECTS_VIOLATION, items=items
+        ),
+    }
+    return runs, score, merged_path, pivot_path, pivot, naive_rate, variant_scores
 
 
 @kbench.task(
-    name="lo_normative_accuracy_3",
+    name="lo_normative_accuracy_4",
     description=(
-        "LO (linear optimization) benchmark: fraction of parseable JSON answers "
-        "whose cost is within 1% of the keyed objective after applying obvious "
-        "unstated constraints. Higher is better."
+        "LO (linear optimization) benchmark: overall fraction of parsable "
+        "answers that are keyed-correct across JSON solve prompts and tacit-"
+        "constraint audits. Higher is better."
     ),
 )
-def lo_normative_accuracy_3(llm) -> float:
-    _, score, _, _, _, _ = evaluate_lp_rate_benchmark(llm)
+def lo_normative_accuracy_4(llm) -> float:
+    _, score, _, _, _, _, _ = evaluate_lp_rate_benchmark(llm)
     return float(score.accuracy)
+
+
+@kbench.task(
+    name="lp_needs_tacit_constraint",
+    description=(
+        "LO audit: fraction of parsable A/B answers that correctly say solving "
+        "the problem requires unstated constraints (integrality / "
+        "non-negativity). Higher is better."
+    ),
+)
+def lp_needs_tacit_constraint(llm) -> float:
+    _, _, _, _, _, _, variant_scores = evaluate_lp_rate_benchmark(llm)
+    return float(variant_scores[VARIANT_NEEDS_TACIT])
+
+
+@kbench.task(
+    name="lp_detects_tacit_violation",
+    description=(
+        "LO audit: fraction of parsable A/B answers that correctly reject a "
+        "proposed plan that violates an unstated constraint. Higher is better."
+    ),
+)
+def lp_detects_tacit_violation(llm) -> float:
+    _, _, _, _, _, _, variant_scores = evaluate_lp_rate_benchmark(llm)
+    return float(variant_scores[VARIANT_DETECTS_VIOLATION])
 
 
 @kbench.task(
     name="lo_naive_confusion",
     description=(
-        "LO (linear optimization) benchmark: fraction of parseable JSON answers "
+        "LO (linear optimization) benchmark: fraction of parsable JSON answers "
         "whose cost is within 1% of the naive stated-constraints-only optimum. "
         "Lower is better."
     ),
 )
 def lo_naive_confusion(llm) -> float:
-    _, _, _, _, _, naive_rate = evaluate_lp_rate_benchmark(llm)
+    _, _, _, _, _, naive_rate, _ = evaluate_lp_rate_benchmark(llm)
     return float(naive_rate)
 
 
 @kbench.task(
     name="lp_rate_normative_accuracy",
     description=(
-        "Alias of lo_normative_accuracy_3 (LP / LO implicit-constraint benchmark)."
+        "Alias of lo_normative_accuracy_4 (LP / LO tacit-constraint benchmark)."
     ),
 )
 def lp_rate_normative_accuracy(llm) -> float:
-    _, score, _, _, _, _ = evaluate_lp_rate_benchmark(llm)
+    _, score, _, _, _, _, _ = evaluate_lp_rate_benchmark(llm)
     return float(score.accuracy)
 
 
 @kbench.task(
     name="lp_rate_naive_confusion",
     description=(
-        "Alias of lo_naive_confusion (LP / LO implicit-constraint benchmark)."
+        "Alias of lo_naive_confusion (LP / LO tacit-constraint benchmark)."
     ),
 )
 def lp_rate_naive_confusion(llm) -> float:
-    _, _, _, _, _, naive_rate = evaluate_lp_rate_benchmark(llm)
+    _, _, _, _, _, naive_rate, _ = evaluate_lp_rate_benchmark(llm)
     return float(naive_rate)

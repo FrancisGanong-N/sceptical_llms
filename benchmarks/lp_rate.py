@@ -1,9 +1,12 @@
-"""LP implicit-constraint benchmark: JSON solution+cost scoring.
+"""LP tacit-constraint benchmark: JSON solve + A/B audit scoring.
 
-Each item asks for a JSON object ``{"solution": {...}, "cost": <number>}``.
-A parseable ``cost`` scores correct when it is within 1% relative of
-``true_objective``. Naive-LP confusion is the fraction of parseable answers
-within 1% of ``naive_objective``.
+JSON items ask for ``{"solution": {...}, "cost": <number>}``. A parsable
+``cost`` scores correct when it is within 1% relative of ``true_objective``.
+Naive-LP confusion is the fraction of parsable JSON answers within 1% of
+``naive_objective`` (when naive differs from true).
+
+Audit variants (``needs_tacit_constraint``, ``detects_tacit_violation``) ask
+for a letter A/B and score against ``normative_choice``.
 """
 
 from __future__ import annotations
@@ -26,6 +29,10 @@ from benchmarks.base_rate import (
 __all__ = [
     "BENCHMARK_CSV",
     "OBJECTIVE_TOLERANCE_RELATIVE",
+    "VARIANT_JSON",
+    "VARIANT_NEEDS_TACIT",
+    "VARIANT_DETECTS_VIOLATION",
+    "accuracy_for_variant",
     "parse_lp_json",
     "parse_lp_response",
     "load_benchmark",
@@ -51,7 +58,11 @@ DEFAULT_MERGED_RESULTS_CSV = (
 )
 
 OBJECTIVE_TOLERANCE_RELATIVE = 0.01
-CONDITION_COLUMN_ORDER = ("implicit", "explicit", "control")
+CONDITION_COLUMN_ORDER = ("implicit", "explicit")
+VARIANT_JSON = "json"
+VARIANT_NEEDS_TACIT = "needs_tacit_constraint"
+VARIANT_DETECTS_VIOLATION = "detects_tacit_violation"
+AUDIT_VARIANTS = frozenset({VARIANT_NEEDS_TACIT, VARIANT_DETECTS_VIOLATION})
 LP_MERGE_EXTRA_COLUMNS = (
     "naive_lp_confusion",
     "parsed_objective",
@@ -92,7 +103,13 @@ class LpBenchmarkItem:
 
     @property
     def scoring_type(self) -> str:
+        if self.variant in AUDIT_VARIANTS:
+            return "mc_numeric"
         return "json"
+
+    @property
+    def is_json_solve(self) -> bool:
+        return self.variant == VARIANT_JSON
 
 
 @dataclass
@@ -233,7 +250,10 @@ def parse_lp_json(text: str) -> ParsedLpResponse:
 
 def parse_lp_response(response: str, *, scoring_type: str = "json") -> ParsedResponse:
     """Adapter returning a base_rate ParsedResponse for task plumbing."""
-    del scoring_type
+    if scoring_type in ("mc_numeric", "data_audit", "response_audit") or (
+        scoring_type in AUDIT_VARIANTS
+    ):
+        return base_rate.parse_response(response, scoring_type="mc_numeric")
     parsed = parse_lp_json(response)
     return ParsedResponse(
         answer_type="probability" if parsed.parseable else "unparseable",
@@ -340,7 +360,9 @@ def matches_naive_lp(
     return within_relative_tolerance(parsed.cost, item.naive_objective)
 
 
-def score_lp_example(item: LpBenchmarkItem, parsed: ParsedLpResponse) -> ExampleScore:
+def score_lp_json_example(
+    item: LpBenchmarkItem, parsed: ParsedLpResponse
+) -> ExampleScore:
     return ExampleScore(
         example_id=item.example_id,
         scoring_type="open",
@@ -354,6 +376,32 @@ def score_lp_example(item: LpBenchmarkItem, parsed: ParsedLpResponse) -> Example
         parseable=parsed.parseable,
         score=parsed.parseable and matches_true_objective(item, parsed),
     )
+
+
+def score_lp_audit_example(
+    item: LpBenchmarkItem, parsed: ParsedResponse
+) -> ExampleScore:
+    target = (item.normative_choice or item.scepticism_score_target or "").strip().upper()
+    parseable = parsed.choice is not None
+    correct = parseable and parsed.choice == target
+    return ExampleScore(
+        example_id=item.example_id,
+        scoring_type="mc_numeric",
+        answer_type=parsed.answer_type,
+        answer_line=parsed.answer_line,
+        confidence_line=parsed.confidence_line,
+        comment_line=parsed.comment_line,
+        parsed_percent=None,
+        parsed_choice=parsed.choice,
+        parsed_confidence=parsed.confidence,
+        parseable=parseable,
+        score=correct,
+    )
+
+
+def score_lp_example(item: LpBenchmarkItem, parsed: ParsedLpResponse) -> ExampleScore:
+    """Score a JSON solve item (compat wrapper)."""
+    return score_lp_json_example(item, parsed)
 
 
 def score_run_rows(
@@ -373,8 +421,13 @@ def score_run_rows(
         model = str(row.get("model") or "unknown").strip()
         item = items[example_id]
         response = str(row.get("response") or "")
-        parsed = parse_lp_json(response)
-        scored = score_lp_example(item, parsed)
+        if item.is_json_solve:
+            scored = score_lp_json_example(item, parse_lp_json(response))
+        else:
+            scored = score_lp_audit_example(
+                item,
+                base_rate.parse_response(response, scoring_type="mc_numeric"),
+            )
         scored.model = model
         examples.append(scored)
         if scored.parseable:
@@ -393,6 +446,23 @@ def score_run_rows(
     )
 
 
+def accuracy_for_variant(
+    run_rows: list[dict[str, object]],
+    variant: str,
+    items: dict[str, LpBenchmarkItem] | None = None,
+) -> float:
+    """Parsable accuracy restricted to one ``variant``."""
+    items = items or load_benchmark()
+    filtered = [
+        row
+        for row in run_rows
+        if items[str(row["example_id"]).strip()].variant == variant
+    ]
+    if not filtered:
+        return 0.0
+    return float(score_run_rows(filtered, items=items).accuracy)
+
+
 def naive_confusion_rate(
     run_rows: list[dict[str, object]],
     items: dict[str, LpBenchmarkItem] | None = None,
@@ -403,6 +473,8 @@ def naive_confusion_rate(
     for row in run_rows:
         example_id = str(row["example_id"]).strip()
         item = items[example_id]
+        if not item.is_json_solve:
+            continue
         parsed = parse_lp_json(str(row.get("response") or ""))
         if not parsed.parseable:
             continue
@@ -502,8 +574,12 @@ def merge_run_results(
         scored = score_by_key[(example_id, model)]
         item = items[example_id]
         response = str(run_row.get("response") or "")
-        parsed = parse_lp_json(response)
-        naive = matches_naive_lp(item, parsed)
+        if item.is_json_solve:
+            parsed = parse_lp_json(response)
+            naive = matches_naive_lp(item, parsed)
+        else:
+            parsed = ParsedLpResponse(answer_line=response.strip(), parseable=False)
+            naive = False
         merge_fields = {
             "model": model,
             "llm_response": response,

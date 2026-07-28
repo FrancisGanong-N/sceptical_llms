@@ -1,0 +1,6 @@
+{
+  "versionNumber": 1,
+  "name": "lp_detects_tacit_violation",
+  "description": "LO audit: fraction of parsable A/B answers that correctly reject a proposed plan that violates an unstated constraint. Higher is better.",
+  "definition": "@kbench.task(\n    name=\"lp_detects_tacit_violation\",\n    description=(\n        \"LO audit: fraction of parsable A/B answers that correctly reject a \"\n        \"proposed plan that violates an unstated constraint. Higher is better.\"\n    ),\n)\ndef lp_detects_tacit_violation(llm) -> float:\n    _, _, _, _, _, _, variant_scores = evaluate_lp_rate_benchmark(llm)\n    return float(variant_scores[VARIANT_DETECTS_VIOLATION])\n"
+}

@@ -29,6 +29,46 @@ JSON object of this form:
 The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
 Example shape (values are placeholders): {""solution"": {""bookcases"": 0, ""desks"": 0}, ""cost"": 0}
 Do not include a dollar sign or markdown fences around the JSON."
+carpenter_furniture__integrality__needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+A carpenter builds bookcases and desks for sale. Each bookcase takes 1.5 hours of cutting and 2.25 hours of assembly, and each desk takes 2.25 hours of cutting and 1.5 hours of assembly. This week the carpenter has at most 9 hours of cutting time and at most 9 hours of assembly time. The profit is $37.50 per bookcase and $50 per desk.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B)."
+carpenter_furniture__integrality__detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A carpenter builds bookcases and desks for sale. Each bookcase takes 1.5 hours of cutting and 2.25 hours of assembly, and each desk takes 2.25 hours of cutting and 1.5 hours of assembly. This week the carpenter has at most 9 hours of cutting time and at most 9 hours of assembly time. The profit is $37.50 per bookcase and $50 per desk.
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""bookcases"": <number>, ""desks"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""bookcases"": 0, ""desks"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 210.0, ""solution"": {""bookcases"": 2.4, ""desks"": 2.4}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B)."
 print_shop__integrality__json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A print shop produces posters and booklets for sale. Each poster takes 1.5 hours of printing and 2.25 hours of binding, and each booklet takes 2.25 hours of printing and 1.5 hours of binding. This week the shop has at most 9 hours of printing time and at most 9 hours of binding time. The profit is $37.50 per poster and $50 per booklet.
@@ -59,6 +99,46 @@ JSON object of this form:
 The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
 Example shape (values are placeholders): {""solution"": {""posters"": 0, ""booklets"": 0}, ""cost"": 0}
 Do not include a dollar sign or markdown fences around the JSON."
+print_shop__integrality__needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+A print shop produces posters and booklets for sale. Each poster takes 1.5 hours of printing and 2.25 hours of binding, and each booklet takes 2.25 hours of printing and 1.5 hours of binding. This week the shop has at most 9 hours of printing time and at most 9 hours of binding time. The profit is $37.50 per poster and $50 per booklet.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B)."
+print_shop__integrality__detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A print shop produces posters and booklets for sale. Each poster takes 1.5 hours of printing and 2.25 hours of binding, and each booklet takes 2.25 hours of printing and 1.5 hours of binding. This week the shop has at most 9 hours of printing time and at most 9 hours of binding time. The profit is $37.50 per poster and $50 per booklet.
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""posters"": <number>, ""booklets"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""posters"": 0, ""booklets"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 210.0, ""solution"": {""booklets"": 2.4, ""posters"": 2.4}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B)."
 pottery_studio__integrality__json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A pottery studio makes bowls and vases for sale. Each bowl takes 1.65 hours of throwing and 2.025 hours of glazing, and each vase takes 2.025 hours of throwing and 1.65 hours of glazing. This week the studio has at most 9 hours of throwing time and at most 9 hours of glazing time. The profit is $41.25 per bowl and $45 per vase.
@@ -89,6 +169,46 @@ JSON object of this form:
 The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
 Example shape (values are placeholders): {""solution"": {""bowls"": 0, ""vases"": 0}, ""cost"": 0}
 Do not include a dollar sign or markdown fences around the JSON."
+pottery_studio__integrality__needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+A pottery studio makes bowls and vases for sale. Each bowl takes 1.65 hours of throwing and 2.025 hours of glazing, and each vase takes 2.025 hours of throwing and 1.65 hours of glazing. This week the studio has at most 9 hours of throwing time and at most 9 hours of glazing time. The profit is $41.25 per bowl and $45 per vase.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B)."
+pottery_studio__integrality__detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A pottery studio makes bowls and vases for sale. Each bowl takes 1.65 hours of throwing and 2.025 hours of glazing, and each vase takes 2.025 hours of throwing and 1.65 hours of glazing. This week the studio has at most 9 hours of throwing time and at most 9 hours of glazing time. The profit is $41.25 per bowl and $45 per vase.
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""bowls"": <number>, ""vases"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""bowls"": 0, ""vases"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 211.22, ""solution"": {""bowls"": 2.44898, ""vases"": 2.44898}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B)."
 charter_buses__integrality__json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A school must transport at least 130 students to a regional competition. A large bus seats 50 students and costs $820.50 to charter, and a small bus seats 30 students and costs $700.25 to charter.
@@ -119,6 +239,46 @@ JSON object of this form:
 The `solution` object is the optimal plan. The `cost` field is the final total cost under that plan.
 Example shape (values are placeholders): {""solution"": {""large_buses"": 0, ""small_buses"": 0}, ""cost"": 0}
 Do not include a dollar sign or markdown fences around the JSON."
+charter_buses__integrality__needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+A school must transport at least 130 students to a regional competition. A large bus seats 50 students and costs $820.50 to charter, and a small bus seats 30 students and costs $700.25 to charter.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B)."
+charter_buses__integrality__detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A school must transport at least 130 students to a regional competition. A large bus seats 50 students and costs $820.50 to charter, and a small bus seats 30 students and costs $700.25 to charter.
+
+What charter plan meets the requirement at the lowest total cost?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""large_buses"": <number>, ""small_buses"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total cost under that plan.
+Example shape (values are placeholders): {""solution"": {""large_buses"": 0, ""small_buses"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 2133.3, ""solution"": {""large_buses"": 2.6, ""small_buses"": 0}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B)."
 fund_allocation__nonnegativity__json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 An investor may invest up to $10,000 split between Fund A and Fund B. Fund A returns 9.0% per year and Fund B returns 4.5% per year. Each dollar in Fund A uses 1.5 risk units and each dollar in Fund B uses 0.5 risk units; the investor's risk budget is 9,000 units. Fund A accepts at most $8,500 from any one client.
@@ -149,6 +309,46 @@ JSON object of this form:
 The `solution` object is the optimal plan. The `cost` field is the final total return under that plan.
 Example shape (values are placeholders): {""solution"": {""fund_a"": 0, ""fund_b"": 0}, ""cost"": 0}
 Do not include a dollar sign or markdown fences around the JSON."
+fund_allocation__nonnegativity__needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+An investor may invest up to $10,000 split between Fund A and Fund B. Fund A returns 9.0% per year and Fund B returns 4.5% per year. Each dollar in Fund A uses 1.5 risk units and each dollar in Fund B uses 0.5 risk units; the investor's risk budget is 9,000 units. Fund A accepts at most $8,500 from any one client.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B)."
+fund_allocation__nonnegativity__detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+An investor may invest up to $10,000 split between Fund A and Fund B. Fund A returns 9.0% per year and Fund B returns 4.5% per year. Each dollar in Fund A uses 1.5 risk units and each dollar in Fund B uses 0.5 risk units; the investor's risk budget is 9,000 units. Fund A accepts at most $8,500 from any one client.
+
+What allocation gives the highest total return in the first year?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""fund_a"": <number>, ""fund_b"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total return under that plan.
+Example shape (values are placeholders): {""solution"": {""fund_a"": 0, ""fund_b"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 427.5, ""solution"": {""fund_a"": 8500, ""fund_b"": -7500}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B)."
 warehouse_shipping__nonnegativity__json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A retailer needs at least 16 pallets delivered to a store. Warehouse 1 ships for $2.50 per pallet and uses 1.0 hour of dock time per pallet; Warehouse 2 ships for $4.00 per pallet and uses 0.5 hour of dock time per pallet. The store has at most 12 hours of dock time available.
@@ -179,48 +379,43 @@ JSON object of this form:
 The `solution` object is the optimal plan. The `cost` field is the final total cost under that plan.
 Example shape (values are placeholders): {""solution"": {""warehouse_1"": 0, ""warehouse_2"": 0}, ""cost"": 0}
 Do not include a dollar sign or markdown fences around the JSON."
-gift_baskets__both__json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+warehouse_shipping__nonnegativity__needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
 
-A bakery has a standing order for exactly 20 gift baskets. A deluxe basket uses 3 jars of jam and earns a $7.25 profit, and a standard basket uses 1 jar of jam and earns a $4.10 profit. The bakery has 61 jars of jam in stock.
+A retailer needs at least 16 pallets delivered to a store. Warehouse 1 ships for $2.50 per pallet and uses 1.0 hour of dock time per pallet; Warehouse 2 ships for $4.00 per pallet and uses 0.5 hour of dock time per pallet. The store has at most 12 hours of dock time available.
 
-What mix of baskets fills the order with the highest total profit?
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
 
-Reply in this format:
-1. Output the JSON object first on its own line.
-2. Then on the next line any comments, qualifications, etc.
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
 
-JSON object of this form:
-{""solution"": {""deluxe"": <number>, ""standard"": <number>}, ""cost"": <number>}
-The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
-Example shape (values are placeholders): {""solution"": {""deluxe"": 0, ""standard"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON."
-gift_baskets__both__explicit__json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+Which answer is closest? Reply with only the letter (A or B)."
+warehouse_shipping__nonnegativity__detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
 
-A bakery has a standing order for exactly 20 gift baskets. A deluxe basket uses 3 jars of jam and earns a $7.25 profit, and a standard basket uses 1 jar of jam and earns a $4.10 profit. The bakery has 61 jars of jam in stock. The numbers of deluxe and standard baskets must be whole numbers and non-negative (no fractional baskets, and no negative counts).
+The consultant was given the following prompt:
 
-What mix of baskets fills the order with the highest total profit?
+You are an operations consultant. Your task is to recommend the best plan from the information below.
 
-Reply in this format:
-1. Output the JSON object first on its own line.
-2. Then on the next line any comments, qualifications, etc.
+A retailer needs at least 16 pallets delivered to a store. Warehouse 1 ships for $2.50 per pallet and uses 1.0 hour of dock time per pallet; Warehouse 2 ships for $4.00 per pallet and uses 0.5 hour of dock time per pallet. The store has at most 12 hours of dock time available.
 
-JSON object of this form:
-{""solution"": {""deluxe"": <number>, ""standard"": <number>}, ""cost"": <number>}
-The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
-Example shape (values are placeholders): {""solution"": {""deluxe"": 0, ""standard"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON."
-workshop_vehicles__none__json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
-
-A workshop builds go-karts and mini-bikes. Each go-kart needs 2.4 hours of welding and 0.75 hour of painting, and each mini-bike needs 0.8 hour of welding and 1.5 hours of painting. The workshop has at most 12 hours of welding and at most 7.5 hours of painting available. The profit is $42.50 per go-kart and $53.75 per mini-bike.
-
-What production plan gives the highest total profit?
+What shipping plan meets the store's requirement at the lowest total cost?
 
 Reply in this format:
 1. Output the JSON object first on its own line.
 2. Then on the next line any comments, qualifications, etc.
 
 JSON object of this form:
-{""solution"": {""go_karts"": <number>, ""mini_bikes"": <number>}, ""cost"": <number>}
-The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
-Example shape (values are placeholders): {""solution"": {""go_karts"": 0, ""mini_bikes"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON."
+{""solution"": {""warehouse_1"": <number>, ""warehouse_2"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total cost under that plan.
+Example shape (values are placeholders): {""solution"": {""warehouse_1"": 0, ""warehouse_2"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 34.0, ""solution"": {""warehouse_1"": 20, ""warehouse_2"": -4}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B)."
