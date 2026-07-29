@@ -187,6 +187,24 @@ class LpVignette:
             FAILURE_MODE_BOTH,
         }
 
+    @property
+    def needs_tacit_normative_choice(self) -> str:
+        """Keyed A/B for ``needs_tacit_constraint``.
+
+        Most vignettes need at least one unstated domain constraint
+        (integrality and/or non-negativity) → A.
+
+        ``signed_domain`` is the exception: stated temperature bands already
+        allow negatives, so adding T >= 0 is a mistake and the stated problem
+        is enough → B.
+
+        ``fractional_ok`` still needs unstated non-negativity (fractional
+        amounts are fine; negative amounts are not) → A.
+        """
+        if self.failure_mode == FAILURE_MODE_SIGNED_DOMAIN:
+            return "B"
+        return "A"
+
     def example_prefix(self) -> str:
         return f"{slug(self.name)}__{self.failure_mode}"
 
@@ -457,8 +475,8 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
             "weekly profit?"
         ),
         solution_keys=("reaction_1_c", "reaction_2_c"),
-        true_solution={"reaction_1_c": -1.25, "reaction_2_c": 10.5},
-        true_objective="242.25",
+        true_solution={"reaction_1_c": -12, "reaction_2_c": -11},
+        true_objective="253",
         naive_objective="181",
         violating_solution={"reaction_1_c": 0, "reaction_2_c": 8},
         violating_objective="181",
@@ -648,13 +666,14 @@ def build_prompt(
     resolved = CONDITION_IMPLICIT
     shared = _shared_item_fields(v, condition=resolved)
     if variant == VARIANT_NEEDS_TACIT:
+        needs_choice = v.needs_tacit_normative_choice
         shared.update(
             {
                 "problem_type": "needs_tacit_constraint",
                 "normative": "needs_tacit_constraint",
-                "normative_choice": "A",
+                "normative_choice": needs_choice,
                 "scepticism_required": "true",
-                "scepticism_score_target": "A",
+                "scepticism_score_target": needs_choice,
                 "option_a_label": NEEDS_TACIT_YES,
                 "option_b_label": NEEDS_TACIT_NO,
             }

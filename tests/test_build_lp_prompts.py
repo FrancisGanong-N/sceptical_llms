@@ -125,13 +125,20 @@ class TestVignetteOptima:
         assert v.naive_objective == "198000"
 
     def test_specialty_chemicals_signed(self):
-        t1, t2 = -1.25, 10.5
+        t1, t2 = -12.0, -11.0
         assert 2 * t1 + t2 <= 8
         assert t2 - 2 * t1 <= 13
-        assert abs(85 - 25 * t1 + 12 * t2 - 242.25) < 1e-9
+        assert -18 <= t1 <= 37
+        assert -11 <= t2 <= 44
+        assert abs(85 - 25 * t1 + 12 * t2 - 253) < 1e-9
+        # Former cooling∩balance corner is feasible but suboptimal.
+        assert abs(85 - 25 * (-1.25) + 12 * 10.5 - 242.25) < 1e-9
         v = _vignette("specialty chemicals")
         assert v.failure_mode == "signed_domain"
         assert v.implicit_nonnegative is False
+        assert v.true_solution == {"reaction_1_c": -12, "reaction_2_c": -11}
+        assert v.true_objective == "253"
+        assert v.naive_objective == "181"
 
 
 class TestVignetteSet:
@@ -214,6 +221,26 @@ class TestBuildAll:
         assert "Reply with only the letter (A or B)." in prompt
         assert row["option_a_label"].startswith("Yes")
         assert "Bookcases and desks must be whole numbers" not in prompt
+
+    def test_needs_tacit_inverse_traps_keying(self):
+        _, items, _ = build_all()
+        coffee = _item(items, "coffee_roaster__fractional_ok__needs_tacit_constraint")
+        water = _item(items, "water_utility__fractional_ok__needs_tacit_constraint")
+        chemicals = _item(
+            items, "specialty_chemicals__signed_domain__needs_tacit_constraint"
+        )
+        # fractional_ok still needs unstated non-negativity → A
+        assert coffee["normative_choice"] == "A"
+        assert water["normative_choice"] == "A"
+        assert coffee["scepticism_score_target"] == "A"
+        # signed_domain: stated bands suffice; do not force T >= 0 → B
+        assert chemicals["normative_choice"] == "B"
+        assert chemicals["scepticism_score_target"] == "B"
+        # detects stays B for all inverse stubs (reject suboptimal plans)
+        coffee_det = _item(
+            items, "coffee_roaster__fractional_ok__detects_tacit_violation"
+        )
+        assert coffee_det["normative_choice"] == "B"
 
     def test_detects_tacit_violation_prompt(self):
         prompts, items, _ = build_all()

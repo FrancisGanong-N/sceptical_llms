@@ -40,8 +40,14 @@ def test_lo_benchmark_has_thirty_six_prompts():
     assert detects.normative_choice == "B"
     coffee = loaded["coffee_roaster__fractional_ok__json"]
     assert coffee.implicit_integer is False
+    coffee_needs = loaded["coffee_roaster__fractional_ok__needs_tacit_constraint"]
+    assert coffee_needs.normative_choice == "A"
     chemicals = loaded["specialty_chemicals__signed_domain__json"]
     assert chemicals.implicit_nonnegative is False
+    chemicals_needs = loaded[
+        "specialty_chemicals__signed_domain__needs_tacit_constraint"
+    ]
+    assert chemicals_needs.normative_choice == "B"
     assert "gift_baskets" not in loaded
     assert "workshop_vehicles" not in loaded
 

@@ -133,9 +133,11 @@ variant=json, condition=explicit
 
 variant=needs_tacit_constraint
   choice: A
+  (Fractional batches OK, but unstated non-negativity is still required.)
 
 variant=detects_tacit_violation
   choice: B
+  (Stub is an integer plan that misses the fractional optimum.)
 
 
 ================================================================================
@@ -211,6 +213,7 @@ variant=json, condition=explicit
 
 variant=needs_tacit_constraint
   choice: A
+  (Fractional units OK, but unstated non-negativity is still required.)
 
 variant=detects_tacit_violation
   choice: B
@@ -293,15 +296,18 @@ detects_tacit_violation — embed implicit JSON; INSERT stub:
 KEYED ANSWERS
 --------------------------------------------------------------------------------
 variant=json, condition=implicit
-  T1 = -5/4 = -1.25,  T2 = 21/2 = 10.5
-  cost = 969/4 = 242.25   [thousands of dollars]
+  T1 = -12,  T2 = -11
+  cost = 253   [thousands of dollars]
+  (balance ∩ Reaction-2 lower band; cooling∩balance at (-1.25, 10.5)/242.25 is
+  feasible but suboptimal)
   mistaken T1, T2 >= 0 optimum: T1 = 0, T2 = 8  →  cost = 181
 
 variant=json, condition=explicit
   Same keyed optimum as implicit.
 
 variant=needs_tacit_constraint
-  choice: A
+  choice: B
+  (Stated bands are enough; do not force T >= 0°C.)
 
 variant=detects_tacit_violation
   choice: B
