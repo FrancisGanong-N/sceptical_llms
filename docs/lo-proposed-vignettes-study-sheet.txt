@@ -1,0 +1,317 @@
+LO proposed vignettes — study sheet (draft)
+================================================================================
+These three vignettes are now in benchmark v5 (``build_lp_prompts.py``). This file
+is kept as design notes with equations.
+
+Two traps assume integrality wrongly (fractional amounts are valid); one assumes
+non-negativity on °C wrongly. Format mirrors lo_normative_accuracy v5 (JSON
+implicit / explicit + tacit audits).
+
+For these three vignettes, the optimization criterion and constraints are also
+given below as equations (in addition to the word-problem narrative used in
+prompts).
+
+Shared blocks (same as current LO benchmark)
+--------------------------------------------------------------------------------
+JSON solve — consultant intro (implicit & explicit):
+  You are an operations consultant. Your task is to recommend the best plan
+  from the information below.
+
+JSON reply tail (all JSON variants):
+  Reply in this format:
+  1. Output the JSON object first on its own line.
+  2. Then on the next line any comments, qualifications, etc.
+  (Then JSON schema + "Do not include a dollar sign or markdown fences...")
+
+needs_tacit_constraint — intro (replaces consultant intro):
+  You are reviewing an operations-planning problem. Decide whether a sensible
+  optimal plan requires applying constraints that are not stated in the problem
+  text.
+
+needs_tacit_constraint — question + options (appended after base narrative):
+  Does finding a sensible optimal plan for this problem require applying any
+  constraints that are not stated above (for example, that counts must be
+  whole numbers, or that quantities cannot be negative)?
+
+  A. Yes — unstated constraints (such as whole numbers or non-negativity) are
+     needed
+  B. No — the stated information is enough as written; no unstated constraints
+     are required
+
+  Which answer is closest? Reply with only the letter (A or B).
+
+detects_tacit_violation — intro (replaces consultant intro):
+  You are an operations auditor, checking a proposed plan for another
+  consultant.
+
+detects_tacit_violation — middle (after intro):
+  The consultant was given the following prompt:
+  (Then full implicit JSON prompt embedded, including consultant intro + base
+  narrative + question + JSON instructions.)
+
+detects_tacit_violation — tail (after embedded prompt + stub JSON):
+  And proposed the following plan:
+  (stub JSON object)
+
+  Is this a sensible plan to recommend to the client?
+
+  A. Yes — this plan is sensible
+  B. No — this plan is not appropriate
+
+  Which answer is closest? Reply with only the letter (A or B).
+
+
+================================================================================
+1. Coffee roaster (House Blend / Morning Blend)
+   Trap: assuming whole batches is wrong; fractional batches are valid.
+   failure_mode (proposed): fractional_ok  [inverse of integrality]
+================================================================================
+
+Decision variables
+--------------------------------------------------------------------------------
+  h  = batches of House Blend (may be fractional in the keyed problem)
+  m  = batches of Morning Blend (may be fractional in the keyed problem)
+
+Stated constraints (resources)
+--------------------------------------------------------------------------------
+  4h +  m  <=  11     (arabica, kg)
+   h + 3m  <=   8     (robusta, kg)
+
+Optimization criterion
+--------------------------------------------------------------------------------
+  maximize   52h + 37m     (total profit, dollars)
+
+Keyed problem (continuous)
+--------------------------------------------------------------------------------
+  max  52h + 37m
+  s.t. 4h + m <= 11
+       h + 3m <= 8
+       (no integrality requirement)
+
+Common mistaken restriction (not stated in implicit prompt)
+--------------------------------------------------------------------------------
+  h, m in { ..., -1, 0, 1, 2, ... }   (whole batches only)
+
+BASE NARRATIVE + QUESTION (implicit JSON body)
+--------------------------------------------------------------------------------
+A coffee roaster prepares two blends for wholesale sale: House Blend and Morning
+Blend. House Blend uses 4 kg of arabica and 1 kg of robusta per batch, while
+Morning Blend uses 1 kg of arabica and 3 kg of robusta per batch. The roaster
+has 11 kg of arabica and 8 kg of robusta available. Profit is $52 per batch of
+House Blend and $37 per batch of Morning Blend.
+
+What production plan gives the highest total profit?
+
+JSON solution keys: house_blend (h), morning_blend (m)
+Objective field: cost (total profit)
+JSON shape:
+  {"solution": {"house_blend": <number>, "morning_blend": <number>}, "cost": <number>}
+
+CONDITION TEXT — insertions / swaps only
+--------------------------------------------------------------------------------
+explicit JSON — INSERT after narrative (before question), appended to narrative
+  paragraph:
+    Partial batches are allowed; production amounts need not be whole numbers.
+
+needs_tacit_constraint — SWAP intro (see shared block); narrative = BASE only
+  (no explicit insertion).
+
+detects_tacit_violation — SWAP intro; embed full implicit JSON prompt; INSERT
+  stub plan after embedded prompt:
+    {"cost": 178, "solution": {"house_blend": 2, "morning_blend": 2}}
+  (Integer-only plan; feasible but suboptimal vs fractional optimum.)
+
+KEYED ANSWERS
+--------------------------------------------------------------------------------
+variant=json, condition=implicit
+  h = 25/11 ≈ 2.272727,  m = 21/11 ≈ 1.909091
+  cost = 2077/11 ≈ 188.818182
+  mistaken whole-batch optimum: h = 2, m = 2  →  cost = 178
+
+variant=json, condition=explicit
+  Same keyed optimum as implicit.
+
+variant=needs_tacit_constraint
+  choice: A
+
+variant=detects_tacit_violation
+  choice: B
+
+
+================================================================================
+2. Water utility (industrial supply / irrigation)
+   Trap: assuming whole units is wrong; fractional allocations are valid.
+   failure_mode (proposed): fractional_ok
+================================================================================
+
+Decision variables
+--------------------------------------------------------------------------------
+  i  = units of industrial supply
+  r  = units of irrigation delivery
+       (may be fractional in the keyed problem)
+
+Stated constraints (capacity)
+--------------------------------------------------------------------------------
+  5i + 2r  <=  14     (treated water, million gallons)
+   i + 3r  <=  11     (pumping capacity, units)
+
+Optimization criterion
+--------------------------------------------------------------------------------
+  maximize   58000 i + 41000 r     (total profit, dollars)
+
+Keyed problem (continuous)
+--------------------------------------------------------------------------------
+  max  58000 i + 41000 r
+  s.t. 5i + 2r <= 14
+       i + 3r <= 11
+       (no integrality requirement)
+
+Common mistaken restriction (not stated in implicit prompt)
+--------------------------------------------------------------------------------
+  i, r in { ..., -1, 0, 1, 2, ... }   (whole units only)
+
+BASE NARRATIVE + QUESTION (implicit JSON body)
+--------------------------------------------------------------------------------
+A water utility allocates treated water between two customer programs:
+industrial supply contracts and agricultural irrigation deliveries. Each unit
+of industrial supply uses 5 million gallons of treated water capacity and 1
+unit of pumping capacity, while each unit of irrigation delivery uses 2 million
+gallons of treated water capacity and 3 units of pumping capacity. This week
+the utility has at most 14 million gallons of treated water capacity and at
+most 11 units of pumping capacity available. The profit is $58,000 per unit of
+industrial supply and $41,000 per unit of irrigation delivery.
+
+What allocation gives the highest total profit?
+
+JSON solution keys: industrial_supply (i), irrigation_delivery (r)
+Objective field: cost (total profit)
+JSON shape:
+  {"solution": {"industrial_supply": <number>, "irrigation_delivery": <number>},
+   "cost": <number>}
+
+CONDITION TEXT — insertions / swaps only
+--------------------------------------------------------------------------------
+explicit JSON — INSERT (appended to narrative):
+  Allocations may be fractional; program sizes need not be whole units.
+
+needs_tacit_constraint — SWAP intro; narrative = BASE only.
+
+detects_tacit_violation — embed implicit JSON; INSERT stub:
+  {"cost": 198000, "solution": {"industrial_supply": 2, "irrigation_delivery": 2}}
+
+KEYED ANSWERS
+--------------------------------------------------------------------------------
+variant=json, condition=implicit
+  i = 20/13 ≈ 1.538462,  r = 41/13 ≈ 3.153846
+  cost = 2841/13 * 1000 ≈ 218538.46  [dollars]
+  mistaken whole-unit optimum: i = 2, r = 2  →  cost = 198000
+
+variant=json, condition=explicit
+  Same keyed optimum as implicit.
+
+variant=needs_tacit_constraint
+  choice: A
+
+variant=detects_tacit_violation
+  choice: B
+
+
+================================================================================
+3. Specialty chemicals (reaction temperatures, °C)
+   Trap: assuming temperatures must be ≥ 0°C is wrong; below-freezing settings
+   can be optimal if still within the stated band around each normal setpoint.
+   failure_mode (proposed): signed_domain  [inverse of nonnegativity]
+================================================================================
+
+Decision variables
+--------------------------------------------------------------------------------
+  T1  = Reaction 1 operating temperature (°C)
+  T2  = Reaction 2 operating temperature (°C)
+
+Stated constraints (process + bands from narrative)
+--------------------------------------------------------------------------------
+  2 T1 + T2  <=  8                    (cooling load index)
+  T2 - 2 T1  <=  13                    (equipment balance)
+  -18 <= T1 <= 37                       (Reaction 1: 12°C normal, -30 / +25)
+  -11 <= T2 <= 44                       (Reaction 2: 14°C normal, -25 / +30)
+
+Optimization criterion
+--------------------------------------------------------------------------------
+  maximize   85 - 25 T1 + 12 T2         (weekly profit, thousands of dollars)
+
+Keyed problem (continuous, with stated bands)
+--------------------------------------------------------------------------------
+  max   85 - 25 T1 + 12 T2
+  s.t.  2 T1 + T2 <= 8
+        T2 - 2 T1 <= 13
+        -18 <= T1 <= 37
+        -11 <= T2 <= 44
+
+Common mistaken restriction (not stated in implicit prompt)
+--------------------------------------------------------------------------------
+  T1 >= 0,  T2 >= 0                     (nonnegative °C only)
+
+BASE NARRATIVE + QUESTION (implicit JSON body)
+--------------------------------------------------------------------------------
+A specialty chemicals plant sets the operating temperatures, in degrees Celsius,
+for Reaction 1 and Reaction 2. Reaction 1 is normally run at 12°C; this week it
+may be set anywhere from 30 degrees below that normal setting to 25 degrees
+above it. Reaction 2 is normally run at 14°C; this week it may be set anywhere
+from 25 degrees below its normal setting to 30 degrees above it.
+
+Side-product losses rise sharply when Reaction 1 runs hotter; conversion on
+Reaction 2 improves when it runs hotter. Engineers estimate weekly profit (in
+thousands of dollars) as 85 minus 25 times (Reaction 1 temperature in °C)
+plus 12 times (Reaction 2 temperature in °C).
+
+Shared cooling is limited. The cooling load index is twice (Reaction 1
+temperature in °C) plus (Reaction 2 temperature in °C); the index must be at
+most 8. For equipment balance, Reaction 2's temperature minus twice Reaction
+1's temperature may be at most 13.
+
+What temperatures for Reaction 1 and Reaction 2 give the highest weekly profit?
+
+JSON solution keys: reaction_1_c (T1), reaction_2_c (T2)
+Objective field: cost (weekly profit, in thousands of dollars)
+JSON shape:
+  {"solution": {"reaction_1_c": <number>, "reaction_2_c": <number>},
+   "cost": <number>}
+
+CONDITION TEXT — insertions / swaps only
+--------------------------------------------------------------------------------
+explicit JSON — INSERT (appended to narrative):
+  Temperatures must stay within the bands above relative to each reaction's
+  normal setting. Do not assume temperatures must be at or above 0°C if a
+  setting below 0°C is still within a reaction's band.
+
+needs_tacit_constraint — SWAP intro; narrative = BASE only.
+
+detects_tacit_violation — embed implicit JSON; INSERT stub:
+  {"cost": 181, "solution": {"reaction_1_c": 0, "reaction_2_c": 8}}
+  (Plan with T1, T2 >= 0; feasible under mistaken restriction but suboptimal.)
+
+KEYED ANSWERS
+--------------------------------------------------------------------------------
+variant=json, condition=implicit
+  T1 = -5/4 = -1.25,  T2 = 21/2 = 10.5
+  cost = 969/4 = 242.25   [thousands of dollars]
+  mistaken T1, T2 >= 0 optimum: T1 = 0, T2 = 8  →  cost = 181
+
+variant=json, condition=explicit
+  Same keyed optimum as implicit.
+
+variant=needs_tacit_constraint
+  choice: A
+
+variant=detects_tacit_violation
+  choice: B
+
+
+================================================================================
+Scoring notes (when added to lp_rate.py)
+================================================================================
+- JSON: parsable cost within 1% of true_objective (same as v4).
+- naive_objective: optimum under the mistaken restriction listed above
+  (integrality for vignettes 1–2; T1,T2 >= 0 for vignette 3).
+- Audit keyed answers use current v4 A/B wording; the tacit constraint under
+  test differs from standard v4 integrality / nonnegativity traps.

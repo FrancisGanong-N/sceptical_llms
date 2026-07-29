@@ -92,12 +92,55 @@ class TestVignetteOptima:
         assert v.true_solution == {"warehouse_1": 8, "warehouse_2": 8}
         assert v.violating_solution["warehouse_2"] < 0
 
+    def test_coffee_roaster_fractional(self):
+        from fractions import Fraction
+
+        h = Fraction(25, 11)
+        m = Fraction(21, 11)
+        assert 4 * h + m <= 11
+        assert h + 3 * m <= 8
+        profit = 52 * h + 37 * m
+        assert float(profit) == float(Fraction(2077, 11))
+        best_int = max(
+            52 * hi + 37 * mi
+            for hi in range(0, 4)
+            for mi in range(0, 4)
+            if 4 * hi + mi <= 11 and hi + 3 * mi <= 8
+        )
+        assert best_int == 178
+        v = _vignette("coffee roaster")
+        assert v.failure_mode == "fractional_ok"
+        assert v.implicit_integer is False
+
+    def test_water_utility_fractional(self):
+        from fractions import Fraction
+
+        i = Fraction(20, 13)
+        r = Fraction(41, 13)
+        assert 5 * i + 2 * r <= 14
+        assert i + 3 * r <= 11
+        profit = 58000 * i + 41000 * r
+        assert abs(float(profit) - 2841000 / 13) < 1e-6
+        v = _vignette("water utility")
+        assert v.naive_objective == "198000"
+
+    def test_specialty_chemicals_signed(self):
+        t1, t2 = -1.25, 10.5
+        assert 2 * t1 + t2 <= 8
+        assert t2 - 2 * t1 <= 13
+        assert abs(85 - 25 * t1 + 12 * t2 - 242.25) < 1e-9
+        v = _vignette("specialty chemicals")
+        assert v.failure_mode == "signed_domain"
+        assert v.implicit_nonnegative is False
+
 
 class TestVignetteSet:
     def test_failure_mode_coverage(self):
         modes = [v.failure_mode for v in load_lp_vignettes()]
         assert modes.count("integrality") == 4
         assert modes.count("nonnegativity") == 2
+        assert modes.count("fractional_ok") == 2
+        assert modes.count("signed_domain") == 1
         assert modes.count("both") == 0
         assert modes.count("none") == 0
         names = {v.name for v in load_lp_vignettes()}
@@ -106,12 +149,12 @@ class TestVignetteSet:
 
 
 class TestBuildAll:
-    def test_prompt_count_v4(self):
+    def test_prompt_count_v5(self):
         prompts, items, benchmark = build_all()
-        # 6 vignettes × (json×2 + needs + detects) = 24
-        assert len(prompts) == 24
-        assert len(items) == 24
-        assert len(benchmark) == 24
+        # 9 vignettes × (json×2 + needs + detects) = 36
+        assert len(prompts) == 36
+        assert len(items) == 36
+        assert len(benchmark) == 36
         assert {row["variant"] for row in benchmark} == {
             "json",
             "needs_tacit_constraint",
@@ -119,11 +162,18 @@ class TestBuildAll:
         }
         conditions = {row["condition"] for row in items}
         assert conditions == {"implicit", "explicit"}
-        assert sum(1 for row in items if row["condition"] == "implicit") == 18
-        assert sum(1 for row in items if row["condition"] == "explicit") == 6
-        assert sum(1 for row in items if row["variant"] == "json") == 12
-        assert sum(1 for row in items if row["variant"] == "needs_tacit_constraint") == 6
-        assert sum(1 for row in items if row["variant"] == "detects_tacit_violation") == 6
+        assert sum(1 for row in items if row["condition"] == "implicit") == 27
+        assert sum(1 for row in items if row["condition"] == "explicit") == 9
+        assert sum(1 for row in items if row["variant"] == "json") == 18
+        assert sum(1 for row in items if row["variant"] == "needs_tacit_constraint") == 9
+        assert sum(1 for row in items if row["variant"] == "detects_tacit_violation") == 9
+
+    def test_benchmark_constraint_columns(self):
+        _, _, benchmark = build_all()
+        row = next(r for r in benchmark if r["vignette_name"] == "coffee roaster")
+        assert "maximize 52 h" in row["optimization_criterion"]
+        assert "4 h + m" in row["stated_constraints"]
+        assert "integer" in row["tacit_mistake"]
 
     def test_json_prompt_shape(self):
         prompts, items, _ = build_all()
@@ -189,19 +239,30 @@ class TestBuildAll:
             by_id["fund_allocation__nonnegativity__json"]["implicit_nonnegative"]
             == "true"
         )
+        assert (
+            by_id["coffee_roaster__fractional_ok__json"]["implicit_integer"]
+            == "false"
+        )
+        assert (
+            by_id["specialty_chemicals__signed_domain__json"]["implicit_nonnegative"]
+            == "false"
+        )
         assert "gift_baskets__both__json" not in by_id
         assert "workshop_vehicles__none__json" not in by_id
 
     def test_write_csvs(self, tmp_path: Path, monkeypatch):
         monkeypatch.setattr("scripts.build_lp_prompts.OUT_DIR", tmp_path / "lp")
         count = write_csvs()
-        assert count == 24
+        assert count == 36
         with (tmp_path / "lp" / "benchmark.csv").open(
             newline="", encoding="utf-8"
         ) as handle:
             rows = list(csv.DictReader(handle))
-        assert len(rows) == 24
+        assert len(rows) == 36
         assert "violating_solution" in rows[0]
+        assert "optimization_criterion" in rows[0]
+        assert "stated_constraints" in rows[0]
+        assert "tacit_mistake" in rows[0]
 
 
 class TestScoring:
@@ -220,7 +281,7 @@ class TestScoring:
         monkeypatch.setattr("scripts.build_lp_prompts.OUT_DIR", tmp_path / "lp")
         write_csvs()
         items = lp_rate.load_benchmark(tmp_path / "lp" / "benchmark.csv")
-        assert len(items) == 24
+        assert len(items) == 36
 
         correct_rows = []
         for example_id, item in items.items():
@@ -257,8 +318,8 @@ class TestScoring:
                     ),
                 }
             )
-        # carpenter, print, pottery, charter × 2 conditions = 8
-        assert len(naive_rows) == 8
+        # integrality ×4×2 + fractional_ok ×2×2 + signed_domain ×1×2 = 14
+        assert len(naive_rows) == 14
         assert lp_rate.score_run_rows(naive_rows, items=items).accuracy == 0.0
         assert lp_rate.naive_confusion_rate(naive_rows, items=items) == 1.0
 

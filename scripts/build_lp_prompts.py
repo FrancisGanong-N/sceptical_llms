@@ -22,13 +22,20 @@ parsable ``cost`` within 1% of ``true_objective``. Audit variants ask for
 a letter (A or B).
 
 failure_mode column values:
-  - integrality    naive optimum is fractional (e.g. 2.6 buses)
-  - nonnegativity  non-negativity is an unstated domain constraint
-  - both           (reserved; not used in v4 vignette set)
+  - integrality     unstated integrality is required (naive LP is fractional)
+  - nonnegativity   unstated non-negativity is required
+  - fractional_ok   wrongly imposing integrality is a mistake (continuous optimum)
+  - signed_domain   wrongly imposing non-negativity is a mistake (signed optimum)
+  - both            (reserved)
 
 Constraint-type flags (true/false strings):
-  - implicit_integer      integrality is part of the trap
-  - implicit_nonnegative  non-negativity is part of the trap
+  - implicit_integer      standard trap: whole units are tacitly required
+  - implicit_nonnegative  standard trap: non-negative quantities are tacitly required
+
+Equation columns (documentation / analysis):
+  - optimization_criterion  keyed objective as an equation
+  - stated_constraints      keyed LP constraints (semicolon-separated)
+  - tacit_mistake           common mistaken restriction (not in implicit prompt)
 """
 
 from __future__ import annotations
@@ -82,6 +89,8 @@ DETECTS_VIOLATION_NO = "No — this plan is not appropriate"
 
 FAILURE_MODE_INTEGRALITY = "integrality"
 FAILURE_MODE_NONNEGATIVITY = "nonnegativity"
+FAILURE_MODE_FRACTIONAL_OK = "fractional_ok"
+FAILURE_MODE_SIGNED_DOMAIN = "signed_domain"
 FAILURE_MODE_BOTH = "both"
 
 CONDITION_IMPLICIT = "implicit"
@@ -125,6 +134,9 @@ BENCHMARK_FIELDS = (
     "option_b_label",
     "violating_solution",
     "violating_objective",
+    "optimization_criterion",
+    "stated_constraints",
+    "tacit_mistake",
 )
 
 ITEM_FIELDS = tuple(field for field in BENCHMARK_FIELDS if field != "prompt")
@@ -153,6 +165,9 @@ class LpVignette:
     # Stub plan that violates a tacit constraint (for detects_tacit_violation).
     violating_solution: dict[str, float]
     violating_objective: str
+    optimization_criterion: str
+    stated_constraints: str
+    tacit_mistake: str
 
     @property
     def well_posed(self) -> bool:
@@ -206,6 +221,9 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         naive_objective="210",
         violating_solution={"bookcases": 2.4, "desks": 2.4},
         violating_objective="210",
+        optimization_criterion="maximize 37.5 b + 50 d",
+        stated_constraints="1.5 b + 2.25 d <= 9; 2.25 b + 1.5 d <= 9",
+        tacit_mistake="b, d integer",
     ),
     LpVignette(
         name="print shop",
@@ -229,6 +247,9 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         naive_objective="210",
         violating_solution={"posters": 2.4, "booklets": 2.4},
         violating_objective="210",
+        optimization_criterion="maximize 37.5 p + 50 b",
+        stated_constraints="1.5 p + 2.25 b <= 9; 2.25 p + 1.5 b <= 9",
+        tacit_mistake="p, b integer",
     ),
     LpVignette(
         name="pottery studio",
@@ -252,6 +273,9 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         naive_objective="211.22",
         violating_solution={"bowls": 2.44898, "vases": 2.44898},
         violating_objective="211.22",
+        optimization_criterion="maximize 41.25 b + 45 v",
+        stated_constraints="1.65 b + 2.025 v <= 9; 2.025 b + 1.65 v <= 9",
+        tacit_mistake="b, v integer",
     ),
     LpVignette(
         name="charter buses",
@@ -274,6 +298,9 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         naive_objective="2133.3",
         violating_solution={"large_buses": 2.6, "small_buses": 0},
         violating_objective="2133.3",
+        optimization_criterion="minimize 820.5 L + 700.25 S",
+        stated_constraints="50 L + 30 S >= 130",
+        tacit_mistake="L, S integer",
     ),
     LpVignette(
         name="fund allocation",
@@ -300,6 +327,9 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         # Hand-crafted violating stub (negative Fund B).
         violating_solution={"fund_a": 8500, "fund_b": -7500},
         violating_objective="427.5",
+        optimization_criterion="maximize 0.09 a + 0.045 b",
+        stated_constraints="a + b <= 10000; 1.5 a + 0.5 b <= 9000; a <= 8500",
+        tacit_mistake="a, b >= 0",
     ),
     LpVignette(
         name="warehouse shipping",
@@ -327,6 +357,116 @@ LP_VIGNETTES: tuple[LpVignette, ...] = (
         # Hand-crafted violating stub (negative Warehouse 2 shipment).
         violating_solution={"warehouse_1": 20, "warehouse_2": -4},
         violating_objective="34",
+        optimization_criterion="minimize 2.5 w1 + 4.0 w2",
+        stated_constraints="w1 + w2 >= 16; w1 + 0.5 w2 <= 12",
+        tacit_mistake="w1, w2 >= 0",
+    ),
+    LpVignette(
+        name="coffee roaster",
+        failure_mode=FAILURE_MODE_FRACTIONAL_OK,
+        narrative=(
+            "A coffee roaster prepares two blends for wholesale sale: House Blend "
+            "and Morning Blend. House Blend uses 4 kg of arabica and 1 kg of "
+            "robusta per batch, while Morning Blend uses 1 kg of arabica and "
+            "3 kg of robusta per batch. The roaster has 11 kg of arabica and "
+            "8 kg of robusta available. Profit is $52 per batch of House Blend "
+            "and $37 per batch of Morning Blend."
+        ),
+        explicit_addendum=(
+            "Partial batches are allowed; production amounts need not be whole "
+            "numbers."
+        ),
+        objective_name="total profit",
+        question="What production plan gives the highest total profit?",
+        solution_keys=("house_blend", "morning_blend"),
+        true_solution={
+            "house_blend": 25 / 11,
+            "morning_blend": 21 / 11,
+        },
+        true_objective=f"{2077 / 11:.12g}",
+        naive_objective="178",
+        violating_solution={"house_blend": 2, "morning_blend": 2},
+        violating_objective="178",
+        optimization_criterion="maximize 52 h + 37 m",
+        stated_constraints="4 h + m <= 11; h + 3 m <= 8",
+        tacit_mistake="h, m integer",
+    ),
+    LpVignette(
+        name="water utility",
+        failure_mode=FAILURE_MODE_FRACTIONAL_OK,
+        narrative=(
+            "A water utility allocates treated water between two customer "
+            "programs: industrial supply contracts and agricultural irrigation "
+            "deliveries. Each unit of industrial supply uses 5 million gallons "
+            "of treated water capacity and 1 unit of pumping capacity, while "
+            "each unit of irrigation delivery uses 2 million gallons of treated "
+            "water capacity and 3 units of pumping capacity. This week the "
+            "utility has at most 14 million gallons of treated water capacity "
+            "and at most 11 units of pumping capacity available. The profit is "
+            "$58,000 per unit of industrial supply and $41,000 per unit of "
+            "irrigation delivery."
+        ),
+        explicit_addendum=(
+            "Allocations may be fractional; program sizes need not be whole "
+            "units."
+        ),
+        objective_name="total profit",
+        question="What allocation gives the highest total profit?",
+        solution_keys=("industrial_supply", "irrigation_delivery"),
+        true_solution={
+            "industrial_supply": 20 / 13,
+            "irrigation_delivery": 41 / 13,
+        },
+        true_objective=f"{2841000 / 13:.12g}",
+        naive_objective="198000",
+        violating_solution={"industrial_supply": 2, "irrigation_delivery": 2},
+        violating_objective="198000",
+        optimization_criterion="maximize 58000 i + 41000 r",
+        stated_constraints="5 i + 2 r <= 14; i + 3 r <= 11",
+        tacit_mistake="i, r integer",
+    ),
+    LpVignette(
+        name="specialty chemicals",
+        failure_mode=FAILURE_MODE_SIGNED_DOMAIN,
+        narrative=(
+            "A specialty chemicals plant sets the operating temperatures, in "
+            "degrees Celsius, for Reaction 1 and Reaction 2. Reaction 1 is "
+            "normally run at 12°C; this week it may be set anywhere from 30 "
+            "degrees below that normal setting to 25 degrees above it. Reaction "
+            "2 is normally run at 14°C; this week it may be set anywhere from "
+            "25 degrees below its normal setting to 30 degrees above it. "
+            "Side-product losses rise sharply when Reaction 1 runs hotter; "
+            "conversion on Reaction 2 improves when it runs hotter. Engineers "
+            "estimate weekly profit (in thousands of dollars) as 85 minus 25 "
+            "times (Reaction 1 temperature in °C) plus 12 times (Reaction 2 "
+            "temperature in °C). Shared cooling is limited. The cooling load "
+            "index is twice (Reaction 1 temperature in °C) plus (Reaction 2 "
+            "temperature in °C); the index must be at most 8. For equipment "
+            "balance, Reaction 2's temperature minus twice Reaction 1's "
+            "temperature may be at most 13."
+        ),
+        explicit_addendum=(
+            "Temperatures must stay within the bands above relative to each "
+            "reaction's normal setting. Do not assume temperatures must be at "
+            "or above 0°C if a setting below 0°C is still within a reaction's "
+            "band."
+        ),
+        objective_name="weekly profit",
+        question=(
+            "What temperatures for Reaction 1 and Reaction 2 give the highest "
+            "weekly profit?"
+        ),
+        solution_keys=("reaction_1_c", "reaction_2_c"),
+        true_solution={"reaction_1_c": -1.25, "reaction_2_c": 10.5},
+        true_objective="242.25",
+        naive_objective="181",
+        violating_solution={"reaction_1_c": 0, "reaction_2_c": 8},
+        violating_objective="181",
+        optimization_criterion="maximize 85 - 25 T1 + 12 T2",
+        stated_constraints=(
+            "2 T1 + T2 <= 8; T2 - 2 T1 <= 13; -18 <= T1 <= 37; -11 <= T2 <= 44"
+        ),
+        tacit_mistake="T1 >= 0, T2 >= 0",
     ),
 )
 
@@ -469,6 +609,9 @@ def _shared_item_fields(v: LpVignette, *, condition: str) -> dict[str, str]:
         "option_b_label": "",
         "violating_solution": v.violating_solution_json(),
         "violating_objective": v.violating_objective,
+        "optimization_criterion": v.optimization_criterion,
+        "stated_constraints": v.stated_constraints,
+        "tacit_mistake": v.tacit_mistake,
     }
 
 

@@ -1,4 +1,4 @@
-example_id,vignette_name,failure_mode,condition,problem_type,intersection_size,response_type,has_statistics,variant,prompt,well_posed,normative,true_objective,naive_objective,true_solution,solution_keys,objective_name,implicit_integer,implicit_nonnegative,normative_percent,normative_choice,confidence_required,scepticism_required,scepticism_score_target,option_a_label,option_b_label,violating_solution,violating_objective
+example_id,vignette_name,failure_mode,condition,problem_type,intersection_size,response_type,has_statistics,variant,prompt,well_posed,normative,true_objective,naive_objective,true_solution,solution_keys,objective_name,implicit_integer,implicit_nonnegative,normative_percent,normative_choice,confidence_required,scepticism_required,scepticism_score_target,option_a_label,option_b_label,violating_solution,violating_objective,optimization_criterion,stated_constraints,tacit_mistake
 carpenter_furniture__integrality__json,carpenter furniture,integrality,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A carpenter builds bookcases and desks for sale. Each bookcase takes 1.5 hours of cutting and 2.25 hours of assembly, and each desk takes 2.25 hours of cutting and 1.5 hours of assembly. This week the carpenter has at most 9 hours of cutting time and at most 9 hours of assembly time. The profit is $37.50 per bookcase and $50 per desk.
@@ -13,7 +13,7 @@ JSON object of this form:
 {""solution"": {""bookcases"": <number>, ""desks"": <number>}, ""cost"": <number>}
 The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
 Example shape (values are placeholders): {""solution"": {""bookcases"": 0, ""desks"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,200,210,"{""bookcases"": 0, ""desks"": 4}","bookcases,desks",total profit,true,false,200,,false,false,n/a,,,"{""bookcases"": 2.4, ""desks"": 2.4}",210
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,200,210,"{""bookcases"": 0, ""desks"": 4}","bookcases,desks",total profit,true,false,200,,false,false,n/a,,,"{""bookcases"": 2.4, ""desks"": 2.4}",210,maximize 37.5 b + 50 d,1.5 b + 2.25 d <= 9; 2.25 b + 1.5 d <= 9,"b, d integer"
 carpenter_furniture__integrality__explicit__json,carpenter furniture,integrality,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A carpenter builds bookcases and desks for sale. Each bookcase takes 1.5 hours of cutting and 2.25 hours of assembly, and each desk takes 2.25 hours of cutting and 1.5 hours of assembly. This week the carpenter has at most 9 hours of cutting time and at most 9 hours of assembly time. The profit is $37.50 per bookcase and $50 per desk. Bookcases and desks must be whole numbers (no fractional furniture).
@@ -28,7 +28,7 @@ JSON object of this form:
 {""solution"": {""bookcases"": <number>, ""desks"": <number>}, ""cost"": <number>}
 The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
 Example shape (values are placeholders): {""solution"": {""bookcases"": 0, ""desks"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,200,210,"{""bookcases"": 0, ""desks"": 4}","bookcases,desks",total profit,true,false,200,,false,false,n/a,,,"{""bookcases"": 2.4, ""desks"": 2.4}",210
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,200,210,"{""bookcases"": 0, ""desks"": 4}","bookcases,desks",total profit,true,false,200,,false,false,n/a,,,"{""bookcases"": 2.4, ""desks"": 2.4}",210,maximize 37.5 b + 50 d,1.5 b + 2.25 d <= 9; 2.25 b + 1.5 d <= 9,"b, d integer"
 carpenter_furniture__integrality__needs_tacit_constraint,carpenter furniture,integrality,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
 
 A carpenter builds bookcases and desks for sale. Each bookcase takes 1.5 hours of cutting and 2.25 hours of assembly, and each desk takes 2.25 hours of cutting and 1.5 hours of assembly. This week the carpenter has at most 9 hours of cutting time and at most 9 hours of assembly time. The profit is $37.50 per bookcase and $50 per desk.
@@ -38,7 +38,7 @@ Does finding a sensible optimal plan for this problem require applying any const
 A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
 B. No — the stated information is enough as written; no unstated constraints are required
 
-Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,200,210,"{""bookcases"": 0, ""desks"": 4}","bookcases,desks",total profit,true,false,200,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""bookcases"": 2.4, ""desks"": 2.4}",210
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,200,210,"{""bookcases"": 0, ""desks"": 4}","bookcases,desks",total profit,true,false,200,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""bookcases"": 2.4, ""desks"": 2.4}",210,maximize 37.5 b + 50 d,1.5 b + 2.25 d <= 9; 2.25 b + 1.5 d <= 9,"b, d integer"
 carpenter_furniture__integrality__detects_tacit_violation,carpenter furniture,integrality,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
 
 The consultant was given the following prompt:
@@ -68,7 +68,7 @@ Is this a sensible plan to recommend to the client?
 A. Yes — this plan is sensible
 B. No — this plan is not appropriate
 
-Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,200,210,"{""bookcases"": 0, ""desks"": 4}","bookcases,desks",total profit,true,false,200,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""bookcases"": 2.4, ""desks"": 2.4}",210
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,200,210,"{""bookcases"": 0, ""desks"": 4}","bookcases,desks",total profit,true,false,200,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""bookcases"": 2.4, ""desks"": 2.4}",210,maximize 37.5 b + 50 d,1.5 b + 2.25 d <= 9; 2.25 b + 1.5 d <= 9,"b, d integer"
 print_shop__integrality__json,print shop,integrality,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A print shop produces posters and booklets for sale. Each poster takes 1.5 hours of printing and 2.25 hours of binding, and each booklet takes 2.25 hours of printing and 1.5 hours of binding. This week the shop has at most 9 hours of printing time and at most 9 hours of binding time. The profit is $37.50 per poster and $50 per booklet.
@@ -83,7 +83,7 @@ JSON object of this form:
 {""solution"": {""posters"": <number>, ""booklets"": <number>}, ""cost"": <number>}
 The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
 Example shape (values are placeholders): {""solution"": {""posters"": 0, ""booklets"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,200,210,"{""booklets"": 4, ""posters"": 0}","posters,booklets",total profit,true,false,200,,false,false,n/a,,,"{""booklets"": 2.4, ""posters"": 2.4}",210
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,200,210,"{""booklets"": 4, ""posters"": 0}","posters,booklets",total profit,true,false,200,,false,false,n/a,,,"{""booklets"": 2.4, ""posters"": 2.4}",210,maximize 37.5 p + 50 b,1.5 p + 2.25 b <= 9; 2.25 p + 1.5 b <= 9,"p, b integer"
 print_shop__integrality__explicit__json,print shop,integrality,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A print shop produces posters and booklets for sale. Each poster takes 1.5 hours of printing and 2.25 hours of binding, and each booklet takes 2.25 hours of printing and 1.5 hours of binding. This week the shop has at most 9 hours of printing time and at most 9 hours of binding time. The profit is $37.50 per poster and $50 per booklet. Posters and booklets must be whole numbers (no fractional print jobs).
@@ -98,7 +98,7 @@ JSON object of this form:
 {""solution"": {""posters"": <number>, ""booklets"": <number>}, ""cost"": <number>}
 The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
 Example shape (values are placeholders): {""solution"": {""posters"": 0, ""booklets"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,200,210,"{""booklets"": 4, ""posters"": 0}","posters,booklets",total profit,true,false,200,,false,false,n/a,,,"{""booklets"": 2.4, ""posters"": 2.4}",210
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,200,210,"{""booklets"": 4, ""posters"": 0}","posters,booklets",total profit,true,false,200,,false,false,n/a,,,"{""booklets"": 2.4, ""posters"": 2.4}",210,maximize 37.5 p + 50 b,1.5 p + 2.25 b <= 9; 2.25 p + 1.5 b <= 9,"p, b integer"
 print_shop__integrality__needs_tacit_constraint,print shop,integrality,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
 
 A print shop produces posters and booklets for sale. Each poster takes 1.5 hours of printing and 2.25 hours of binding, and each booklet takes 2.25 hours of printing and 1.5 hours of binding. This week the shop has at most 9 hours of printing time and at most 9 hours of binding time. The profit is $37.50 per poster and $50 per booklet.
@@ -108,7 +108,7 @@ Does finding a sensible optimal plan for this problem require applying any const
 A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
 B. No — the stated information is enough as written; no unstated constraints are required
 
-Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,200,210,"{""booklets"": 4, ""posters"": 0}","posters,booklets",total profit,true,false,200,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""booklets"": 2.4, ""posters"": 2.4}",210
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,200,210,"{""booklets"": 4, ""posters"": 0}","posters,booklets",total profit,true,false,200,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""booklets"": 2.4, ""posters"": 2.4}",210,maximize 37.5 p + 50 b,1.5 p + 2.25 b <= 9; 2.25 p + 1.5 b <= 9,"p, b integer"
 print_shop__integrality__detects_tacit_violation,print shop,integrality,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
 
 The consultant was given the following prompt:
@@ -138,7 +138,7 @@ Is this a sensible plan to recommend to the client?
 A. Yes — this plan is sensible
 B. No — this plan is not appropriate
 
-Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,200,210,"{""booklets"": 4, ""posters"": 0}","posters,booklets",total profit,true,false,200,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""booklets"": 2.4, ""posters"": 2.4}",210
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,200,210,"{""booklets"": 4, ""posters"": 0}","posters,booklets",total profit,true,false,200,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""booklets"": 2.4, ""posters"": 2.4}",210,maximize 37.5 p + 50 b,1.5 p + 2.25 b <= 9; 2.25 p + 1.5 b <= 9,"p, b integer"
 pottery_studio__integrality__json,pottery studio,integrality,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A pottery studio makes bowls and vases for sale. Each bowl takes 1.65 hours of throwing and 2.025 hours of glazing, and each vase takes 2.025 hours of throwing and 1.65 hours of glazing. This week the studio has at most 9 hours of throwing time and at most 9 hours of glazing time. The profit is $41.25 per bowl and $45 per vase.
@@ -153,7 +153,7 @@ JSON object of this form:
 {""solution"": {""bowls"": <number>, ""vases"": <number>}, ""cost"": <number>}
 The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
 Example shape (values are placeholders): {""solution"": {""bowls"": 0, ""vases"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,180,211.22,"{""bowls"": 0, ""vases"": 4}","bowls,vases",total profit,true,false,180,,false,false,n/a,,,"{""bowls"": 2.44898, ""vases"": 2.44898}",211.22
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,180,211.22,"{""bowls"": 0, ""vases"": 4}","bowls,vases",total profit,true,false,180,,false,false,n/a,,,"{""bowls"": 2.44898, ""vases"": 2.44898}",211.22,maximize 41.25 b + 45 v,1.65 b + 2.025 v <= 9; 2.025 b + 1.65 v <= 9,"b, v integer"
 pottery_studio__integrality__explicit__json,pottery studio,integrality,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A pottery studio makes bowls and vases for sale. Each bowl takes 1.65 hours of throwing and 2.025 hours of glazing, and each vase takes 2.025 hours of throwing and 1.65 hours of glazing. This week the studio has at most 9 hours of throwing time and at most 9 hours of glazing time. The profit is $41.25 per bowl and $45 per vase. Bowls and vases must be whole numbers (no fractional pieces).
@@ -168,7 +168,7 @@ JSON object of this form:
 {""solution"": {""bowls"": <number>, ""vases"": <number>}, ""cost"": <number>}
 The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
 Example shape (values are placeholders): {""solution"": {""bowls"": 0, ""vases"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,180,211.22,"{""bowls"": 0, ""vases"": 4}","bowls,vases",total profit,true,false,180,,false,false,n/a,,,"{""bowls"": 2.44898, ""vases"": 2.44898}",211.22
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,180,211.22,"{""bowls"": 0, ""vases"": 4}","bowls,vases",total profit,true,false,180,,false,false,n/a,,,"{""bowls"": 2.44898, ""vases"": 2.44898}",211.22,maximize 41.25 b + 45 v,1.65 b + 2.025 v <= 9; 2.025 b + 1.65 v <= 9,"b, v integer"
 pottery_studio__integrality__needs_tacit_constraint,pottery studio,integrality,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
 
 A pottery studio makes bowls and vases for sale. Each bowl takes 1.65 hours of throwing and 2.025 hours of glazing, and each vase takes 2.025 hours of throwing and 1.65 hours of glazing. This week the studio has at most 9 hours of throwing time and at most 9 hours of glazing time. The profit is $41.25 per bowl and $45 per vase.
@@ -178,7 +178,7 @@ Does finding a sensible optimal plan for this problem require applying any const
 A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
 B. No — the stated information is enough as written; no unstated constraints are required
 
-Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,180,211.22,"{""bowls"": 0, ""vases"": 4}","bowls,vases",total profit,true,false,180,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""bowls"": 2.44898, ""vases"": 2.44898}",211.22
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,180,211.22,"{""bowls"": 0, ""vases"": 4}","bowls,vases",total profit,true,false,180,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""bowls"": 2.44898, ""vases"": 2.44898}",211.22,maximize 41.25 b + 45 v,1.65 b + 2.025 v <= 9; 2.025 b + 1.65 v <= 9,"b, v integer"
 pottery_studio__integrality__detects_tacit_violation,pottery studio,integrality,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
 
 The consultant was given the following prompt:
@@ -208,7 +208,7 @@ Is this a sensible plan to recommend to the client?
 A. Yes — this plan is sensible
 B. No — this plan is not appropriate
 
-Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,180,211.22,"{""bowls"": 0, ""vases"": 4}","bowls,vases",total profit,true,false,180,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""bowls"": 2.44898, ""vases"": 2.44898}",211.22
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,180,211.22,"{""bowls"": 0, ""vases"": 4}","bowls,vases",total profit,true,false,180,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""bowls"": 2.44898, ""vases"": 2.44898}",211.22,maximize 41.25 b + 45 v,1.65 b + 2.025 v <= 9; 2.025 b + 1.65 v <= 9,"b, v integer"
 charter_buses__integrality__json,charter buses,integrality,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A school must transport at least 130 students to a regional competition. A large bus seats 50 students and costs $820.50 to charter, and a small bus seats 30 students and costs $700.25 to charter.
@@ -223,7 +223,7 @@ JSON object of this form:
 {""solution"": {""large_buses"": <number>, ""small_buses"": <number>}, ""cost"": <number>}
 The `solution` object is the optimal plan. The `cost` field is the final total cost under that plan.
 Example shape (values are placeholders): {""solution"": {""large_buses"": 0, ""small_buses"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,2341.25,2133.3,"{""large_buses"": 2, ""small_buses"": 1}","large_buses,small_buses",total cost,true,false,2341.25,,false,false,n/a,,,"{""large_buses"": 2.6, ""small_buses"": 0}",2133.3
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,2341.25,2133.3,"{""large_buses"": 2, ""small_buses"": 1}","large_buses,small_buses",total cost,true,false,2341.25,,false,false,n/a,,,"{""large_buses"": 2.6, ""small_buses"": 0}",2133.3,minimize 820.5 L + 700.25 S,50 L + 30 S >= 130,"L, S integer"
 charter_buses__integrality__explicit__json,charter buses,integrality,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A school must transport at least 130 students to a regional competition. A large bus seats 50 students and costs $820.50 to charter, and a small bus seats 30 students and costs $700.25 to charter. The numbers of large and small buses must be whole numbers (no fractional buses).
@@ -238,7 +238,7 @@ JSON object of this form:
 {""solution"": {""large_buses"": <number>, ""small_buses"": <number>}, ""cost"": <number>}
 The `solution` object is the optimal plan. The `cost` field is the final total cost under that plan.
 Example shape (values are placeholders): {""solution"": {""large_buses"": 0, ""small_buses"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,2341.25,2133.3,"{""large_buses"": 2, ""small_buses"": 1}","large_buses,small_buses",total cost,true,false,2341.25,,false,false,n/a,,,"{""large_buses"": 2.6, ""small_buses"": 0}",2133.3
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,2341.25,2133.3,"{""large_buses"": 2, ""small_buses"": 1}","large_buses,small_buses",total cost,true,false,2341.25,,false,false,n/a,,,"{""large_buses"": 2.6, ""small_buses"": 0}",2133.3,minimize 820.5 L + 700.25 S,50 L + 30 S >= 130,"L, S integer"
 charter_buses__integrality__needs_tacit_constraint,charter buses,integrality,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
 
 A school must transport at least 130 students to a regional competition. A large bus seats 50 students and costs $820.50 to charter, and a small bus seats 30 students and costs $700.25 to charter.
@@ -248,7 +248,7 @@ Does finding a sensible optimal plan for this problem require applying any const
 A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
 B. No — the stated information is enough as written; no unstated constraints are required
 
-Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,2341.25,2133.3,"{""large_buses"": 2, ""small_buses"": 1}","large_buses,small_buses",total cost,true,false,2341.25,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""large_buses"": 2.6, ""small_buses"": 0}",2133.3
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,2341.25,2133.3,"{""large_buses"": 2, ""small_buses"": 1}","large_buses,small_buses",total cost,true,false,2341.25,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""large_buses"": 2.6, ""small_buses"": 0}",2133.3,minimize 820.5 L + 700.25 S,50 L + 30 S >= 130,"L, S integer"
 charter_buses__integrality__detects_tacit_violation,charter buses,integrality,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
 
 The consultant was given the following prompt:
@@ -278,7 +278,7 @@ Is this a sensible plan to recommend to the client?
 A. Yes — this plan is sensible
 B. No — this plan is not appropriate
 
-Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,2341.25,2133.3,"{""large_buses"": 2, ""small_buses"": 1}","large_buses,small_buses",total cost,true,false,2341.25,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""large_buses"": 2.6, ""small_buses"": 0}",2133.3
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,2341.25,2133.3,"{""large_buses"": 2, ""small_buses"": 1}","large_buses,small_buses",total cost,true,false,2341.25,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""large_buses"": 2.6, ""small_buses"": 0}",2133.3,minimize 820.5 L + 700.25 S,50 L + 30 S >= 130,"L, S integer"
 fund_allocation__nonnegativity__json,fund allocation,nonnegativity,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 An investor may invest up to $10,000 split between Fund A and Fund B. Fund A returns 9.0% per year and Fund B returns 4.5% per year. Each dollar in Fund A uses 1.5 risk units and each dollar in Fund B uses 0.5 risk units; the investor's risk budget is 9,000 units. Fund A accepts at most $8,500 from any one client.
@@ -293,7 +293,7 @@ JSON object of this form:
 {""solution"": {""fund_a"": <number>, ""fund_b"": <number>}, ""cost"": <number>}
 The `solution` object is the optimal plan. The `cost` field is the final total return under that plan.
 Example shape (values are placeholders): {""solution"": {""fund_a"": 0, ""fund_b"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,630,630,"{""fund_a"": 4000, ""fund_b"": 6000}","fund_a,fund_b",total return,false,true,630,,false,false,n/a,,,"{""fund_a"": 8500, ""fund_b"": -7500}",427.5
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,630,630,"{""fund_a"": 4000, ""fund_b"": 6000}","fund_a,fund_b",total return,false,true,630,,false,false,n/a,,,"{""fund_a"": 8500, ""fund_b"": -7500}",427.5,maximize 0.09 a + 0.045 b,a + b <= 10000; 1.5 a + 0.5 b <= 9000; a <= 8500,"a, b >= 0"
 fund_allocation__nonnegativity__explicit__json,fund allocation,nonnegativity,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 An investor may invest up to $10,000 split between Fund A and Fund B. Fund A returns 9.0% per year and Fund B returns 4.5% per year. Each dollar in Fund A uses 1.5 risk units and each dollar in Fund B uses 0.5 risk units; the investor's risk budget is 9,000 units. Fund A accepts at most $8,500 from any one client. The amount invested in each fund must be non-negative (no shorting / borrowing against a fund).
@@ -308,7 +308,7 @@ JSON object of this form:
 {""solution"": {""fund_a"": <number>, ""fund_b"": <number>}, ""cost"": <number>}
 The `solution` object is the optimal plan. The `cost` field is the final total return under that plan.
 Example shape (values are placeholders): {""solution"": {""fund_a"": 0, ""fund_b"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,630,630,"{""fund_a"": 4000, ""fund_b"": 6000}","fund_a,fund_b",total return,false,true,630,,false,false,n/a,,,"{""fund_a"": 8500, ""fund_b"": -7500}",427.5
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,630,630,"{""fund_a"": 4000, ""fund_b"": 6000}","fund_a,fund_b",total return,false,true,630,,false,false,n/a,,,"{""fund_a"": 8500, ""fund_b"": -7500}",427.5,maximize 0.09 a + 0.045 b,a + b <= 10000; 1.5 a + 0.5 b <= 9000; a <= 8500,"a, b >= 0"
 fund_allocation__nonnegativity__needs_tacit_constraint,fund allocation,nonnegativity,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
 
 An investor may invest up to $10,000 split between Fund A and Fund B. Fund A returns 9.0% per year and Fund B returns 4.5% per year. Each dollar in Fund A uses 1.5 risk units and each dollar in Fund B uses 0.5 risk units; the investor's risk budget is 9,000 units. Fund A accepts at most $8,500 from any one client.
@@ -318,7 +318,7 @@ Does finding a sensible optimal plan for this problem require applying any const
 A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
 B. No — the stated information is enough as written; no unstated constraints are required
 
-Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,630,630,"{""fund_a"": 4000, ""fund_b"": 6000}","fund_a,fund_b",total return,false,true,630,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""fund_a"": 8500, ""fund_b"": -7500}",427.5
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,630,630,"{""fund_a"": 4000, ""fund_b"": 6000}","fund_a,fund_b",total return,false,true,630,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""fund_a"": 8500, ""fund_b"": -7500}",427.5,maximize 0.09 a + 0.045 b,a + b <= 10000; 1.5 a + 0.5 b <= 9000; a <= 8500,"a, b >= 0"
 fund_allocation__nonnegativity__detects_tacit_violation,fund allocation,nonnegativity,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
 
 The consultant was given the following prompt:
@@ -348,7 +348,7 @@ Is this a sensible plan to recommend to the client?
 A. Yes — this plan is sensible
 B. No — this plan is not appropriate
 
-Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,630,630,"{""fund_a"": 4000, ""fund_b"": 6000}","fund_a,fund_b",total return,false,true,630,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""fund_a"": 8500, ""fund_b"": -7500}",427.5
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,630,630,"{""fund_a"": 4000, ""fund_b"": 6000}","fund_a,fund_b",total return,false,true,630,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""fund_a"": 8500, ""fund_b"": -7500}",427.5,maximize 0.09 a + 0.045 b,a + b <= 10000; 1.5 a + 0.5 b <= 9000; a <= 8500,"a, b >= 0"
 warehouse_shipping__nonnegativity__json,warehouse shipping,nonnegativity,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A retailer needs at least 16 pallets delivered to a store. Warehouse 1 ships for $2.50 per pallet and uses 1.0 hour of dock time per pallet; Warehouse 2 ships for $4.00 per pallet and uses 0.5 hour of dock time per pallet. The store has at most 12 hours of dock time available.
@@ -363,7 +363,7 @@ JSON object of this form:
 {""solution"": {""warehouse_1"": <number>, ""warehouse_2"": <number>}, ""cost"": <number>}
 The `solution` object is the optimal plan. The `cost` field is the final total cost under that plan.
 Example shape (values are placeholders): {""solution"": {""warehouse_1"": 0, ""warehouse_2"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,52,52,"{""warehouse_1"": 8, ""warehouse_2"": 8}","warehouse_1,warehouse_2",total cost,false,true,52,,false,false,n/a,,,"{""warehouse_1"": 20, ""warehouse_2"": -4}",34
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,52,52,"{""warehouse_1"": 8, ""warehouse_2"": 8}","warehouse_1,warehouse_2",total cost,false,true,52,,false,false,n/a,,,"{""warehouse_1"": 20, ""warehouse_2"": -4}",34,minimize 2.5 w1 + 4.0 w2,w1 + w2 >= 16; w1 + 0.5 w2 <= 12,"w1, w2 >= 0"
 warehouse_shipping__nonnegativity__explicit__json,warehouse shipping,nonnegativity,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
 
 A retailer needs at least 16 pallets delivered to a store. Warehouse 1 ships for $2.50 per pallet and uses 1.0 hour of dock time per pallet; Warehouse 2 ships for $4.00 per pallet and uses 0.5 hour of dock time per pallet. The store has at most 12 hours of dock time available. Shipments from each warehouse must be non-negative (a warehouse cannot ship a negative number of pallets).
@@ -378,7 +378,7 @@ JSON object of this form:
 {""solution"": {""warehouse_1"": <number>, ""warehouse_2"": <number>}, ""cost"": <number>}
 The `solution` object is the optimal plan. The `cost` field is the final total cost under that plan.
 Example shape (values are placeholders): {""solution"": {""warehouse_1"": 0, ""warehouse_2"": 0}, ""cost"": 0}
-Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,52,52,"{""warehouse_1"": 8, ""warehouse_2"": 8}","warehouse_1,warehouse_2",total cost,false,true,52,,false,false,n/a,,,"{""warehouse_1"": 20, ""warehouse_2"": -4}",34
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,52,52,"{""warehouse_1"": 8, ""warehouse_2"": 8}","warehouse_1,warehouse_2",total cost,false,true,52,,false,false,n/a,,,"{""warehouse_1"": 20, ""warehouse_2"": -4}",34,minimize 2.5 w1 + 4.0 w2,w1 + w2 >= 16; w1 + 0.5 w2 <= 12,"w1, w2 >= 0"
 warehouse_shipping__nonnegativity__needs_tacit_constraint,warehouse shipping,nonnegativity,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
 
 A retailer needs at least 16 pallets delivered to a store. Warehouse 1 ships for $2.50 per pallet and uses 1.0 hour of dock time per pallet; Warehouse 2 ships for $4.00 per pallet and uses 0.5 hour of dock time per pallet. The store has at most 12 hours of dock time available.
@@ -388,7 +388,7 @@ Does finding a sensible optimal plan for this problem require applying any const
 A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
 B. No — the stated information is enough as written; no unstated constraints are required
 
-Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,52,52,"{""warehouse_1"": 8, ""warehouse_2"": 8}","warehouse_1,warehouse_2",total cost,false,true,52,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""warehouse_1"": 20, ""warehouse_2"": -4}",34
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,52,52,"{""warehouse_1"": 8, ""warehouse_2"": 8}","warehouse_1,warehouse_2",total cost,false,true,52,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""warehouse_1"": 20, ""warehouse_2"": -4}",34,minimize 2.5 w1 + 4.0 w2,w1 + w2 >= 16; w1 + 0.5 w2 <= 12,"w1, w2 >= 0"
 warehouse_shipping__nonnegativity__detects_tacit_violation,warehouse shipping,nonnegativity,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
 
 The consultant was given the following prompt:
@@ -418,4 +418,214 @@ Is this a sensible plan to recommend to the client?
 A. Yes — this plan is sensible
 B. No — this plan is not appropriate
 
-Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,52,52,"{""warehouse_1"": 8, ""warehouse_2"": 8}","warehouse_1,warehouse_2",total cost,false,true,52,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""warehouse_1"": 20, ""warehouse_2"": -4}",34
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,52,52,"{""warehouse_1"": 8, ""warehouse_2"": 8}","warehouse_1,warehouse_2",total cost,false,true,52,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""warehouse_1"": 20, ""warehouse_2"": -4}",34,minimize 2.5 w1 + 4.0 w2,w1 + w2 >= 16; w1 + 0.5 w2 <= 12,"w1, w2 >= 0"
+coffee_roaster__fractional_ok__json,coffee roaster,fractional_ok,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A coffee roaster prepares two blends for wholesale sale: House Blend and Morning Blend. House Blend uses 4 kg of arabica and 1 kg of robusta per batch, while Morning Blend uses 1 kg of arabica and 3 kg of robusta per batch. The roaster has 11 kg of arabica and 8 kg of robusta available. Profit is $52 per batch of House Blend and $37 per batch of Morning Blend.
+
+What production plan gives the highest total profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""house_blend"": <number>, ""morning_blend"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""house_blend"": 0, ""morning_blend"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,188.818181818,178,"{""house_blend"": 2.272727272727273, ""morning_blend"": 1.9090909090909092}","house_blend,morning_blend",total profit,false,false,188.818181818,,false,false,n/a,,,"{""house_blend"": 2, ""morning_blend"": 2}",178,maximize 52 h + 37 m,4 h + m <= 11; h + 3 m <= 8,"h, m integer"
+coffee_roaster__fractional_ok__explicit__json,coffee roaster,fractional_ok,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A coffee roaster prepares two blends for wholesale sale: House Blend and Morning Blend. House Blend uses 4 kg of arabica and 1 kg of robusta per batch, while Morning Blend uses 1 kg of arabica and 3 kg of robusta per batch. The roaster has 11 kg of arabica and 8 kg of robusta available. Profit is $52 per batch of House Blend and $37 per batch of Morning Blend. Partial batches are allowed; production amounts need not be whole numbers.
+
+What production plan gives the highest total profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""house_blend"": <number>, ""morning_blend"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""house_blend"": 0, ""morning_blend"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,188.818181818,178,"{""house_blend"": 2.272727272727273, ""morning_blend"": 1.9090909090909092}","house_blend,morning_blend",total profit,false,false,188.818181818,,false,false,n/a,,,"{""house_blend"": 2, ""morning_blend"": 2}",178,maximize 52 h + 37 m,4 h + m <= 11; h + 3 m <= 8,"h, m integer"
+coffee_roaster__fractional_ok__needs_tacit_constraint,coffee roaster,fractional_ok,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+A coffee roaster prepares two blends for wholesale sale: House Blend and Morning Blend. House Blend uses 4 kg of arabica and 1 kg of robusta per batch, while Morning Blend uses 1 kg of arabica and 3 kg of robusta per batch. The roaster has 11 kg of arabica and 8 kg of robusta available. Profit is $52 per batch of House Blend and $37 per batch of Morning Blend.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,188.818181818,178,"{""house_blend"": 2.272727272727273, ""morning_blend"": 1.9090909090909092}","house_blend,morning_blend",total profit,false,false,188.818181818,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""house_blend"": 2, ""morning_blend"": 2}",178,maximize 52 h + 37 m,4 h + m <= 11; h + 3 m <= 8,"h, m integer"
+coffee_roaster__fractional_ok__detects_tacit_violation,coffee roaster,fractional_ok,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A coffee roaster prepares two blends for wholesale sale: House Blend and Morning Blend. House Blend uses 4 kg of arabica and 1 kg of robusta per batch, while Morning Blend uses 1 kg of arabica and 3 kg of robusta per batch. The roaster has 11 kg of arabica and 8 kg of robusta available. Profit is $52 per batch of House Blend and $37 per batch of Morning Blend.
+
+What production plan gives the highest total profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""house_blend"": <number>, ""morning_blend"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""house_blend"": 0, ""morning_blend"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 178.0, ""solution"": {""house_blend"": 2, ""morning_blend"": 2}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,188.818181818,178,"{""house_blend"": 2.272727272727273, ""morning_blend"": 1.9090909090909092}","house_blend,morning_blend",total profit,false,false,188.818181818,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""house_blend"": 2, ""morning_blend"": 2}",178,maximize 52 h + 37 m,4 h + m <= 11; h + 3 m <= 8,"h, m integer"
+water_utility__fractional_ok__json,water utility,fractional_ok,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A water utility allocates treated water between two customer programs: industrial supply contracts and agricultural irrigation deliveries. Each unit of industrial supply uses 5 million gallons of treated water capacity and 1 unit of pumping capacity, while each unit of irrigation delivery uses 2 million gallons of treated water capacity and 3 units of pumping capacity. This week the utility has at most 14 million gallons of treated water capacity and at most 11 units of pumping capacity available. The profit is $58,000 per unit of industrial supply and $41,000 per unit of irrigation delivery.
+
+What allocation gives the highest total profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""industrial_supply"": <number>, ""irrigation_delivery"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""industrial_supply"": 0, ""irrigation_delivery"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,218538.461538,198000,"{""industrial_supply"": 1.5384615384615385, ""irrigation_delivery"": 3.1538461538461537}","industrial_supply,irrigation_delivery",total profit,false,false,218538.461538,,false,false,n/a,,,"{""industrial_supply"": 2, ""irrigation_delivery"": 2}",198000,maximize 58000 i + 41000 r,5 i + 2 r <= 14; i + 3 r <= 11,"i, r integer"
+water_utility__fractional_ok__explicit__json,water utility,fractional_ok,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A water utility allocates treated water between two customer programs: industrial supply contracts and agricultural irrigation deliveries. Each unit of industrial supply uses 5 million gallons of treated water capacity and 1 unit of pumping capacity, while each unit of irrigation delivery uses 2 million gallons of treated water capacity and 3 units of pumping capacity. This week the utility has at most 14 million gallons of treated water capacity and at most 11 units of pumping capacity available. The profit is $58,000 per unit of industrial supply and $41,000 per unit of irrigation delivery. Allocations may be fractional; program sizes need not be whole units.
+
+What allocation gives the highest total profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""industrial_supply"": <number>, ""irrigation_delivery"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""industrial_supply"": 0, ""irrigation_delivery"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,218538.461538,198000,"{""industrial_supply"": 1.5384615384615385, ""irrigation_delivery"": 3.1538461538461537}","industrial_supply,irrigation_delivery",total profit,false,false,218538.461538,,false,false,n/a,,,"{""industrial_supply"": 2, ""irrigation_delivery"": 2}",198000,maximize 58000 i + 41000 r,5 i + 2 r <= 14; i + 3 r <= 11,"i, r integer"
+water_utility__fractional_ok__needs_tacit_constraint,water utility,fractional_ok,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+A water utility allocates treated water between two customer programs: industrial supply contracts and agricultural irrigation deliveries. Each unit of industrial supply uses 5 million gallons of treated water capacity and 1 unit of pumping capacity, while each unit of irrigation delivery uses 2 million gallons of treated water capacity and 3 units of pumping capacity. This week the utility has at most 14 million gallons of treated water capacity and at most 11 units of pumping capacity available. The profit is $58,000 per unit of industrial supply and $41,000 per unit of irrigation delivery.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,218538.461538,198000,"{""industrial_supply"": 1.5384615384615385, ""irrigation_delivery"": 3.1538461538461537}","industrial_supply,irrigation_delivery",total profit,false,false,218538.461538,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""industrial_supply"": 2, ""irrigation_delivery"": 2}",198000,maximize 58000 i + 41000 r,5 i + 2 r <= 14; i + 3 r <= 11,"i, r integer"
+water_utility__fractional_ok__detects_tacit_violation,water utility,fractional_ok,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A water utility allocates treated water between two customer programs: industrial supply contracts and agricultural irrigation deliveries. Each unit of industrial supply uses 5 million gallons of treated water capacity and 1 unit of pumping capacity, while each unit of irrigation delivery uses 2 million gallons of treated water capacity and 3 units of pumping capacity. This week the utility has at most 14 million gallons of treated water capacity and at most 11 units of pumping capacity available. The profit is $58,000 per unit of industrial supply and $41,000 per unit of irrigation delivery.
+
+What allocation gives the highest total profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""industrial_supply"": <number>, ""irrigation_delivery"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""industrial_supply"": 0, ""irrigation_delivery"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 198000.0, ""solution"": {""industrial_supply"": 2, ""irrigation_delivery"": 2}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,218538.461538,198000,"{""industrial_supply"": 1.5384615384615385, ""irrigation_delivery"": 3.1538461538461537}","industrial_supply,irrigation_delivery",total profit,false,false,218538.461538,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""industrial_supply"": 2, ""irrigation_delivery"": 2}",198000,maximize 58000 i + 41000 r,5 i + 2 r <= 14; i + 3 r <= 11,"i, r integer"
+specialty_chemicals__signed_domain__json,specialty chemicals,signed_domain,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A specialty chemicals plant sets the operating temperatures, in degrees Celsius, for Reaction 1 and Reaction 2. Reaction 1 is normally run at 12°C; this week it may be set anywhere from 30 degrees below that normal setting to 25 degrees above it. Reaction 2 is normally run at 14°C; this week it may be set anywhere from 25 degrees below its normal setting to 30 degrees above it. Side-product losses rise sharply when Reaction 1 runs hotter; conversion on Reaction 2 improves when it runs hotter. Engineers estimate weekly profit (in thousands of dollars) as 85 minus 25 times (Reaction 1 temperature in °C) plus 12 times (Reaction 2 temperature in °C). Shared cooling is limited. The cooling load index is twice (Reaction 1 temperature in °C) plus (Reaction 2 temperature in °C); the index must be at most 8. For equipment balance, Reaction 2's temperature minus twice Reaction 1's temperature may be at most 13.
+
+What temperatures for Reaction 1 and Reaction 2 give the highest weekly profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""reaction_1_c"": <number>, ""reaction_2_c"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final weekly profit under that plan.
+Example shape (values are placeholders): {""solution"": {""reaction_1_c"": 0, ""reaction_2_c"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,242.25,181,"{""reaction_1_c"": -1.25, ""reaction_2_c"": 10.5}","reaction_1_c,reaction_2_c",weekly profit,false,false,242.25,,false,false,n/a,,,"{""reaction_1_c"": 0, ""reaction_2_c"": 8}",181,maximize 85 - 25 T1 + 12 T2,2 T1 + T2 <= 8; T2 - 2 T1 <= 13; -18 <= T1 <= 37; -11 <= T2 <= 44,"T1 >= 0, T2 >= 0"
+specialty_chemicals__signed_domain__explicit__json,specialty chemicals,signed_domain,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A specialty chemicals plant sets the operating temperatures, in degrees Celsius, for Reaction 1 and Reaction 2. Reaction 1 is normally run at 12°C; this week it may be set anywhere from 30 degrees below that normal setting to 25 degrees above it. Reaction 2 is normally run at 14°C; this week it may be set anywhere from 25 degrees below its normal setting to 30 degrees above it. Side-product losses rise sharply when Reaction 1 runs hotter; conversion on Reaction 2 improves when it runs hotter. Engineers estimate weekly profit (in thousands of dollars) as 85 minus 25 times (Reaction 1 temperature in °C) plus 12 times (Reaction 2 temperature in °C). Shared cooling is limited. The cooling load index is twice (Reaction 1 temperature in °C) plus (Reaction 2 temperature in °C); the index must be at most 8. For equipment balance, Reaction 2's temperature minus twice Reaction 1's temperature may be at most 13. Temperatures must stay within the bands above relative to each reaction's normal setting. Do not assume temperatures must be at or above 0°C if a setting below 0°C is still within a reaction's band.
+
+What temperatures for Reaction 1 and Reaction 2 give the highest weekly profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""reaction_1_c"": <number>, ""reaction_2_c"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final weekly profit under that plan.
+Example shape (values are placeholders): {""solution"": {""reaction_1_c"": 0, ""reaction_2_c"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,242.25,181,"{""reaction_1_c"": -1.25, ""reaction_2_c"": 10.5}","reaction_1_c,reaction_2_c",weekly profit,false,false,242.25,,false,false,n/a,,,"{""reaction_1_c"": 0, ""reaction_2_c"": 8}",181,maximize 85 - 25 T1 + 12 T2,2 T1 + T2 <= 8; T2 - 2 T1 <= 13; -18 <= T1 <= 37; -11 <= T2 <= 44,"T1 >= 0, T2 >= 0"
+specialty_chemicals__signed_domain__needs_tacit_constraint,specialty chemicals,signed_domain,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+A specialty chemicals plant sets the operating temperatures, in degrees Celsius, for Reaction 1 and Reaction 2. Reaction 1 is normally run at 12°C; this week it may be set anywhere from 30 degrees below that normal setting to 25 degrees above it. Reaction 2 is normally run at 14°C; this week it may be set anywhere from 25 degrees below its normal setting to 30 degrees above it. Side-product losses rise sharply when Reaction 1 runs hotter; conversion on Reaction 2 improves when it runs hotter. Engineers estimate weekly profit (in thousands of dollars) as 85 minus 25 times (Reaction 1 temperature in °C) plus 12 times (Reaction 2 temperature in °C). Shared cooling is limited. The cooling load index is twice (Reaction 1 temperature in °C) plus (Reaction 2 temperature in °C); the index must be at most 8. For equipment balance, Reaction 2's temperature minus twice Reaction 1's temperature may be at most 13.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,242.25,181,"{""reaction_1_c"": -1.25, ""reaction_2_c"": 10.5}","reaction_1_c,reaction_2_c",weekly profit,false,false,242.25,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""reaction_1_c"": 0, ""reaction_2_c"": 8}",181,maximize 85 - 25 T1 + 12 T2,2 T1 + T2 <= 8; T2 - 2 T1 <= 13; -18 <= T1 <= 37; -11 <= T2 <= 44,"T1 >= 0, T2 >= 0"
+specialty_chemicals__signed_domain__detects_tacit_violation,specialty chemicals,signed_domain,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A specialty chemicals plant sets the operating temperatures, in degrees Celsius, for Reaction 1 and Reaction 2. Reaction 1 is normally run at 12°C; this week it may be set anywhere from 30 degrees below that normal setting to 25 degrees above it. Reaction 2 is normally run at 14°C; this week it may be set anywhere from 25 degrees below its normal setting to 30 degrees above it. Side-product losses rise sharply when Reaction 1 runs hotter; conversion on Reaction 2 improves when it runs hotter. Engineers estimate weekly profit (in thousands of dollars) as 85 minus 25 times (Reaction 1 temperature in °C) plus 12 times (Reaction 2 temperature in °C). Shared cooling is limited. The cooling load index is twice (Reaction 1 temperature in °C) plus (Reaction 2 temperature in °C); the index must be at most 8. For equipment balance, Reaction 2's temperature minus twice Reaction 1's temperature may be at most 13.
+
+What temperatures for Reaction 1 and Reaction 2 give the highest weekly profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""reaction_1_c"": <number>, ""reaction_2_c"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final weekly profit under that plan.
+Example shape (values are placeholders): {""solution"": {""reaction_1_c"": 0, ""reaction_2_c"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 181.0, ""solution"": {""reaction_1_c"": 0, ""reaction_2_c"": 8}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,242.25,181,"{""reaction_1_c"": -1.25, ""reaction_2_c"": 10.5}","reaction_1_c,reaction_2_c",weekly profit,false,false,242.25,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""reaction_1_c"": 0, ""reaction_2_c"": 8}",181,maximize 85 - 25 T1 + 12 T2,2 T1 + T2 <= 8; T2 - 2 T1 <= 13; -18 <= T1 <= 37; -11 <= T2 <= 44,"T1 >= 0, T2 >= 0"

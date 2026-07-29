@@ -6,7 +6,7 @@ Writes:
 - ``docs/lo-benchmark-study-sheet.txt`` — non-explicit prompts only (implicit JSON
   + tacit audits; no explicit JSON parallels).
 - ``docs/lo-benchmark-study-sheet-all-prompts.txt`` — every benchmark prompt
-  (24 in v4).
+  (36 in v5).
 
 Each entry includes the prompt, keyed answer, and model responses from
 downloaded Kaggle runs when available.
