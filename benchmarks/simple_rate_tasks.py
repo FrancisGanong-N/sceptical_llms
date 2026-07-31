@@ -39,9 +39,12 @@ def model_slug_from_llm(llm) -> str:
     return getattr(llm, "model", None) or getattr(llm, "name", None) or "unknown"
 
 
-def _llm_extra_api_params(token_cap: int) -> dict[str, int | dict[str, int]]:
+def _llm_extra_api_params(
+    token_cap: int,
+) -> dict[str, int | list[str] | dict[str, int]]:
     return {
         "max_tokens": token_cap,
+        "modalities": ["text"],
         "extra_body": {"max_output_tokens": token_cap},
     }
 

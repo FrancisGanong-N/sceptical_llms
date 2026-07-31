@@ -16,6 +16,7 @@ class TestPromptLlm:
     def test_llm_extra_api_params(self):
         params = _llm_extra_api_params(512)
         assert params["max_tokens"] == 512
+        assert params["modalities"] == ["text"]
         assert params["extra_body"]["max_output_tokens"] == 512
 
     def test_prompt_llm_passes_max_output_tokens_from_caller(self):
@@ -31,4 +32,5 @@ class TestPromptLlm:
         _prompt_llm(llm, "test prompt", max_output_tokens=256)
         assert llm.last_extra is not None
         assert llm.last_extra["max_tokens"] == 256
+        assert llm.last_extra["modalities"] == ["text"]
         assert llm.last_extra["extra_body"]["max_output_tokens"] == 256

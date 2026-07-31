@@ -183,6 +183,7 @@ class TestScoring:
 
         params = _llm_extra_api_params(128)
         assert params["max_tokens"] == 128
+        assert params["modalities"] == ["text"]
         assert "max_output_tokens" not in params
         assert params["extra_body"]["max_output_tokens"] == 128
 
