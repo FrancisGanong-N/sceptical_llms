@@ -5,7 +5,10 @@ from pathlib import Path
 
 import kaggle_benchmarks as kbench
 
+from benchmarks.kbench_openai_patch import apply_null_message_patch
 from benchmarks.kbench_resume import evaluate_prompt_task_with_resume
+
+apply_null_message_patch()
 from benchmarks.simple_rate import (
     BENCHMARK_CSV,
     DEFAULT_MERGED_RESULTS_CSV,

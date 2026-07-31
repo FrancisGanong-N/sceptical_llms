@@ -4,6 +4,7 @@ from pathlib import Path
 
 import kaggle_benchmarks as kbench
 
+from benchmarks.kbench_openai_patch import apply_null_message_patch
 from benchmarks.kbench_resume import evaluate_prompt_task_with_resume
 from benchmarks.base_rate import (
     BENCHMARK_CSV,
@@ -15,6 +16,8 @@ from benchmarks.base_rate import (
     score_run_rows,
     write_merged_results_csv,
 )
+
+apply_null_message_patch()
 
 
 def _kaggle_merged_results_path() -> Path:
