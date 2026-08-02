@@ -1,0 +1,1003 @@
+example_id,vignette_name,failure_mode,condition,problem_type,intersection_size,response_type,has_statistics,variant,prompt,well_posed,normative,true_objective,naive_objective,true_solution,solution_keys,objective_name,implicit_integer,implicit_nonnegative,normative_percent,normative_choice,confidence_required,scepticism_required,scepticism_score_target,option_a_label,option_b_label,violating_solution,violating_objective,optimization_criterion,stated_constraints,tacit_mistake,model,llm_response,reasoning,answer_line,confidence_line,comment_line,parsed_answer_type,parsed_percent,parsed_choice,parsed_confidence,scoring_type,parseable,score,naive_lp_confusion,parsed_objective,parsed_solution
+carpenter_furniture__integrality__detects_tacit_violation,carpenter furniture,integrality,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A carpenter builds bookcases and desks for sale. Each bookcase takes 1.5 hours of cutting and 2.25 hours of assembly, and each desk takes 2.25 hours of cutting and 1.5 hours of assembly. This week the carpenter has at most 9 hours of cutting time and at most 9 hours of assembly time. The profit is $37.50 per bookcase and $50 per desk.
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""bookcases"": <number>, ""desks"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""bookcases"": 0, ""desks"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 210.0, ""solution"": {""bookcases"": 2.4, ""desks"": 2.4}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,200,210,"{""bookcases"": 0, ""desks"": 4}","bookcases,desks",total profit,true,false,200,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""bookcases"": 2.4, ""desks"": 2.4}",210,maximize 37.5 b + 50 d,1.5 b + 2.25 d <= 9; 2.25 b + 1.5 d <= 9,"b, d integer",anthropic/claude-opus-5@default,B,,B,,,mc_choice,,B,,mc_numeric,true,true,false,,
+carpenter_furniture__integrality__explicit__json,carpenter furniture,integrality,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A carpenter builds bookcases and desks for sale. Each bookcase takes 1.5 hours of cutting and 2.25 hours of assembly, and each desk takes 2.25 hours of cutting and 1.5 hours of assembly. This week the carpenter has at most 9 hours of cutting time and at most 9 hours of assembly time. The profit is $37.50 per bookcase and $50 per desk. Bookcases and desks must be whole numbers (no fractional furniture).
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""bookcases"": <number>, ""desks"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""bookcases"": 0, ""desks"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,200,210,"{""bookcases"": 0, ""desks"": 4}","bookcases,desks",total profit,true,false,200,,false,false,n/a,,,"{""bookcases"": 2.4, ""desks"": 2.4}",210,maximize 37.5 b + 50 d,1.5 b + 2.25 d <= 9; 2.25 b + 1.5 d <= 9,"b, d integer",anthropic/claude-opus-5@default,"{""solution"": {""bookcases"": 0, ""desks"": 4}, ""cost"": 200}
+
+Enumerating integer options under the constraints (1.5B + 2.25D ≤ 9 cutting, 2.25B + 1.5D ≤ 9 assembly):
+
+- B=0, D=4: cutting 9.0, assembly 6.0 → $200.00 ✔ best
+- B=1, D=3: cutting 8.25, assembly 6.75 → $187.50
+- B=2, D=2: cutting 7.5, assembly 7.5 → $175.00
+- B=3, D=1: cutting 6.75, assembly 8.25 → $162.50
+- B=4, D=0: cutting 6.0, assembly 9.0 → $150.00
+
+The LP relaxation optimum is B=D=2.4 (both constraints tight) for $210, but that's infeasible in whole units; the best integer plan is 4 desks for $200. Note this plan leaves 3 hours of assembly time idle — if the carpenter can shift an hour of assembly capacity into cutting (e.g., cross-trained help or outsourced cutting), 5 desks would need 11.25 cutting hours and yield $250, so relieving the cutting bottleneck is the highest-value operational change.",,"{""solution"": {""bookcases"": 0, ""desks"": 4}, ""cost"": 200}
+
+Enumerating integer options under the constraints (1.5B + 2.25D ≤ 9 cutting, 2.25B + 1.5D ≤ 9 assembly):
+
+- B=0, D=4: cutting 9.0, assembly 6.0 → $200.00 ✔ best
+- B=1, D=3: cutting 8.25, assembly 6.75 → $187.50
+- B=2, D=2: cutting 7.5, assembly 7.5 → $175.00
+- B=3, D=1: cutting 6.75, assembly 8.25 → $162.50
+- B=4, D=0: cutting 6.0, assembly 9.0 → $150.00
+
+The LP relaxation optimum is B=D=2.4 (both constraints tight) for $210, but that's infeasible in whole units; the best integer plan is 4 desks for $200. Note this plan leaves 3 hours of assembly time idle — if the carpenter can shift an hour of assembly capacity into cutting (e.g., cross-trained help or outsourced cutting), 5 desks would need 11.25 cutting hours and yield $250, so relieving the cutting bottleneck is the highest-value operational change.",,,probability,200,,,open,true,true,false,200,"{""bookcases"": 0, ""desks"": 4}"
+carpenter_furniture__integrality__json,carpenter furniture,integrality,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A carpenter builds bookcases and desks for sale. Each bookcase takes 1.5 hours of cutting and 2.25 hours of assembly, and each desk takes 2.25 hours of cutting and 1.5 hours of assembly. This week the carpenter has at most 9 hours of cutting time and at most 9 hours of assembly time. The profit is $37.50 per bookcase and $50 per desk.
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""bookcases"": <number>, ""desks"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""bookcases"": 0, ""desks"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,200,210,"{""bookcases"": 0, ""desks"": 4}","bookcases,desks",total profit,true,false,200,,false,false,n/a,,,"{""bookcases"": 2.4, ""desks"": 2.4}",210,maximize 37.5 b + 50 d,1.5 b + 2.25 d <= 9; 2.25 b + 1.5 d <= 9,"b, d integer",anthropic/claude-opus-5@default,"{""solution"": {""bookcases"": 0, ""desks"": 4}, ""cost"": 200}
+
+Assuming whole units must be produced (partial furniture can't be sold), the best plan is 4 desks and 0 bookcases, using 9 hours of cutting (the binding constraint) and 6 hours of assembly, for $200 profit.
+
+Checks on alternatives: 4 bookcases uses 6 cutting / 9 assembly hours and yields only $150. Mixed integer plans are worse — e.g., 2 bookcases + 2 desks uses 7.5 hours of each and yields $175; 1 bookcase + 3 desks uses 8.25 cutting / 6.75 assembly and yields $187.50; 3 bookcases + 2 desks would need 9 cutting and 9.75 assembly hours, which exceeds the assembly limit.
+
+Qualification: if fractional production were allowed (e.g., work-in-progress carried to next week), the LP optimum is 2.4 bookcases and 2.4 desks, using all 9 hours of both cutting and assembly, for $210. The integer-feasible recommendation above is 4 desks at $200. Note also that 3 hours of assembly time go unused under this plan — that slack could be sold as service work or used to start next week's inventory.",,"{""solution"": {""bookcases"": 0, ""desks"": 4}, ""cost"": 200}
+
+Assuming whole units must be produced (partial furniture can't be sold), the best plan is 4 desks and 0 bookcases, using 9 hours of cutting (the binding constraint) and 6 hours of assembly, for $200 profit.
+
+Checks on alternatives: 4 bookcases uses 6 cutting / 9 assembly hours and yields only $150. Mixed integer plans are worse — e.g., 2 bookcases + 2 desks uses 7.5 hours of each and yields $175; 1 bookcase + 3 desks uses 8.25 cutting / 6.75 assembly and yields $187.50; 3 bookcases + 2 desks would need 9 cutting and 9.75 assembly hours, which exceeds the assembly limit.
+
+Qualification: if fractional production were allowed (e.g., work-in-progress carried to next week), the LP optimum is 2.4 bookcases and 2.4 desks, using all 9 hours of both cutting and assembly, for $210. The integer-feasible recommendation above is 4 desks at $200. Note also that 3 hours of assembly time go unused under this plan — that slack could be sold as service work or used to start next week's inventory.",,,probability,200,,,open,true,true,false,200,"{""bookcases"": 0, ""desks"": 4}"
+carpenter_furniture__integrality__needs_tacit_constraint,carpenter furniture,integrality,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+A carpenter builds bookcases and desks for sale. Each bookcase takes 1.5 hours of cutting and 2.25 hours of assembly, and each desk takes 2.25 hours of cutting and 1.5 hours of assembly. This week the carpenter has at most 9 hours of cutting time and at most 9 hours of assembly time. The profit is $37.50 per bookcase and $50 per desk.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,200,210,"{""bookcases"": 0, ""desks"": 4}","bookcases,desks",total profit,true,false,200,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""bookcases"": 2.4, ""desks"": 2.4}",210,maximize 37.5 b + 50 d,1.5 b + 2.25 d <= 9; 2.25 b + 1.5 d <= 9,"b, d integer",anthropic/claude-opus-5@default,A,,A,,,mc_choice,,A,,mc_numeric,true,true,false,,
+charter_buses__integrality__detects_tacit_violation,charter buses,integrality,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A school must transport at least 130 students to a regional competition. A large bus seats 50 students and costs $820.50 to charter, and a small bus seats 30 students and costs $700.25 to charter.
+
+What charter plan meets the requirement at the lowest total cost?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""large_buses"": <number>, ""small_buses"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total cost under that plan.
+Example shape (values are placeholders): {""solution"": {""large_buses"": 0, ""small_buses"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 2133.3, ""solution"": {""large_buses"": 2.6, ""small_buses"": 0}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,2341.25,2133.3,"{""large_buses"": 2, ""small_buses"": 1}","large_buses,small_buses",total cost,true,false,2341.25,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""large_buses"": 2.6, ""small_buses"": 0}",2133.3,minimize 820.5 L + 700.25 S,50 L + 30 S >= 130,"L, S integer",anthropic/claude-opus-5@default,B,,B,,,mc_choice,,B,,mc_numeric,true,true,false,,
+charter_buses__integrality__explicit__json,charter buses,integrality,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A school must transport at least 130 students to a regional competition. A large bus seats 50 students and costs $820.50 to charter, and a small bus seats 30 students and costs $700.25 to charter. The numbers of large and small buses must be whole numbers (no fractional buses).
+
+What charter plan meets the requirement at the lowest total cost?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""large_buses"": <number>, ""small_buses"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total cost under that plan.
+Example shape (values are placeholders): {""solution"": {""large_buses"": 0, ""small_buses"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,2341.25,2133.3,"{""large_buses"": 2, ""small_buses"": 1}","large_buses,small_buses",total cost,true,false,2341.25,,false,false,n/a,,,"{""large_buses"": 2.6, ""small_buses"": 0}",2133.3,minimize 820.5 L + 700.25 S,50 L + 30 S >= 130,"L, S integer",anthropic/claude-opus-5@default,"{""solution"": {""large_buses"": 2, ""small_buses"": 1}, ""cost"": 2341.25}
+
+Enumeration of the feasible integer options (capacity ≥ 130):
+
+- 3 large, 0 small: 150 seats, $2,461.50
+- 2 large, 1 small: 130 seats, $2,341.25 ← lowest cost
+- 2 large, 2 small: 160 seats, $3,041.50
+- 1 large, 3 small: 140 seats, $2,921.25
+- 0 large, 5 small: 150 seats, $3,501.25
+
+The optimal plan is 2 large buses plus 1 small bus, giving exactly 130 seats at $2,341.25.
+
+Qualifications worth noting:
+- This assumes buses can be chartered in any mix and that all 130 students must ride (no other transport). It also assumes no minimum-fill, driver, or per-mile surcharges beyond the flat charter fees.
+- The plan leaves zero spare seats. If attendance could rise, chaperones need seats, or a bus is unavailable, the next-best options are 1 large + 3 small (140 seats, $2,921.25) or 3 large (150 seats, $2,461.50) — the latter is the cheaper way to buy a 20-seat buffer.",,"{""solution"": {""large_buses"": 2, ""small_buses"": 1}, ""cost"": 2341.25}
+
+Enumeration of the feasible integer options (capacity ≥ 130):
+
+- 3 large, 0 small: 150 seats, $2,461.50
+- 2 large, 1 small: 130 seats, $2,341.25 ← lowest cost
+- 2 large, 2 small: 160 seats, $3,041.50
+- 1 large, 3 small: 140 seats, $2,921.25
+- 0 large, 5 small: 150 seats, $3,501.25
+
+The optimal plan is 2 large buses plus 1 small bus, giving exactly 130 seats at $2,341.25.
+
+Qualifications worth noting:
+- This assumes buses can be chartered in any mix and that all 130 students must ride (no other transport). It also assumes no minimum-fill, driver, or per-mile surcharges beyond the flat charter fees.
+- The plan leaves zero spare seats. If attendance could rise, chaperones need seats, or a bus is unavailable, the next-best options are 1 large + 3 small (140 seats, $2,921.25) or 3 large (150 seats, $2,461.50) — the latter is the cheaper way to buy a 20-seat buffer.",,,probability,2341.25,,,open,true,true,false,2341.25,"{""large_buses"": 2, ""small_buses"": 1}"
+charter_buses__integrality__json,charter buses,integrality,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A school must transport at least 130 students to a regional competition. A large bus seats 50 students and costs $820.50 to charter, and a small bus seats 30 students and costs $700.25 to charter.
+
+What charter plan meets the requirement at the lowest total cost?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""large_buses"": <number>, ""small_buses"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total cost under that plan.
+Example shape (values are placeholders): {""solution"": {""large_buses"": 0, ""small_buses"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,2341.25,2133.3,"{""large_buses"": 2, ""small_buses"": 1}","large_buses,small_buses",total cost,true,false,2341.25,,false,false,n/a,,,"{""large_buses"": 2.6, ""small_buses"": 0}",2133.3,minimize 820.5 L + 700.25 S,50 L + 30 S >= 130,"L, S integer",anthropic/claude-opus-5@default,"<!-- Enumerate feasible combos: need 50L + 30S >= 130 -->
+
+Let me enumerate options.
+
+- L=0: need 30S ≥ 130 → S ≥ 4.33 → S=5, cost = 5(700.25) = 3501.25
+- L=1: 50 + 30S ≥ 130 → S ≥ 2.67 → S=3, cost = 820.50 + 2100.75 = 2921.25
+- L=2: 100 + 30S ≥ 130 → S ≥ 1 → S=1, cost = 1641.00 + 700.25 = 2341.25
+- L=3: 150 ≥ 130 → S=0, cost = 2461.50
+- L=4: 3282.00 (worse)
+
+Minimum is L=2, S=1 at $2341.25.
+
+{""solution"": {""large_buses"": 2, ""small_buses"": 1}, ""cost"": 2341.25}
+
+Two large buses plus one small bus provides 130 seats exactly — no wasted capacity — at a total of $2,341.25. The closest alternatives are three large buses ($2,461.50, with 20 empty seats) and one large plus three small ($2,921.25). Note that if attendance might rise above 130, three large buses ($2,461.50) buys 20 extra seats for only $120.25 more, which may be worth the flexibility.",,"<!-- Enumerate feasible combos: need 50L + 30S >= 130 -->
+
+Let me enumerate options.
+
+- L=0: need 30S ≥ 130 → S ≥ 4.33 → S=5, cost = 5(700.25) = 3501.25
+- L=1: 50 + 30S ≥ 130 → S ≥ 2.67 → S=3, cost = 820.50 + 2100.75 = 2921.25
+- L=2: 100 + 30S ≥ 130 → S ≥ 1 → S=1, cost = 1641.00 + 700.25 = 2341.25
+- L=3: 150 ≥ 130 → S=0, cost = 2461.50
+- L=4: 3282.00 (worse)
+
+Minimum is L=2, S=1 at $2341.25.
+
+{""solution"": {""large_buses"": 2, ""small_buses"": 1}, ""cost"": 2341.25}
+
+Two large buses plus one small bus provides 130 seats exactly — no wasted capacity — at a total of $2,341.25. The closest alternatives are three large buses ($2,461.50, with 20 empty seats) and one large plus three small ($2,921.25). Note that if attendance might rise above 130, three large buses ($2,461.50) buys 20 extra seats for only $120.25 more, which may be worth the flexibility.",,,probability,2341.25,,,open,true,true,false,2341.25,"{""large_buses"": 2, ""small_buses"": 1}"
+charter_buses__integrality__needs_tacit_constraint,charter buses,integrality,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+A school must transport at least 130 students to a regional competition. A large bus seats 50 students and costs $820.50 to charter, and a small bus seats 30 students and costs $700.25 to charter.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,2341.25,2133.3,"{""large_buses"": 2, ""small_buses"": 1}","large_buses,small_buses",total cost,true,false,2341.25,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""large_buses"": 2.6, ""small_buses"": 0}",2133.3,minimize 820.5 L + 700.25 S,50 L + 30 S >= 130,"L, S integer",anthropic/claude-opus-5@default,A,,A,,,mc_choice,,A,,mc_numeric,true,true,false,,
+coffee_roaster__fractional_ok__detects_tacit_violation,coffee roaster,fractional_ok,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A coffee roaster prepares two blends for wholesale sale: House Blend and Morning Blend. House Blend uses 4 kg of arabica and 1 kg of robusta per batch, while Morning Blend uses 1 kg of arabica and 3 kg of robusta per batch. The roaster has 11 kg of arabica and 8 kg of robusta available. Profit is $52 per batch of House Blend and $37 per batch of Morning Blend.
+
+What production plan gives the highest total profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""house_blend"": <number>, ""morning_blend"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""house_blend"": 0, ""morning_blend"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 178.0, ""solution"": {""house_blend"": 2, ""morning_blend"": 2}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,188.818181818,178,"{""house_blend"": 2.272727272727273, ""morning_blend"": 1.9090909090909092}","house_blend,morning_blend",total profit,false,false,188.818181818,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""house_blend"": 2, ""morning_blend"": 2}",178,maximize 52 h + 37 m,4 h + m <= 11; h + 3 m <= 8,"h, m integer",anthropic/claude-opus-5@default,"<thinking>
+Let me check. Constraints: 4H + M ≤ 11, H + 3M ≤ 8. Profit 52H + 37M.
+
+Proposed: H=2, M=2: arabica 8+2=10 ≤11 ok; robusta 2+6=8 ≤8 ok. Profit = 104+74=178.
+
+Check better integer solutions. H=2, M=2 gives 178.
+H=1, M=2: 52+74=126.
+H=2, M=1: 104+37=141.
+H=2, M=2 = 178.
+H=1, M=2: robusta 1+6=7 ok, arabica 4+2=6.
+Could H=2, M=2 be improved? Try H=2, M=2 uses all robusta. H=1, M=2 → could add? H=2,M=2 already.
+Try H=0, M=2: 74. 
+H=2, M=2 seems best integer. Check H=2, M=2 vs LP: solve 4H+M=11, H+3M=8 → multiply second by 4: 4H+12M=32; subtract: 11M=21 → M=21/11≈1.909, H=(8-3*1.909)=8-5.727=2.273. Profit = 52*2.273+37*1.909=118.18+70.64=188.8. Integer options: H=2,M=2 profit 178. H=2, M=1: 141. H=1,M=2:126. So 178 best if integers.
+
+But if fractional allowed (batches maybe fractional?), the answer would be 188.8 approx. Typically these problems use integer batches. Hmm. The question asks whether the plan is sensible. Given feasibility and optimality among integers, likely A.
+
+Actually check H=2, M=2 is feasible and optimal integer. Yes, A.</thinking>A",,"Actually check H=2, M=2 is feasible and optimal integer. Yes, A.</thinking>A",,,mc_choice,,A,,mc_numeric,true,false,false,,
+coffee_roaster__fractional_ok__explicit__json,coffee roaster,fractional_ok,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A coffee roaster prepares two blends for wholesale sale: House Blend and Morning Blend. House Blend uses 4 kg of arabica and 1 kg of robusta per batch, while Morning Blend uses 1 kg of arabica and 3 kg of robusta per batch. The roaster has 11 kg of arabica and 8 kg of robusta available. Profit is $52 per batch of House Blend and $37 per batch of Morning Blend. Partial batches are allowed; production amounts need not be whole numbers.
+
+What production plan gives the highest total profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""house_blend"": <number>, ""morning_blend"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""house_blend"": 0, ""morning_blend"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,188.818181818,178,"{""house_blend"": 2.272727272727273, ""morning_blend"": 1.9090909090909092}","house_blend,morning_blend",total profit,false,false,188.818181818,,false,false,n/a,,,"{""house_blend"": 2, ""morning_blend"": 2}",178,maximize 52 h + 37 m,4 h + m <= 11; h + 3 m <= 8,"h, m integer",anthropic/claude-opus-5@default,"{""solution"": {""house_blend"": 2.2727272727, ""morning_blend"": 1.9090909091}, ""cost"": 188.8181818182}
+
+Constraints: 4H + M ≤ 11 (arabica), H + 3M ≤ 8 (robusta), H, M ≥ 0.
+
+Candidate vertices:
+- (0, 0): profit $0
+- (2.75, 0): profit $143 (arabica binding, robusta slack)
+- (0, 2.667): profit $98.67
+- (25/11, 21/11) = (2.2727, 1.9091): both constraints binding, profit = 52(25/11) + 37(21/11) = (1300 + 777)/11 = 2077/11 ≈ $188.82
+
+Optimal plan: produce about 2.27 batches of House Blend and 1.91 batches of Morning Blend, consuming all 11 kg arabica and all 8 kg robusta, for a total profit of approximately $188.82. Since partial batches are permitted, this fractional solution is feasible; if whole batches were required, the best integer plan would be 2 House and 2 Morning for $178.",,"{""solution"": {""house_blend"": 2.2727272727, ""morning_blend"": 1.9090909091}, ""cost"": 188.8181818182}
+
+Constraints: 4H + M ≤ 11 (arabica), H + 3M ≤ 8 (robusta), H, M ≥ 0.
+
+Candidate vertices:
+- (0, 0): profit $0
+- (2.75, 0): profit $143 (arabica binding, robusta slack)
+- (0, 2.667): profit $98.67
+- (25/11, 21/11) = (2.2727, 1.9091): both constraints binding, profit = 52(25/11) + 37(21/11) = (1300 + 777)/11 = 2077/11 ≈ $188.82
+
+Optimal plan: produce about 2.27 batches of House Blend and 1.91 batches of Morning Blend, consuming all 11 kg arabica and all 8 kg robusta, for a total profit of approximately $188.82. Since partial batches are permitted, this fractional solution is feasible; if whole batches were required, the best integer plan would be 2 House and 2 Morning for $178.",,,probability,188.818,,,open,true,true,false,188.818,"{""house_blend"": 2.2727272727, ""morning_blend"": 1.9090909091}"
+coffee_roaster__fractional_ok__json,coffee roaster,fractional_ok,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A coffee roaster prepares two blends for wholesale sale: House Blend and Morning Blend. House Blend uses 4 kg of arabica and 1 kg of robusta per batch, while Morning Blend uses 1 kg of arabica and 3 kg of robusta per batch. The roaster has 11 kg of arabica and 8 kg of robusta available. Profit is $52 per batch of House Blend and $37 per batch of Morning Blend.
+
+What production plan gives the highest total profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""house_blend"": <number>, ""morning_blend"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""house_blend"": 0, ""morning_blend"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,188.818181818,178,"{""house_blend"": 2.272727272727273, ""morning_blend"": 1.9090909090909092}","house_blend,morning_blend",total profit,false,false,188.818181818,,false,false,n/a,,,"{""house_blend"": 2, ""morning_blend"": 2}",178,maximize 52 h + 37 m,4 h + m <= 11; h + 3 m <= 8,"h, m integer",anthropic/claude-opus-5@default,"{""solution"": {""house_blend"": 2, ""morning_blend"": 2}, ""cost"": 178}
+
+Assuming batches must be whole units, the best integer plan is 2 House Blend and 2 Morning Blend batches, using 10 kg arabica (1 kg spare) and 8 kg robusta (fully used), for $178 profit. Nearby alternatives are worse: 2 House + 1 Morning = $141; 1 House + 2 Morning = $126. If fractional batches were allowed, the LP optimum is 2.4545 House and 1.1818 Morning for about $171.3 — lower than the integer solution above only because the continuous optimum here is actually $171.4 at the arabica/robusta intersection, so the integer point (2,2) is preferable and feasible. Verify batch divisibility with the roaster before committing.",,"{""solution"": {""house_blend"": 2, ""morning_blend"": 2}, ""cost"": 178}
+
+Assuming batches must be whole units, the best integer plan is 2 House Blend and 2 Morning Blend batches, using 10 kg arabica (1 kg spare) and 8 kg robusta (fully used), for $178 profit. Nearby alternatives are worse: 2 House + 1 Morning = $141; 1 House + 2 Morning = $126. If fractional batches were allowed, the LP optimum is 2.4545 House and 1.1818 Morning for about $171.3 — lower than the integer solution above only because the continuous optimum here is actually $171.4 at the arabica/robusta intersection, so the integer point (2,2) is preferable and feasible. Verify batch divisibility with the roaster before committing.",,,probability,178,,,open,true,false,true,178,"{""house_blend"": 2, ""morning_blend"": 2}"
+coffee_roaster__fractional_ok__needs_tacit_constraint,coffee roaster,fractional_ok,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+A coffee roaster prepares two blends for wholesale sale: House Blend and Morning Blend. House Blend uses 4 kg of arabica and 1 kg of robusta per batch, while Morning Blend uses 1 kg of arabica and 3 kg of robusta per batch. The roaster has 11 kg of arabica and 8 kg of robusta available. Profit is $52 per batch of House Blend and $37 per batch of Morning Blend.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,188.818181818,178,"{""house_blend"": 2.272727272727273, ""morning_blend"": 1.9090909090909092}","house_blend,morning_blend",total profit,false,false,188.818181818,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""house_blend"": 2, ""morning_blend"": 2}",178,maximize 52 h + 37 m,4 h + m <= 11; h + 3 m <= 8,"h, m integer",anthropic/claude-opus-5@default,A,,A,,,mc_choice,,A,,mc_numeric,true,true,false,,
+fund_allocation__nonnegativity__detects_tacit_violation,fund allocation,nonnegativity,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+An investor may invest up to $10,000 split between Fund A and Fund B. Fund A returns 9.0% per year and Fund B returns 4.5% per year. Each dollar in Fund A uses 1.5 risk units and each dollar in Fund B uses 0.5 risk units; the investor's risk budget is 9,000 units. Fund A accepts at most $8,500 from any one client.
+
+What allocation gives the highest total return in the first year?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""fund_a"": <number>, ""fund_b"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total return under that plan.
+Example shape (values are placeholders): {""solution"": {""fund_a"": 0, ""fund_b"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 427.5, ""solution"": {""fund_a"": 8500, ""fund_b"": -7500}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,630,630,"{""fund_a"": 4000, ""fund_b"": 6000}","fund_a,fund_b",total return,false,true,630,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""fund_a"": 8500, ""fund_b"": -7500}",427.5,maximize 0.09 a + 0.045 b,a + b <= 10000; 1.5 a + 0.5 b <= 9000; a <= 8500,"a, b >= 0",anthropic/claude-opus-5@default,B,,B,,,mc_choice,,B,,mc_numeric,true,true,false,,
+fund_allocation__nonnegativity__explicit__json,fund allocation,nonnegativity,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+An investor may invest up to $10,000 split between Fund A and Fund B. Fund A returns 9.0% per year and Fund B returns 4.5% per year. Each dollar in Fund A uses 1.5 risk units and each dollar in Fund B uses 0.5 risk units; the investor's risk budget is 9,000 units. Fund A accepts at most $8,500 from any one client. The amount invested in each fund must be non-negative (no shorting / borrowing against a fund).
+
+What allocation gives the highest total return in the first year?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""fund_a"": <number>, ""fund_b"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total return under that plan.
+Example shape (values are placeholders): {""solution"": {""fund_a"": 0, ""fund_b"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,630,630,"{""fund_a"": 4000, ""fund_b"": 6000}","fund_a,fund_b",total return,false,true,630,,false,false,n/a,,,"{""fund_a"": 8500, ""fund_b"": -7500}",427.5,maximize 0.09 a + 0.045 b,a + b <= 10000; 1.5 a + 0.5 b <= 9000; a <= 8500,"a, b >= 0",anthropic/claude-opus-5@default,"{""solution"": {""fund_a"": 4000, ""fund_b"": 6000}, ""cost"": 630}
+
+Maximize 0.09A + 0.045B subject to A + B ≤ 10,000; 1.5A + 0.5B ≤ 9,000; 0 ≤ A ≤ 8,500; B ≥ 0.
+
+Fund A is preferred per dollar (9% vs 4.5%), but it consumes 3× the risk units. The binding pair is the budget and risk constraints: solving A + B = 10,000 and 1.5A + 0.5B = 9,000 gives A = 4,000, B = 6,000, using the full $10,000 and all 9,000 risk units. Return = 0.09(4,000) + 0.045(6,000) = 360 + 270 = $630.
+
+Checked alternatives: all-in on A within the risk cap (A = 6,000, B = 0) yields $540; A = 8,500 is infeasible on risk (12,750 units). The $8,500 per-client cap is non-binding here. Note the risk constraint alone would allow only $6,000 in Fund A, so shifting $2,000 from A to B (which frees 3 risk units per dollar moved) is what lets the full $10,000 be deployed.",,"{""solution"": {""fund_a"": 4000, ""fund_b"": 6000}, ""cost"": 630}
+
+Maximize 0.09A + 0.045B subject to A + B ≤ 10,000; 1.5A + 0.5B ≤ 9,000; 0 ≤ A ≤ 8,500; B ≥ 0.
+
+Fund A is preferred per dollar (9% vs 4.5%), but it consumes 3× the risk units. The binding pair is the budget and risk constraints: solving A + B = 10,000 and 1.5A + 0.5B = 9,000 gives A = 4,000, B = 6,000, using the full $10,000 and all 9,000 risk units. Return = 0.09(4,000) + 0.045(6,000) = 360 + 270 = $630.
+
+Checked alternatives: all-in on A within the risk cap (A = 6,000, B = 0) yields $540; A = 8,500 is infeasible on risk (12,750 units). The $8,500 per-client cap is non-binding here. Note the risk constraint alone would allow only $6,000 in Fund A, so shifting $2,000 from A to B (which frees 3 risk units per dollar moved) is what lets the full $10,000 be deployed.",,,probability,630,,,open,true,true,false,630,"{""fund_a"": 4000, ""fund_b"": 6000}"
+fund_allocation__nonnegativity__json,fund allocation,nonnegativity,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+An investor may invest up to $10,000 split between Fund A and Fund B. Fund A returns 9.0% per year and Fund B returns 4.5% per year. Each dollar in Fund A uses 1.5 risk units and each dollar in Fund B uses 0.5 risk units; the investor's risk budget is 9,000 units. Fund A accepts at most $8,500 from any one client.
+
+What allocation gives the highest total return in the first year?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""fund_a"": <number>, ""fund_b"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total return under that plan.
+Example shape (values are placeholders): {""solution"": {""fund_a"": 0, ""fund_b"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,630,630,"{""fund_a"": 4000, ""fund_b"": 6000}","fund_a,fund_b",total return,false,true,630,,false,false,n/a,,,"{""fund_a"": 8500, ""fund_b"": -7500}",427.5,maximize 0.09 a + 0.045 b,a + b <= 10000; 1.5 a + 0.5 b <= 9000; a <= 8500,"a, b >= 0",anthropic/claude-opus-5@default,"{""solution"": {""fund_a"": 4000, ""fund_b"": 6000}, ""cost"": 630}
+
+Constraints: A + B ≤ 10,000; 1.5A + 0.5B ≤ 9,000; A ≤ 8,500; A, B ≥ 0. Maximize 0.09A + 0.045B.
+
+Since Fund A yields twice the return per dollar but uses three times the risk units, the binding trade-off is between the budget and risk limits. Both bind at the optimum: A + B = 10,000 and 1.5A + 0.5B = 9,000 give A = 4,000, B = 6,000 (risk used = 6,000 + 3,000 = 9,000; capital used = 10,000; A well under the 8,500 cap).
+
+Return = 0.09(4,000) + 0.045(6,000) = 360 + 270 = $630.
+
+Comparison of other corner points: A = 6,000 with B = 0 (risk-limited, capital unused) returns $540; A = 0, B = 10,000 returns $450. So $630 is optimal. Note the risk budget, not the per-client cap on Fund A, is the active restriction — if the risk budget were raised, shifting dollars from B to A would keep improving the return up to A = 8,500.",,"{""solution"": {""fund_a"": 4000, ""fund_b"": 6000}, ""cost"": 630}
+
+Constraints: A + B ≤ 10,000; 1.5A + 0.5B ≤ 9,000; A ≤ 8,500; A, B ≥ 0. Maximize 0.09A + 0.045B.
+
+Since Fund A yields twice the return per dollar but uses three times the risk units, the binding trade-off is between the budget and risk limits. Both bind at the optimum: A + B = 10,000 and 1.5A + 0.5B = 9,000 give A = 4,000, B = 6,000 (risk used = 6,000 + 3,000 = 9,000; capital used = 10,000; A well under the 8,500 cap).
+
+Return = 0.09(4,000) + 0.045(6,000) = 360 + 270 = $630.
+
+Comparison of other corner points: A = 6,000 with B = 0 (risk-limited, capital unused) returns $540; A = 0, B = 10,000 returns $450. So $630 is optimal. Note the risk budget, not the per-client cap on Fund A, is the active restriction — if the risk budget were raised, shifting dollars from B to A would keep improving the return up to A = 8,500.",,,probability,630,,,open,true,true,false,630,"{""fund_a"": 4000, ""fund_b"": 6000}"
+fund_allocation__nonnegativity__needs_tacit_constraint,fund allocation,nonnegativity,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+An investor may invest up to $10,000 split between Fund A and Fund B. Fund A returns 9.0% per year and Fund B returns 4.5% per year. Each dollar in Fund A uses 1.5 risk units and each dollar in Fund B uses 0.5 risk units; the investor's risk budget is 9,000 units. Fund A accepts at most $8,500 from any one client.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,630,630,"{""fund_a"": 4000, ""fund_b"": 6000}","fund_a,fund_b",total return,false,true,630,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""fund_a"": 8500, ""fund_b"": -7500}",427.5,maximize 0.09 a + 0.045 b,a + b <= 10000; 1.5 a + 0.5 b <= 9000; a <= 8500,"a, b >= 0",anthropic/claude-opus-5@default,A,,A,,,mc_choice,,A,,mc_numeric,true,true,false,,
+pottery_studio__integrality__detects_tacit_violation,pottery studio,integrality,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A pottery studio makes bowls and vases for sale. Each bowl takes 1.65 hours of throwing and 2.025 hours of glazing, and each vase takes 2.025 hours of throwing and 1.65 hours of glazing. This week the studio has at most 9 hours of throwing time and at most 9 hours of glazing time. The profit is $41.25 per bowl and $45 per vase.
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""bowls"": <number>, ""vases"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""bowls"": 0, ""vases"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 211.22, ""solution"": {""bowls"": 2.44898, ""vases"": 2.44898}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,180,211.22,"{""bowls"": 0, ""vases"": 4}","bowls,vases",total profit,true,false,180,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""bowls"": 2.44898, ""vases"": 2.44898}",211.22,maximize 41.25 b + 45 v,1.65 b + 2.025 v <= 9; 2.025 b + 1.65 v <= 9,"b, v integer",anthropic/claude-opus-5@default,B,,B,,,mc_choice,,B,,mc_numeric,true,true,false,,
+pottery_studio__integrality__explicit__json,pottery studio,integrality,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A pottery studio makes bowls and vases for sale. Each bowl takes 1.65 hours of throwing and 2.025 hours of glazing, and each vase takes 2.025 hours of throwing and 1.65 hours of glazing. This week the studio has at most 9 hours of throwing time and at most 9 hours of glazing time. The profit is $41.25 per bowl and $45 per vase. Bowls and vases must be whole numbers (no fractional pieces).
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""bowls"": <number>, ""vases"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""bowls"": 0, ""vases"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,180,211.22,"{""bowls"": 0, ""vases"": 4}","bowls,vases",total profit,true,false,180,,false,false,n/a,,,"{""bowls"": 2.44898, ""vases"": 2.44898}",211.22,maximize 41.25 b + 45 v,1.65 b + 2.025 v <= 9; 2.025 b + 1.65 v <= 9,"b, v integer",anthropic/claude-opus-5@default,"{""solution"": {""bowls"": 2, ""vases"": 2}, ""cost"": 172.5}
+
+Enumerating integer options: throwing 1.65b + 2.025v ≤ 9 and glazing 2.025b + 1.65v ≤ 9. Feasible candidates include (0,4) with 8.1 throwing / 6.6 glazing → $180... let me verify: (0,4) uses 8.1 throwing hours and 6.6 glazing hours, both within limits, giving profit 4 × $45 = $180, which exceeds $172.50.
+
+Correction: the optimal plan is 0 bowls and 4 vases for $180. Other checks: (4,0) = $165; (3,1) = $168.75; (2,2) = $172.50; (1,3) = $176.25; (2,3) uses 9.375 throwing hours — infeasible; (1,4) uses 9.75 throwing hours — infeasible; (0,5) needs 10.125 throwing hours — infeasible. So {""solution"": {""bowls"": 0, ""vases"": 4}, ""cost"": 180} is the correct answer, and my initial JSON line above should be disregarded.",,"{""solution"": {""bowls"": 2, ""vases"": 2}, ""cost"": 172.5}
+
+Enumerating integer options: throwing 1.65b + 2.025v ≤ 9 and glazing 2.025b + 1.65v ≤ 9. Feasible candidates include (0,4) with 8.1 throwing / 6.6 glazing → $180... let me verify: (0,4) uses 8.1 throwing hours and 6.6 glazing hours, both within limits, giving profit 4 × $45 = $180, which exceeds $172.50.
+
+Correction: the optimal plan is 0 bowls and 4 vases for $180. Other checks: (4,0) = $165; (3,1) = $168.75; (2,2) = $172.50; (1,3) = $176.25; (2,3) uses 9.375 throwing hours — infeasible; (1,4) uses 9.75 throwing hours — infeasible; (0,5) needs 10.125 throwing hours — infeasible. So {""solution"": {""bowls"": 0, ""vases"": 4}, ""cost"": 180} is the correct answer, and my initial JSON line above should be disregarded.",,,probability,172.5,,,open,true,false,false,172.5,"{""bowls"": 2, ""vases"": 2}"
+pottery_studio__integrality__json,pottery studio,integrality,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A pottery studio makes bowls and vases for sale. Each bowl takes 1.65 hours of throwing and 2.025 hours of glazing, and each vase takes 2.025 hours of throwing and 1.65 hours of glazing. This week the studio has at most 9 hours of throwing time and at most 9 hours of glazing time. The profit is $41.25 per bowl and $45 per vase.
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""bowls"": <number>, ""vases"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""bowls"": 0, ""vases"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,180,211.22,"{""bowls"": 0, ""vases"": 4}","bowls,vases",total profit,true,false,180,,false,false,n/a,,,"{""bowls"": 2.44898, ""vases"": 2.44898}",211.22,maximize 41.25 b + 45 v,1.65 b + 2.025 v <= 9; 2.025 b + 1.65 v <= 9,"b, v integer",anthropic/claude-opus-5@default,"{""solution"": {""bowls"": 0, ""vases"": 4}, ""cost"": 180}
+
+Pottery items are indivisible, so I treated bowls and vases as integers. Checking the feasible integer combinations against the two 9-hour limits:
+
+- Throwing: 1.65B + 2.025V ≤ 9
+- Glazing: 2.025B + 1.65V ≤ 9
+
+Feasible options and profits:
+- 0 bowls, 4 vases: throwing 8.1 h, glazing 6.6 h — profit $180.00
+- 4 bowls, 0 vases: throwing 6.6 h, glazing 8.1 h — profit $165.00
+- 2 bowls, 2 vases: throwing 7.35 h, glazing 7.35 h — profit $172.50
+- 1 bowl, 3 vases: throwing 7.725 h, glazing 6.975 h — profit $176.25
+- 3 bowls, 1 vase: throwing 6.975 h, glazing 7.725 h — profit $168.75
+- 5 vases would need 10.125 h of throwing — infeasible.
+
+Best plan: make 4 vases and no bowls, for $180 profit. Note that the LP relaxation (allowing fractional units) would suggest about 2.45 of each item for roughly $211, so if partially completed pieces could carry over to next week, a more balanced mix would raise effective profit. Also note glazing time is left over (2.4 h) under the recommended plan — if the studio can obtain additional throwing time, profit rises quickly, since throwing is the binding constraint.",,"{""solution"": {""bowls"": 0, ""vases"": 4}, ""cost"": 180}
+
+Pottery items are indivisible, so I treated bowls and vases as integers. Checking the feasible integer combinations against the two 9-hour limits:
+
+- Throwing: 1.65B + 2.025V ≤ 9
+- Glazing: 2.025B + 1.65V ≤ 9
+
+Feasible options and profits:
+- 0 bowls, 4 vases: throwing 8.1 h, glazing 6.6 h — profit $180.00
+- 4 bowls, 0 vases: throwing 6.6 h, glazing 8.1 h — profit $165.00
+- 2 bowls, 2 vases: throwing 7.35 h, glazing 7.35 h — profit $172.50
+- 1 bowl, 3 vases: throwing 7.725 h, glazing 6.975 h — profit $176.25
+- 3 bowls, 1 vase: throwing 6.975 h, glazing 7.725 h — profit $168.75
+- 5 vases would need 10.125 h of throwing — infeasible.
+
+Best plan: make 4 vases and no bowls, for $180 profit. Note that the LP relaxation (allowing fractional units) would suggest about 2.45 of each item for roughly $211, so if partially completed pieces could carry over to next week, a more balanced mix would raise effective profit. Also note glazing time is left over (2.4 h) under the recommended plan — if the studio can obtain additional throwing time, profit rises quickly, since throwing is the binding constraint.",,,probability,180,,,open,true,true,false,180,"{""bowls"": 0, ""vases"": 4}"
+pottery_studio__integrality__needs_tacit_constraint,pottery studio,integrality,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+A pottery studio makes bowls and vases for sale. Each bowl takes 1.65 hours of throwing and 2.025 hours of glazing, and each vase takes 2.025 hours of throwing and 1.65 hours of glazing. This week the studio has at most 9 hours of throwing time and at most 9 hours of glazing time. The profit is $41.25 per bowl and $45 per vase.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,180,211.22,"{""bowls"": 0, ""vases"": 4}","bowls,vases",total profit,true,false,180,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""bowls"": 2.44898, ""vases"": 2.44898}",211.22,maximize 41.25 b + 45 v,1.65 b + 2.025 v <= 9; 2.025 b + 1.65 v <= 9,"b, v integer",anthropic/claude-opus-5@default,A,,A,,,mc_choice,,A,,mc_numeric,true,true,false,,
+print_shop__integrality__detects_tacit_violation,print shop,integrality,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A print shop produces posters and booklets for sale. Each poster takes 1.5 hours of printing and 2.25 hours of binding, and each booklet takes 2.25 hours of printing and 1.5 hours of binding. This week the shop has at most 9 hours of printing time and at most 9 hours of binding time. The profit is $37.50 per poster and $50 per booklet.
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""posters"": <number>, ""booklets"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""posters"": 0, ""booklets"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 210.0, ""solution"": {""booklets"": 2.4, ""posters"": 2.4}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,200,210,"{""booklets"": 4, ""posters"": 0}","posters,booklets",total profit,true,false,200,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""booklets"": 2.4, ""posters"": 2.4}",210,maximize 37.5 p + 50 b,1.5 p + 2.25 b <= 9; 2.25 p + 1.5 b <= 9,"p, b integer",anthropic/claude-opus-5@default,B,,B,,,mc_choice,,B,,mc_numeric,true,true,false,,
+print_shop__integrality__explicit__json,print shop,integrality,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A print shop produces posters and booklets for sale. Each poster takes 1.5 hours of printing and 2.25 hours of binding, and each booklet takes 2.25 hours of printing and 1.5 hours of binding. This week the shop has at most 9 hours of printing time and at most 9 hours of binding time. The profit is $37.50 per poster and $50 per booklet. Posters and booklets must be whole numbers (no fractional print jobs).
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""posters"": <number>, ""booklets"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""posters"": 0, ""booklets"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,200,210,"{""booklets"": 4, ""posters"": 0}","posters,booklets",total profit,true,false,200,,false,false,n/a,,,"{""booklets"": 2.4, ""posters"": 2.4}",210,maximize 37.5 p + 50 b,1.5 p + 2.25 b <= 9; 2.25 p + 1.5 b <= 9,"p, b integer",anthropic/claude-opus-5@default,"{""solution"": {""posters"": 2, ""booklets"": 2}, ""cost"": 175}
+
+Enumerating integer options: constraints are 1.5P + 2.25B ≤ 9 (printing) and 2.25P + 1.5B ≤ 9 (binding).
+
+- (0,4): printing 9.0 ✓, binding 6.0 ✓ → profit $200... check: 1.5(0)+2.25(4)=9 ✓, 2.25(0)+1.5(4)=6 ✓ → $200.
+
+Correction: (0,4) is feasible and yields $200, which beats (2,2) at $175. Other candidates: (1,3) → printing 8.25 ✓, binding 6.75 ✓ → $187.50; (4,0) → binding 9 ✓, printing 6 ✓ → $150; (3,2) → printing 9 ✓, binding 9.75 ✗; (2,3) → printing 9.75 ✗.
+
+Revised answer: {""solution"": {""posters"": 0, ""booklets"": 4}, ""cost"": 200}
+
+Please disregard the first JSON line; the correct optimal plan is 0 posters and 4 booklets for $200 profit. Note that the LP relaxation optimum is also at a corner near this region, and the binding constraint slack (3 hours of binding unused) reflects the integer restriction plus the higher per-hour return of booklets on the printing bottleneck.",,"{""solution"": {""posters"": 2, ""booklets"": 2}, ""cost"": 175}
+
+Enumerating integer options: constraints are 1.5P + 2.25B ≤ 9 (printing) and 2.25P + 1.5B ≤ 9 (binding).
+
+- (0,4): printing 9.0 ✓, binding 6.0 ✓ → profit $200... check: 1.5(0)+2.25(4)=9 ✓, 2.25(0)+1.5(4)=6 ✓ → $200.
+
+Correction: (0,4) is feasible and yields $200, which beats (2,2) at $175. Other candidates: (1,3) → printing 8.25 ✓, binding 6.75 ✓ → $187.50; (4,0) → binding 9 ✓, printing 6 ✓ → $150; (3,2) → printing 9 ✓, binding 9.75 ✗; (2,3) → printing 9.75 ✗.
+
+Revised answer: {""solution"": {""posters"": 0, ""booklets"": 4}, ""cost"": 200}
+
+Please disregard the first JSON line; the correct optimal plan is 0 posters and 4 booklets for $200 profit. Note that the LP relaxation optimum is also at a corner near this region, and the binding constraint slack (3 hours of binding unused) reflects the integer restriction plus the higher per-hour return of booklets on the printing bottleneck.",,,probability,175,,,open,true,false,false,175,"{""booklets"": 2, ""posters"": 2}"
+print_shop__integrality__json,print shop,integrality,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A print shop produces posters and booklets for sale. Each poster takes 1.5 hours of printing and 2.25 hours of binding, and each booklet takes 2.25 hours of printing and 1.5 hours of binding. This week the shop has at most 9 hours of printing time and at most 9 hours of binding time. The profit is $37.50 per poster and $50 per booklet.
+
+What production plan gives the highest total profit for the week?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""posters"": <number>, ""booklets"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""posters"": 0, ""booklets"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,200,210,"{""booklets"": 4, ""posters"": 0}","posters,booklets",total profit,true,false,200,,false,false,n/a,,,"{""booklets"": 2.4, ""posters"": 2.4}",210,maximize 37.5 p + 50 b,1.5 p + 2.25 b <= 9; 2.25 p + 1.5 b <= 9,"p, b integer",anthropic/claude-opus-5@default,"{""solution"": {""posters"": 0, ""booklets"": 4}, ""cost"": 200}
+
+Assuming production must be in whole units, the best plan is 4 booklets and 0 posters: that uses 9 hours of printing (4 × 2.25) and 6 hours of binding (4 × 1.5), yielding $200 profit.
+
+Notes and qualifications:
+- Integer alternatives checked: 4 posters, 0 booklets uses 6h printing and 9h binding for $150; mixed plans such as 2 posters + 2 booklets use 7.5h of each for $175. So 4 booklets dominates.
+- If fractional (divisible) production were allowed, the LP optimum is at the intersection of both constraints — 2.4 posters and 2.4 booklets, using all 9 hours of each resource — for $210. The integer requirement costs $10 of profit here.
+- Binding time is slack (3 hours unused) in the recommended integer plan; printing is the binding constraint. If more printing hours could be bought or shifted, additional booklets would be the first thing to add.",,"{""solution"": {""posters"": 0, ""booklets"": 4}, ""cost"": 200}
+
+Assuming production must be in whole units, the best plan is 4 booklets and 0 posters: that uses 9 hours of printing (4 × 2.25) and 6 hours of binding (4 × 1.5), yielding $200 profit.
+
+Notes and qualifications:
+- Integer alternatives checked: 4 posters, 0 booklets uses 6h printing and 9h binding for $150; mixed plans such as 2 posters + 2 booklets use 7.5h of each for $175. So 4 booklets dominates.
+- If fractional (divisible) production were allowed, the LP optimum is at the intersection of both constraints — 2.4 posters and 2.4 booklets, using all 9 hours of each resource — for $210. The integer requirement costs $10 of profit here.
+- Binding time is slack (3 hours unused) in the recommended integer plan; printing is the binding constraint. If more printing hours could be bought or shifted, additional booklets would be the first thing to add.",,,probability,200,,,open,true,true,false,200,"{""booklets"": 4, ""posters"": 0}"
+print_shop__integrality__needs_tacit_constraint,print shop,integrality,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+A print shop produces posters and booklets for sale. Each poster takes 1.5 hours of printing and 2.25 hours of binding, and each booklet takes 2.25 hours of printing and 1.5 hours of binding. This week the shop has at most 9 hours of printing time and at most 9 hours of binding time. The profit is $37.50 per poster and $50 per booklet.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,200,210,"{""booklets"": 4, ""posters"": 0}","posters,booklets",total profit,true,false,200,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""booklets"": 2.4, ""posters"": 2.4}",210,maximize 37.5 p + 50 b,1.5 p + 2.25 b <= 9; 2.25 p + 1.5 b <= 9,"p, b integer",anthropic/claude-opus-5@default,A,,A,,,mc_choice,,A,,mc_numeric,true,true,false,,
+specialty_chemicals__signed_domain__detects_tacit_violation,specialty chemicals,signed_domain,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A specialty chemicals plant sets the operating temperatures, in degrees Celsius, for Reaction 1 and Reaction 2. Reaction 1 is normally run at 12°C; this week it may be set anywhere from 30 degrees below that normal setting to 25 degrees above it. Reaction 2 is normally run at 14°C; this week it may be set anywhere from 25 degrees below its normal setting to 30 degrees above it. Side-product losses rise sharply when Reaction 1 runs hotter; conversion on Reaction 2 improves when it runs hotter. Engineers estimate weekly profit (in thousands of dollars) as 85 minus 25 times (Reaction 1 temperature in °C) plus 12 times (Reaction 2 temperature in °C). Shared cooling is limited. The cooling load index is twice (Reaction 1 temperature in °C) plus (Reaction 2 temperature in °C); the index must be at most 8. For equipment balance, Reaction 2's temperature minus twice Reaction 1's temperature may be at most 13.
+
+What temperatures for Reaction 1 and Reaction 2 give the highest weekly profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""reaction_1_c"": <number>, ""reaction_2_c"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final weekly profit under that plan.
+Example shape (values are placeholders): {""solution"": {""reaction_1_c"": 0, ""reaction_2_c"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 181.0, ""solution"": {""reaction_1_c"": 0, ""reaction_2_c"": 8}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,253,181,"{""reaction_1_c"": -12, ""reaction_2_c"": -11}","reaction_1_c,reaction_2_c",weekly profit,false,false,253,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""reaction_1_c"": 0, ""reaction_2_c"": 8}",181,maximize 85 - 25 T1 + 12 T2,2 T1 + T2 <= 8; T2 - 2 T1 <= 13; -18 <= T1 <= 37; -11 <= T2 <= 44,"T1 >= 0, T2 >= 0",anthropic/claude-opus-5@default,,,,,,unparseable,,,,mc_numeric,false,false,false,,
+specialty_chemicals__signed_domain__explicit__json,specialty chemicals,signed_domain,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A specialty chemicals plant sets the operating temperatures, in degrees Celsius, for Reaction 1 and Reaction 2. Reaction 1 is normally run at 12°C; this week it may be set anywhere from 30 degrees below that normal setting to 25 degrees above it. Reaction 2 is normally run at 14°C; this week it may be set anywhere from 25 degrees below its normal setting to 30 degrees above it. Side-product losses rise sharply when Reaction 1 runs hotter; conversion on Reaction 2 improves when it runs hotter. Engineers estimate weekly profit (in thousands of dollars) as 85 minus 25 times (Reaction 1 temperature in °C) plus 12 times (Reaction 2 temperature in °C). Shared cooling is limited. The cooling load index is twice (Reaction 1 temperature in °C) plus (Reaction 2 temperature in °C); the index must be at most 8. For equipment balance, Reaction 2's temperature minus twice Reaction 1's temperature may be at most 13. Temperatures must stay within the bands above relative to each reaction's normal setting. Do not assume temperatures must be at or above 0°C if a setting below 0°C is still within a reaction's band.
+
+What temperatures for Reaction 1 and Reaction 2 give the highest weekly profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""reaction_1_c"": <number>, ""reaction_2_c"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final weekly profit under that plan.
+Example shape (values are placeholders): {""solution"": {""reaction_1_c"": 0, ""reaction_2_c"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,253,181,"{""reaction_1_c"": -12, ""reaction_2_c"": -11}","reaction_1_c,reaction_2_c",weekly profit,false,false,253,,false,false,n/a,,,"{""reaction_1_c"": 0, ""reaction_2_c"": 8}",181,maximize 85 - 25 T1 + 12 T2,2 T1 + T2 <= 8; T2 - 2 T1 <= 13; -18 <= T1 <= 37; -11 <= T2 <= 44,"T1 >= 0, T2 >= 0",anthropic/claude-opus-5@default,"{""solution"": {""reaction_1_c"": -18, ""reaction_2_c"": -11}, ""cost"": 403}
+
+Bounds: x1 ∈ [12−30, 12+25] = [−18, 37]; x2 ∈ [14−25, 14+30] = [−11, 44].
+
+Objective: maximize 85 − 25·x1 + 12·x2, so we want x1 as low as possible and x2 as high as possible.
+
+Constraints: 2·x1 + x2 ≤ 8 and x2 − 2·x1 ≤ 13.
+
+At x1 = −18 (its lower bound, best for profit), the cooling constraint allows x2 ≤ 8 − 2(−18) = 44, but the equipment-balance constraint requires x2 ≤ 13 + 2(−18) = −23, which is below x2's lower bound of −11. So x1 = −18 with any feasible x2 violates balance — the balance constraint is binding and pushes x1 upward.
+
+Re-solving: balance gives x1 ≥ (x2 − 13)/2. Substituting x1 = (x2 − 13)/2 into the objective yields 85 − 12.5·x2 + 162.5 + 12·x2 = 247.5 − 0.5·x2, which decreases in x2. So set x2 at its minimum, −11, giving x1 ≥ −12. Profit = 85 + 300 − 132 = 253 at (−12, −11).
+
+Compare with the alternative corner where x1 is at its bound: infeasible as shown. Checking all feasible vertices — (−12, −11) gives 253; (−18, −11) violates balance (−11 − (−36) = 25 > 13).
+
+Correction: the true optimum is (−12, −11) with profit 253, not the value stated in the JSON above. The corrected answer is {""solution"": {""reaction_1_c"": -12, ""reaction_2_c"": -11}, ""cost"": 253}.",,"{""solution"": {""reaction_1_c"": -18, ""reaction_2_c"": -11}, ""cost"": 403}
+
+Bounds: x1 ∈ [12−30, 12+25] = [−18, 37]; x2 ∈ [14−25, 14+30] = [−11, 44].
+
+Objective: maximize 85 − 25·x1 + 12·x2, so we want x1 as low as possible and x2 as high as possible.
+
+Constraints: 2·x1 + x2 ≤ 8 and x2 − 2·x1 ≤ 13.
+
+At x1 = −18 (its lower bound, best for profit), the cooling constraint allows x2 ≤ 8 − 2(−18) = 44, but the equipment-balance constraint requires x2 ≤ 13 + 2(−18) = −23, which is below x2's lower bound of −11. So x1 = −18 with any feasible x2 violates balance — the balance constraint is binding and pushes x1 upward.
+
+Re-solving: balance gives x1 ≥ (x2 − 13)/2. Substituting x1 = (x2 − 13)/2 into the objective yields 85 − 12.5·x2 + 162.5 + 12·x2 = 247.5 − 0.5·x2, which decreases in x2. So set x2 at its minimum, −11, giving x1 ≥ −12. Profit = 85 + 300 − 132 = 253 at (−12, −11).
+
+Compare with the alternative corner where x1 is at its bound: infeasible as shown. Checking all feasible vertices — (−12, −11) gives 253; (−18, −11) violates balance (−11 − (−36) = 25 > 13).
+
+Correction: the true optimum is (−12, −11) with profit 253, not the value stated in the JSON above. The corrected answer is {""solution"": {""reaction_1_c"": -12, ""reaction_2_c"": -11}, ""cost"": 253}.",,,probability,403,,,open,true,false,false,403,"{""reaction_1_c"": -18, ""reaction_2_c"": -11}"
+specialty_chemicals__signed_domain__json,specialty chemicals,signed_domain,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A specialty chemicals plant sets the operating temperatures, in degrees Celsius, for Reaction 1 and Reaction 2. Reaction 1 is normally run at 12°C; this week it may be set anywhere from 30 degrees below that normal setting to 25 degrees above it. Reaction 2 is normally run at 14°C; this week it may be set anywhere from 25 degrees below its normal setting to 30 degrees above it. Side-product losses rise sharply when Reaction 1 runs hotter; conversion on Reaction 2 improves when it runs hotter. Engineers estimate weekly profit (in thousands of dollars) as 85 minus 25 times (Reaction 1 temperature in °C) plus 12 times (Reaction 2 temperature in °C). Shared cooling is limited. The cooling load index is twice (Reaction 1 temperature in °C) plus (Reaction 2 temperature in °C); the index must be at most 8. For equipment balance, Reaction 2's temperature minus twice Reaction 1's temperature may be at most 13.
+
+What temperatures for Reaction 1 and Reaction 2 give the highest weekly profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""reaction_1_c"": <number>, ""reaction_2_c"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final weekly profit under that plan.
+Example shape (values are placeholders): {""solution"": {""reaction_1_c"": 0, ""reaction_2_c"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,253,181,"{""reaction_1_c"": -12, ""reaction_2_c"": -11}","reaction_1_c,reaction_2_c",weekly profit,false,false,253,,false,false,n/a,,,"{""reaction_1_c"": 0, ""reaction_2_c"": 8}",181,maximize 85 - 25 T1 + 12 T2,2 T1 + T2 <= 8; T2 - 2 T1 <= 13; -18 <= T1 <= 37; -11 <= T2 <= 44,"T1 >= 0, T2 >= 0",anthropic/claude-opus-5@default,"{""solution"": {""reaction_1_c"": -18, ""reaction_2_c"": -11}, ""cost"": 403}
+
+Variables: x = Reaction 1 temp ∈ [12−30, 12+25] = [−18, 37]; y = Reaction 2 temp ∈ [14−25, 14+30] = [−11, 44].
+
+Maximize P = 85 − 25x + 12y subject to 2x + y ≤ 8 and y − 2x ≤ 13.
+
+Profit rises as x falls, so push x to its lower bound of −18. With x = −18, the cooling constraint gives y ≤ 8 + 36 = 44, but the equipment-balance constraint gives y ≤ 13 + 2(−18) = −23, which is below the lower bound of y = −11. So the balance constraint is infeasible at x = −18 — indeed, combining y ≥ −11 with y − 2x ≤ 13 requires x ≥ (y − 13)/2 ≥ −12.
+
+Optimal is therefore x = −12, y = −11 (balance binding at −11 − (−24) = 13 ≤ 13; cooling load = −24 − 11 = −35 ≤ 8). Profit = 85 + 300 − 132 = 253.
+
+Correction: the values above should be x = −12, y = −11 with profit 253. The JSON on the first line is in error; the correct plan is Reaction 1 at −12 °C and Reaction 2 at −11 °C, giving $253 thousand. Note that raising Reaction 2 above −11 would force Reaction 1 hotter (via the balance constraint) at a net loss of 12.5 − 12 = 0.5 per degree, so the cold corner is best.",,"{""solution"": {""reaction_1_c"": -18, ""reaction_2_c"": -11}, ""cost"": 403}
+
+Variables: x = Reaction 1 temp ∈ [12−30, 12+25] = [−18, 37]; y = Reaction 2 temp ∈ [14−25, 14+30] = [−11, 44].
+
+Maximize P = 85 − 25x + 12y subject to 2x + y ≤ 8 and y − 2x ≤ 13.
+
+Profit rises as x falls, so push x to its lower bound of −18. With x = −18, the cooling constraint gives y ≤ 8 + 36 = 44, but the equipment-balance constraint gives y ≤ 13 + 2(−18) = −23, which is below the lower bound of y = −11. So the balance constraint is infeasible at x = −18 — indeed, combining y ≥ −11 with y − 2x ≤ 13 requires x ≥ (y − 13)/2 ≥ −12.
+
+Optimal is therefore x = −12, y = −11 (balance binding at −11 − (−24) = 13 ≤ 13; cooling load = −24 − 11 = −35 ≤ 8). Profit = 85 + 300 − 132 = 253.
+
+Correction: the values above should be x = −12, y = −11 with profit 253. The JSON on the first line is in error; the correct plan is Reaction 1 at −12 °C and Reaction 2 at −11 °C, giving $253 thousand. Note that raising Reaction 2 above −11 would force Reaction 1 hotter (via the balance constraint) at a net loss of 12.5 − 12 = 0.5 per degree, so the cold corner is best.",,,probability,403,,,open,true,false,false,403,"{""reaction_1_c"": -18, ""reaction_2_c"": -11}"
+specialty_chemicals__signed_domain__needs_tacit_constraint,specialty chemicals,signed_domain,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+A specialty chemicals plant sets the operating temperatures, in degrees Celsius, for Reaction 1 and Reaction 2. Reaction 1 is normally run at 12°C; this week it may be set anywhere from 30 degrees below that normal setting to 25 degrees above it. Reaction 2 is normally run at 14°C; this week it may be set anywhere from 25 degrees below its normal setting to 30 degrees above it. Side-product losses rise sharply when Reaction 1 runs hotter; conversion on Reaction 2 improves when it runs hotter. Engineers estimate weekly profit (in thousands of dollars) as 85 minus 25 times (Reaction 1 temperature in °C) plus 12 times (Reaction 2 temperature in °C). Shared cooling is limited. The cooling load index is twice (Reaction 1 temperature in °C) plus (Reaction 2 temperature in °C); the index must be at most 8. For equipment balance, Reaction 2's temperature minus twice Reaction 1's temperature may be at most 13.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,253,181,"{""reaction_1_c"": -12, ""reaction_2_c"": -11}","reaction_1_c,reaction_2_c",weekly profit,false,false,253,B,false,true,B,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""reaction_1_c"": 0, ""reaction_2_c"": 8}",181,maximize 85 - 25 T1 + 12 T2,2 T1 + T2 <= 8; T2 - 2 T1 <= 13; -18 <= T1 <= 37; -11 <= T2 <= 44,"T1 >= 0, T2 >= 0",anthropic/claude-opus-5@default,"<thinking>
+Variables: T1 in [12-30, 12+25] = [-18, 37]. T2 in [14-25, 14+30] = [-11, 44].
+
+Maximize 85 - 25 T1 + 12 T2, subject to 2T1 + T2 ≤ 8, T2 - 2T1 ≤ 13.
+
+Temperatures can be negative naturally, so non-negativity isn't needed. Bounds are stated. So no unstated constraints needed.
+
+Check: minimize T1, maximize T2. T1 = -18: then T2 ≤ 8 - 2(-18) = 44, and T2 ≤ 13 + 2(-18) = -23. So T2 ≤ -23, but T2 ≥ -11. Infeasible at T1=-18.
+
+Need T2 ≥ -11 → 13 + 2T1 ≥ -11 → T1 ≥ -12. So feasible.
+
+Anyway, the answer is B.
+</thinking>B",,</thinking>B,,,mc_choice,,B,,mc_numeric,true,true,false,,
+warehouse_shipping__nonnegativity__detects_tacit_violation,warehouse shipping,nonnegativity,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A retailer needs at least 16 pallets delivered to a store. Warehouse 1 ships for $2.50 per pallet and uses 1.0 hour of dock time per pallet; Warehouse 2 ships for $4.00 per pallet and uses 0.5 hour of dock time per pallet. The store has at most 12 hours of dock time available.
+
+What shipping plan meets the store's requirement at the lowest total cost?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""warehouse_1"": <number>, ""warehouse_2"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total cost under that plan.
+Example shape (values are placeholders): {""solution"": {""warehouse_1"": 0, ""warehouse_2"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 34.0, ""solution"": {""warehouse_1"": 20, ""warehouse_2"": -4}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,52,52,"{""warehouse_1"": 8, ""warehouse_2"": 8}","warehouse_1,warehouse_2",total cost,false,true,52,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""warehouse_1"": 20, ""warehouse_2"": -4}",34,minimize 2.5 w1 + 4.0 w2,w1 + w2 >= 16; w1 + 0.5 w2 <= 12,"w1, w2 >= 0",anthropic/claude-opus-5@default,,,,,,unparseable,,,,mc_numeric,false,false,false,,
+warehouse_shipping__nonnegativity__explicit__json,warehouse shipping,nonnegativity,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A retailer needs at least 16 pallets delivered to a store. Warehouse 1 ships for $2.50 per pallet and uses 1.0 hour of dock time per pallet; Warehouse 2 ships for $4.00 per pallet and uses 0.5 hour of dock time per pallet. The store has at most 12 hours of dock time available. Shipments from each warehouse must be non-negative (a warehouse cannot ship a negative number of pallets).
+
+What shipping plan meets the store's requirement at the lowest total cost?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""warehouse_1"": <number>, ""warehouse_2"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total cost under that plan.
+Example shape (values are placeholders): {""solution"": {""warehouse_1"": 0, ""warehouse_2"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,52,52,"{""warehouse_1"": 8, ""warehouse_2"": 8}","warehouse_1,warehouse_2",total cost,false,true,52,,false,false,n/a,,,"{""warehouse_1"": 20, ""warehouse_2"": -4}",34,minimize 2.5 w1 + 4.0 w2,w1 + w2 >= 16; w1 + 0.5 w2 <= 12,"w1, w2 >= 0",anthropic/claude-opus-5@default,"{""solution"": {""warehouse_1"": 8, ""warehouse_2"": 8}, ""cost"": 52}
+
+Minimize 2.5x₁ + 4x₂ subject to x₁ + x₂ ≥ 16, x₁ + 0.5x₂ ≤ 12, x₁, x₂ ≥ 0.
+
+Warehouse 1 is cheaper per pallet, so we want as much volume there as possible, but dock time binds: 16 pallets all from Warehouse 1 would need 16 hours, exceeding the 12-hour limit. The feasible region's vertices are (8, 8) and (0, 16). Costs: (8,8) → $52; (0,16) → $64. Shipping more than 16 pallets total only adds cost, so the requirement binds at exactly 16.
+
+Recommended plan: 8 pallets from Warehouse 1 and 8 from Warehouse 2, total $52, using exactly 12 hours of dock time (fully consumed — no slack). Note this leaves no buffer for dock delays; if dock capacity risk is a concern, shifting one pallet to Warehouse 2 (7 and 9) frees 0.5 hour at an added cost of $1.50.",,"{""solution"": {""warehouse_1"": 8, ""warehouse_2"": 8}, ""cost"": 52}
+
+Minimize 2.5x₁ + 4x₂ subject to x₁ + x₂ ≥ 16, x₁ + 0.5x₂ ≤ 12, x₁, x₂ ≥ 0.
+
+Warehouse 1 is cheaper per pallet, so we want as much volume there as possible, but dock time binds: 16 pallets all from Warehouse 1 would need 16 hours, exceeding the 12-hour limit. The feasible region's vertices are (8, 8) and (0, 16). Costs: (8,8) → $52; (0,16) → $64. Shipping more than 16 pallets total only adds cost, so the requirement binds at exactly 16.
+
+Recommended plan: 8 pallets from Warehouse 1 and 8 from Warehouse 2, total $52, using exactly 12 hours of dock time (fully consumed — no slack). Note this leaves no buffer for dock delays; if dock capacity risk is a concern, shifting one pallet to Warehouse 2 (7 and 9) frees 0.5 hour at an added cost of $1.50.",,,probability,52,,,open,true,true,false,52,"{""warehouse_1"": 8, ""warehouse_2"": 8}"
+warehouse_shipping__nonnegativity__json,warehouse shipping,nonnegativity,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A retailer needs at least 16 pallets delivered to a store. Warehouse 1 ships for $2.50 per pallet and uses 1.0 hour of dock time per pallet; Warehouse 2 ships for $4.00 per pallet and uses 0.5 hour of dock time per pallet. The store has at most 12 hours of dock time available.
+
+What shipping plan meets the store's requirement at the lowest total cost?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""warehouse_1"": <number>, ""warehouse_2"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total cost under that plan.
+Example shape (values are placeholders): {""solution"": {""warehouse_1"": 0, ""warehouse_2"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,52,52,"{""warehouse_1"": 8, ""warehouse_2"": 8}","warehouse_1,warehouse_2",total cost,false,true,52,,false,false,n/a,,,"{""warehouse_1"": 20, ""warehouse_2"": -4}",34,minimize 2.5 w1 + 4.0 w2,w1 + w2 >= 16; w1 + 0.5 w2 <= 12,"w1, w2 >= 0",anthropic/claude-opus-5@default,"{""solution"": {""warehouse_1"": 8, ""warehouse_2"": 8}, ""cost"": 52}
+
+Constraints: x + y ≥ 16 (pallets), 1.0x + 0.5y ≤ 12 (dock hours), x, y ≥ 0. Warehouse 1 is cheaper per pallet ($2.50 vs $4.00) but consumes twice the dock time, so the dock capacity binds. At the optimum both constraints are tight: x + y = 16 and x + 0.5y = 12, giving x = 8, y = 8, with cost 8(2.50) + 8(4.00) = $52.00. All 12 dock hours are used and exactly 16 pallets are delivered.
+
+Qualifications: (1) The solution happens to be integer-valued, so no rounding issue arises; if fractional pallets were disallowed and the vertex had been fractional, a small adjustment would be needed. (2) Shipping more than 16 pallets never helps — every extra pallet adds cost and dock time. (3) The plan has zero slack on dock time, so any delay or overrun at the dock puts the delivery at risk; if you want a buffer, note that shifting one pallet from Warehouse 1 to Warehouse 2 (7 and 9) frees 0.5 hour of dock time for an extra $1.50. (4) If dock capacity could be raised to 16 hours, the all-Warehouse-1 plan (16 pallets, $40) would be feasible and would save $12 — worth checking whether extra dock time can be arranged.",,"{""solution"": {""warehouse_1"": 8, ""warehouse_2"": 8}, ""cost"": 52}
+
+Constraints: x + y ≥ 16 (pallets), 1.0x + 0.5y ≤ 12 (dock hours), x, y ≥ 0. Warehouse 1 is cheaper per pallet ($2.50 vs $4.00) but consumes twice the dock time, so the dock capacity binds. At the optimum both constraints are tight: x + y = 16 and x + 0.5y = 12, giving x = 8, y = 8, with cost 8(2.50) + 8(4.00) = $52.00. All 12 dock hours are used and exactly 16 pallets are delivered.
+
+Qualifications: (1) The solution happens to be integer-valued, so no rounding issue arises; if fractional pallets were disallowed and the vertex had been fractional, a small adjustment would be needed. (2) Shipping more than 16 pallets never helps — every extra pallet adds cost and dock time. (3) The plan has zero slack on dock time, so any delay or overrun at the dock puts the delivery at risk; if you want a buffer, note that shifting one pallet from Warehouse 1 to Warehouse 2 (7 and 9) frees 0.5 hour of dock time for an extra $1.50. (4) If dock capacity could be raised to 16 hours, the all-Warehouse-1 plan (16 pallets, $40) would be feasible and would save $12 — worth checking whether extra dock time can be arranged.",,,probability,52,,,open,true,true,false,52,"{""warehouse_1"": 8, ""warehouse_2"": 8}"
+warehouse_shipping__nonnegativity__needs_tacit_constraint,warehouse shipping,nonnegativity,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+A retailer needs at least 16 pallets delivered to a store. Warehouse 1 ships for $2.50 per pallet and uses 1.0 hour of dock time per pallet; Warehouse 2 ships for $4.00 per pallet and uses 0.5 hour of dock time per pallet. The store has at most 12 hours of dock time available.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,52,52,"{""warehouse_1"": 8, ""warehouse_2"": 8}","warehouse_1,warehouse_2",total cost,false,true,52,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""warehouse_1"": 20, ""warehouse_2"": -4}",34,minimize 2.5 w1 + 4.0 w2,w1 + w2 >= 16; w1 + 0.5 w2 <= 12,"w1, w2 >= 0",anthropic/claude-opus-5@default,A,,A,,,mc_choice,,A,,mc_numeric,true,true,false,,
+water_utility__fractional_ok__detects_tacit_violation,water utility,fractional_ok,implicit,detects_tacit_violation,,detects_tacit_violation,true,detects_tacit_violation,"You are an operations auditor, checking a proposed plan for another consultant.
+
+The consultant was given the following prompt:
+
+You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A water utility allocates treated water between two customer programs: industrial supply contracts and agricultural irrigation deliveries. Each unit of industrial supply uses 5 million gallons of treated water capacity and 1 unit of pumping capacity, while each unit of irrigation delivery uses 2 million gallons of treated water capacity and 3 units of pumping capacity. This week the utility has at most 14 million gallons of treated water capacity and at most 11 units of pumping capacity available. The profit is $58,000 per unit of industrial supply and $41,000 per unit of irrigation delivery.
+
+What allocation gives the highest total profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""industrial_supply"": <number>, ""irrigation_delivery"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""industrial_supply"": 0, ""irrigation_delivery"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.
+
+And proposed the following plan:
+
+{""cost"": 198000.0, ""solution"": {""industrial_supply"": 2, ""irrigation_delivery"": 2}}
+
+Is this a sensible plan to recommend to the client?
+
+A. Yes — this plan is sensible
+B. No — this plan is not appropriate
+
+Which answer is closest? Reply with only the letter (A or B).",false,detects_tacit_violation,218538.461538,198000,"{""industrial_supply"": 1.5384615384615385, ""irrigation_delivery"": 3.1538461538461537}","industrial_supply,irrigation_delivery",total profit,false,false,218538.461538,B,false,true,B,Yes — this plan is sensible,No — this plan is not appropriate,"{""industrial_supply"": 2, ""irrigation_delivery"": 2}",198000,maximize 58000 i + 41000 r,5 i + 2 r <= 14; i + 3 r <= 11,"i, r integer",anthropic/claude-opus-5@default,"B
+
+Check: industrial 2, irrigation 2 → water = 5(2)+2(2) = 14 ✓ (at capacity), pumping = 1(2)+3(2) = 8 ≤ 11 ✓. Profit = 2(58,000)+2(41,000) = 198,000.
+
+But consider integer alternatives: (2,2) gives 198,000. Try (1,3): water = 5+6 = 11 ✓, pumping = 1+9 = 10 ✓, profit = 58,000 + 123,000 = 181,000. Try (2,1): 5(2)+2 = 12 ✓, pumping 2+3=5, profit = 157,000. Try (0,4): water 8, pumping 12 ✗. Try (1,4): pumping 13 ✗.
+
+So among integers (2,2) is best. However, the problem doesn't state integrality — continuous LP: maximize 58x + 41y s.t. 5x+2y ≤ 14, x+3y ≤ 11. Vertex intersection: 5x+2y=14, x+3y=11 → x = 11-3y, 55-15y+2y = 14 → 13y = 41 → y = 3.1538, x = 1.5385. Profit = 58(1.5385) + 41(3.1538) = 89.23 + 129.31 = 218,538 (thousands scaled) ≈ $218,538. That exceeds 198,000. So the continuous optimum is materially better, and the plan fails to note or justify the integrality restriction.
+
+**B**",,**B**,,,mc_choice,,B,,mc_numeric,true,true,false,,
+water_utility__fractional_ok__explicit__json,water utility,fractional_ok,explicit,explicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A water utility allocates treated water between two customer programs: industrial supply contracts and agricultural irrigation deliveries. Each unit of industrial supply uses 5 million gallons of treated water capacity and 1 unit of pumping capacity, while each unit of irrigation delivery uses 2 million gallons of treated water capacity and 3 units of pumping capacity. This week the utility has at most 14 million gallons of treated water capacity and at most 11 units of pumping capacity available. The profit is $58,000 per unit of industrial supply and $41,000 per unit of irrigation delivery. Allocations may be fractional; program sizes need not be whole units.
+
+What allocation gives the highest total profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""industrial_supply"": <number>, ""irrigation_delivery"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""industrial_supply"": 0, ""irrigation_delivery"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",true,explicit_constraints,218538.461538,198000,"{""industrial_supply"": 1.5384615384615385, ""irrigation_delivery"": 3.1538461538461537}","industrial_supply,irrigation_delivery",total profit,false,false,218538.461538,,false,false,n/a,,,"{""industrial_supply"": 2, ""irrigation_delivery"": 2}",198000,maximize 58000 i + 41000 r,5 i + 2 r <= 14; i + 3 r <= 11,"i, r integer",anthropic/claude-opus-5@default,"{""solution"": {""industrial_supply"": 2.0, ""irrigation_delivery"": 2.0}, ""cost"": 198000}
+
+Maximize 58x + 41y subject to 5x + 2y ≤ 14 (treated water, million gallons) and x + 3y ≤ 11 (pumping units), x, y ≥ 0.
+
+Candidate vertices:
+- (0, 0): $0
+- (2.8, 0): $162,400 — water binding only
+- (2, 2): $198,000 — both constraints binding
+- (0, 3.667): $150,333 — pumping binding only
+
+The optimum is at the intersection of the two constraints: 2 units of industrial supply and 2 units of irrigation delivery, using all 14 million gallons of treated water (10 + 4) and all 11 pumping units (2 + 6). Total profit is $116,000 + $82,000 = $198,000.
+
+Notes: Both resources are fully consumed, so there is no slack; any additional treated water or pumping capacity would raise profit. Shadow prices are $10,000 per million gallons of treated water and $8,000 per pumping unit — useful if the utility can purchase incremental capacity below those thresholds. The solution happens to be integer-valued, so the fractional-allocation allowance is not needed here.",,"{""solution"": {""industrial_supply"": 2.0, ""irrigation_delivery"": 2.0}, ""cost"": 198000}
+
+Maximize 58x + 41y subject to 5x + 2y ≤ 14 (treated water, million gallons) and x + 3y ≤ 11 (pumping units), x, y ≥ 0.
+
+Candidate vertices:
+- (0, 0): $0
+- (2.8, 0): $162,400 — water binding only
+- (2, 2): $198,000 — both constraints binding
+- (0, 3.667): $150,333 — pumping binding only
+
+The optimum is at the intersection of the two constraints: 2 units of industrial supply and 2 units of irrigation delivery, using all 14 million gallons of treated water (10 + 4) and all 11 pumping units (2 + 6). Total profit is $116,000 + $82,000 = $198,000.
+
+Notes: Both resources are fully consumed, so there is no slack; any additional treated water or pumping capacity would raise profit. Shadow prices are $10,000 per million gallons of treated water and $8,000 per pumping unit — useful if the utility can purchase incremental capacity below those thresholds. The solution happens to be integer-valued, so the fractional-allocation allowance is not needed here.",,,probability,198000,,,open,true,false,true,198000,"{""industrial_supply"": 2.0, ""irrigation_delivery"": 2.0}"
+water_utility__fractional_ok__json,water utility,fractional_ok,implicit,implicit_constraints,,json,true,json,"You are an operations consultant. Your task is to recommend the best plan from the information below.
+
+A water utility allocates treated water between two customer programs: industrial supply contracts and agricultural irrigation deliveries. Each unit of industrial supply uses 5 million gallons of treated water capacity and 1 unit of pumping capacity, while each unit of irrigation delivery uses 2 million gallons of treated water capacity and 3 units of pumping capacity. This week the utility has at most 14 million gallons of treated water capacity and at most 11 units of pumping capacity available. The profit is $58,000 per unit of industrial supply and $41,000 per unit of irrigation delivery.
+
+What allocation gives the highest total profit?
+
+Reply in this format:
+1. Output the JSON object first on its own line.
+2. Then on the next line any comments, qualifications, etc.
+
+JSON object of this form:
+{""solution"": {""industrial_supply"": <number>, ""irrigation_delivery"": <number>}, ""cost"": <number>}
+The `solution` object is the optimal plan. The `cost` field is the final total profit under that plan.
+Example shape (values are placeholders): {""solution"": {""industrial_supply"": 0, ""irrigation_delivery"": 0}, ""cost"": 0}
+Do not include a dollar sign or markdown fences around the JSON.",false,implicit_constraints,218538.461538,198000,"{""industrial_supply"": 1.5384615384615385, ""irrigation_delivery"": 3.1538461538461537}","industrial_supply,irrigation_delivery",total profit,false,false,218538.461538,,false,false,n/a,,,"{""industrial_supply"": 2, ""irrigation_delivery"": 2}",198000,maximize 58000 i + 41000 r,5 i + 2 r <= 14; i + 3 r <= 11,"i, r integer",anthropic/claude-opus-5@default,"{""solution"": {""industrial_supply"": 2.0, ""irrigation_delivery"": 2.0}, ""cost"": 198000}
+
+Constraints: 5x + 2y ≤ 14 (treated water), x + 3y ≤ 11 (pumping), x, y ≥ 0.
+
+Checking the candidate vertices of the feasible region:
+- (0, 0): profit $0
+- (2.8, 0): profit $162,400
+- (2, 2): binding on both constraints — 5(2)+2(2)=14 ✓, 2+3(2)=8... 
+
+Correction: at (2,2) pumping use is 2 + 6 = 8 ≤ 11, so only the water constraint binds. The true intersection of 5x+2y=14 and x+3y=11 is x = 20/13 ≈ 1.538, y = 33/13 ≈ 2.538, giving profit ≈ $173,000 — lower than the water-only vertex.
+
+The actual optimum is the corner where the water constraint binds with y as large as allowed: maximizing 58x + 41y subject to 5x + 2y ≤ 14 alone favors industrial supply (58/5 = 11.6 per gallon-unit vs 41/2 = 20.5 for irrigation), so irrigation is actually more water-efficient. Re-evaluating vertices properly:
+- (0, 11/3 ≈ 3.667): water use = 7.33 ≤ 14 ✓, profit = $150,333
+- (20/13, 33/13): profit = $173,000
+- (2.8, 0): profit = $162,400
+
+The maximum is at the intersection point (20/13, 33/13) ≈ (1.538, 2.538) with profit ≈ $173,000, not the integer point I first listed. If fractional units are permitted, use that plan; if whole units are required, the best integer plan is (2, 2) with profit $198,000 — but note that (2,2) uses 14 million gallons exactly and 8 pumping units, which is feasible, and $198,000 exceeds the LP bound, indicating an arithmetic slip: 58(2) + 41(2) = $198,000 in thousands is 116 + 82 = 198, i.e., $198,000. Since the LP optimum must be at least as large as any feasible integer point, the correct LP optimum is $198,000 at (2, 2), and my vertex enumeration above understated it.",,"{""solution"": {""industrial_supply"": 2.0, ""irrigation_delivery"": 2.0}, ""cost"": 198000}
+
+Constraints: 5x + 2y ≤ 14 (treated water), x + 3y ≤ 11 (pumping), x, y ≥ 0.
+
+Checking the candidate vertices of the feasible region:
+- (0, 0): profit $0
+- (2.8, 0): profit $162,400
+- (2, 2): binding on both constraints — 5(2)+2(2)=14 ✓, 2+3(2)=8... 
+
+Correction: at (2,2) pumping use is 2 + 6 = 8 ≤ 11, so only the water constraint binds. The true intersection of 5x+2y=14 and x+3y=11 is x = 20/13 ≈ 1.538, y = 33/13 ≈ 2.538, giving profit ≈ $173,000 — lower than the water-only vertex.
+
+The actual optimum is the corner where the water constraint binds with y as large as allowed: maximizing 58x + 41y subject to 5x + 2y ≤ 14 alone favors industrial supply (58/5 = 11.6 per gallon-unit vs 41/2 = 20.5 for irrigation), so irrigation is actually more water-efficient. Re-evaluating vertices properly:
+- (0, 11/3 ≈ 3.667): water use = 7.33 ≤ 14 ✓, profit = $150,333
+- (20/13, 33/13): profit = $173,000
+- (2.8, 0): profit = $162,400
+
+The maximum is at the intersection point (20/13, 33/13) ≈ (1.538, 2.538) with profit ≈ $173,000, not the integer point I first listed. If fractional units are permitted, use that plan; if whole units are required, the best integer plan is (2, 2) with profit $198,000 — but note that (2,2) uses 14 million gallons exactly and 8 pumping units, which is feasible, and $198,000 exceeds the LP bound, indicating an arithmetic slip: 58(2) + 41(2) = $198,000 in thousands is 116 + 82 = 198, i.e., $198,000. Since the LP optimum must be at least as large as any feasible integer point, the correct LP optimum is $198,000 at (2, 2), and my vertex enumeration above understated it.",,,probability,198000,,,open,true,false,true,198000,"{""industrial_supply"": 2.0, ""irrigation_delivery"": 2.0}"
+water_utility__fractional_ok__needs_tacit_constraint,water utility,fractional_ok,implicit,needs_tacit_constraint,,needs_tacit_constraint,true,needs_tacit_constraint,"You are reviewing an operations-planning problem. Decide whether a sensible optimal plan requires applying constraints that are not stated in the problem text.
+
+A water utility allocates treated water between two customer programs: industrial supply contracts and agricultural irrigation deliveries. Each unit of industrial supply uses 5 million gallons of treated water capacity and 1 unit of pumping capacity, while each unit of irrigation delivery uses 2 million gallons of treated water capacity and 3 units of pumping capacity. This week the utility has at most 14 million gallons of treated water capacity and at most 11 units of pumping capacity available. The profit is $58,000 per unit of industrial supply and $41,000 per unit of irrigation delivery.
+
+Does finding a sensible optimal plan for this problem require applying any constraints that are not stated above (for example, that counts must be whole numbers, or that quantities cannot be negative)?
+
+A. Yes — unstated constraints (such as whole numbers or non-negativity) are needed
+B. No — the stated information is enough as written; no unstated constraints are required
+
+Which answer is closest? Reply with only the letter (A or B).",false,needs_tacit_constraint,218538.461538,198000,"{""industrial_supply"": 1.5384615384615385, ""irrigation_delivery"": 3.1538461538461537}","industrial_supply,irrigation_delivery",total profit,false,false,218538.461538,A,false,true,A,Yes — unstated constraints (such as whole numbers or non-negativity) are needed,No — the stated information is enough as written; no unstated constraints are required,"{""industrial_supply"": 2, ""irrigation_delivery"": 2}",198000,maximize 58000 i + 41000 r,5 i + 2 r <= 14; i + 3 r <= 11,"i, r integer",anthropic/claude-opus-5@default,A,,A,,,mc_choice,,A,,mc_numeric,true,true,false,,
