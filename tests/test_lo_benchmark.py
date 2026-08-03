@@ -56,15 +56,16 @@ def test_lo_benchmark_notebook_exists():
     notebook = ROOT / "benchmark" / "lo-benchmark.ipynb"
     assert notebook.is_file()
     text = notebook.read_text(encoding="utf-8")
-    assert "lo_normative_accuracy_5" in text
+    assert "lo_normative_accuracy_6" in text
     assert "evaluate_lp_rate_benchmark" in text
+    assert "MODEL" in text
 
 
 def test_lo_task_json_exists():
-    path = ROOT / "lo_normative_accuracy_5.task.json"
+    path = ROOT / "lo_normative_accuracy_6.task.json"
     assert path.is_file()
-    assert "lo_normative_accuracy_5" in path.read_text(encoding="utf-8")
-    assert not (ROOT / "lo_normative_accuracy_4.task.json").exists()
+    assert "lo_normative_accuracy_6" in path.read_text(encoding="utf-8")
+    assert not (ROOT / "lo_normative_accuracy_5.task.json").exists()
 
 
 def test_lo_results_notebook_exists():
@@ -75,7 +76,7 @@ def test_lo_results_notebook_exists():
     assert "implicit_explicit_diff" in text
     assert "vignette_name" in text
     assert "merged_lo_results_from_kaggle_runs" in text
-    assert "lo-normative-accuracy-5" in text
+    assert "lo-normative-accuracy-6" in text
 
 
 def test_lo_study_sheet_notebook_exists():
@@ -127,7 +128,7 @@ def test_lo_study_sheet_includes_prompts_without_results(tmp_path):
 def test_merged_lo_helper_exported():
     from benchmarks.kaggle_runs import DEFAULT_LO_TASK_SLUG, merged_lo_results_from_kaggle_runs
 
-    assert DEFAULT_LO_TASK_SLUG == "lo-normative-accuracy-5"
+    assert DEFAULT_LO_TASK_SLUG == "lo-normative-accuracy-6"
     assert callable(merged_lo_results_from_kaggle_runs)
 
 

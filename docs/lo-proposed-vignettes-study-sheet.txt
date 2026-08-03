@@ -1,10 +1,10 @@
 LO proposed vignettes — study sheet (draft)
 ================================================================================
-These three vignettes are now in benchmark v5 (``build_lp_prompts.py``). This file
+These three vignettes are now in the LO benchmark (``build_lp_prompts.py``). This file
 is kept as design notes with equations.
 
 Two traps assume integrality wrongly (fractional amounts are valid); one assumes
-non-negativity on °C wrongly. Format mirrors lo_normative_accuracy v5 (JSON
+non-negativity on °C wrongly. Format mirrors lo_normative_accuracy (JSON
 implicit / explicit + tacit audits).
 
 For these three vignettes, the optimization criterion and constraints are also

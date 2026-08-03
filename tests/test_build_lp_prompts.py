@@ -156,7 +156,7 @@ class TestVignetteSet:
 
 
 class TestBuildAll:
-    def test_prompt_count_v5(self):
+    def test_prompt_count(self):
         prompts, items, benchmark = build_all()
         # 9 vignettes × (json×2 + needs + detects) = 36
         assert len(prompts) == 36

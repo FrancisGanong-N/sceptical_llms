@@ -1,0 +1,6 @@
+{
+  "versionNumber": 1,
+  "name": "lo_normative_accuracy_6",
+  "description": "LO (linear optimization) benchmark v6: parsable JSON solve + tacit-constraint audits across nine vignettes (integrality, nonnegativity, fractional_ok, signed_domain). Higher is better.",
+  "definition": "@kbench.task(\n    name=\"lo_normative_accuracy_6\",\n    description=(\n        \"LO (linear optimization) benchmark: overall fraction of parsable \"\n        \"answers that are keyed-correct across JSON solve prompts and tacit-\"\n        \"constraint audits. Higher is better.\"\n    ),\n)\ndef lo_normative_accuracy_6(llm) -> float:\n    _, score, _, _, _, _, _ = evaluate_lp_rate_benchmark(llm)\n    return float(score.accuracy)\n"
+}

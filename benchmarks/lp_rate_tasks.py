@@ -141,26 +141,36 @@ def evaluate_lp_rate_benchmark(
 
 
 @kbench.task(
-    name="lo_normative_accuracy_5",
+    name="lo_normative_accuracy_6",
     description=(
         "LO (linear optimization) benchmark: overall fraction of parsable "
         "answers that are keyed-correct across JSON solve prompts and tacit-"
         "constraint audits. Higher is better."
     ),
 )
-def lo_normative_accuracy_5(llm) -> float:
+def lo_normative_accuracy_6(llm) -> float:
     _, score, _, _, _, _, _ = evaluate_lp_rate_benchmark(llm)
     return float(score.accuracy)
 
 
 @kbench.task(
+    name="lo_normative_accuracy_5",
+    description=(
+        "Deprecated alias of lo_normative_accuracy_6 (re-run Build task with v6)."
+    ),
+)
+def lo_normative_accuracy_5(llm) -> float:
+    return lo_normative_accuracy_6(llm)
+
+
+@kbench.task(
     name="lo_normative_accuracy_4",
     description=(
-        "Deprecated alias of lo_normative_accuracy_5 (re-run Build task with v5)."
+        "Deprecated alias of lo_normative_accuracy_6 (re-run Build task with v6)."
     ),
 )
 def lo_normative_accuracy_4(llm) -> float:
-    return lo_normative_accuracy_5(llm)
+    return lo_normative_accuracy_6(llm)
 
 
 @kbench.task(
@@ -204,7 +214,7 @@ def lo_naive_confusion(llm) -> float:
 @kbench.task(
     name="lp_rate_normative_accuracy",
     description=(
-        "Alias of lo_normative_accuracy_5 (LP / LO tacit-constraint benchmark)."
+        "Alias of lo_normative_accuracy_6 (LP / LO tacit-constraint benchmark)."
     ),
 )
 def lp_rate_normative_accuracy(llm) -> float:
