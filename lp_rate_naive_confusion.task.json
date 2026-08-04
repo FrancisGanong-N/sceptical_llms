@@ -1,0 +1,6 @@
+{
+  "versionNumber": 1,
+  "name": "lp_rate_naive_confusion",
+  "description": "Alias of lo_naive_confusion.",
+  "definition": "@kbench.task(\n    name=\"lp_rate_naive_confusion\",\n    description=\"Alias of lo_naive_confusion.\",\n)\ndef lp_rate_naive_confusion(llm) -> float:\n    return lo_naive_confusion(llm)\n"
+}

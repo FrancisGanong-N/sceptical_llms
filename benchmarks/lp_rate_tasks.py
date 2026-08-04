@@ -12,6 +12,11 @@ apply_null_message_patch()
 from benchmarks.lp_rate import (
     BENCHMARK_CSV,
     DEFAULT_MERGED_RESULTS_CSV,
+    LO_BENCHMARK_VERSIONS,
+    LO_VERSION_COMMON_SENSE_PROBLEM_AUDIT,
+    LO_VERSION_COMMON_SENSE_SOLUTION_AUDIT,
+    LO_VERSION_EXPLICITLY_GIVEN_COMMON_SENSE,
+    LO_VERSION_NEEDS_COMMON_SENSE,
     VARIANT_DETECTS_VIOLATION,
     VARIANT_JSON,
     VARIANT_NEEDS_TACIT,
@@ -83,16 +88,26 @@ def evaluate_lp_rate_benchmark(
     max_prompts: int | None = None,
     max_output_tokens: int | None = None,
     n_jobs: int = LP_N_JOBS,
+    benchmark_version: str | None = None,
 ):
-    """Run LP benchmark prompts and score JSON + A/B audit variants."""
+    """Run LP benchmark prompts (optionally one of the four LO versions)."""
     benchmark_path = Path(benchmark_path or BENCHMARK_CSV)
     llms = llm if isinstance(llm, list) else [llm]
-    evaluation_data = prompts_to_dataframe(benchmark_path, max_prompts=max_prompts)
-    example_ids = (
-        None
-        if max_prompts is None
-        else list(evaluation_data["example_id"])
+    evaluation_data = prompts_to_dataframe(
+        benchmark_path,
+        max_prompts=max_prompts,
+        benchmark_version=benchmark_version,
     )
+    if evaluation_data.empty:
+        raise ValueError(
+            "No LO prompts selected"
+            + (
+                f" for benchmark_version={benchmark_version!r}"
+                if benchmark_version
+                else ""
+            )
+        )
+    example_ids = list(evaluation_data["example_id"])
     token_cap = (
         LP_MAX_OUTPUT_TOKENS
         if max_output_tokens is None
@@ -140,12 +155,51 @@ def evaluate_lp_rate_benchmark(
     return runs, score, merged_path, pivot_path, pivot, naive_rate, variant_scores
 
 
+def _accuracy_for_benchmark_version(llm, benchmark_version: str) -> float:
+    _, score, _, _, _, _, _ = evaluate_lp_rate_benchmark(
+        llm, benchmark_version=benchmark_version
+    )
+    return float(score.accuracy)
+
+
+def _register_version_task(benchmark_version: str):
+    meta = LO_BENCHMARK_VERSIONS[benchmark_version]
+    task_name = meta["task_name"]
+
+    def _task(llm, *, _version: str = benchmark_version) -> float:
+        return _accuracy_for_benchmark_version(llm, _version)
+
+    _task.__name__ = task_name
+    _task.__qualname__ = task_name
+    _task.__doc__ = meta["description"]
+    return kbench.task(name=task_name, description=meta["description"])(_task)
+
+
+lo_normative_accuracy_needs_common_sense = _register_version_task(
+    LO_VERSION_NEEDS_COMMON_SENSE
+)
+lo_normative_accuracy_explicitly_given_common_sense = _register_version_task(
+    LO_VERSION_EXPLICITLY_GIVEN_COMMON_SENSE
+)
+lo_normative_accuracy_common_sense_problem_audit = _register_version_task(
+    LO_VERSION_COMMON_SENSE_PROBLEM_AUDIT
+)
+lo_normative_accuracy_common_sense_solution_audit = _register_version_task(
+    LO_VERSION_COMMON_SENSE_SOLUTION_AUDIT
+)
+
+# Resolve the live task object for notebook `%choose` / `.run`.
+LO_VERSION_TASKS = {
+    version: globals()[meta["task_name"]]
+    for version, meta in LO_BENCHMARK_VERSIONS.items()
+}
+
+
 @kbench.task(
     name="lo_normative_accuracy_6",
     description=(
-        "LO (linear optimization) benchmark: overall fraction of parsable "
-        "answers that are keyed-correct across JSON solve prompts and tacit-"
-        "constraint audits. Higher is better."
+        "Deprecated full-suite LO accuracy (all 36 prompts). Prefer one of "
+        "the four common-sense version tasks."
     ),
 )
 def lo_normative_accuracy_6(llm) -> float:
@@ -155,9 +209,7 @@ def lo_normative_accuracy_6(llm) -> float:
 
 @kbench.task(
     name="lo_normative_accuracy_5",
-    description=(
-        "Deprecated alias of lo_normative_accuracy_6 (re-run Build task with v6)."
-    ),
+    description="Deprecated alias of lo_normative_accuracy_6.",
 )
 def lo_normative_accuracy_5(llm) -> float:
     return lo_normative_accuracy_6(llm)
@@ -165,9 +217,7 @@ def lo_normative_accuracy_5(llm) -> float:
 
 @kbench.task(
     name="lo_normative_accuracy_4",
-    description=(
-        "Deprecated alias of lo_normative_accuracy_6 (re-run Build task with v6)."
-    ),
+    description="Deprecated alias of lo_normative_accuracy_6.",
 )
 def lo_normative_accuracy_4(llm) -> float:
     return lo_normative_accuracy_6(llm)
@@ -176,26 +226,25 @@ def lo_normative_accuracy_4(llm) -> float:
 @kbench.task(
     name="lp_needs_tacit_constraint",
     description=(
-        "LO audit: fraction of parsable A/B answers that correctly say solving "
-        "the problem requires unstated constraints (integrality / "
-        "non-negativity). Higher is better."
+        "Alias of lo_normative_accuracy_common_sense_problem_audit."
     ),
 )
 def lp_needs_tacit_constraint(llm) -> float:
-    _, _, _, _, _, _, variant_scores = evaluate_lp_rate_benchmark(llm)
-    return float(variant_scores[VARIANT_NEEDS_TACIT])
+    return _accuracy_for_benchmark_version(
+        llm, LO_VERSION_COMMON_SENSE_PROBLEM_AUDIT
+    )
 
 
 @kbench.task(
     name="lp_detects_tacit_violation",
     description=(
-        "LO audit: fraction of parsable A/B answers that correctly reject a "
-        "proposed plan that violates an unstated constraint. Higher is better."
+        "Alias of lo_normative_accuracy_common_sense_solution_audit."
     ),
 )
 def lp_detects_tacit_violation(llm) -> float:
-    _, _, _, _, _, _, variant_scores = evaluate_lp_rate_benchmark(llm)
-    return float(variant_scores[VARIANT_DETECTS_VIOLATION])
+    return _accuracy_for_benchmark_version(
+        llm, LO_VERSION_COMMON_SENSE_SOLUTION_AUDIT
+    )
 
 
 @kbench.task(
@@ -213,21 +262,39 @@ def lo_naive_confusion(llm) -> float:
 
 @kbench.task(
     name="lp_rate_normative_accuracy",
-    description=(
-        "Alias of lo_normative_accuracy_6 (LP / LO tacit-constraint benchmark)."
-    ),
+    description="Deprecated alias of lo_normative_accuracy_6.",
 )
 def lp_rate_normative_accuracy(llm) -> float:
-    _, score, _, _, _, _, _ = evaluate_lp_rate_benchmark(llm)
-    return float(score.accuracy)
+    return lo_normative_accuracy_6(llm)
 
 
 @kbench.task(
     name="lp_rate_naive_confusion",
-    description=(
-        "Alias of lo_naive_confusion (LP / LO tacit-constraint benchmark)."
-    ),
+    description="Alias of lo_naive_confusion.",
 )
 def lp_rate_naive_confusion(llm) -> float:
-    _, _, _, _, _, naive_rate, _ = evaluate_lp_rate_benchmark(llm)
-    return float(naive_rate)
+    return lo_naive_confusion(llm)
+
+
+def resolve_lo_task(benchmark_version: str):
+    """Return the kbench task object for a display-name LO version."""
+    try:
+        return LO_VERSION_TASKS[benchmark_version]
+    except KeyError as exc:
+        raise ValueError(
+            f"Unknown LO benchmark version {benchmark_version!r}. "
+            f"Expected one of: {list(LO_BENCHMARK_VERSIONS)}"
+        ) from exc
+
+
+# Re-export for notebooks.
+__all__ = [
+    "LO_VERSION_TASKS",
+    "evaluate_lp_rate_benchmark",
+    "lo_normative_accuracy_common_sense_problem_audit",
+    "lo_normative_accuracy_common_sense_solution_audit",
+    "lo_normative_accuracy_explicitly_given_common_sense",
+    "lo_normative_accuracy_needs_common_sense",
+    "resolve_lo_task",
+    "task_name_for_version",
+]

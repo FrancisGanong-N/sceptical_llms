@@ -14,7 +14,13 @@ BASE_RATE_PROMPT_DICT_KEYS = frozenset({"example_id", "response"})
 
 DEFAULT_BASE_RATE_TASK_SLUG = "base-rate-normative-accuracy"
 DEFAULT_SIMPLE_RATE_TASK_SLUG = "simple-rate-normative-accuracy"
-DEFAULT_LO_TASK_SLUG = "lo-normative-accuracy-6"
+DEFAULT_LO_TASK_SLUGS = (
+    "lo-normative-accuracy-needs-common-sense",
+    "lo-normative-accuracy-explicitly-given-common-sense",
+    "lo-normative-accuracy-common-sense-problem-audit",
+    "lo-normative-accuracy-common-sense-solution-audit",
+)
+DEFAULT_LO_TASK_SLUG = DEFAULT_LO_TASK_SLUGS[0]
 
 
 @dataclass(frozen=True)
@@ -270,6 +276,48 @@ def merged_lo_results_from_kaggle_runs(
             f"-o data/kaggle_runs/{DEFAULT_LO_TASK_SLUG}"
         ),
     )
+    return merge_run_results(
+        run_rows,
+        benchmark_path=benchmark_path,
+        fill_missing=fill_missing,
+    )
+
+
+def merged_lo_results_from_kaggle_run_dirs(
+    roots: list[Path | str],
+    *,
+    benchmark_path: Path | str | None = None,
+    fill_missing: bool = False,
+):
+    """Merge LO rows from several downloaded task run directories (the four versions)."""
+    from benchmarks.lp_rate import BENCHMARK_CSV, merge_run_results
+
+    benchmark_path = Path(benchmark_path or BENCHMARK_CSV)
+    run_rows: list[dict[str, object]] = []
+    errors: list[str] = []
+    for root in roots:
+        root_path = Path(root)
+        if not root_path.is_dir():
+            continue
+        try:
+            run_rows.extend(
+                _run_rows_for_benchmark_merge(
+                    root_path,
+                    benchmark_path=benchmark_path,
+                    task_slug=root_path.name,
+                    download_hint=(
+                        "python -m kaggle benchmarks tasks download {slug} "
+                        f"-o data/kaggle_runs/{root_path.name}"
+                    ),
+                )
+            )
+        except FileNotFoundError as exc:
+            errors.append(str(exc))
+    if not run_rows:
+        detail = "\n".join(errors) if errors else f"Looked under: {roots}"
+        raise FileNotFoundError(
+            "No LO per-prompt records found in any version run dir.\n" + detail
+        )
     return merge_run_results(
         run_rows,
         benchmark_path=benchmark_path,

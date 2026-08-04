@@ -1,0 +1,6 @@
+{
+  "versionNumber": 1,
+  "name": "lo_normative_accuracy_common_sense_problem_audit",
+  "description": "LO audit: does a sensible optimum require unstated common-sense constraints? Higher is better.",
+  "definition": "    def _task(llm, *, _version: str = benchmark_version) -> float:\n        return _accuracy_for_benchmark_version(llm, _version)\n"
+}

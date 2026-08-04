@@ -4,7 +4,19 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from benchmarks.lp_rate import BENCHMARK_CSV, load_benchmark
+from benchmarks.lp_rate import (
+    BENCHMARK_CSV,
+    LO_BENCHMARK_VERSIONS,
+    LO_VERSION_COMMON_SENSE_PROBLEM_AUDIT,
+    LO_VERSION_COMMON_SENSE_SOLUTION_AUDIT,
+    LO_VERSION_EXPLICITLY_GIVEN_COMMON_SENSE,
+    LO_VERSION_NEEDS_COMMON_SENSE,
+    example_ids_for_benchmark_version,
+    load_benchmark,
+    prompts_to_dataframe,
+    task_name_for_version,
+    task_slug_for_version,
+)
 from scripts.build_lp_prompts import build_all
 
 
@@ -52,20 +64,51 @@ def test_lo_benchmark_has_thirty_six_prompts():
     assert "workshop_vehicles" not in loaded
 
 
+def test_lo_benchmark_versions_partition_prompts():
+    assert list(LO_BENCHMARK_VERSIONS) == [
+        LO_VERSION_NEEDS_COMMON_SENSE,
+        LO_VERSION_EXPLICITLY_GIVEN_COMMON_SENSE,
+        LO_VERSION_COMMON_SENSE_PROBLEM_AUDIT,
+        LO_VERSION_COMMON_SENSE_SOLUTION_AUDIT,
+    ]
+    all_ids: list[str] = []
+    for version in LO_BENCHMARK_VERSIONS:
+        ids = example_ids_for_benchmark_version(benchmark_version=version)
+        assert len(ids) == 9
+        all_ids.extend(ids)
+        frame = prompts_to_dataframe(benchmark_version=version)
+        assert len(frame) == 9
+        assert task_name_for_version(version).startswith("lo_normative_accuracy_")
+        assert "-" in task_slug_for_version(version)
+    assert len(all_ids) == 36
+    assert len(set(all_ids)) == 36
+
+
 def test_lo_benchmark_notebook_exists():
     notebook = ROOT / "benchmark" / "lo-benchmark.ipynb"
     assert notebook.is_file()
     text = notebook.read_text(encoding="utf-8")
-    assert "lo_normative_accuracy_6" in text
+    assert "BENCHMARK_VERSION" in text
+    assert "lo_normative_accuracy_needs_common_sense" in text
     assert "evaluate_lp_rate_benchmark" in text
-    assert "MODEL" in text
+    assert "resolve_lo_task" in text
 
 
 def test_lo_task_json_exists():
-    path = ROOT / "lo_normative_accuracy_6.task.json"
-    assert path.is_file()
-    assert "lo_normative_accuracy_6" in path.read_text(encoding="utf-8")
+    for version in LO_BENCHMARK_VERSIONS:
+        path = ROOT / f"{task_name_for_version(version)}.task.json"
+        assert path.is_file(), path
+        assert task_name_for_version(version) in path.read_text(encoding="utf-8")
+    assert not (ROOT / "lo_normative_accuracy_6.task.json").exists()
     assert not (ROOT / "lo_normative_accuracy_5.task.json").exists()
+
+
+def test_lo_version_tasks_registered():
+    from benchmarks.lp_rate_tasks import LO_VERSION_TASKS, resolve_lo_task
+
+    assert set(LO_VERSION_TASKS) == set(LO_BENCHMARK_VERSIONS)
+    task = resolve_lo_task(LO_VERSION_NEEDS_COMMON_SENSE)
+    assert task.name == "lo_normative_accuracy_needs_common_sense"
 
 
 def test_lo_results_notebook_exists():
@@ -75,8 +118,9 @@ def test_lo_results_notebook_exists():
     assert "score_table" in text
     assert "implicit_explicit_diff" in text
     assert "vignette_name" in text
-    assert "merged_lo_results_from_kaggle_runs" in text
-    assert "lo-normative-accuracy-6" in text
+    assert "merged_lo_results_from_kaggle_run_dirs" in text
+    assert "lo_normative_accuracy_needs_common_sense" in text
+    assert "DEFAULT_LO_TASK_SLUGS" in text
 
 
 def test_lo_study_sheet_notebook_exists():
@@ -126,10 +170,17 @@ def test_lo_study_sheet_includes_prompts_without_results(tmp_path):
 
 
 def test_merged_lo_helper_exported():
-    from benchmarks.kaggle_runs import DEFAULT_LO_TASK_SLUG, merged_lo_results_from_kaggle_runs
+    from benchmarks.kaggle_runs import (
+        DEFAULT_LO_TASK_SLUG,
+        DEFAULT_LO_TASK_SLUGS,
+        merged_lo_results_from_kaggle_run_dirs,
+        merged_lo_results_from_kaggle_runs,
+    )
 
-    assert DEFAULT_LO_TASK_SLUG == "lo-normative-accuracy-6"
+    assert DEFAULT_LO_TASK_SLUG == "lo-normative-accuracy-needs-common-sense"
+    assert len(DEFAULT_LO_TASK_SLUGS) == 4
     assert callable(merged_lo_results_from_kaggle_runs)
+    assert callable(merged_lo_results_from_kaggle_run_dirs)
 
 
 def test_benchmark_csv_has_constraint_columns():

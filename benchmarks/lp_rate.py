@@ -32,14 +32,24 @@ __all__ = [
     "VARIANT_JSON",
     "VARIANT_NEEDS_TACIT",
     "VARIANT_DETECTS_VIOLATION",
+    "LO_BENCHMARK_VERSIONS",
+    "LO_VERSION_NEEDS_COMMON_SENSE",
+    "LO_VERSION_EXPLICITLY_GIVEN_COMMON_SENSE",
+    "LO_VERSION_COMMON_SENSE_PROBLEM_AUDIT",
+    "LO_VERSION_COMMON_SENSE_SOLUTION_AUDIT",
     "accuracy_for_variant",
+    "example_ids_for_benchmark_version",
+    "item_matches_benchmark_version",
     "parse_lp_json",
     "parse_lp_response",
     "load_benchmark",
     "matches_true_objective",
     "matches_naive_lp",
     "naive_confusion_rate",
+    "prompts_to_dataframe",
     "score_run_rows",
+    "task_name_for_version",
+    "task_slug_for_version",
     "write_merged_results_csv",
 ]
 
@@ -63,6 +73,87 @@ VARIANT_JSON = "json"
 VARIANT_NEEDS_TACIT = "needs_tacit_constraint"
 VARIANT_DETECTS_VIOLATION = "detects_tacit_violation"
 AUDIT_VARIANTS = frozenset({VARIANT_NEEDS_TACIT, VARIANT_DETECTS_VIOLATION})
+
+# Four published LO task slices (one notebook selects among these).
+LO_VERSION_NEEDS_COMMON_SENSE = "needs common sense"
+LO_VERSION_EXPLICITLY_GIVEN_COMMON_SENSE = "explicitly given common sense"
+LO_VERSION_COMMON_SENSE_PROBLEM_AUDIT = "common sense problem audit"
+LO_VERSION_COMMON_SENSE_SOLUTION_AUDIT = "common sense solution audit"
+
+LO_BENCHMARK_VERSIONS: dict[str, dict[str, str]] = {
+    LO_VERSION_NEEDS_COMMON_SENSE: {
+        "task_name": "lo_normative_accuracy_needs_common_sense",
+        "description": (
+            "LO JSON solves with unstated common-sense constraints "
+            "(implicit). Higher is better."
+        ),
+    },
+    LO_VERSION_EXPLICITLY_GIVEN_COMMON_SENSE: {
+        "task_name": "lo_normative_accuracy_explicitly_given_common_sense",
+        "description": (
+            "LO JSON solves with common-sense constraints stated explicitly. "
+            "Higher is better."
+        ),
+    },
+    LO_VERSION_COMMON_SENSE_PROBLEM_AUDIT: {
+        "task_name": "lo_normative_accuracy_common_sense_problem_audit",
+        "description": (
+            "LO audit: does a sensible optimum require unstated common-sense "
+            "constraints? Higher is better."
+        ),
+    },
+    LO_VERSION_COMMON_SENSE_SOLUTION_AUDIT: {
+        "task_name": "lo_normative_accuracy_common_sense_solution_audit",
+        "description": (
+            "LO audit: reject a proposed plan that violates unstated "
+            "common-sense constraints. Higher is better."
+        ),
+    },
+}
+
+
+def task_name_for_version(benchmark_version: str) -> str:
+    try:
+        return LO_BENCHMARK_VERSIONS[benchmark_version]["task_name"]
+    except KeyError as exc:
+        known = ", ".join(repr(v) for v in LO_BENCHMARK_VERSIONS)
+        raise ValueError(
+            f"Unknown LO benchmark version {benchmark_version!r}. "
+            f"Expected one of: {known}"
+        ) from exc
+
+
+def task_slug_for_version(benchmark_version: str) -> str:
+    return task_name_for_version(benchmark_version).replace("_", "-")
+
+
+def item_matches_benchmark_version(
+    item: "LpBenchmarkItem", benchmark_version: str
+) -> bool:
+    if benchmark_version == LO_VERSION_NEEDS_COMMON_SENSE:
+        return item.variant == VARIANT_JSON and item.condition == "implicit"
+    if benchmark_version == LO_VERSION_EXPLICITLY_GIVEN_COMMON_SENSE:
+        return item.variant == VARIANT_JSON and item.condition == "explicit"
+    if benchmark_version == LO_VERSION_COMMON_SENSE_PROBLEM_AUDIT:
+        return item.variant == VARIANT_NEEDS_TACIT
+    if benchmark_version == LO_VERSION_COMMON_SENSE_SOLUTION_AUDIT:
+        return item.variant == VARIANT_DETECTS_VIOLATION
+    raise ValueError(f"Unknown LO benchmark version: {benchmark_version!r}")
+
+
+def example_ids_for_benchmark_version(
+    path: Path | str = BENCHMARK_CSV,
+    *,
+    benchmark_version: str,
+) -> list[str]:
+    items = load_benchmark(path)
+    return sorted(
+        item.example_id
+        for item in items.values()
+        if item_matches_benchmark_version(item, benchmark_version)
+    )
+
+
 LP_MERGE_EXTRA_COLUMNS = (
     "naive_lp_confusion",
     "parsed_objective",
@@ -325,10 +416,25 @@ def prompts_to_dataframe(
     path: Path | str = BENCHMARK_CSV,
     *,
     max_prompts: int | None = None,
+    example_ids: list[str] | None = None,
+    benchmark_version: str | None = None,
 ) -> "pd.DataFrame":
     import pandas as pd
 
     items = load_benchmark(path)
+    if benchmark_version is not None:
+        items = {
+            example_id: item
+            for example_id, item in items.items()
+            if item_matches_benchmark_version(item, benchmark_version)
+        }
+    if example_ids is not None:
+        allowed = set(example_ids)
+        items = {
+            example_id: item
+            for example_id, item in items.items()
+            if example_id in allowed
+        }
     rows = [
         {"example_id": item.example_id, "prompt": item.prompt}
         for item in sorted(items.values(), key=lambda item: item.example_id)
