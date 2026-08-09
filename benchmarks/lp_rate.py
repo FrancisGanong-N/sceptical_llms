@@ -82,28 +82,28 @@ LO_VERSION_COMMON_SENSE_SOLUTION_AUDIT = "common sense solution audit"
 
 LO_BENCHMARK_VERSIONS: dict[str, dict[str, str]] = {
     LO_VERSION_NEEDS_COMMON_SENSE: {
-        "task_name": "lo_normative_accuracy_needs_common_sense",
+        "task_name": "needs_common_sense_accuracy",
         "description": (
             "LO JSON solves with unstated common-sense constraints "
             "(implicit). Higher is better."
         ),
     },
     LO_VERSION_EXPLICITLY_GIVEN_COMMON_SENSE: {
-        "task_name": "lo_normative_accuracy_explicitly_given_common_sense",
+        "task_name": "explicitly_given_common_sense_accuracy",
         "description": (
             "LO JSON solves with common-sense constraints stated explicitly. "
             "Higher is better."
         ),
     },
     LO_VERSION_COMMON_SENSE_PROBLEM_AUDIT: {
-        "task_name": "lo_normative_accuracy_common_sense_problem_audit",
+        "task_name": "common_sense_problem_audit_accuracy",
         "description": (
             "LO audit: does a sensible optimum require unstated common-sense "
             "constraints? Higher is better."
         ),
     },
     LO_VERSION_COMMON_SENSE_SOLUTION_AUDIT: {
-        "task_name": "lo_normative_accuracy_common_sense_solution_audit",
+        "task_name": "common_sense_solution_audit_accuracy",
         "description": (
             "LO audit: reject a proposed plan that violates unstated "
             "common-sense constraints. Higher is better."

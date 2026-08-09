@@ -78,7 +78,8 @@ def test_lo_benchmark_versions_partition_prompts():
         all_ids.extend(ids)
         frame = prompts_to_dataframe(benchmark_version=version)
         assert len(frame) == 9
-        assert task_name_for_version(version).startswith("lo_normative_accuracy_")
+        assert task_name_for_version(version).endswith("_accuracy")
+        assert not task_name_for_version(version).startswith("lo_normative")
         assert "-" in task_slug_for_version(version)
     assert len(all_ids) == 36
     assert len(set(all_ids)) == 36
@@ -89,7 +90,7 @@ def test_lo_benchmark_notebook_exists():
     assert notebook.is_file()
     text = notebook.read_text(encoding="utf-8")
     assert "BENCHMARK_VERSION" in text
-    assert "lo_normative_accuracy_needs_common_sense" in text
+    assert "needs_common_sense_accuracy" in text
     assert "evaluate_lp_rate_benchmark" in text
     assert "resolve_lo_task" in text
 
@@ -99,8 +100,7 @@ def test_lo_task_json_exists():
         path = ROOT / f"{task_name_for_version(version)}.task.json"
         assert path.is_file(), path
         assert task_name_for_version(version) in path.read_text(encoding="utf-8")
-    assert not (ROOT / "lo_normative_accuracy_6.task.json").exists()
-    assert not (ROOT / "lo_normative_accuracy_5.task.json").exists()
+    assert not (ROOT / "lo_normative_accuracy_needs_common_sense.task.json").exists()
 
 
 def test_lo_version_tasks_registered():
@@ -108,7 +108,7 @@ def test_lo_version_tasks_registered():
 
     assert set(LO_VERSION_TASKS) == set(LO_BENCHMARK_VERSIONS)
     task = resolve_lo_task(LO_VERSION_NEEDS_COMMON_SENSE)
-    assert task.name == "lo_normative_accuracy_needs_common_sense"
+    assert task.name == "needs_common_sense_accuracy"
 
 
 def test_lo_results_notebook_exists():
@@ -119,7 +119,7 @@ def test_lo_results_notebook_exists():
     assert "implicit_explicit_diff" in text
     assert "vignette_name" in text
     assert "merged_lo_results_from_kaggle_run_dirs" in text
-    assert "lo_normative_accuracy_needs_common_sense" in text
+    assert "needs_common_sense_accuracy" in text
     assert "DEFAULT_LO_TASK_SLUGS" in text
 
 
@@ -177,7 +177,7 @@ def test_merged_lo_helper_exported():
         merged_lo_results_from_kaggle_runs,
     )
 
-    assert DEFAULT_LO_TASK_SLUG == "lo-normative-accuracy-needs-common-sense"
+    assert DEFAULT_LO_TASK_SLUG == "needs-common-sense-accuracy"
     assert len(DEFAULT_LO_TASK_SLUGS) == 4
     assert callable(merged_lo_results_from_kaggle_runs)
     assert callable(merged_lo_results_from_kaggle_run_dirs)

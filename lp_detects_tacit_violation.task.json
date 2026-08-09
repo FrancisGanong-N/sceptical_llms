@@ -1,6 +1,6 @@
 {
   "versionNumber": 1,
   "name": "lp_detects_tacit_violation",
-  "description": "Alias of lo_normative_accuracy_common_sense_solution_audit.",
-  "definition": "@kbench.task(\n    name=\"lp_detects_tacit_violation\",\n    description=(\n        \"Alias of lo_normative_accuracy_common_sense_solution_audit.\"\n    ),\n)\ndef lp_detects_tacit_violation(llm) -> float:\n    return _accuracy_for_benchmark_version(\n        llm, LO_VERSION_COMMON_SENSE_SOLUTION_AUDIT\n    )\n"
+  "description": "Alias of common_sense_solution_audit_accuracy.",
+  "definition": "@kbench.task(\n    name=\"lp_detects_tacit_violation\",\n    description=\"Alias of common_sense_solution_audit_accuracy.\",\n)\ndef lp_detects_tacit_violation(llm) -> float:\n    return _accuracy_for_benchmark_version(\n        llm, LO_VERSION_COMMON_SENSE_SOLUTION_AUDIT\n    )\n"
 }

@@ -175,16 +175,16 @@ def _register_version_task(benchmark_version: str):
     return kbench.task(name=task_name, description=meta["description"])(_task)
 
 
-lo_normative_accuracy_needs_common_sense = _register_version_task(
+needs_common_sense_accuracy = _register_version_task(
     LO_VERSION_NEEDS_COMMON_SENSE
 )
-lo_normative_accuracy_explicitly_given_common_sense = _register_version_task(
+explicitly_given_common_sense_accuracy = _register_version_task(
     LO_VERSION_EXPLICITLY_GIVEN_COMMON_SENSE
 )
-lo_normative_accuracy_common_sense_problem_audit = _register_version_task(
+common_sense_problem_audit_accuracy = _register_version_task(
     LO_VERSION_COMMON_SENSE_PROBLEM_AUDIT
 )
-lo_normative_accuracy_common_sense_solution_audit = _register_version_task(
+common_sense_solution_audit_accuracy = _register_version_task(
     LO_VERSION_COMMON_SENSE_SOLUTION_AUDIT
 )
 
@@ -225,9 +225,7 @@ def lo_normative_accuracy_4(llm) -> float:
 
 @kbench.task(
     name="lp_needs_tacit_constraint",
-    description=(
-        "Alias of lo_normative_accuracy_common_sense_problem_audit."
-    ),
+    description="Alias of common_sense_problem_audit_accuracy.",
 )
 def lp_needs_tacit_constraint(llm) -> float:
     return _accuracy_for_benchmark_version(
@@ -237,9 +235,7 @@ def lp_needs_tacit_constraint(llm) -> float:
 
 @kbench.task(
     name="lp_detects_tacit_violation",
-    description=(
-        "Alias of lo_normative_accuracy_common_sense_solution_audit."
-    ),
+    description="Alias of common_sense_solution_audit_accuracy.",
 )
 def lp_detects_tacit_violation(llm) -> float:
     return _accuracy_for_benchmark_version(
@@ -290,11 +286,11 @@ def resolve_lo_task(benchmark_version: str):
 # Re-export for notebooks.
 __all__ = [
     "LO_VERSION_TASKS",
+    "common_sense_problem_audit_accuracy",
+    "common_sense_solution_audit_accuracy",
     "evaluate_lp_rate_benchmark",
-    "lo_normative_accuracy_common_sense_problem_audit",
-    "lo_normative_accuracy_common_sense_solution_audit",
-    "lo_normative_accuracy_explicitly_given_common_sense",
-    "lo_normative_accuracy_needs_common_sense",
+    "explicitly_given_common_sense_accuracy",
+    "needs_common_sense_accuracy",
     "resolve_lo_task",
     "task_name_for_version",
 ]

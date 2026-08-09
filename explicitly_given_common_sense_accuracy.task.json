@@ -1,6 +1,6 @@
 {
   "versionNumber": 1,
-  "name": "lo_normative_accuracy_needs_common_sense",
-  "description": "LO JSON solves with unstated common-sense constraints (implicit). Higher is better.",
+  "name": "explicitly_given_common_sense_accuracy",
+  "description": "LO JSON solves with common-sense constraints stated explicitly. Higher is better.",
   "definition": "    def _task(llm, *, _version: str = benchmark_version) -> float:\n        return _accuracy_for_benchmark_version(llm, _version)\n"
 }

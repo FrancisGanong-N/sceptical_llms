@@ -15,10 +15,10 @@ BASE_RATE_PROMPT_DICT_KEYS = frozenset({"example_id", "response"})
 DEFAULT_BASE_RATE_TASK_SLUG = "base-rate-normative-accuracy"
 DEFAULT_SIMPLE_RATE_TASK_SLUG = "simple-rate-normative-accuracy"
 DEFAULT_LO_TASK_SLUGS = (
-    "lo-normative-accuracy-needs-common-sense",
-    "lo-normative-accuracy-explicitly-given-common-sense",
-    "lo-normative-accuracy-common-sense-problem-audit",
-    "lo-normative-accuracy-common-sense-solution-audit",
+    "needs-common-sense-accuracy",
+    "explicitly-given-common-sense-accuracy",
+    "common-sense-problem-audit-accuracy",
+    "common-sense-solution-audit-accuracy",
 )
 DEFAULT_LO_TASK_SLUG = DEFAULT_LO_TASK_SLUGS[0]
 

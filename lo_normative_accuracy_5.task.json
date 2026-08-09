@@ -1,0 +1,6 @@
+{
+  "versionNumber": 1,
+  "name": "lo_normative_accuracy_5",
+  "description": "Deprecated alias of lo_normative_accuracy_6.",
+  "definition": "@kbench.task(\n    name=\"lo_normative_accuracy_5\",\n    description=\"Deprecated alias of lo_normative_accuracy_6.\",\n)\ndef lo_normative_accuracy_5(llm) -> float:\n    return lo_normative_accuracy_6(llm)\n"
+}
